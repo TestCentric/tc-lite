@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputPath>..\..\bin\$(Configuration)\</OutputPath>
+    <Copyright>Copyright (c) Charlie Poole and TestCentric Contriutors</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\tclite\tclite.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="nunit" Version="3.12.0" />
+    <PackageReference Include="nunitlite" Version="3.12.0" />
+  </ItemGroup>
+
+</Project>
