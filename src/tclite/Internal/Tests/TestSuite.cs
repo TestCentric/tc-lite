@@ -31,28 +31,6 @@ namespace TCLite.Framework.Internal
 			: base( parentSuiteName, name ) { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TestSuite"/> class.
-        /// </summary>
-        /// <param name="fixtureType">Type of the fixture.</param>
-        /// <param name="arguments">The arguments.</param>
-        public TestSuite(Type fixtureType, object[] arguments = null)
-            : base(fixtureType.Name)
-        {
-            FixtureType = fixtureType;
-            FullName = fixtureType.FullName;
-#if NYI
-            string name = TypeHelper.GetDisplayName(fixtureType, arguments);
-            this.Name = name;
-            
-            this.FullName = name;
-            string nspace = fixtureType.Namespace;
-            if (nspace != null && nspace != "")
-                this.FullName = nspace + "." + name;
-#endif
-            Arguments = arguments;
-        }
-
-        /// <summary>
         /// Adds a test to the suite.
         /// </summary>
         /// <param name="test">The test.</param>
@@ -80,11 +58,6 @@ namespace TCLite.Framework.Internal
 				return count;
 			}
 		}
-
-        /// <summary>
-        /// The arguments to use in creating the fixture, or empty array if none are provided.
-        /// </summary>
-        public override object[] Arguments { get; }
 
         /// <summary>
         /// Gets the name used for the top-level element in the

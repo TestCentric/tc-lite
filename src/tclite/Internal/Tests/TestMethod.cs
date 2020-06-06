@@ -64,8 +64,6 @@ namespace TCLite.Framework.Internal.Tests
 
         internal object ExpectedResult => TestCaseParameters?.ExpectedResult;
 
-        public override object[] Arguments => TestCaseParameters?.Arguments;
-
 #if NYI
         internal bool IsAsync => Method.IsDefined(typeof(System.Runtime.CompilerServices.AsyncStateMachineAttribute), false);
 #endif

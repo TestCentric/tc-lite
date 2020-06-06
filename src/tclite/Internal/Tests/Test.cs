@@ -122,7 +122,7 @@ namespace TCLite.Framework.Internal
         /// <summary>
         /// The arguments to use in creating the test or empty array if none required.
         /// </summary>
-        public abstract object[] Arguments { get; }
+        public object[] Arguments { get; protected set; }
 
         /// <summary>
         /// Gets a MethodInfo for the method implementing this test.
