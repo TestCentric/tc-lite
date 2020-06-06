@@ -8,7 +8,7 @@ var PROJECT_DIR = Context.Environment.WorkingDirectory.FullPath + "/";
 var BIN_DIR = PROJECT_DIR + "bin/" + configuration + "/";
 
 var SUPPORTED_TEST_PLATFORMS = new [] { "netcoreapp3.1" };
-var TEST_ASSEMBLY = "nunitlite.tests.dll";
+var TEST_ASSEMBLY = "tclite.tests.dll";
 
 // Deletes the contents of the Artifacts folder if it contains anything from a previous build.
 Task("Clean")

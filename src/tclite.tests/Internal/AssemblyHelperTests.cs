@@ -15,7 +15,7 @@ namespace TCLite.Framework.Internal
         public void GetPathForAssembly()
         {
             string path = AssemblyHelper.GetAssemblyPath(this.GetType().Assembly);
-            Assert.That(Path.GetFileName(path), Is.EqualTo("nunitlite.tests.dll"));
+            Assert.That(Path.GetFileName(path), Is.EqualTo("tclite.tests.dll"));
             Assert.That(File.Exists(path));
         }
 

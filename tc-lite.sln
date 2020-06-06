@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4B713625-2A5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tclite", "src\tclite\tclite.csproj", "{61FF51E9-3B26-4A2C-A57A-BCEEC0D65563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunitlite.tests", "src\nunitlite.tests\nunitlite.tests.csproj", "{9B35B953-9425-40F1-ABEF-284B5AE352E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tclite.tests", "src\tclite.tests\tclite.tests.csproj", "{9B35B953-9425-40F1-ABEF-284B5AE352E1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testdata", "src\testdata\testdata.csproj", "{EE91A0BC-2173-41CF-9BE9-6B391C813CC4}"
 EndProject
