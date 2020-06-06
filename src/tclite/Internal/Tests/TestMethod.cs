@@ -60,7 +60,6 @@ namespace TCLite.Framework.Internal.Tests
         /// </summary>
         public IList<ICommandDecorator> CustomDecorators { get; } = new List<ICommandDecorator>();
 #endif
-
         internal bool HasExpectedResult => TestCaseParameters?.HasExpectedResult ?? false;
 
         internal object ExpectedResult => TestCaseParameters?.ExpectedResult;
