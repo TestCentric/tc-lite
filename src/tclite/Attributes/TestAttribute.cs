@@ -11,7 +11,7 @@ namespace TCLite.Framework
 	/// <summary>
 	/// Adding this attribute to a method creates a TCLite TestMethod. 
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple=false, Inherited=true)]
-    public class TestAttribute : TCLiteAttribute, IApplyToTest
+    public class TestAttribute : TCLiteAttribute, IApplyToTest, IImplyFixture
 	{
 		/// <summary>
 		/// Descriptive text for this test
