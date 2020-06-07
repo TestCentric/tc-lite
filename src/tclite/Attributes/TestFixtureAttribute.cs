@@ -5,8 +5,8 @@
 
 using System;
 using System.Collections;
-using TCLite.Framework.Api;
 using TCLite.Framework.Internal;
+using TCLite.Framework.Internal.Tests;
 
 namespace TCLite.Framework
 {

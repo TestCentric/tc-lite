@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Xml;
 using TCLite.Framework.Api;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Framework.Internal.Tests
 {
 	/// <summary>
 	/// The Test abstract class represents a test within the framework.

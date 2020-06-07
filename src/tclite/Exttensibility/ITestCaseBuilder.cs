@@ -5,7 +5,7 @@
 
 using System.Reflection;
 using TCLite.Framework.Api;
-using TCLite.Framework.Internal;
+using TCLite.Framework.Internal.Tests;
 
 namespace TCLite.Framework.Extensibility
 {

@@ -4,6 +4,7 @@
 // ***********************************************************************
 
 using TCLite.Framework.Api;
+using TCLite.Framework.Internal.Tests;
 
 namespace TCLite.Framework.Internal.Filters
 {

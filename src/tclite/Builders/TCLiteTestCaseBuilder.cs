@@ -11,7 +11,7 @@ using TCLite.Framework.Internal;
 using TCLite.Framework.Internal.Tests;
 using TCLite.Framework.Extensibility;
 
-namespace TCLite.Framework.Internal.Builders
+namespace TCLite.Framework.Builders
 {
     /// <summary>
     /// Class to build ether a parameterized or a normal NUnitTestMethod.

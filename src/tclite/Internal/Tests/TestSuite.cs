@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Xml;
 using TCLite.Framework.Api;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Framework.Internal.Tests
 {
     /// <summary>
     /// TestSuite represents a composite test, which contains other tests.

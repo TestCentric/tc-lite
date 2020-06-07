@@ -10,14 +10,15 @@ using System.Text.RegularExpressions;
 using System.Text;
 using TCLite.Framework.Api;
 using TCLite.Framework.Internal;
+using TCLite.Framework.Internal.Tests;
 using TCLite.Framework.Extensibility;
 
-namespace TCLite.Framework.Internal.Builders
+namespace TCLite.Framework.Builders
 {
 	/// <summary>
 	/// Built-in SuiteBuilder for NUnit TestFixture
 	/// </summary>
-	public class NUnitTestFixtureBuilder : ISuiteBuilder
+	public class TCLiteTestFixtureBuilder : ISuiteBuilder
     {
         #region Static Fields
                 
@@ -40,7 +41,7 @@ namespace TCLite.Framework.Internal.Builders
 
         #region Constructor
 
-        public NUnitTestFixtureBuilder()
+        public TCLiteTestFixtureBuilder()
         {
             testBuilder = new TCLiteTestCaseBuilder();
         }

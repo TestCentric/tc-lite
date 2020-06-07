@@ -1,5 +1,9 @@
-﻿using System;
-using TCLite.Framework.Api;
+﻿// ***********************************************************************
+// Copyright (c) Charlie Poole and TestCentric contributors.
+// Licensed under the MIT License. See LICENSE in root directory.
+// ***********************************************************************
+
+using TCLite.Framework.Internal.Tests;
 
 namespace TCLite.Framework.Internal.Results
 {

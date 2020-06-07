@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 using TCLite.Framework.Api;
+using TCLite.Framework.Internal.Tests;
 
 namespace TCLite.Framework.Internal.Results
 {
