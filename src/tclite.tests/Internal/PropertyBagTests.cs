@@ -4,9 +4,10 @@
 // ***********************************************************************
 
 using System;
-using NUnit.Framework.Interfaces;
+using System.Xml;
+using NUnit.Framework;
 
-namespace NUnit.Framework.Internal
+namespace TCLite.Framework.Internal
 {
     [TestFixture]
     public class PropertyBagTests
@@ -91,30 +92,31 @@ namespace NUnit.Framework.Internal
         [Test]
         public void XmlIsProducedCorrectly()
         {
-            TNode topNode = bag.ToXml(true);
+            var topNode = bag.ToXml(true);
             Assert.That(topNode.Name, Is.EqualTo("properties"));
 
             string[] props = new string[topNode.ChildNodes.Count];
             for (int i = 0; i < topNode.ChildNodes.Count; i++)
             {
-                TNode node = topNode.ChildNodes[i];
+                XmlNode node = topNode.ChildNodes[i];
 
                 Assert.That(node.Name, Is.EqualTo("property"));
                 
-                props[i] = string.Format("{0}={1}",
-                    node.Attributes["name"],
-                    node.Attributes["value"]);
+                var name = node.GetAttribute("name");
+                var value = node.GetAttribute("value");
+                props[i] = $"{name}={value}";
             }
 
             Assert.That(props,
                 Is.EquivalentTo(new string[] { "Answer=42", "Tag=bug", "Tag=easy" }));
         }
 
-        [Test]
-        public void TestNullPropertyValueIsntAdded()
-        {
-            Assert.Throws<ArgumentNullException>(() => bag.Add("dontAddMe", null));
-            Assert.IsFalse(bag.ContainsKey("dontAddMe"));
-        }
+        // TODO: Do we need this feature?
+        // [Test]
+        // public void TestNullPropertyValueIsntAdded()
+        // {
+        //     Assert.Throws<ArgumentNullException>(() => bag.Add("dontAddMe", null));
+        //     Assert.IsFalse(bag.ContainsKey("dontAddMe"));
+        // }
     }
 }
