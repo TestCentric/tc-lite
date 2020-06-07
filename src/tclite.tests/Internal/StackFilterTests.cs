@@ -65,19 +65,19 @@ namespace TCLite.Framework.Internal
         // NOTE: Using individual tests rather than test cases 
         // to make the error messages easier to read.
 
-        [Test]
+        [NUnit.Framework.Test]
         public void FilterShortTraceWithAssert()
         {
             Assert.That(StackFilter.Filter(shortTrace_Assert), Is.EqualTo(shortTrace_Result));
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void FilterShortTraceWithAssume_Trace1()
         {
             Assert.That(StackFilter.Filter(shortTrace_Assume), Is.EqualTo(shortTrace_Result));
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void FilterLongTrace()
         {
             Assert.That(StackFilter.Filter(longTrace), Is.EqualTo(longTrace_Result));

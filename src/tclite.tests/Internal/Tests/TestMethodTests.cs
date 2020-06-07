@@ -12,7 +12,7 @@ namespace TCLite.Framework.Internal.Tests
     {
         private TestMethod _testMethod;
 
-        [SetUp]
+        [NUnit.Framework.SetUp]
         public void CreateTestMethod()
         {
             var method = GetType().GetMethod(nameof(MyTestMethod), BindingFlags.NonPublic | BindingFlags.Instance);
@@ -22,13 +22,13 @@ namespace TCLite.Framework.Internal.Tests
             Assert.NotNull(_testMethod);
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void TestType()
         {
             Assert.That(_testMethod.TestType, Is.EqualTo("TestMethod"));
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void MethodName()
         {
             Assert.That(_testMethod.MethodName, Is.EqualTo(nameof(MyTestMethod)));

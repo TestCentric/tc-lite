@@ -9,12 +9,12 @@ using NUnit.Framework;
 
 namespace TCLite.Framework.Internal
 {
-    [TestFixture]
+    [NUnit.Framework.TestFixture]
     public class PropertyBagTests
     {
         PropertyBag bag;
 
-        [SetUp]
+        [NUnit.Framework.SetUp]
         public void SetUp()
         {
             bag = new PropertyBag();
@@ -23,7 +23,7 @@ namespace TCLite.Framework.Internal
             bag.Add("Tag", "easy");
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void IndexGetsListOfValues()
         {
             Assert.That(bag["Answer"].Count, Is.EqualTo(1));
@@ -34,13 +34,13 @@ namespace TCLite.Framework.Internal
             Assert.That(bag["Tag"], Contains.Item("easy"));
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void IndexGetsEmptyListIfNameIsNotPresent()
         {
             Assert.That(bag["Level"].Count, Is.EqualTo(0));
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void IndexSetsListOfValues()
         {
             bag["Zip"] = new string[] {"junk", "more junk"};
@@ -49,7 +49,7 @@ namespace TCLite.Framework.Internal
             Assert.That(bag["Zip"], Contains.Item("more junk"));
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void AllKeysAreListed()
         {
             Assert.That(bag.Keys.Count, Is.EqualTo(2));
@@ -57,7 +57,7 @@ namespace TCLite.Framework.Internal
             Assert.That(bag.Keys, Has.Member("Tag"));
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void ContainsKey()
         {
             Assert.That(bag.ContainsKey("Answer"));
@@ -65,14 +65,14 @@ namespace TCLite.Framework.Internal
             Assert.False(bag.ContainsKey("Target"));
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void GetReturnsSingleValue()
         {
             Assert.That(bag.Get("Answer"), Is.EqualTo(42));
             Assert.That(bag.Get("Tag"), Is.EqualTo("bug"));
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void SetAddsNewSingleValue()
         {
             bag.Set("Zip", "ZAP");
@@ -81,7 +81,7 @@ namespace TCLite.Framework.Internal
             Assert.That(bag.Get("Zip"), Is.EqualTo("ZAP"));
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void SetReplacesOldValues()
         {
             bag.Set("Tag", "ZAPPED");
@@ -89,7 +89,7 @@ namespace TCLite.Framework.Internal
             Assert.That(bag.Get("Tag"), Is.EqualTo("ZAPPED"));
         }
 
-        [Test]
+        [NUnit.Framework.Test]
         public void XmlIsProducedCorrectly()
         {
             var topNode = bag.ToXml(true);
