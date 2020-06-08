@@ -6,9 +6,7 @@
 namespace TCLite.Framework.Internal 
 {
 	using System;
-#if !NETCF
 	using System.Runtime.Serialization;
-#endif
 
 	/// <summary>
 	/// Thrown when an assertion failed. Here to preserve the inner
@@ -42,12 +40,10 @@ namespace TCLite.Framework.Internal
 			base(message, inner) 
 		{}
 
-#if !NETCF && !SILVERLIGHT
 		/// <summary>
 		/// Serialization Constructor
 		/// </summary>
 		protected TCLiteException(SerializationInfo info, 
 			StreamingContext context) : base(info,context){}
-#endif
 	}
 }

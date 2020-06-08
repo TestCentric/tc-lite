@@ -227,11 +227,7 @@ namespace TCLite.Runners
         {
             if (path == null) return null;
 
-#if NETCF
-            return Path.Combine(TCLite.Env.DocumentFolder, path);
-#else
             return Path.GetFullPath(path); 
-#endif
         }
 
         /// <summary>

@@ -270,49 +270,5 @@ namespace TCLite.Framework.Internal
 
             return false;
         }
-
-        /// <summary>
-        /// Gets the values for an enumeration, using Enum.GetTypes
-        /// where available, otherwise through reflection.
-        /// </summary>
-        /// <param name="enumType"></param>
-        /// <returns></returns>
-        public static Array GetEnumValues(Type enumType)
-        {
-#if NETCF || SILVERLIGHT
-            FieldInfo[] fields = enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
-
-            Array enumValues = Array.CreateInstance(enumType, fields.Length);
-
-            for (int index = 0; index < fields.Length; index++)
-                enumValues.SetValue(fields[index].GetValue(enumType), index);
-
-            return enumValues;
-#else
-            return Enum.GetValues(enumType);
-#endif
-        }
-
-        /// <summary>
-        /// Gets the names defined for an enumeration, using Enum.GetNames
-        /// where available, otherwise through reflection.
-        /// </summary>
-        /// <param name="enumType"></param>
-        /// <returns></returns>
-        public static string[] GetEnumNames(Type enumType)
-        {
-#if NETCF || SILVERLIGHT
-            FieldInfo[] fields = enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
-
-            string[] names = new string[fields.Length];
-
-            for (int index = 0; index < fields.Length; index++)
-                names[index] = fields[index].Name;
-
-            return names;
-#else
-            return Enum.GetNames(enumType);
-#endif
-        }
     }
 }

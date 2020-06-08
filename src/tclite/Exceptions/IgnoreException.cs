@@ -25,13 +25,11 @@ namespace TCLite.Framework
 			base(message, inner) 
 		{}
 
-#if !NETCF && !SILVERLIGHT
 		/// <summary>
 		/// Serialization Constructor
 		/// </summary>
 		protected IgnoreException(System.Runtime.Serialization.SerializationInfo info, 
 			System.Runtime.Serialization.StreamingContext context) : base(info,context)
 		{}
-#endif
 	}
 }

@@ -101,7 +101,6 @@ namespace TCLite.Framework.Internal.WorkItems
         {
             _context = new TestExecutionContext(context);
 
-#if !SILVERLIGHT
             // Timeout set at a higher level
             int timeout = _context.TestCaseTimeout;
 
@@ -113,12 +112,8 @@ namespace TCLite.Framework.Internal.WorkItems
                 RunTestWithTimeout(timeout);
             else
                 RunTest();
-#else
-            RunTest();
-#endif
         }
 
-#if !SILVERLIGHT
         private void RunTestWithTimeout(int timeout)
         {
             Thread thread = new Thread(new ThreadStart(RunTest));
@@ -128,19 +123,12 @@ namespace TCLite.Framework.Internal.WorkItems
             if (timeout <= 0)
                 timeout = Timeout.Infinite;
 
-#if NETCF
-            // NETCF doesn't support IsAlive as well as various
-            // members required by our ThreadUtilitity.Kill
-            if (!thread.Join(timeout))
-            {
-                thread.Abort();
-#else
             thread.Join(timeout);
 
             if (thread.IsAlive)
             {
                 ThreadUtility.Kill(thread);
-#endif
+
                 // NOTE: Without the use of Join, there is a race condition here.
                 // The thread sets the result to Cancelled and our code below sets
                 // it to Failure. In order for the result to be shown as a failure,
@@ -156,7 +144,6 @@ namespace TCLite.Framework.Internal.WorkItems
                 WorkItemComplete();
             }
         }
-#endif
 
         private void RunTest()
         {
@@ -167,9 +154,7 @@ namespace TCLite.Framework.Internal.WorkItems
 
             TestExecutionContext.SetCurrentContext(_context);
 
-#if !SILVERLIGHT && !NETCF_2_0
             long startTicks = Stopwatch.GetTimestamp();
-#endif
 
             try
             {
@@ -177,13 +162,9 @@ namespace TCLite.Framework.Internal.WorkItems
             }
             finally
             {
-#if !SILVERLIGHT && !NETCF_2_0
                 long tickCount = Stopwatch.GetTimestamp() - startTicks;
                 double seconds = (double)tickCount / Stopwatch.Frequency;
                 Result.Duration = TimeSpan.FromSeconds(seconds);
-#else
-                Result.Duration = DateTime.Now - Context.StartTime;
-#endif
 
                 Result.AssertCount = _context.AssertCount;
 

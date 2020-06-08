@@ -240,14 +240,6 @@ namespace TCLite.Framework.Builders
                 return MarkAsNotRunnable(testMethod, "Method is not public");
             }
 
-#if NETCF
-            // TODO: Get this to work
-            if (testMethod.Method.IsGenericMethodDefinition)
-            {
-                return MarkAsNotRunnable(testMethod, "Generic test methods are not yet supported under .NET CF");
-            }
-#endif
-
             ParameterInfo[] parameters = testMethod.Method.GetParameters();
             int argsNeeded = parameters.Length;
 
@@ -276,7 +268,7 @@ namespace TCLite.Framework.Builders
             }
             else
             {
-#if NET_4_5
+#if NYI
                 if (MethodHelper.IsAsyncMethod(testMethod.Method))
                 {
                     bool returnsGenericTask = returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>);
@@ -306,7 +298,6 @@ namespace TCLite.Framework.Builders
                 return MarkAsNotRunnable(testMethod, "Wrong number of arguments provided");
             }
 
-#if !NETCF
             if (testMethod.Method.IsGenericMethodDefinition)
             {
                 Type[] typeArguments = GetTypeArgumentsForMethod(testMethod.Method, arglist);
@@ -319,7 +310,6 @@ namespace TCLite.Framework.Builders
                 testMethod.Method = testMethod.Method.MakeGenericMethod(typeArguments);
                 parameters = testMethod.Method.GetParameters();
            }
-#endif
 
            if (arglist != null && parameters != null)
                TypeHelper.ConvertArgumentList(arglist, parameters);
@@ -327,7 +317,6 @@ namespace TCLite.Framework.Builders
             return true;
         }
 
-#if !NETCF
         private static Type[] GetTypeArgumentsForMethod(MethodInfo method, object[] arglist)
         {
             Type[] typeParameters = method.GetGenericArguments();
@@ -349,7 +338,6 @@ namespace TCLite.Framework.Builders
 
             return typeArguments;
         }
-#endif
 
         private static MethodInfo GetExceptionHandler(Type fixtureType, string name)
         {

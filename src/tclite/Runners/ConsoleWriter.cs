@@ -85,11 +85,7 @@ namespace TCLite.Runners
         /// </returns>
         public override System.Text.Encoding Encoding
         {
-#if SILVERLIGHT
-            get { return System.Text.Encoding.UTF8; }
-#else
             get { return System.Text.Encoding.Default; }
-#endif
         }
     }
 }

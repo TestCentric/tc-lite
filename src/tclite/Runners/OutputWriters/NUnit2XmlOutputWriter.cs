@@ -50,23 +50,9 @@ namespace TCLite.Runners
         /// <param name="writer">The TextWriter to which the xml will be written</param>
         public override void WriteResultFile(ITestResult result, TextWriter writer)
         {
-            // NOTE: Under .NET 1.1, XmlTextWriter does not implement IDisposable,
-            // but does implement Close(). Hence we cannot use a 'using' clause.
-            //using (XmlTextWriter xmlWriter = new XmlTextWriter(writer))
-#if SILVERLIGHT
-            XmlWriter xmlWriter = XmlWriter.Create(writer);
-#else
-            XmlTextWriter xmlWriter = new XmlTextWriter(writer);
-            xmlWriter.Formatting = Formatting.Indented;
-#endif
-
-            try
+            using (XmlTextWriter xmlWriter = new XmlTextWriter(writer){ Formatting = Formatting.Indented })
             {
                 WriteXmlOutput(result, xmlWriter);
-            }
-            finally
-            {
-                writer.Close();
             }
         }
 
@@ -126,18 +112,14 @@ namespace TCLite.Runners
                                            Environment.OSVersion.ToString());
             xmlWriter.WriteAttributeString("platform",
                 Environment.OSVersion.Platform.ToString());
-#if !NETCF
             xmlWriter.WriteAttributeString("cwd",
                                            Environment.CurrentDirectory);
-#if !SILVERLIGHT
             xmlWriter.WriteAttributeString("machine-name",
                                            Environment.MachineName);
             xmlWriter.WriteAttributeString("user",
                                            Environment.UserName);
             xmlWriter.WriteAttributeString("user-domain",
                                            Environment.UserDomainName);
-#endif
-#endif
             xmlWriter.WriteEndElement();
         }
 

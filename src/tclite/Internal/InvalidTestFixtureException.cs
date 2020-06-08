@@ -6,9 +6,7 @@
 namespace TCLite.Framework.Internal
 {
 	using System;
-#if !NETCF
 	using System.Runtime.Serialization;
-#endif
 
     /// <summary>
     /// InvalidTestFixtureException is thrown when an appropriate test
@@ -37,12 +35,10 @@ namespace TCLite.Framework.Internal
 		public InvalidTestFixtureException(string message, Exception inner) : base(message, inner)
 		{}
 
-#if !NETCF && !SILVERLIGHT
 		/// <summary>
 		/// Serialization Constructor
 		/// </summary>
 		protected InvalidTestFixtureException(SerializationInfo info, 
 			StreamingContext context) : base(info,context){}
-#endif
 	}
 }

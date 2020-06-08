@@ -30,7 +30,7 @@ namespace TCLite.Framework.Internal
 	/// object on the top of the stack.
 	/// </summary>
 	public class TestExecutionContext
-#if NETFRAMEWORK && !SILVERLIGHT && !NETCF
+#if NETFRAMEWORK
         : ILogicalThreadAffinative
 #endif
 	{
@@ -88,7 +88,6 @@ namespace TCLite.Framework.Internal
 
         private RandomGenerator randomGenerator;
 
-#if !NETCF
         /// <summary>
         /// The current culture
         /// </summary>
@@ -98,9 +97,7 @@ namespace TCLite.Framework.Internal
         /// The current UI culture
         /// </summary>
         private CultureInfo currentUICulture;
-#endif
 
-#if !NETCF && !SILVERLIGHT
         /// <summary>
         /// Destination for standard output
         /// </summary>
@@ -120,7 +117,6 @@ namespace TCLite.Framework.Internal
         /// Destination for Trace output
         /// </summary>
         private TextWriter traceWriter;
-#endif
 
         #endregion
 
@@ -134,17 +130,13 @@ namespace TCLite.Framework.Internal
 			this.prior = null;
             this.testCaseTimeout = 0;
 
-#if !NETCF
             this.currentCulture = CultureInfo.CurrentCulture;
             this.currentUICulture = CultureInfo.CurrentUICulture;
-#endif
 
-#if !NETCF && !SILVERLIGHT
 			this.outWriter = Console.Out;
 			this.errorWriter = Console.Error;
             this.traceWriter = null;
             this.tracing = false;
-#endif
 
         }
 
@@ -164,18 +156,13 @@ namespace TCLite.Framework.Internal
             this.stopOnError = other.stopOnError;
             this.testCaseTimeout = other.testCaseTimeout;
 
-#if !NETCF
             this.currentCulture = CultureInfo.CurrentCulture;
             this.currentUICulture = CultureInfo.CurrentUICulture;
-#endif
 
-#if !NETCF && !SILVERLIGHT
 			this.outWriter = other.outWriter;
 			this.errorWriter = other.errorWriter;
             this.traceWriter = other.traceWriter;
             this.tracing = other.tracing;
-#endif
-
         }
 
         #endregion
@@ -314,7 +301,6 @@ namespace TCLite.Framework.Internal
             set { testCaseTimeout = value; }
         }
 
-#if !NETCF
         /// <summary>
         /// Saves or restores the CurrentCulture
         /// </summary>
@@ -340,9 +326,7 @@ namespace TCLite.Framework.Internal
                 Thread.CurrentThread.CurrentUICulture = currentUICulture;
             }
         }
-#endif
 
-#if !NETCF && !SILVERLIGHT
         /// <summary>
 		/// Controls where Console.Out is directed
 		/// </summary>
@@ -430,7 +414,6 @@ namespace TCLite.Framework.Internal
 		{
 			System.Diagnostics.Trace.Listeners.Add( new TextWriterTraceListener( traceWriter, "NUnit" ) );
 		}
-#endif
 
         #endregion
 
@@ -456,16 +439,12 @@ namespace TCLite.Framework.Internal
 
             this.TestCaseTimeout = prior.TestCaseTimeout;
 
-#if !NETCF
             this.CurrentCulture = prior.CurrentCulture;
             this.CurrentUICulture = prior.CurrentUICulture;
-#endif
 
-#if !NETCF && !SILVERLIGHT
             this.Out = prior.Out;
             this.Error = prior.Error;
             this.Tracing = prior.Tracing;
-#endif
 
             return prior;
         }
@@ -477,10 +456,8 @@ namespace TCLite.Framework.Internal
         /// </summary>
         public void UpdateContext()
         {
-#if !NETCF
             this.currentCulture = CultureInfo.CurrentCulture;
             this.currentUICulture = CultureInfo.CurrentUICulture;
-#endif
         }
 
         /// <summary>

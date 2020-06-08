@@ -158,7 +158,7 @@ namespace TCLite.Framework.Internal
         /// <returns> T </returns>
         public T GetEnum<T>()
         {
-            Array enums = TypeHelper.GetEnumValues(typeof(T));
+            Array enums = Enum.GetValues(typeof(T));
             return (T)enums.GetValue(Rand.Next(0, enums.Length));
         }
 

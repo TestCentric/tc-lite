@@ -90,15 +90,11 @@ namespace TCLite.Framework.Builders
 
         private Assembly Load(string path)
         {
-#if NETCF || SILVERLIGHT
-            return Assembly.Load(path);
-#else
             // Throws if this isn't a managed assembly or if it was built
             // with a later version of the same assembly. 
             AssemblyName assemblyName = AssemblyName.GetAssemblyName(Path.GetFileName(path));
 
             return Assembly.Load(assemblyName);
-#endif
         }
 
         private IList GetFixtures(Assembly assembly, IList names)
