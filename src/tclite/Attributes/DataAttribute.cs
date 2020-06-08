@@ -7,15 +7,16 @@ using System;
 
 namespace TCLite.Framework
 {
-    // TODO: Do we really need a common base class?
     /// <summary>
-    /// The abstract base class for all custom attributes defined by TCLite.
+    /// The abstract base class for all data-providing attributes 
+    /// defined by TCLite. Used to select all data sources for a 
+    /// method, class or parameter.
     /// </summary>
-    public abstract class TCLiteAttribute : Attribute
+    public abstract class DataAttribute : TCLiteAttribute
     {
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TCLiteAttribute() { }
+        public DataAttribute() { }
     }
 }
