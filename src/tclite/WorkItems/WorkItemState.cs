@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE.txt in root directory.
 // ***********************************************************************
 
-namespace TCLite.Framework.Internal.WorkItems
+namespace TCLite.Framework.WorkItems
 {
     /// <summary>
     /// The current state of a work item

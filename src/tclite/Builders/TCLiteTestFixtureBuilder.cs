@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Text;
 using TCLite.Framework.Api;
 using TCLite.Framework.Internal;
-using TCLite.Framework.Internal.Tests;
+using TCLite.Framework.Tests;
 using TCLite.Framework.Extensibility;
 
 namespace TCLite.Framework.Builders

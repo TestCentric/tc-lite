@@ -5,9 +5,9 @@
 
 using System;
 using System.Threading;
-using TCLite.Framework.Internal.Tests;
+using TCLite.Framework.Tests;
 
-namespace TCLite.Framework.Internal.WorkItems
+namespace TCLite.Framework.WorkItems
 {
     /// <summary>
     /// A SimpleWorkItem represents a single test case and is

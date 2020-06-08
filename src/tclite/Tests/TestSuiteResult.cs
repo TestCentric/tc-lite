@@ -3,9 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using TCLite.Framework.Internal.Tests;
-
-namespace TCLite.Framework.Internal.Results
+namespace TCLite.Framework.Tests
 {
     /// <summary>
     /// Represents the result of running a test suite

@@ -6,7 +6,7 @@
 using System;
 using System.Collections;
 using System.Reflection;
-using TCLite.Framework.Internal.Tests;
+using TCLite.Framework.Tests;
 
 namespace TCLite.Framework.Api
 {

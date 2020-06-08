@@ -6,7 +6,7 @@
 using System.Reflection;
 using NUnit.Framework;
 
-namespace TCLite.Framework.Internal.Tests
+namespace TCLite.Framework.Tests
 {
     public class TestMethodTests
     {

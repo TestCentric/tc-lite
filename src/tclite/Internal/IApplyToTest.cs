@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using TCLite.Framework.Internal.Tests;
+using TCLite.Framework.Tests;
 
 namespace TCLite.Framework.Internal
 {

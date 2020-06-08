@@ -6,7 +6,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace TCLite.Framework.Internal.Tests
+namespace TCLite.Framework.Tests
 {
     /// <summary>
     /// TestAssembly is a TestSuite that represents the execution

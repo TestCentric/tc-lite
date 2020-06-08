@@ -7,8 +7,8 @@ using System;
 using System.Collections;
 using System.Reflection;
 using TCLite.Framework.Api;
-using TCLite.Framework.Internal.Tests;
-using TCLite.Framework.Internal.WorkItems;
+using TCLite.Framework.Tests;
+using TCLite.Framework.WorkItems;
 
 namespace TCLite.Framework.Internal
 {

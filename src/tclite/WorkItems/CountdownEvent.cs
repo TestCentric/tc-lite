@@ -5,7 +5,7 @@
 
 using System.Threading;
 
-namespace TCLite.Framework.Internal.WorkItems
+namespace TCLite.Framework.WorkItems
 {
     /// <summary>
     /// A simplified implementation of .NET 4 CountdownEvent

@@ -8,10 +8,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Xml;
 using TCLite.Framework.Api;
-using TCLite.Framework.Internal.Results;
-using TCLite.Framework.Internal.WorkItems;
+using TCLite.Framework.Internal;
+using TCLite.Framework.WorkItems;
 
-namespace TCLite.Framework.Internal.Tests
+namespace TCLite.Framework.Tests
 {
 	/// <summary>
 	/// The Test abstract class represents a test within the framework.

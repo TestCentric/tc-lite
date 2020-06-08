@@ -1,7 +1,6 @@
 ﻿using TCLite.Framework.Api;
-using TCLite.Framework.Internal.Tests;
 
-namespace TCLite.Framework.Internal.Results
+namespace TCLite.Framework.Tests
 {
     /// <summary>
     /// Represents the result of running a single test case.

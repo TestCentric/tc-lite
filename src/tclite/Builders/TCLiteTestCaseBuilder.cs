@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using TCLite.Framework.Api;
 using TCLite.Framework.Commands;
 using TCLite.Framework.Internal;
-using TCLite.Framework.Internal.Tests;
+using TCLite.Framework.Tests;
 using TCLite.Framework.Extensibility;
 
 namespace TCLite.Framework.Builders

@@ -5,8 +5,9 @@
 
 using System;
 using TCLite.Framework.Api;
+using TCLite.Framework.Internal;
 
-namespace TCLite.Framework.Internal.Tests
+namespace TCLite.Framework.Tests
 {
     /// <summary>
     /// ParameterSet encapsulates method arguments and

@@ -11,7 +11,7 @@ using System.Xml;
 using System.IO;
 using TCLite.Framework.Api;
 using TCLite.Framework.Internal;
-using TCLite.Framework.Internal.Tests;
+using TCLite.Framework.Tests;
 
 namespace TCLite.Runners
 {

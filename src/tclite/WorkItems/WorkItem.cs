@@ -7,10 +7,10 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using TCLite.Framework.Api;
-using TCLite.Framework.Internal.Tests;
-using TCLite.Framework.Internal.Results;
+using TCLite.Framework.Internal;
+using TCLite.Framework.Tests;
 
-namespace TCLite.Framework.Internal.WorkItems
+namespace TCLite.Framework.WorkItems
 {
     /// <summary>
     /// A WorkItem may be an individual test case, a fixture or

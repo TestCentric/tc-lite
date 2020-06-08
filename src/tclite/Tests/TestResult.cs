@@ -7,9 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 using TCLite.Framework.Api;
-using TCLite.Framework.Internal.Tests;
+using TCLite.Framework.Internal;
 
-namespace TCLite.Framework.Internal.Results
+namespace TCLite.Framework.Tests
 {
     /// <summary>
     /// The TestResult class represents the result of a test.
