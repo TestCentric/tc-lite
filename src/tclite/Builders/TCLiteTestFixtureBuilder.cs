@@ -145,9 +145,7 @@ namespace TCLite.Framework.Builders
             this.fixture = new TestFixture(type, arguments);
             CheckTestFixtureIsValid(fixture);
 
-#if NYI
             fixture.ApplyAttributesToTest(type);
-#endif
 
             if (fixture.RunState == RunState.Runnable && attr != null)
             {

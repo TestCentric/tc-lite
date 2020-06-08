@@ -174,10 +174,9 @@ namespace TCLite.Framework.Builders
 
             if (CheckTestMethodSignature(testMethod, parameterSet))
             {
-#if NYI
                 if (parameterSet == null)
                     testMethod.ApplyAttributesToTest(method);
-
+#if NYI
                 foreach (ICommandDecorator decorator in method.GetCustomAttributes(typeof(ICommandDecorator), true))
                     testMethod.CustomDecorators.Add(decorator);
 #endif

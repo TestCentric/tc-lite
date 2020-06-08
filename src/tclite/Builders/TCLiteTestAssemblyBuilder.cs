@@ -171,9 +171,9 @@ namespace TCLite.Framework.Builders
                 testAssembly.RunState = RunState.NotRunnable;
                 testAssembly.Properties.Set(PropertyNames.SkipReason, "Has no TestFixtures");
             }
-#if NYI
+
             testAssembly.ApplyAttributesToTest(assembly);
-#endif
+
             testAssembly.Properties.Set(PropertyNames.ProcessID, System.Diagnostics.Process.GetCurrentProcess().Id);
             testAssembly.Properties.Set(PropertyNames.AppDomain, AppDomain.CurrentDomain.FriendlyName);
 
