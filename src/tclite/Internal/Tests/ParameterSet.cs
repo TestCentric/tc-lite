@@ -43,7 +43,6 @@ namespace TCLite.Framework.Internal.Tests
                 this.Properties[key] = data.Properties[key];
         }
 
-#if NYI
         /// <summary>
         /// Construct a non-runnable ParameterSet, specifying
         /// the provider exception that made it invalid.
@@ -54,7 +53,6 @@ namespace TCLite.Framework.Internal.Tests
             this.Properties.Set(PropertyNames.SkipReason, ExceptionHelper.BuildMessage(exception));
             this.Properties.Set(PropertyNames.ProviderStackTrace, ExceptionHelper.BuildStackTrace(exception));
         }
-#endif
 
         /// <summary>
         /// The RunState for this set of parameters.

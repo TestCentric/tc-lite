@@ -3,9 +3,11 @@
 // Licensed under the MIT License. See LICENSE.txt in root directory.
 // ***********************************************************************
 
+using System.Collections.Generic;
 using System.Reflection;
 using System.Xml;
 using TCLite.Framework.Api;
+using TCLite.Framework.Commands;
 using TCLite.Framework.Internal.Results;
 using TCLite.Framework.Internal.WorkItems;
 
@@ -56,19 +58,16 @@ namespace TCLite.Framework.Internal.Tests
         /// </summary>
         internal ParameterSet TestCaseParameters { get; set; }
 
-#if NYI
         /// <summary>
         /// Gets a list of custom decorators for this test.
         /// </summary>
         public IList<ICommandDecorator> CustomDecorators { get; } = new List<ICommandDecorator>();
-#endif
+
         internal bool HasExpectedResult => TestCaseParameters?.HasExpectedResult ?? false;
 
         internal object ExpectedResult => TestCaseParameters?.ExpectedResult;
 
-#if NYI
         internal bool IsAsync => Method.IsDefined(typeof(System.Runtime.CompilerServices.AsyncStateMachineAttribute), false);
-#endif
 
         #endregion
 
@@ -143,13 +142,9 @@ namespace TCLite.Framework.Internal.Tests
 
         #region Helper Methods
 
-#if NYI
         private TestCommand ApplyDecoratorsToCommand(TestCommand command)
         {
             CommandDecoratorList decorators = new CommandDecoratorList();
-
-            // Add Standard stuff
-            decorators.Add(new SetUpTearDownDecorator());
 
             // Add Decorators supplied by attributes and parameter sets
             foreach (ICommandDecorator decorator in CustomDecorators)
@@ -164,7 +159,6 @@ namespace TCLite.Framework.Internal.Tests
 
             return command;
         }
-#endif
 
         #endregion
     }

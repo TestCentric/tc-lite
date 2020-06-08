@@ -7,6 +7,7 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using TCLite.Framework.Api;
+using TCLite.Framework.Commands;
 using TCLite.Framework.Internal;
 using TCLite.Framework.Internal.Tests;
 using TCLite.Framework.Extensibility;
@@ -176,10 +177,9 @@ namespace TCLite.Framework.Builders
             {
                 if (parameterSet == null)
                     testMethod.ApplyAttributesToTest(method);
-#if NYI
+
                 foreach (ICommandDecorator decorator in method.GetCustomAttributes(typeof(ICommandDecorator), true))
                     testMethod.CustomDecorators.Add(decorator);
-#endif
             }
 
             if (parameterSet != null)

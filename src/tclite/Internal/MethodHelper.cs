@@ -192,7 +192,6 @@ namespace TCLite.Framework.Internal
             }
         }
 
-#if NYI
         /// <summary>
         /// Returns true if the method specified by the argument
         /// is an async method.
@@ -201,6 +200,5 @@ namespace TCLite.Framework.Internal
         {
             return method.IsDefined(typeof(System.Runtime.CompilerServices.AsyncStateMachineAttribute));
         }
-#endif
     }
 }
