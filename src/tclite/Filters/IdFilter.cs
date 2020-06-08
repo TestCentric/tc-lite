@@ -1,11 +1,11 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using TCLite.Framework.Api;
 
-namespace TCLite.Framework.Internal.Filters
+namespace TCLite.Framework.Filters
 {
     /// <summary>
     /// IdFilter selects tests based on their id

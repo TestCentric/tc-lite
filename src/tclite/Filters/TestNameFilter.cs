@@ -1,21 +1,19 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using System;
-using System.Collections.Generic;
 using TCLite.Framework.Api;
 
-namespace TCLite.Framework.Internal.Filters
+namespace TCLite.Framework.Filters
 {
 	/// <summary>
-	/// SimpleName filter selects tests based on their name
+	/// TestName filter selects tests based on their FullName
 	/// </summary>
     public class TestNameFilter : ValueMatchFilter
     {
         /// <summary>
-        /// Construct a FullNameFilter for a single name
+        /// Construct a TestNameFilter for a single name
         /// </summary>
         /// <param name="expectedValue">The name the filter will recognize.</param>
         public TestNameFilter(string expectedValue) : base(expectedValue) { }

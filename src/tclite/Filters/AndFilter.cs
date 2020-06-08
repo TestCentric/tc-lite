@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using System.Collections.Generic;
 using TCLite.Framework.Api;
+using TCLite.Framework.Internal;
 
-namespace TCLite.Framework.Internal.Filters
+namespace TCLite.Framework.Filters
 {
 	/// <summary>
 	/// Combines multiple filters so that a test must pass all 

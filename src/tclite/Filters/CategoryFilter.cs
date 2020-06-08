@@ -1,15 +1,14 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using TCLite.Framework.Api;
+using TCLite.Framework.Internal;
 
-namespace TCLite.Framework.Internal.Filters
+namespace TCLite.Framework.Filters
 {
 	/// <summary>
 	/// CategoryFilter is able to select or exclude tests

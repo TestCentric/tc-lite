@@ -1,12 +1,11 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using System;
 using TCLite.Framework.Api;
 
-namespace TCLite.Framework.Internal.Filters
+namespace TCLite.Framework.Filters
 {
     /// <summary>
     /// ClassName filter selects tests based on the class FullName
