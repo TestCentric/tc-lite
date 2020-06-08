@@ -7,6 +7,8 @@ using System;
 using System.Reflection;
 using System.Xml;
 using TCLite.Framework.Api;
+using TCLite.Framework.Internal.Results;
+using TCLite.Framework.Internal.WorkItems;
 
 namespace TCLite.Framework.Internal.Tests
 {
@@ -58,6 +60,28 @@ namespace TCLite.Framework.Internal.Tests
 				return count;
 			}
 		}
+
+        /// <summary>
+        /// Overridden to return a TestSuiteResult.
+        /// </summary>
+        /// <returns>A TestResult for this test.</returns>
+        public override TestResult MakeTestResult()
+        {
+            return new TestSuiteResult(this);
+        }
+
+        /// <summary>
+        /// Creates a WorkItem for executing this test.
+        /// </summary>
+        /// <param name="childFilter">A filter to be used in selecting child tests</param>
+        /// <returns>A new WorkItem</returns>
+        public override WorkItem CreateWorkItem(ITestFilter childFilter)
+        {
+            //return RunState == Api.RunState.Runnable || RunState == Api.RunState.Explicit
+            //    ? (WorkItem)new CompositeWorkItem(this, childFilter)
+            //    : (WorkItem)new SimpleWorkItem(this);
+            return new CompositeWorkItem(this, childFilter);
+        }
 
         /// <summary>
         /// Gets the name used for the top-level element in the

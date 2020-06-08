@@ -6,6 +6,8 @@
 using System.Reflection;
 using System.Xml;
 using TCLite.Framework.Api;
+using TCLite.Framework.Internal.Results;
+using TCLite.Framework.Internal.WorkItems;
 
 namespace TCLite.Framework.Internal.Tests
 {
@@ -73,6 +75,15 @@ namespace TCLite.Framework.Internal.Tests
         #region Test Overrides
 
         /// <summary>
+        /// Overridden to return a TestCaseResult.
+        /// </summary>
+        /// <returns>A TestResult for this test.</returns>
+        public override TestResult MakeTestResult()
+        {
+            return new TestCaseResult(this);
+        }
+
+        /// <summary>
         /// Returns an XmlNode representing the current result after
         /// adding it as a child of the supplied parent node.
         /// </summary>
@@ -95,6 +106,37 @@ namespace TCLite.Framework.Internal.Tests
         public override string XmlElementName
         {
             get { return "test-case"; }
+        }
+
+        // /// <summary>
+        // /// Creates a test command for use in running this test. 
+        // /// </summary>
+        // /// <returns></returns>
+        // public virtual TestCommand MakeTestCommand()
+        // {
+        //     if (RunState != RunState.Runnable && RunState != RunState.Explicit)
+        //         return new SkipCommand(this);
+
+        //     TestCommand command = new TestMethodCommand(this);
+
+        //     command = ApplyDecoratorsToCommand(command);
+
+        //     IApplyToContext[] changes = (IApplyToContext[])Method.GetCustomAttributes(typeof(IApplyToContext), true);
+        //     if (changes.Length > 0)
+        //         command = new ApplyChangesToContextCommand(command, changes);
+
+        //     return command;
+        // }
+
+        /// <summary>
+        /// Creates a WorkItem for executing this test.
+        /// </summary>
+        /// <param name="childFilter">A filter to be used in selecting child tests</param>
+        /// <returns>A new WorkItem</returns>
+        public override WorkItem CreateWorkItem(ITestFilter childFilter)
+        {
+            // For simple test cases, we ignore the filter
+            return new SimpleWorkItem(this);
         }
 
         #endregion
