@@ -8,8 +8,12 @@ namespace TCLite.Framework.Api
     [TestFixture]
     public class ResultStateTests
     {
-        [Test]
-        public void ConstructWithOneArgument([Values]TestStatus status)
+        [TestCase(TestStatus.Passed)]
+        [TestCase(TestStatus.Failed)]
+        [TestCase(TestStatus.Warning)]
+        [TestCase(TestStatus.Skipped)]
+        [TestCase(TestStatus.Inconclusive)]
+        public void ConstructWithOneArgument(TestStatus status)
         {
             ResultState resultState = new ResultState(status);
 
@@ -29,8 +33,12 @@ namespace TCLite.Framework.Api
             Assert.AreEqual(label, resultState.Label);
         }
 
-        [Test]
-        public void ConstructorWithNullLabel([Values]TestStatus status)
+        [TestCase(TestStatus.Passed)]
+        [TestCase(TestStatus.Failed)]
+        [TestCase(TestStatus.Warning)]
+        [TestCase(TestStatus.Skipped)]
+        [TestCase(TestStatus.Inconclusive)]
+        public void ConstructorWithNullLabel(TestStatus status)
         {
             ResultState resultState = new ResultState(status, null);
 
@@ -38,8 +46,12 @@ namespace TCLite.Framework.Api
             Assert.AreEqual(string.Empty, resultState.Label);
         }
 
-        [Test]
-        public void ConstructWithEmptyLabel([Values]TestStatus status)
+        [TestCase(TestStatus.Passed)]
+        [TestCase(TestStatus.Failed)]
+        [TestCase(TestStatus.Warning)]
+        [TestCase(TestStatus.Skipped)]
+        [TestCase(TestStatus.Inconclusive)]
+        public void ConstructWithEmptyLabel(TestStatus status)
         {
             ResultState resultState = new ResultState(status, string.Empty);
 

@@ -11,7 +11,7 @@ namespace TCLite.Framework.Internal
     [TestFixture]
     public class PropertyBagTests
     {
-        private static readonly PropertyBag bag = CreatePropertyBag();
+        private PropertyBag bag = CreatePropertyBag();
 
         [Test]
         public void IndexGetsListOfValues()

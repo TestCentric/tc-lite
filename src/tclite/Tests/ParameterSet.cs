@@ -111,8 +111,7 @@ namespace TCLite.Framework.Tests
         /// <summary>
         /// Gets the property dictionary for this test
         /// </summary>
-        //public IPropertyBag Properties { get; } = new PropertyBag();
-        public IPropertyBag Properties => throw new NotImplementedException();
+        public IPropertyBag Properties { get; } = new PropertyBag();
 
         #region IApplyToTest Members
 

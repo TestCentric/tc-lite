@@ -30,7 +30,7 @@ namespace TCLite.Framework.Builders
 	{
         private Randomizer _randomizer;
 
-        // NYI: private ITestCaseProvider _testCaseProvider = new TestCaseProviders();
+        private ITestCaseProvider _testCaseProvider = new TestCaseProviders();
 
         /// <summary>
         /// Default no argument constructor for NUnitTestCaseBuilder
@@ -108,19 +108,15 @@ namespace TCLite.Framework.Builders
         /// <returns>A Test representing one or more method invocations</returns>
         public Test BuildFrom(MethodInfo method, ITest parentSuite)
         {
-            return BuildSingleTestMethod(method, parentSuite, null);
-#if NYI
             return _testCaseProvider.HasTestCasesFor(method)
                 ? BuildParameterizedMethodSuite(method, parentSuite)
                 : BuildSingleTestMethod(method, parentSuite, null);
-#endif
         }
 
         #endregion
 
         #region Implementation
 
-#if NYI
         /// <summary>
         /// Builds a ParameterizedMethodSuite containing individual
         /// test cases for each set of parameters provided for
@@ -147,7 +143,6 @@ namespace TCLite.Framework.Builders
 
             return methodSuite;
         }
-#endif
 
         /// <summary>
         /// Builds a single NUnitTestMethod, either as a child of the fixture 

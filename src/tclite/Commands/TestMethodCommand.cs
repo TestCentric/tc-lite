@@ -48,7 +48,7 @@ namespace TCLite.Framework.Commands
         public override TestResult Execute(TestExecutionContext context)
         {
             if (!testMethod.Method.IsStatic)
-                context.TestObject = Reflect.Construct(testMethod.FixtureType, testMethod.Arguments);
+                context.TestObject = Reflect.Construct(testMethod.FixtureType);
 
             try
             {
