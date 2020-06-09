@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -13,7 +13,7 @@ namespace TCLite.Framework.Constraints
     /// process of being constructed from a series of syntactic elements.
     /// 
     /// Individual elements are appended to the expression as they are
-    /// reognized. Once an actual Constraint is appended, the expression
+    /// recognized. Once an actual Constraint is appended, the expression
     /// returns a resolvable Constraint.
     /// </summary>
     public class ConstraintExpression : ConstraintExpressionBase
@@ -31,7 +31,6 @@ namespace TCLite.Framework.Constraints
         public ConstraintExpression(ConstraintBuilder builder)
             : base( builder ) { }
 
-#if NYI
         #region Not
 
         /// <summary>
@@ -54,6 +53,7 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
+#if NYI
         #region All
 
         /// <summary>
@@ -231,6 +231,7 @@ namespace TCLite.Framework.Constraints
         }
 
         #endregion
+#endif
 
         #region Null
 
@@ -268,6 +269,7 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
+#if NYI
         #region Positive
  
         /// <summary>
@@ -333,7 +335,6 @@ namespace TCLite.Framework.Constraints
 
         #region BinarySerializable
 
-#if !NETCF && !SILVERLIGHT
         /// <summary>
         /// Returns a constraint that tests whether an object graph is serializable in binary format.
         /// </summary>
@@ -341,13 +342,11 @@ namespace TCLite.Framework.Constraints
         {
             get { return (BinarySerializableConstraint)this.Append(new BinarySerializableConstraint()); }
         }
-#endif
 
         #endregion
 
         #region XmlSerializable
 
-#if !SILVERLIGHT
         /// <summary>
         /// Returns a constraint that tests whether an object graph is serializable in xml format.
         /// </summary>
@@ -355,9 +354,9 @@ namespace TCLite.Framework.Constraints
         {
             get { return (XmlSerializableConstraint)this.Append(new XmlSerializableConstraint()); }
         }
-#endif
 
         #endregion
+#endif
 
         #region EqualTo
 
@@ -383,6 +382,7 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
+#if NYI
         #region GreaterThan
 
         /// <summary>

@@ -11,6 +11,7 @@ namespace TCLite.Framework.Internal
 {
     public class RandomizerTests
     {
+#if NYI
         [NUnit.Framework.Test]
         public void RandomizersAreUnique()
         {
@@ -80,6 +81,7 @@ namespace TCLite.Framework.Internal
             foreach (object e in enums)
                 Assert.That(e, Is.TypeOf(typeof(AttributeTargets)));
         }
+#endif
 
         [NUnit.Framework.Test]
         public void RandomizersWithSameSeedsReturnSameValues()

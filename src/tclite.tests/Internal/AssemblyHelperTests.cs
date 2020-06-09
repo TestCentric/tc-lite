@@ -18,7 +18,7 @@ namespace TCLite.Framework.Internal
             Assert.That(Path.GetFileName(path), Is.EqualTo("tclite.tests.dll"));
             Assert.That(File.Exists(path));
         }
-
+#if NYI
         //[NUnit.Framework.Test]
         //public void GetPathForType()
         //{
@@ -59,5 +59,6 @@ namespace TCLite.Framework.Internal
             string localPath = AssemblyHelper.GetAssemblyPathFromCodeBase(uri);
             Assert.That(localPath, Is.SamePath(expectedPath));
         }
+#endif
     }
 }

@@ -88,7 +88,7 @@ namespace TCLite.Framework.Internal
             Assert.That(bag["Tag"].Count, Is.EqualTo(1));
             Assert.That(bag.Get("Tag"), Is.EqualTo("ZAPPED"));
         }
-
+#if NYI
         [NUnit.Framework.Test]
         public void XmlIsProducedCorrectly()
         {
@@ -110,7 +110,7 @@ namespace TCLite.Framework.Internal
             Assert.That(props,
                 Is.EquivalentTo(new string[] { "Answer=42", "Tag=bug", "Tag=easy" }));
         }
-
+#endif
         // TODO: Do we need this feature?
         // [Test]
         // public void TestNullPropertyValueIsntAdded()
