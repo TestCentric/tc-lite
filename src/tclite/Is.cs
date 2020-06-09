@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -131,7 +131,6 @@ namespace TCLite.Framework
 
         #region Unique
 
-#if NYI
         /// <summary>
         /// Returns a constraint that tests whether a collection 
         /// contains all unique items.
@@ -140,7 +139,6 @@ namespace TCLite.Framework
         {
             get { return new UniqueItemsConstraint(); }
         }
-#endif
 
         #endregion
 
@@ -193,7 +191,6 @@ namespace TCLite.Framework
 
         #endregion
 
-#if NYI
         #region GreaterThan
 
         /// <summary>
@@ -264,6 +261,7 @@ namespace TCLite.Framework
 
         #endregion
 
+#if NYI
         #region TypeOf
 
         /// <summary>
