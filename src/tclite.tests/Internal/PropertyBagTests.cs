@@ -79,7 +79,6 @@ namespace TCLite.Framework.Internal
             Assert.That(bag.Get("Tag"), Is.EqualTo("ZAPPED"));
         }
 
-#if NYI
         [Test]
         public void XmlIsProducedCorrectly()
         {
@@ -98,9 +97,8 @@ namespace TCLite.Framework.Internal
                 props[i] = $"{name}={value}";
             }
             Assert.That(props,
-                Is.EquivalentTo(new string[] { "Answer=42", "Tag=bug", "Tag=easy" }));
+                Is.EqualTo(new string[] { "Answer=42", "Tag=bug", "Tag=easy" }));
         }
-#endif
 
         private static PropertyBag CreatePropertyBag()
         {

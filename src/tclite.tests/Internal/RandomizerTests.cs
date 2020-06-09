@@ -10,7 +10,7 @@ namespace TCLite.Framework.Internal
 {
     public class RandomizerTests
     {
-#if NYI
+#if NYI // Unique
         [Test]
         public void RandomizersAreUnique()
         {
