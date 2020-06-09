@@ -692,7 +692,6 @@ namespace TCLite.Framework.Constraints
 
         #region Matches
 
-#if !NETCF
         /// <summary>
         /// Returns a constraint that succeeds if the actual
         /// value matches the regular expression supplied as an argument.
@@ -710,7 +709,6 @@ namespace TCLite.Framework.Constraints
         {
             return (RegexConstraint)this.Append(new RegexConstraint(pattern));
         }
-#endif
 
         #endregion
 

@@ -171,17 +171,14 @@ namespace TCLite.Framework.Constraints
                     return ((TimeSpan)expected - (TimeSpan)actual).Duration() <= amount;
             }
 
-#if !NETCF
             if (FirstImplementsIEquatableOfSecond(xType, yType))
                 return InvokeFirstIEquatableEqualsSecond(expected, actual);
             else if (FirstImplementsIEquatableOfSecond(yType, xType))
                 return InvokeFirstIEquatableEqualsSecond(actual, expected);
-#endif
             
             return expected.Equals(actual);
         }
 
-#if !NETCF
         private static bool FirstImplementsIEquatableOfSecond(Type first, Type second)
         {
             Type[] equatableArguments = GetEquatableGenericArguments(first);
@@ -208,7 +205,6 @@ namespace TCLite.Framework.Constraints
 
             return (bool)equals.Invoke(first, new object[] { second });
         }
-#endif
         
         private EqualityAdapter GetExternalComparer(object x, object y)
         {

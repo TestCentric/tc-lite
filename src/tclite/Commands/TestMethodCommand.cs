@@ -74,7 +74,7 @@ namespace TCLite.Framework.Commands
 
         private object RunTestMethod(TestExecutionContext context)
         {
-#if NET_4_5
+#if NYI
             if (MethodHelper.IsAsyncMethod(testMethod.Method))
                 return RunAsyncTestMethod(context);
             //{
@@ -88,7 +88,7 @@ namespace TCLite.Framework.Commands
                 return RunNonAsyncTestMethod(context);
         }
 
-#if NET_4_5
+#if NYI
         private object RunAsyncTestMethod(TestExecutionContext context)
         {
             using (AsyncInvocationRegion region = AsyncInvocationRegion.Create(testMethod.Method))
@@ -112,7 +112,7 @@ namespace TCLite.Framework.Commands
             return Reflect.InvokeMethod(testMethod.Method, context.TestObject, arguments);
         }
 
-#if NET_4_5x
+#if NYI
         private object RunAsyncVoidTestMethod(TestExecutionContext context)
         {
             var previousContext = SynchronizationContext.Current;

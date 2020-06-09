@@ -146,7 +146,6 @@ namespace TCLite.Framework
 
         #region BinarySerializable
 
-#if !NETCF && !SILVERLIGHT
         /// <summary>
         /// Returns a constraint that tests whether an object graph is serializable in binary format.
         /// </summary>
@@ -154,13 +153,11 @@ namespace TCLite.Framework
         {
             get { return new BinarySerializableConstraint(); }
         }
-#endif
 
         #endregion
 
         #region XmlSerializable
 
-#if !SILVERLIGHT
         /// <summary>
         /// Returns a constraint that tests whether an object graph is serializable in xml format.
         /// </summary>
@@ -168,7 +165,6 @@ namespace TCLite.Framework
         {
             get { return new XmlSerializableConstraint(); }
         }
-#endif
 
         #endregion
 #endif
@@ -440,7 +436,6 @@ namespace TCLite.Framework
 
         #region StringMatching
 
-#if !NETCF
         /// <summary>
         /// Returns a constraint that succeeds if the actual
         /// value matches the regular expression supplied as an argument.
@@ -449,7 +444,6 @@ namespace TCLite.Framework
         {
             return new RegexConstraint(pattern);
         }
-#endif
 
         #endregion
 

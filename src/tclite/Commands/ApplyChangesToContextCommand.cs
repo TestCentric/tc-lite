@@ -37,10 +37,9 @@ namespace TCLite.Framework.Commands
             }
             catch (Exception ex)
             {
-#if !NETCF && !SILVERLIGHT
                 if (ex is ThreadAbortException)
                     Thread.ResetAbort();
-#endif
+
                 context.CurrentResult.RecordException(ex);
             }
 

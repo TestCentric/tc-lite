@@ -160,7 +160,7 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for success, false for failure</returns>
         public virtual bool Matches<T>(ActualValueDelegate<T> del)
         {
-#if NET_4_5
+#if NYI
             if (AsyncInvocationRegion.IsAsyncOperation(del))
                 using (var region = AsyncInvocationRegion.Create(del))
                     return Matches(region.WaitForPendingOperationsToComplete(del()));
@@ -327,7 +327,6 @@ namespace TCLite.Framework.Constraints
 
         #region After Modifier
 
-#if !SILVERLIGHT
         /// <summary>
         /// Returns a DelayedConstraint with the specified delay time.
         /// </summary>
@@ -354,7 +353,6 @@ namespace TCLite.Framework.Constraints
                 delayInMilliseconds,
                 pollingInterval);
         }
-#endif
 
         #endregion
 

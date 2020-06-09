@@ -26,7 +26,6 @@ namespace TCLite.Framework
     /// </remarks>
     public abstract partial class Assert
     {
-#if !NETCF
         /// <summary>
         /// The Equals method throws an AssertionException. This is done 
         /// to make sure there is no mistake by calling this function.
@@ -50,7 +49,6 @@ namespace TCLite.Framework
         {
             throw new InvalidOperationException("Assert.ReferenceEquals should not be used for Assertions");
         }
-#endif
 
         /// <summary>
         /// Throws a <see cref="SuccessException"/> with the message and arguments 
