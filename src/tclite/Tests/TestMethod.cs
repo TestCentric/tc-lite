@@ -107,25 +107,25 @@ namespace TCLite.Framework.Tests
             get { return "test-case"; }
         }
 
-        // /// <summary>
-        // /// Creates a test command for use in running this test. 
-        // /// </summary>
-        // /// <returns></returns>
-        // public virtual TestCommand MakeTestCommand()
-        // {
-        //     if (RunState != RunState.Runnable && RunState != RunState.Explicit)
-        //         return new SkipCommand(this);
+        /// <summary>
+        /// Creates a test command for use in running this test. 
+        /// </summary>
+        /// <returns></returns>
+        public virtual TestCommand MakeTestCommand()
+        {
+            if (RunState != RunState.Runnable && RunState != RunState.Explicit)
+                return new SkipCommand(this);
 
-        //     TestCommand command = new TestMethodCommand(this);
+            TestCommand command = new TestMethodCommand(this);
 
-        //     command = ApplyDecoratorsToCommand(command);
+            command = ApplyDecoratorsToCommand(command);
 
-        //     IApplyToContext[] changes = (IApplyToContext[])Method.GetCustomAttributes(typeof(IApplyToContext), true);
-        //     if (changes.Length > 0)
-        //         command = new ApplyChangesToContextCommand(command, changes);
+            IApplyToContext[] changes = (IApplyToContext[])Method.GetCustomAttributes(typeof(IApplyToContext), true);
+            if (changes.Length > 0)
+                command = new ApplyChangesToContextCommand(command, changes);
 
-        //     return command;
-        // }
+            return command;
+        }
 
         /// <summary>
         /// Creates a WorkItem for executing this test.

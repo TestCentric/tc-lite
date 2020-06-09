@@ -5,6 +5,7 @@
 
 using System;
 using System.Threading;
+using TCLite.Framework.Commands;
 using TCLite.Framework.Tests;
 
 namespace TCLite.Framework.WorkItems
@@ -16,11 +17,16 @@ namespace TCLite.Framework.WorkItems
     /// </summary>
     public class SimpleWorkItem : WorkItem
     {
+        private TestCommand _command;
+
         /// <summary>
         /// Construct a simple work item for a test.
         /// </summary>
         /// <param name="test">The test to be executed</param>
-        public SimpleWorkItem(TestMethod test) : base(test) { }
+        public SimpleWorkItem(TestMethod test) : base(test)
+        {
+            _command = test.MakeTestCommand();
+        }
 
         /// <summary>
         /// Method that performs actually performs the work.
@@ -29,7 +35,7 @@ namespace TCLite.Framework.WorkItems
         {
             try
             {
-                //testResult = Test.Run(Context);
+                Result = _command.Execute(Context);
             }
             finally
             {

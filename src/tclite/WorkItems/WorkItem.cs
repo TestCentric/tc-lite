@@ -21,36 +21,16 @@ namespace TCLite.Framework.WorkItems
     /// </summary>
     public abstract class WorkItem
     {
-        // The current state of the WorkItem
-        private WorkItemState _state;
-
-        // The test this WorkItem represents
-        private Test _test;
-
-        /// <summary>
-        /// The result of running the test
-        /// </summary>
-        protected TestResult testResult;
-
-        // The execution context used by this work item
-        private TestExecutionContext _context;
-
-        #region Constructor
-
         /// <summary>
         /// Construct a WorkItem for a particular test.
         /// </summary>
         /// <param name="test">The test that the WorkItem will run</param>
         public WorkItem(Test test)
         {
-            _test = test;
-            testResult = test.MakeTestResult();
-            _state = WorkItemState.Ready;
+            Test = test;
+            Result = test.MakeTestResult();
+            State = WorkItemState.Ready;
         }
-
-        #endregion
-
-        #region Properties and Events
 
         /// <summary>
         /// Event triggered when the item is complete
@@ -60,36 +40,22 @@ namespace TCLite.Framework.WorkItems
         /// <summary>
         /// Gets the current state of the WorkItem
         /// </summary>
-        public WorkItemState State
-        {
-            get { return _state; }
-        }
+        public WorkItemState State { get; private set; }
 
         /// <summary>
         /// The test being executed by the work item
         /// </summary>
-        public Test Test
-        {
-            get { return _test; }
-        }
+        public Test Test { get; }
 
         /// <summary>
         /// The execution context
         /// </summary>
-        protected TestExecutionContext Context
-        {
-            get { return _context; }
-        }
+        protected TestExecutionContext Context { get; private set; }
 
         /// <summary>
         /// The test result
         /// </summary>
-        public TestResult Result
-        {
-            get { return testResult; }
-        }
-
-        #endregion
+        public TestResult Result { get; protected set; }
 
         #region Public Methods
 
@@ -99,10 +65,10 @@ namespace TCLite.Framework.WorkItems
         /// </summary>
         public virtual void Execute(TestExecutionContext context)
         {
-            _context = new TestExecutionContext(context);
+            Context = new TestExecutionContext(context);
 
             // Timeout set at a higher level
-            int timeout = _context.TestCaseTimeout;
+            int timeout = Context.TestCaseTimeout;
 
             // Timeout set on this test
             if (Test.Properties.ContainsKey(PropertyNames.Timeout))
@@ -147,12 +113,12 @@ namespace TCLite.Framework.WorkItems
 
         private void RunTest()
         {
-            _context.CurrentTest = this.Test;
-            _context.CurrentResult = this.Result;
-            _context.Listener.TestStarted(this.Test);
-            _context.StartTime = DateTime.Now;
+            Context.CurrentTest = this.Test;
+            Context.CurrentResult = this.Result;
+            Context.Listener.TestStarted(this.Test);
+            Context.StartTime = DateTime.Now;
 
-            TestExecutionContext.SetCurrentContext(_context);
+            TestExecutionContext.SetCurrentContext(Context);
 
             long startTicks = Stopwatch.GetTimestamp();
 
@@ -166,12 +132,12 @@ namespace TCLite.Framework.WorkItems
                 double seconds = (double)tickCount / Stopwatch.Frequency;
                 Result.Duration = TimeSpan.FromSeconds(seconds);
 
-                Result.AssertCount = _context.AssertCount;
+                Result.AssertCount = Context.AssertCount;
 
-                _context.Listener.TestFinished(Result);
+                Context.Listener.TestFinished(Result);
 
-                _context = _context.Restore();
-                _context.AssertCount += Result.AssertCount;
+                Context = Context.Restore();
+                Context.AssertCount += Result.AssertCount;
             }
         }
 
@@ -190,7 +156,7 @@ namespace TCLite.Framework.WorkItems
         /// </summary>
         protected void WorkItemComplete()
         {
-            _state = WorkItemState.Complete;
+            State = WorkItemState.Complete;
             if (Completed != null)
                 Completed(this, EventArgs.Empty);
         }

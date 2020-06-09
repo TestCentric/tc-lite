@@ -19,18 +19,6 @@ namespace TCLite.Framework
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited=false)]
     public class TestCaseAttribute : DataAttribute, ITestCaseData, ITestCaseSource
     {
-        #region Instance variables
-
-        private object[] arguments;
-        private object expectedResult;
-        private bool hasExpectedResult;
-        private IPropertyBag properties;
-        private RunState runState;
-
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct a TestCaseAttribute with a list of arguments.
         /// This constructor is not CLS-Compliant
@@ -38,12 +26,8 @@ namespace TCLite.Framework
         /// <param name="arguments"></param>
         public TestCaseAttribute(params object[] arguments)
         {
-			this.runState = RunState.Runnable;
-			
-         	if (arguments == null)
-         		this.arguments = new object[] { null };
-         	else
- 	        	this.arguments = arguments;
+			RunState = RunState.Runnable;			
+            Arguments = arguments;
         }
 
         /// <summary>
@@ -52,8 +36,8 @@ namespace TCLite.Framework
         /// <param name="arg"></param>
         public TestCaseAttribute(object arg)
         {
-			this.runState = RunState.Runnable;			
-            this.arguments = new object[] { arg };
+			RunState = RunState.Runnable;			
+            Arguments = new object[] { arg };
         }
 
         /// <summary>
@@ -63,8 +47,8 @@ namespace TCLite.Framework
         /// <param name="arg2"></param>
         public TestCaseAttribute(object arg1, object arg2)
         {
-			this.runState = RunState.Runnable;			
-            this.arguments = new object[] { arg1, arg2 };
+			RunState = RunState.Runnable;			
+            Arguments = new object[] { arg1, arg2 };
         }
 
         /// <summary>
@@ -75,21 +59,14 @@ namespace TCLite.Framework
         /// <param name="arg3"></param>
         public TestCaseAttribute(object arg1, object arg2, object arg3)
         {
-			this.runState = RunState.Runnable;			
-            this.arguments = new object[] { arg1, arg2, arg3 };
+			RunState = RunState.Runnable;			
+            Arguments = new object[] { arg1, arg2, arg3 };
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets the list of arguments to a test case
         /// </summary>
-        public object[] Arguments
-        {
-            get { return arguments; }
-        }
+        public object[] Arguments { get; private set; }
 
         /// <summary>
         /// Gets or sets the expected result.
@@ -97,34 +74,19 @@ namespace TCLite.Framework
         /// <value>The result.</value>
         public object ExpectedResult
         {
-            get { return expectedResult; }
+            get { return _expectedResult; }
             set 
             { 
-                expectedResult = value;
-                hasExpectedResult = true;
+                _expectedResult = value;
+                HasExpectedResult = true;
             }
         }
-
-        /// <summary>
-        /// Gets the expected result (alias for use
-        /// by NUnit 2.6.x runners and for use
-        /// in legacy code. Remove the setter
-        /// after a time.)
-        /// </summary>
-        [Obsolete("Use ExpectedResult")]
-        public object Result
-        {
-            get { return ExpectedResult; }
-            set { ExpectedResult = value; }
-        }
+        private object _expectedResult;
 
         /// <summary>
         /// Returns true if the expected result has been set
         /// </summary>
-        public bool HasExpectedResult
-        {
-            get { return hasExpectedResult; }
-        }
+        public bool HasExpectedResult { get; private set; }
 
         /// <summary>
         /// Gets or sets the description.
@@ -152,8 +114,8 @@ namespace TCLite.Framework
         /// </summary>
         public bool Ignore 
 		{ 
-			get { return this.RunState == RunState.Ignored; }
-			set { this.runState = value ? RunState.Ignored : RunState.Runnable; } 
+			get { return RunState == RunState.Ignored; }
+			set { RunState = value ? RunState.Ignored : RunState.Runnable; } 
 		}
 		
 		/// <summary>
@@ -164,17 +126,14 @@ namespace TCLite.Framework
 		/// </value>
 		public bool Explicit 
 		{ 
-			get { return this.RunState == RunState.Explicit; }
-			set { this.runState = value ? RunState.Explicit : RunState.Runnable; }
+			get { return RunState == RunState.Explicit; }
+			set { RunState = value ? RunState.Explicit : RunState.Runnable; }
 		}
 
 		/// <summary>
 		/// Gets the RunState of this test case.
 		/// </summary>
-		public RunState RunState 
-        {
-            get { return runState; } 
-        }
+		public RunState RunState { get; private set; }
 		
 		/// <summary>
 		/// Gets or sets the reason for not running the test.
@@ -196,7 +155,7 @@ namespace TCLite.Framework
             get { return this.Reason; }
             set
             {
-				this.runState = RunState.Ignored;
+				RunState = RunState.Ignored;
                 this.Reason = value;
             }
         }
@@ -226,18 +185,7 @@ namespace TCLite.Framework
         /// <summary>
         /// NYI
         /// </summary>
-        public IPropertyBag Properties
-        {
-            get
-            {
-                if (properties == null)
-                    properties = new PropertyBag();
-
-                return properties;
-            }
-        }
-
-        #endregion
+        public IPropertyBag Properties { get; } = new PropertyBag();
 
         #region ITestCaseSource Members
 

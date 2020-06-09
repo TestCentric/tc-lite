@@ -18,8 +18,6 @@ namespace TCLite.Framework
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple=true, Inherited=true)]
     public class TestFixtureAttribute : TCLiteAttribute, IApplyToTest
 	{
-		private string description;
-
         private object[] originalArgs;
         private object[] constructorArgs;
         private Type[] typeArgs;
@@ -52,11 +50,7 @@ namespace TCLite.Framework
 		/// <summary>
 		/// Descriptive text for this fixture
 		/// </summary>
-		public string Description
-		{
-			get { return description; }
-			set { description = value; }
-		}
+		public string Description { get; set; }
 
         /// <summary>
         /// The arguments originally provided to the attribute
@@ -171,8 +165,8 @@ namespace TCLite.Framework
         /// <param name="test">The test to modify</param>
         public void ApplyToTest(Test test)
         {
-            if (!test.Properties.ContainsKey(PropertyNames.Description) && description != null)
-                test.Properties.Set(PropertyNames.Description, description);
+            if (!test.Properties.ContainsKey(PropertyNames.Description) && Description != null)
+                test.Properties.Set(PropertyNames.Description, Description);
 			
 			if (category != null)
 				foreach (string cat in category.Split(new char[] { ',' }) )
