@@ -4,6 +4,7 @@
 // ***********************************************************************
 
 using System;
+using TCLite.Runners;
 
 namespace TCLite.Tests
 {
@@ -11,7 +12,7 @@ namespace TCLite.Tests
     {
         static int Main(string[] args)
         {
-            return new NUnitLite.AutoRun().Execute(args);
+            return new TestRunner().Execute(args);
         }
     }
 }

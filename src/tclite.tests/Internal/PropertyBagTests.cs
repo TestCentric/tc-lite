@@ -5,25 +5,15 @@
 
 using System;
 using System.Xml;
-using NUnit.Framework;
 
 namespace TCLite.Framework.Internal
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     public class PropertyBagTests
     {
-        PropertyBag bag;
+        private static readonly PropertyBag bag = CreatePropertyBag();
 
-        [NUnit.Framework.SetUp]
-        public void SetUp()
-        {
-            bag = new PropertyBag();
-            bag.Add("Answer", 42);
-            bag.Add("Tag", "bug");
-            bag.Add("Tag", "easy");
-        }
-
-        [NUnit.Framework.Test]
+        [Test]
         public void IndexGetsListOfValues()
         {
             Assert.That(bag["Answer"].Count, Is.EqualTo(1));
@@ -34,13 +24,13 @@ namespace TCLite.Framework.Internal
             Assert.That(bag["Tag"], Contains.Item("easy"));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void IndexGetsEmptyListIfNameIsNotPresent()
         {
             Assert.That(bag["Level"].Count, Is.EqualTo(0));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void IndexSetsListOfValues()
         {
             bag["Zip"] = new string[] {"junk", "more junk"};
@@ -49,7 +39,7 @@ namespace TCLite.Framework.Internal
             Assert.That(bag["Zip"], Contains.Item("more junk"));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void AllKeysAreListed()
         {
             Assert.That(bag.Keys.Count, Is.EqualTo(2));
@@ -57,7 +47,7 @@ namespace TCLite.Framework.Internal
             Assert.That(bag.Keys, Has.Member("Tag"));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void ContainsKey()
         {
             Assert.That(bag.ContainsKey("Answer"));
@@ -65,14 +55,14 @@ namespace TCLite.Framework.Internal
             Assert.False(bag.ContainsKey("Target"));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void GetReturnsSingleValue()
         {
             Assert.That(bag.Get("Answer"), Is.EqualTo(42));
             Assert.That(bag.Get("Tag"), Is.EqualTo("bug"));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void SetAddsNewSingleValue()
         {
             bag.Set("Zip", "ZAP");
@@ -81,15 +71,16 @@ namespace TCLite.Framework.Internal
             Assert.That(bag.Get("Zip"), Is.EqualTo("ZAP"));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void SetReplacesOldValues()
         {
             bag.Set("Tag", "ZAPPED");
             Assert.That(bag["Tag"].Count, Is.EqualTo(1));
             Assert.That(bag.Get("Tag"), Is.EqualTo("ZAPPED"));
         }
+
 #if NYI
-        [NUnit.Framework.Test]
+        [Test]
         public void XmlIsProducedCorrectly()
         {
             var topNode = bag.ToXml(true);
@@ -106,11 +97,21 @@ namespace TCLite.Framework.Internal
                 var value = node.GetAttribute("value");
                 props[i] = $"{name}={value}";
             }
-
             Assert.That(props,
                 Is.EquivalentTo(new string[] { "Answer=42", "Tag=bug", "Tag=easy" }));
         }
 #endif
+
+        private static PropertyBag CreatePropertyBag()
+        {
+            var bag = new PropertyBag();
+            bag.Add("Answer", 42);
+            bag.Add("Tag", "bug");
+            bag.Add("Tag", "easy");
+
+            return bag;
+        }
+
         // TODO: Do we need this feature?
         // [Test]
         // public void TestNullPropertyValueIsntAdded()

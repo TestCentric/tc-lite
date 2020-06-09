@@ -4,7 +4,6 @@
 // ***********************************************************************
 
 using System;
-using NUnit.Framework;
 
 namespace TCLite.Framework.Internal
 {
@@ -65,19 +64,19 @@ namespace TCLite.Framework.Internal
         // NOTE: Using individual tests rather than test cases 
         // to make the error messages easier to read.
 
-        [NUnit.Framework.Test]
+        [Test]
         public void FilterShortTraceWithAssert()
         {
             Assert.That(StackFilter.Filter(shortTrace_Assert), Is.EqualTo(shortTrace_Result));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void FilterShortTraceWithAssume_Trace1()
         {
             Assert.That(StackFilter.Filter(shortTrace_Assume), Is.EqualTo(shortTrace_Result));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void FilterLongTrace()
         {
             Assert.That(StackFilter.Filter(longTrace), Is.EqualTo(longTrace_Result));

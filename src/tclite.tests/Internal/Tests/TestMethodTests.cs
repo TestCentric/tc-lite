@@ -4,7 +4,6 @@
 // ***********************************************************************
 
 using System.Reflection;
-using NUnit.Framework;
 
 namespace TCLite.Framework.Tests
 {
@@ -12,31 +11,32 @@ namespace TCLite.Framework.Tests
     {
         private TestMethod _testMethod;
 
-        [NUnit.Framework.SetUp]
-        public void CreateTestMethod()
-        {
-            var method = GetType().GetMethod(nameof(MyTestMethod), BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.NotNull(method);
-            _testMethod = new TestMethod(method, null);
-         
-            Assert.NotNull(_testMethod);
-        }
-
-        [NUnit.Framework.Test]
+        [Test]
         public void TestType()
         {
+            CreateTestMethod();
             Assert.That(_testMethod.TestType, Is.EqualTo("TestMethod"));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void MethodName()
         {
+            CreateTestMethod();
             Assert.That(_testMethod.MethodName, Is.EqualTo(nameof(MyTestMethod)));
         }
 
         private void MyTestMethod()
         {
 
+        }
+
+        private void CreateTestMethod()
+        {
+            var method = GetType().GetMethod(nameof(MyTestMethod), BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.NotNull(method);
+            _testMethod = new TestMethod(method, null);
+         
+            Assert.NotNull(_testMethod);
         }
     }
 }

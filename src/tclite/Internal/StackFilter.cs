@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 namespace TCLite.Framework.Internal
 {
     /// <summary>
-    /// StackFilter class is used to remove internal NUnit
+    /// StackFilter class is used to remove internal TCLite
     /// entries from a stack trace so that the resulting
     /// trace provides better information about the test.
     /// </summary>

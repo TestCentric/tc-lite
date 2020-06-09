@@ -172,7 +172,7 @@ namespace TCLite.Framework.Tests
 		/// A dictionary of properties, used to add information
 		/// to tests without requiring the class to change.
 		/// </summary>
-		public IPropertyBag Properties { get; } //=> throw new new PropertyBag();
+		public IPropertyBag Properties { get; } = new PropertyBag();
 
         /// <summary>
         /// Returns true if this is a TestSuite

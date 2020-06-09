@@ -22,7 +22,7 @@ namespace TCLite.Framework.Builders
         /// </summary>
         Assembly assembly;
 
-        TCLiteTestFixtureBuilder _builder;
+        TCLiteTestFixtureBuilder _builder = new TCLiteTestFixtureBuilder();
 
         #endregion
 

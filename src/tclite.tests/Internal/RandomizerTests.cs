@@ -5,14 +5,13 @@
 
 using System;
 using System.Reflection;
-using NUnit.Framework;
 
 namespace TCLite.Framework.Internal
 {
     public class RandomizerTests
     {
 #if NYI
-        [NUnit.Framework.Test]
+        [Test]
         public void RandomizersAreUnique()
         {
             int[] values = new int[10];
@@ -22,7 +21,7 @@ namespace TCLite.Framework.Internal
             Assert.That(values, Is.Unique);
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void RandomIntsAreUnique()
         {
             Randomizer r = Randomizer.CreateRandomizer();
@@ -34,7 +33,7 @@ namespace TCLite.Framework.Internal
             Assert.That(values, Is.Unique);
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void RandomDoublesAreUnique()
         {
             Randomizer r = Randomizer.CreateRandomizer();
@@ -46,7 +45,7 @@ namespace TCLite.Framework.Internal
             Assert.That(values, Is.Unique);
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void CanGetArrayOfRandomInts()
         {
             Randomizer r = Randomizer.CreateRandomizer();
@@ -57,7 +56,7 @@ namespace TCLite.Framework.Internal
                 Assert.That(i, Is.InRange(1, 100));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void CanGetArrayOfRandomDoubles()
         {
             Randomizer r = Randomizer.CreateRandomizer();
@@ -71,7 +70,7 @@ namespace TCLite.Framework.Internal
             Assert.That(doubles, Is.Unique);
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void CanGetArrayOfRandomEnums()
         {
             Randomizer r = Randomizer.CreateRandomizer();
@@ -83,7 +82,7 @@ namespace TCLite.Framework.Internal
         }
 #endif
 
-        [NUnit.Framework.Test]
+        [Test]
         public void RandomizersWithSameSeedsReturnSameValues()
         {
             Randomizer r1 = new Randomizer(1234);
@@ -93,7 +92,7 @@ namespace TCLite.Framework.Internal
                 Assert.That(r1.NextDouble(), Is.EqualTo(r2.NextDouble()));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void RandomizersWithDifferentSeedsReturnDifferentValues()
         {
             Randomizer r1 = new Randomizer(1234);
@@ -103,7 +102,7 @@ namespace TCLite.Framework.Internal
                 Assert.That(r1.NextDouble(), Is.Not.EqualTo(r2.NextDouble()));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void ReturnsSameRandomizerForSameParameter()
         {
             ParameterInfo p = testMethod1.GetParameters()[0];
@@ -112,7 +111,7 @@ namespace TCLite.Framework.Internal
             Assert.That(r1, Is.SameAs(r2));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void ReturnsSameRandomizerForDifferentParametersOfSameMethod()
         {
             ParameterInfo p1 = testMethod1.GetParameters()[0];
@@ -122,7 +121,7 @@ namespace TCLite.Framework.Internal
             Assert.That(r1, Is.SameAs(r2));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void ReturnsSameRandomizerForSameMethod()
         {
             Randomizer r1 = Randomizer.GetRandomizer(testMethod1);
@@ -130,7 +129,7 @@ namespace TCLite.Framework.Internal
             Assert.That(r1, Is.SameAs(r2));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void ReturnsDifferentRandomizersForDifferentMethods()
         {
             Randomizer r1 = Randomizer.GetRandomizer(testMethod1);

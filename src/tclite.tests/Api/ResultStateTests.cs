@@ -3,14 +3,12 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using NUnit.Framework;
-
 namespace TCLite.Framework.Api
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     public class ResultStateTests
     {
-        [NUnit.Framework.Test]
+        [Test]
         public void ConstructWithOneArgument([Values]TestStatus status)
         {
             ResultState resultState = new ResultState(status);
@@ -19,10 +17,10 @@ namespace TCLite.Framework.Api
             Assert.AreEqual(string.Empty, resultState.Label);
         }
 
-        [NUnit.Framework.TestCase(TestStatus.Failed, "Error")]
-        [NUnit.Framework.TestCase(TestStatus.Failed, "Invalid")]
-        [NUnit.Framework.TestCase(TestStatus.Skipped, "Ignored")]
-        [NUnit.Framework.TestCase(TestStatus.Skipped, "Explicit")]
+        [TestCase(TestStatus.Failed, "Error")]
+        [TestCase(TestStatus.Failed, "Invalid")]
+        [TestCase(TestStatus.Skipped, "Ignored")]
+        [TestCase(TestStatus.Skipped, "Explicit")]
         public void ConstructWithTwoArguments(TestStatus status, string label)
         {
             ResultState resultState = new ResultState(status, label);
@@ -31,7 +29,7 @@ namespace TCLite.Framework.Api
             Assert.AreEqual(label, resultState.Label);
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void ConstructorWithNullLabel([Values]TestStatus status)
         {
             ResultState resultState = new ResultState(status, null);
@@ -40,7 +38,7 @@ namespace TCLite.Framework.Api
             Assert.AreEqual(string.Empty, resultState.Label);
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void ConstructWithEmptyLabel([Values]TestStatus status)
         {
             ResultState resultState = new ResultState(status, string.Empty);
@@ -49,10 +47,10 @@ namespace TCLite.Framework.Api
             Assert.AreEqual(string.Empty, resultState.Label);
         }
 
-        [NUnit.Framework.TestCase(TestStatus.Skipped, null, "Skipped")]
-        [NUnit.Framework.TestCase(TestStatus.Passed, "", "Passed")]
-        [NUnit.Framework.TestCase(TestStatus.Failed, "Error", "Failed:Error")]
-        [NUnit.Framework.TestCase(TestStatus.Skipped, "Ignored", "Skipped:Ignored")]
+        [TestCase(TestStatus.Skipped, null, "Skipped")]
+        [TestCase(TestStatus.Passed, "", "Passed")]
+        [TestCase(TestStatus.Failed, "Error", "Failed:Error")]
+        [TestCase(TestStatus.Skipped, "Ignored", "Skipped:Ignored")]
         public void ToStringTest(TestStatus status, string label, string expected)
         {
             ResultState resultState = new ResultState(status, label);
@@ -62,31 +60,31 @@ namespace TCLite.Framework.Api
 
         #region EqualityTests
 
-        [NUnit.Framework.Test]
+        [Test]
         public void TestEquality_StatusSpecified()
         {
             Assert.AreEqual(new ResultState(TestStatus.Failed), new ResultState(TestStatus.Failed));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void TestEquality_StatusAndLabelSpecified()
         {
             Assert.AreEqual(new ResultState(TestStatus.Skipped, "Ignored"), new ResultState(TestStatus.Skipped, "Ignored"));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void TestEquality_StatusDiffers()
         {
             Assert.AreNotEqual(new ResultState(TestStatus.Passed), new ResultState(TestStatus.Failed));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void TestEquality_LabelDiffers()
         {
             Assert.AreNotEqual(new ResultState(TestStatus.Failed, "Error"), new ResultState(TestStatus.Failed));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void TestEquality_WrongType()
         {
             var rs = new ResultState(TestStatus.Passed);
@@ -97,7 +95,7 @@ namespace TCLite.Framework.Api
             Assert.False(rs.Equals(s));
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void TestEquality_Null()
         {
             var rs = new ResultState(TestStatus.Passed);
@@ -110,7 +108,7 @@ namespace TCLite.Framework.Api
 
         #region Test Static Fields with standard ResultStates
 
-        [NUnit.Framework.Test]
+        [Test]
         public void Inconclusive_ReturnsResultStateWithPropertiesCorrectlySet()
         {
             ResultState resultState = ResultState.Inconclusive;
@@ -119,7 +117,7 @@ namespace TCLite.Framework.Api
             Assert.AreEqual(string.Empty, resultState.Label, "Label not correct.");
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void NotRunnable_ReturnsResultStateWithPropertiesCorrectlySet()
         {
             ResultState resultState = ResultState.NotRunnable;
@@ -128,7 +126,7 @@ namespace TCLite.Framework.Api
             Assert.AreEqual("Invalid", resultState.Label, "Label not correct.");
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void Skipped_ReturnsResultStateWithPropertiesCorrectlySet()
         {
             ResultState resultState = ResultState.Skipped;
@@ -137,7 +135,7 @@ namespace TCLite.Framework.Api
             Assert.AreEqual(string.Empty, resultState.Label, "Label not correct.");
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void Ignored_ReturnsResultStateWithPropertiesCorrectlySet()
         {
             ResultState resultState = ResultState.Ignored;
@@ -146,7 +144,7 @@ namespace TCLite.Framework.Api
             Assert.AreEqual("Ignored", resultState.Label, "Label not correct.");
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void Success_ReturnsResultStateWithPropertiesCorrectlySet()
         {
             ResultState resultState = ResultState.Success;
@@ -155,7 +153,7 @@ namespace TCLite.Framework.Api
             Assert.AreEqual(string.Empty, resultState.Label, "Label not correct.");
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void Warning_ReturnsResultStateWithPropertiesCorrectlySet()
         {
             ResultState resultState = ResultState.Warning;
@@ -164,7 +162,7 @@ namespace TCLite.Framework.Api
             Assert.AreEqual(string.Empty, resultState.Label, "Label not correct.");
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void Failure_ReturnsResultStateWithPropertiesCorrectlySet()
         {
             ResultState resultState = ResultState.Failure;
@@ -173,7 +171,7 @@ namespace TCLite.Framework.Api
             Assert.AreEqual(string.Empty, resultState.Label, "Label not correct.");
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void Error_ReturnsResultStateWithPropertiesCorrectlySet()
         {
             ResultState resultState = ResultState.Error;
@@ -182,7 +180,7 @@ namespace TCLite.Framework.Api
             Assert.AreEqual("Error", resultState.Label, "Label not correct.");
         }
 
-        [NUnit.Framework.Test]
+        [Test]
         public void Cancelled_ReturnsResultStateWithPropertiesCorrectlySet()
         {
             ResultState resultState = ResultState.Cancelled;
