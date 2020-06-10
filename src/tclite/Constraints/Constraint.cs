@@ -105,7 +105,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public abstract bool Matches(object actual);
+        public abstract bool Matches<T>(T actual);
 
         /// <summary>
         /// Test whether the constraint is satisfied by an

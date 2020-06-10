@@ -41,7 +41,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">A delegate representing the code to be tested</param>
         /// <returns>True if an exception is thrown and the constraint succeeds, otherwise false</returns>
-        public override bool Matches(object actual)
+        public override bool Matches<T>(T actual)
         {
             _caughtException = ExceptionInterceptor.Intercept(actual);
 

@@ -47,7 +47,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for if the base constraint fails, false if it succeeds</returns>
-        public override bool Matches(object actual)
+        public override bool Matches<T>(T actual)
         {
             int remainingDelay = _delayInMilliseconds;
 

@@ -20,7 +20,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True if no exception is thrown, otherwise false</returns>
-        public override bool Matches(object actual)
+        public override bool Matches<T>(T actual)
         {
             _caughtException = ExceptionInterceptor.Intercept(actual);
 
