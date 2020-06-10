@@ -41,7 +41,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">A delegate representing the code to be tested</param>
         /// <returns>True if an exception is thrown and the constraint succeeds, otherwise false</returns>
-        public override bool Matches<T>(T actual)
+        public override bool Matches<TActual>(TActual actual)
         {
             _caughtException = ExceptionInterceptor.Intercept(actual);
 
@@ -55,9 +55,9 @@ namespace TCLite.Framework.Constraints
         /// Converts an ActualValueDelegate to a TestDelegate
         /// before calling the primary overload.
         /// </summary>
-        public override bool Matches<T>(ActualValueDelegate<T> del)
+        public override bool Matches<TActual>(ActualValueDelegate<TActual> del)
         {
-            return Matches(new GenericInvocationDescriptor<T>(del));
+            return Matches(new GenericInvocationDescriptor<TActual>(del));
         }
 
         /// <summary>

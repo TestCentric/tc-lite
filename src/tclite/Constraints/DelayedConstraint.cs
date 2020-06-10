@@ -47,7 +47,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for if the base constraint fails, false if it succeeds</returns>
-        public override bool Matches<T>(T actual)
+        public override bool Matches<TActual>(TActual actual)
         {
             int remainingDelay = _delayInMilliseconds;
 
@@ -71,7 +71,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="del">The delegate whose value is to be tested</param>
         /// <returns>True for if the base constraint fails, false if it succeeds</returns>
-        public override bool Matches<T>(ActualValueDelegate<T> del)
+        public override bool Matches<TActual>(ActualValueDelegate<TActual> del)
         {
             int remainingDelay = _delayInMilliseconds;
 
@@ -116,7 +116,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">A reference to the value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public override bool Matches<T>(ref T actual)
+        public override bool Matches<TActual>(ref TActual actual)
         {
             int remainingDelay = _delayInMilliseconds;
 

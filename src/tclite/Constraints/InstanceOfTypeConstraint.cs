@@ -28,7 +28,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The object to be tested</param>
         /// <returns>True if the object is of the provided type or derives from it, otherwise false.</returns>
-        public override bool Matches<T>(T actual)
+        public override bool Matches<TActual>(TActual actual)
         {
             ActualValue = actual;
             return actual != null && ExpectedType.IsInstanceOfType(actual);

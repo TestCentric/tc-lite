@@ -23,7 +23,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The actual value</param>
         /// <returns>True if either constraint succeeded</returns>
-        public override bool Matches<T>(T actual)
+        public override bool Matches<TActual>(TActual actual)
         {
             ActualValue = actual;
 

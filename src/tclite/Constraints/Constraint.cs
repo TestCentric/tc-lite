@@ -105,7 +105,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public abstract bool Matches<T>(T actual);
+        public abstract bool Matches<TActual>(TActual actual);
 
         /// <summary>
         /// Test whether the constraint is satisfied by an
@@ -116,7 +116,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="del">An <see cref="ActualValueDelegate{T}" /></param>
         /// <returns>True for success, false for failure</returns>
-        public virtual bool Matches<T>(ActualValueDelegate<T> del)
+        public virtual bool Matches<TActual>(ActualValueDelegate<TActual> del)
         {
 #if NYI
             if (AsyncInvocationRegion.IsAsyncOperation(del))
@@ -133,7 +133,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">A reference to the value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public virtual bool Matches<T>(ref T actual)
+        public virtual bool Matches<TActual>(ref TActual actual)
         {
             return Matches(actual);
         }

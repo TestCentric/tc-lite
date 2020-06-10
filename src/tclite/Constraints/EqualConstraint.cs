@@ -299,7 +299,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public override bool Matches<T>(T actual)
+        public override bool Matches<TActual>(TActual actual)
         {
             ActualValue = actual;
 

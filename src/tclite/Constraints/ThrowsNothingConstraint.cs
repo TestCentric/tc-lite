@@ -20,16 +20,16 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True if no exception is thrown, otherwise false</returns>
-        public override bool Matches<T>(T actual)
+        public override bool Matches<TActual>(TActual actual)
         {
             _caughtException = ExceptionInterceptor.Intercept(actual);
 
             return _caughtException == null;
         }
 
-        public override bool Matches<T>(ActualValueDelegate<T> del)
+        public override bool Matches<TActual>(ActualValueDelegate<TActual> del)
         {
-            return Matches(new GenericInvocationDescriptor<T>(del));
+            return Matches(new GenericInvocationDescriptor<TActual>(del));
         }
 
         /// <summary>
