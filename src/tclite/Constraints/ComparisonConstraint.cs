@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -19,7 +19,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// ComparisonAdapter to be used in making the comparison
         /// </summary>
-        protected ComparisonAdapter comparer = ComparisonAdapter.Default;
+        protected ComparisonAdapter Comparer { get; set; } = ComparisonAdapter.Default;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ComparisonConstraint"/> class.
@@ -36,7 +36,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public ComparisonConstraint Using(IComparer comparer)
         {
-            this.comparer = ComparisonAdapter.For(comparer);
+            Comparer = ComparisonAdapter.For(comparer);
             return this;
         }
 
@@ -45,7 +45,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public ComparisonConstraint Using<T>(IComparer<T> comparer)
         {
-            this.comparer = ComparisonAdapter.For(comparer);
+            Comparer = ComparisonAdapter.For(comparer);
             return this;
         }
 
@@ -54,7 +54,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public ComparisonConstraint Using<T>(Comparison<T> comparer)
         {
-            this.comparer = ComparisonAdapter.For(comparer);
+            Comparer = ComparisonAdapter.For(comparer);
             return this;
         }
     }

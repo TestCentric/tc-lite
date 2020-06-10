@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -14,7 +14,7 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     public class ThrowsConstraint : PrefixConstraint
     {
-        private Exception caughtException;
+        private Exception _caughtException;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ThrowsConstraint"/> class,
@@ -29,7 +29,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public Exception ActualException
         {
-            get { return caughtException; }
+            get { return _caughtException; }
         }
 
         #region Constraint Overrides
@@ -43,12 +43,12 @@ namespace TCLite.Framework.Constraints
         /// <returns>True if an exception is thrown and the constraint succeeds, otherwise false</returns>
         public override bool Matches(object actual)
         {
-            caughtException = ExceptionInterceptor.Intercept(actual);
+            _caughtException = ExceptionInterceptor.Intercept(actual);
 
-            if (caughtException == null)
+            if (_caughtException == null)
                 return false;
 
-            return baseConstraint == null || baseConstraint.Matches(caughtException);
+            return BaseConstraint == null || BaseConstraint.Matches(_caughtException);
         }
 
         /// <summary>
@@ -66,10 +66,10 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The writer on which the description is displayed</param>
         public override void WriteDescriptionTo(MessageWriter writer)
         {
-            if (baseConstraint == null)
+            if (BaseConstraint == null)
                 writer.WritePredicate("an exception");
             else
-                baseConstraint.WriteDescriptionTo(writer);
+                BaseConstraint.WriteDescriptionTo(writer);
         }
 
         /// <summary>
@@ -81,12 +81,12 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The writer on which the actual value is displayed</param>
         public override void WriteActualValueTo(MessageWriter writer)
         {
-            if (caughtException == null)
+            if (_caughtException == null)
                 writer.Write("no exception thrown");
-            else if (baseConstraint != null)
-                baseConstraint.WriteActualValueTo(writer);
+            else if (BaseConstraint != null)
+                BaseConstraint.WriteActualValueTo(writer);
             else
-                writer.WriteActualValue(caughtException);
+                writer.WriteActualValue(_caughtException);
         }
         #endregion
 
@@ -95,7 +95,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         protected override string GetStringRepresentation()
         {
-            if (baseConstraint == null)
+            if (BaseConstraint == null)
                 return "<throws>";
 
             return base.GetStringRepresentation();
@@ -112,7 +112,7 @@ namespace TCLite.Framework.Constraints
         {
             IInvocationDescriptor invocationDescriptor = GetInvocationDescriptor(invocation);
 
-#if NYI
+#if NYI // async
             if (AsyncInvocationRegion.IsAsyncOperation(invocationDescriptor.Delegate))
             {
                 using (AsyncInvocationRegion region = AsyncInvocationRegion.Create(invocationDescriptor.Delegate))

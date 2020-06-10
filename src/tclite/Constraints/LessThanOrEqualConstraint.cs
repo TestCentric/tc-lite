@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -15,7 +15,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// The value against which a comparison is to be made
         /// </summary>
-        private object expected;
+        private object _expected;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:LessThanOrEqualConstraint"/> class.
@@ -24,7 +24,7 @@ namespace TCLite.Framework.Constraints
         public LessThanOrEqualConstraint(object expected)
             : base(expected)
         {
-            this.expected = expected;
+            _expected = expected;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace TCLite.Framework.Constraints
         public override void WriteDescriptionTo(MessageWriter writer)
         {
             writer.WritePredicate("less than or equal to");
-            writer.WriteExpectedValue(expected);
+            writer.WriteExpectedValue(_expected);
         }
 
         /// <summary>
@@ -44,12 +44,12 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for success, false for failure</returns>
         public override bool Matches(object actual)
         {
-            this.actual = actual;
+            ActualValue = actual;
 
-            if (expected == null || actual == null)
+            if (_expected == null || actual == null)
                 throw new ArgumentException("Cannot compare using a null reference");
 
-            return comparer.Compare(actual, expected) <= 0;
+            return Comparer.Compare(actual, _expected) <= 0;
         }
     }
 }

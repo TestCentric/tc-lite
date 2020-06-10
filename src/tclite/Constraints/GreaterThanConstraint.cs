@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -13,19 +13,19 @@ namespace TCLite.Framework.Constraints
     public class GreaterThanConstraint : ComparisonConstraint
     {
         /// <summary>
-        /// The value against which a comparison is to be made
-        /// </summary>
-        private object expected;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="T:GreaterThanConstraint"/> class.
         /// </summary>
         /// <param name="expected">The expected value.</param>
         public GreaterThanConstraint(object expected)
             : base(expected)
         {
-            this.expected = expected;
+            ExpectedValue = expected;
         }
+
+        /// <summary>
+        /// The value against which a comparison is to be made
+        /// </summary>
+        private object ExpectedValue { get; set; }
 
         /// <summary>
         /// Write the constraint description to a MessageWriter
@@ -34,7 +34,7 @@ namespace TCLite.Framework.Constraints
         public override void WriteDescriptionTo(MessageWriter writer)
         {
             writer.WritePredicate("greater than");
-            writer.WriteExpectedValue(expected);
+            writer.WriteExpectedValue(ExpectedValue);
         }
 
         /// <summary>
@@ -44,12 +44,12 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for success, false for failure</returns>
         public override bool Matches(object actual)
         {
-            this.actual = actual;
+            ActualValue = actual;
 
-            if (expected == null || actual == null)
+            if (ExpectedValue == null || actual == null)
                 throw new ArgumentException("Cannot compare using a null reference");
 
-            return comparer.Compare(actual, expected) > 0;
+            return Comparer.Compare(actual, ExpectedValue) > 0;
         }
     }
 }

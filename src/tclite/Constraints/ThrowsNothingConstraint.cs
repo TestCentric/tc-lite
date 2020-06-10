@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -13,7 +13,7 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     public class ThrowsNothingConstraint : Constraint
     {
-        private Exception caughtException;
+        private Exception _caughtException;
 
         /// <summary>
         /// Test whether the constraint is satisfied by a given value
@@ -22,9 +22,9 @@ namespace TCLite.Framework.Constraints
         /// <returns>True if no exception is thrown, otherwise false</returns>
         public override bool Matches(object actual)
         {
-            caughtException = ExceptionInterceptor.Intercept(actual);
+            _caughtException = ExceptionInterceptor.Intercept(actual);
 
-            return caughtException == null;
+            return _caughtException == null;
         }
 
         public override bool Matches<T>(ActualValueDelegate<T> del)
@@ -49,8 +49,8 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The writer on which the actual value is displayed</param>
         public override void WriteActualValueTo(MessageWriter writer)
         {
-            writer.WriteLine($"<{caughtException.GetType().FullName}> ({caughtException.Message})");
-            writer.WriteLine(caughtException.StackTrace);
+            writer.WriteLine($"<{_caughtException.GetType().FullName}> ({_caughtException.Message})");
+            writer.WriteLine(_caughtException.StackTrace);
         }
     }
 }

@@ -1,3 +1,7 @@
+// ***********************************************************************
+// Copyright (c) Charlie Poole and TestCentric contributors.
+// Licensed under the MIT License. See LICENSE in root directory.
+// ***********************************************************************
 
 using System;
 using System.Collections.Generic;
@@ -112,7 +116,7 @@ namespace TCLite.Framework.Constraints
             public void Push(Constraint constraint)
             {
                 stack.Push(constraint);
-                constraint.SetBuilder( this.builder );
+                constraint.Builder = builder;
             }
 
             /// <summary>
@@ -124,7 +128,7 @@ namespace TCLite.Framework.Constraints
             public Constraint Pop()
             {
                 Constraint constraint = (Constraint)stack.Pop();
-                constraint.SetBuilder( null );
+                constraint.Builder = null;
                 return constraint;
             }
         }
@@ -194,7 +198,6 @@ namespace TCLite.Framework.Constraints
 
             constraints.Push(constraint);
             lastPushed = constraint;
-            constraint.SetBuilder( this );
         }
 
         /// <summary>

@@ -1,10 +1,9 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System.Collections;
-//using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.Constraints
 {

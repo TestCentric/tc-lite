@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 namespace TCLite.Framework.Constraints
@@ -25,9 +25,9 @@ namespace TCLite.Framework.Constraints
         /// <returns>True if either constraint succeeded</returns>
         public override bool Matches(object actual)
         {
-            this.actual = actual;
+            ActualValue = actual;
 
-            return left.Matches(actual) || right.Matches(actual);
+            return _left.Matches(actual) || _right.Matches(actual);
         }
 
         /// <summary>
@@ -36,9 +36,9 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The MessageWriter to receive the description</param>
         public override void WriteDescriptionTo(MessageWriter writer)
         {
-            left.WriteDescriptionTo(writer);
+            _left.WriteDescriptionTo(writer);
             writer.WriteConnector("or");
-            right.WriteDescriptionTo(writer);
+            _right.WriteDescriptionTo(writer);
         }
     }
 }

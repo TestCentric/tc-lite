@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -27,7 +27,7 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The MessageWriter to use</param>
         public override void WriteActualValueTo(MessageWriter writer)
         {
-            Exception ex = actual as Exception;
+            Exception ex = ActualValue as Exception;
             base.WriteActualValueTo(writer);
 
             if (ex != null)

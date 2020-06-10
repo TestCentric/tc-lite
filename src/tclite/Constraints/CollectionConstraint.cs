@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -38,7 +38,6 @@ namespace TCLite.Framework.Constraints
             if (collection != null)
                 return collection.Count == 0;
 
-            // NOTE: Ignore unsuppressed warning about o in .NET 1.1 build
             foreach (object o in enumerable)
                 return false;
 
@@ -52,7 +51,7 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for success, false for failure</returns>
         public override bool Matches(object actual)
         {
-            this.actual = actual;
+            ActualValue = actual;
 
             IEnumerable enumerable = actual as IEnumerable;
             if (enumerable == null)

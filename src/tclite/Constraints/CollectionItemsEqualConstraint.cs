@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -16,7 +16,7 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     public abstract class CollectionItemsEqualConstraint : CollectionConstraint
     {
-        private readonly NUnitEqualityComparer comparer = NUnitEqualityComparer.Default;
+        private readonly NUnitEqualityComparer _comparer = NUnitEqualityComparer.Default;
 
         /// <summary>
         /// Construct an empty CollectionConstraint
@@ -38,7 +38,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                comparer.IgnoreCase = true;
+                _comparer.IgnoreCase = true;
                 return this;
             }
         }
@@ -51,7 +51,7 @@ namespace TCLite.Framework.Constraints
         /// <returns>Self.</returns>
         internal CollectionItemsEqualConstraint Using(EqualityAdapter adapter)
         {
-            this.comparer.ExternalComparers.Add(adapter);
+            _comparer.ExternalComparers.Add(adapter);
             return this;
         }
 
@@ -113,7 +113,7 @@ namespace TCLite.Framework.Constraints
         protected bool ItemsEqual(object x, object y)
         {
             Tolerance tolerance = Tolerance.Zero;
-            return comparer.AreEqual(x, y, ref tolerance);
+            return _comparer.AreEqual(x, y, ref tolerance);
         }
 
 #if NYI

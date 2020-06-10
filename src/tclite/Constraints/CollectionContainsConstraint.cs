@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System.Collections;
@@ -13,7 +13,7 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     public class CollectionContainsConstraint : CollectionItemsEqualConstraint
     {
-        private readonly object expected;
+        private readonly object _expected;
 
         /// <summary>
         /// Construct a CollectionContainsConstraint
@@ -22,8 +22,8 @@ namespace TCLite.Framework.Constraints
         public CollectionContainsConstraint(object expected)
             : base(expected)
         {
-            this.expected = expected;
-            this.DisplayName = "contains";
+            _expected = expected;
+            DisplayName = "contains";
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace TCLite.Framework.Constraints
         protected override bool doMatch(IEnumerable actual)
         {
             foreach (object obj in actual)
-                if (ItemsEqual(obj, expected))
+                if (ItemsEqual(obj, _expected))
                     return true;
 
             return false;
@@ -47,7 +47,7 @@ namespace TCLite.Framework.Constraints
         public override void WriteDescriptionTo(MessageWriter writer)
         {
             writer.WritePredicate("collection containing");
-            writer.WriteExpectedValue(expected);
+            writer.WriteExpectedValue(_expected);
         }
     }
 }

@@ -64,14 +64,14 @@ namespace TCLite.Framework.Constraints
 
         class ComparerAdapter : ComparisonAdapter
         {
-            private readonly IComparer comparer;
+            private readonly IComparer _comparer;
 
             /// <summary>
             /// Construct a ComparisonAdapter for an IComparer
             /// </summary>
             public ComparerAdapter(IComparer comparer)
             {
-                this.comparer = comparer;
+                _comparer = comparer;
             }
 
             /// <summary>
@@ -82,7 +82,7 @@ namespace TCLite.Framework.Constraints
             /// <returns></returns>
             public override int Compare(object expected, object actual)
             {
-                return comparer.Compare(expected, actual);
+                return _comparer.Compare(expected, actual);
             }
         }
 
@@ -93,14 +93,14 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         class ComparerAdapter<T> : ComparisonAdapter
         {
-            private readonly IComparer<T> comparer;
+            private readonly IComparer<T> _comparer;
 
             /// <summary>
             /// Construct a ComparisonAdapter for an IComparer&lt;T&gt;
             /// </summary>
             public ComparerAdapter(IComparer<T> comparer)
             {
-                this.comparer = comparer;
+                _comparer = comparer;
             }
 
             /// <summary>
@@ -114,20 +114,20 @@ namespace TCLite.Framework.Constraints
                 if (!typeof(T).IsAssignableFrom(actual.GetType()))
                     throw new ArgumentException("Cannot compare to " + actual.ToString());
 
-                return comparer.Compare((T)expected, (T)actual);
+                return _comparer.Compare((T)expected, (T)actual);
             }
         }
 
         class ComparisonAdapterForComparison<T> : ComparisonAdapter
         {
-            private readonly Comparison<T> comparison;
+            private readonly Comparison<T> _comparison;
 
             /// <summary>
             /// Construct a ComparisonAdapter for a Comparison&lt;T&gt;
             /// </summary>
             public ComparisonAdapterForComparison(Comparison<T> comparer)
             {
-                this.comparison = comparer;
+                _comparison = comparer;
             }
 
             /// <summary>
@@ -141,7 +141,7 @@ namespace TCLite.Framework.Constraints
                 if (!typeof(T).IsAssignableFrom(actual.GetType()))
                     throw new ArgumentException("Cannot compare to " + actual.ToString());
 
-                return comparison.Invoke((T)expected, (T)actual);
+                return _comparison.Invoke((T)expected, (T)actual);
             }
         }
     }

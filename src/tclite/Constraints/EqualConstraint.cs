@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -20,19 +20,19 @@ namespace TCLite.Framework.Constraints
     {
         #region Static and Instance Fields
 
-        private readonly object expected;
+        private readonly object _expected;
 
-        private Tolerance tolerance = Tolerance.Empty;
+        private Tolerance _tolerance = Tolerance.Empty;
 
         /// <summary>
         /// If true, strings in error messages will be clipped
         /// </summary>
-        private bool clipStrings = true;
+        private bool _clipStrings = true;
 
         /// <summary>
         /// NUnitEqualityComparer used to test equality.
         /// </summary>
-        private NUnitEqualityComparer comparer = new NUnitEqualityComparer();
+        private NUnitEqualityComparer _comparer = new NUnitEqualityComparer();
 
         #region Message Strings
         private static readonly string StringsDiffer_1 =
@@ -62,7 +62,7 @@ namespace TCLite.Framework.Constraints
         /// <param name="expected">The expected value.</param>
         public EqualConstraint(object expected) : base(expected)
         {
-            this.expected = expected;
+            _expected = expected;
         }
         #endregion
 
@@ -74,7 +74,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                comparer.IgnoreCase = true;
+                _comparer.IgnoreCase = true;
                 return this;
             }
         }
@@ -87,7 +87,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                clipStrings = false;
+                _clipStrings = false;
                 return this;
             }
         }
@@ -100,7 +100,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                comparer.CompareAsCollection = true;
+                _comparer.CompareAsCollection = true;
                 return this;
             }
         }
@@ -112,10 +112,10 @@ namespace TCLite.Framework.Constraints
         /// <returns>Self.</returns>
         public EqualConstraint Within(object amount)
         {
-            if (!tolerance.IsEmpty)
+            if (!_tolerance.IsEmpty)
                 throw new InvalidOperationException("Within modifier may appear only once in a constraint expression");
 
-            tolerance = new Tolerance(amount);
+            _tolerance = new Tolerance(amount);
             return this;
         }
 
@@ -137,7 +137,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                tolerance = tolerance.Ulps;
+                _tolerance = _tolerance.Ulps;
                 return this;
             }
         }
@@ -152,7 +152,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                tolerance = tolerance.Percent;
+                _tolerance = _tolerance.Percent;
                 return this;
             }
         }
@@ -165,7 +165,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                tolerance = tolerance.Days;
+                _tolerance = _tolerance.Days;
                 return this;
             }
         }
@@ -178,7 +178,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                tolerance = tolerance.Hours;
+                _tolerance = _tolerance.Hours;
                 return this;
             }
         }
@@ -191,7 +191,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                tolerance = tolerance.Minutes;
+                _tolerance = _tolerance.Minutes;
                 return this;
             }
         }
@@ -204,7 +204,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                tolerance = tolerance.Seconds;
+                _tolerance = _tolerance.Seconds;
                 return this;
             }
         }
@@ -217,7 +217,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                tolerance = tolerance.Milliseconds;
+                _tolerance = _tolerance.Milliseconds;
                 return this;
             }
         }
@@ -230,7 +230,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                tolerance = tolerance.Ticks;
+                _tolerance = _tolerance.Ticks;
                 return this;
             }
         }
@@ -242,7 +242,7 @@ namespace TCLite.Framework.Constraints
         /// <returns>Self.</returns>
         public EqualConstraint Using(IComparer comparer)
         {
-            this.comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
+            _comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
             return this;
         }
 
@@ -253,7 +253,7 @@ namespace TCLite.Framework.Constraints
         /// <returns>Self.</returns>
         public EqualConstraint Using<T>(IComparer<T> comparer)
         {
-            this.comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
+            _comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
             return this;
         }
 
@@ -264,7 +264,7 @@ namespace TCLite.Framework.Constraints
         /// <returns>Self.</returns>
         public EqualConstraint Using<T>(Comparison<T> comparer)
         {
-            this.comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
+            _comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
             return this;
         }
 
@@ -275,7 +275,7 @@ namespace TCLite.Framework.Constraints
         /// <returns>Self.</returns>
         public EqualConstraint Using(IEqualityComparer comparer)
         {
-            this.comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
+            _comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
             return this;
         }
 
@@ -286,7 +286,7 @@ namespace TCLite.Framework.Constraints
         /// <returns>Self.</returns>
         public EqualConstraint Using<T>(IEqualityComparer<T> comparer)
         {
-            this.comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
+            _comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
             return this;
         }
 
@@ -301,9 +301,9 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for success, false for failure</returns>
         public override bool Matches(object actual)
         {
-            this.actual = actual;
+            ActualValue = actual;
 
-            return comparer.AreEqual(expected, actual, ref tolerance);
+            return _comparer.AreEqual(_expected, actual, ref _tolerance);
         }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The MessageWriter to write to</param>
         public override void WriteMessageTo(MessageWriter writer)
         {
-            DisplayDifferences(writer, expected, actual, 0);
+            DisplayDifferences(writer, _expected, ActualValue, 0);
         }
 
 
@@ -323,17 +323,17 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The MessageWriter to write to</param>
         public override void WriteDescriptionTo(MessageWriter writer)
         {
-            writer.WriteExpectedValue(expected);
+            writer.WriteExpectedValue(_expected);
 
-            if (tolerance != null && !tolerance.IsEmpty)
+            if (_tolerance != null && !_tolerance.IsEmpty)
             {
                 writer.WriteConnector("+/-");
-                writer.WriteExpectedValue(tolerance.Value);
-                if (tolerance.Mode != ToleranceMode.Linear)
-                    writer.Write(" {0}", tolerance.Mode);
+                writer.WriteExpectedValue(_tolerance.Value);
+                if (_tolerance.Mode != ToleranceMode.Linear)
+                    writer.Write(" {0}", _tolerance.Mode);
             }
 
-            if (comparer.IgnoreCase)
+            if (_comparer.IgnoreCase)
                 writer.WriteModifier("ignoring case");
         }
 
@@ -347,8 +347,8 @@ namespace TCLite.Framework.Constraints
 				DisplayEnumerableDifferences(writer, (IEnumerable)expected, (IEnumerable)actual, depth);
             else if (expected is Stream && actual is Stream)
                 DisplayStreamDifferences(writer, (Stream)expected, (Stream)actual, depth);
-            else if (tolerance != null)
-                writer.DisplayDifferences(expected, actual, tolerance);
+            else if (_tolerance != null)
+                writer.DisplayDifferences(expected, actual, _tolerance);
             else
                 writer.DisplayDifferences(expected, actual);
         }
@@ -357,14 +357,14 @@ namespace TCLite.Framework.Constraints
         #region DisplayStringDifferences
         private void DisplayStringDifferences(MessageWriter writer, string expected, string actual)
         {
-            int mismatch = MsgUtils.FindMismatchPosition(expected, actual, 0, comparer.IgnoreCase);
+            int mismatch = MsgUtils.FindMismatchPosition(expected, actual, 0, _comparer.IgnoreCase);
 
             if (expected.Length == actual.Length)
                 writer.WriteMessageLine(StringsDiffer_1, expected.Length, mismatch);
             else
                 writer.WriteMessageLine(StringsDiffer_2, expected.Length, actual.Length, mismatch);
 
-            writer.DisplayStringDifferences(expected, actual, mismatch, comparer.IgnoreCase, clipStrings);
+            writer.DisplayStringDifferences(expected, actual, mismatch, _comparer.IgnoreCase, _clipStrings);
         }
         #endregion
 
@@ -373,7 +373,7 @@ namespace TCLite.Framework.Constraints
         {
             if (expected.Length == actual.Length)
             {
-                FailurePoint fp = (FailurePoint)comparer.FailurePoints[depth];
+                FailurePoint fp = (FailurePoint)_comparer.FailurePoints[depth];
                 long offset = fp.Position;
                 writer.WriteMessageLine(StreamsDiffer_1, expected.Length, offset);
             }
@@ -394,9 +394,9 @@ namespace TCLite.Framework.Constraints
         {
             DisplayTypesAndSizes(writer, expected, actual, depth);
 
-            if (comparer.FailurePoints.Count > depth)
+            if (_comparer.FailurePoints.Count > depth)
             {
-                FailurePoint failurePoint = (FailurePoint)comparer.FailurePoints[depth];
+                FailurePoint failurePoint = (FailurePoint)_comparer.FailurePoints[depth];
 
                 DisplayFailurePoint(writer, expected, actual, failurePoint, depth);
 
@@ -513,9 +513,9 @@ namespace TCLite.Framework.Constraints
         {
             DisplayTypesAndSizes(writer, expected, actual, depth);
  
-            if (comparer.FailurePoints.Count > depth)
+            if (_comparer.FailurePoints.Count > depth)
             {
-                FailurePoint failurePoint = (FailurePoint)comparer.FailurePoints[depth];
+                FailurePoint failurePoint = (FailurePoint)_comparer.FailurePoints[depth];
  
                 DisplayFailurePoint(writer, expected, actual, failurePoint, depth);
  

@@ -1,10 +1,9 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System.Collections;
-//using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.Constraints
 {
@@ -15,58 +14,19 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     public abstract class Constraint : IResolveConstraint
     {
-        #region UnsetObject Class
-        /// <summary>
-        /// Class used to detect any derived constraints
-        /// that fail to set the actual value in their
-        /// Matches override.
-        /// </summary>
-        private class UnsetObject
-        {
-            public override string ToString()
-            {
-                return "UNSET";
-            }
-        }
-        #endregion
-
-        #region Static and Instance Fields
-        /// <summary>
-        /// Static UnsetObject used to detect derived constraints
-        /// failing to set the actual value.
-        /// </summary>
-        protected static object UNSET = new UnsetObject();
-
-        /// <summary>
-        /// The actual value being tested against a constraint
-        /// </summary>
-        protected object actual = UNSET;
-
-        /// <summary>
-        /// The display name of this Constraint for use by ToString()
-        /// </summary>
-        private string displayName;
-
         /// <summary>
         /// Argument fields used by ToString();
         /// </summary>
-        private readonly int argcnt;
-        private readonly object arg1;
-        private readonly object arg2;
+        private readonly int _argcnt;
+        private readonly object _arg1;
+        private readonly object _arg2;
 
-        /// <summary>
-        /// The builder holding this constraint
-        /// </summary>
-        private ConstraintBuilder builder;
-        #endregion
-
-        #region Constructors
         /// <summary>
         /// Construct a constraint with no arguments
         /// </summary>
         protected Constraint()
         {
-            argcnt = 0;
+            _argcnt = 0;
         }
 
         /// <summary>
@@ -74,8 +34,8 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         protected Constraint(object arg)
         {
-            argcnt = 1;
-            this.arg1 = arg;
+            _argcnt = 1;
+            _arg1 = arg;
         }
 
         /// <summary>
@@ -83,23 +43,11 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         protected Constraint(object arg1, object arg2)
         {
-            argcnt = 2;
-            this.arg1 = arg1;
-            this.arg2 = arg2;
+            _argcnt = 2;
+            _arg1 = arg1;
+            _arg2 = arg2;
         }
-        #endregion
 
-        #region Set Containing ConstraintBuilder
-        /// <summary>
-        /// Sets the ConstraintBuilder holding this constraint
-        /// </summary>
-        internal void SetBuilder(ConstraintBuilder builder)
-        {
-            this.builder = builder;
-        }
-        #endregion
-
-        #region Properties
         /// <summary>
         /// The display name of this Constraint for use by ToString().
         /// The default value is the name of the constraint with
@@ -110,21 +58,31 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                if (displayName == null)
+                if (_displayName == null)
                 {
-                    displayName = this.GetType().Name.ToLower();
-                    if (displayName.EndsWith("`1") || displayName.EndsWith("`2"))
-                        displayName = displayName.Substring(0, displayName.Length - 2);
-                    if (displayName.EndsWith("constraint"))
-                        displayName = displayName.Substring(0, displayName.Length - 10);
+                    _displayName = GetType().Name.ToLower();
+                    if (_displayName.EndsWith("`1") || _displayName.EndsWith("`2"))
+                        _displayName = _displayName.Substring(0, _displayName.Length - 2);
+                    if (_displayName.EndsWith("constraint"))
+                        _displayName = _displayName.Substring(0, _displayName.Length - 10);
                 }
 
-                return displayName;
+                return _displayName;
             }
 
-            set { displayName = value; }
+            set { _displayName = value; }
         }
-        #endregion
+        private string _displayName;
+
+        /// <summary>
+        /// The actual value being tested against a constraint
+        /// </summary>
+        protected object ActualValue { get; set; }
+
+        /// <summary>
+        /// The builder holding this constraint
+        /// </summary>
+        internal ConstraintBuilder Builder { get; set; }
 
         #region Abstract and Virtual Methods
         /// <summary>
@@ -195,7 +153,7 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The writer on which the actual value is displayed</param>
         public virtual void WriteActualValueTo(MessageWriter writer)
         {
-            writer.WriteActualValue(actual);
+            writer.WriteActualValue(ActualValue);
         }
         #endregion
 
@@ -209,7 +167,7 @@ namespace TCLite.Framework.Constraints
         {
             string rep = GetStringRepresentation();
 
-            return this.builder == null ? rep : string.Format("<unresolved {0}>", rep);
+            return Builder == null ? rep : string.Format("<unresolved {0}>", rep);
         }
 
         /// <summary>
@@ -217,15 +175,15 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         protected virtual string GetStringRepresentation()
         {
-            switch (argcnt)
+            switch (_argcnt)
             {
                 default:
                 case 0:
                     return string.Format("<{0}>", DisplayName);
                 case 1:
-                    return string.Format("<{0} {1}>", DisplayName, _displayable(arg1));
+                    return string.Format("<{0} {1}>", DisplayName, _displayable(_arg1));
                 case 2:
-                    return string.Format("<{0} {1} {2}>", DisplayName, _displayable(arg1), _displayable(arg2));
+                    return string.Format("<{0} {1} {2}>", DisplayName, _displayable(_arg1), _displayable(_arg2));
             }
         }
 
@@ -281,16 +239,15 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                ConstraintBuilder builder = this.builder;
-                if (builder == null)
+                if (Builder == null)
                 {
-                    builder = new ConstraintBuilder();
-                    builder.Append(this);
+                    Builder = new ConstraintBuilder();
+                    Builder.Append(this);
                 }
 
-                builder.Append(new AndOperator());
+                Builder.Append(new AndOperator());
 
-                return new ConstraintExpression(builder);
+                return new ConstraintExpression(Builder);
             }
         }
 
@@ -300,7 +257,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public ConstraintExpression With
         {
-            get { return this.And; }
+            get { return And; }
         }
 
         /// <summary>
@@ -311,16 +268,15 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                ConstraintBuilder builder = this.builder;
-                if (builder == null)
+                if (Builder == null)
                 {
-                    builder = new ConstraintBuilder();
-                    builder.Append(this);
+                    Builder = new ConstraintBuilder();
+                    Builder.Append(this);
                 }
 
-                builder.Append(new OrOperator());
+                Builder.Append(new OrOperator());
 
-                return new ConstraintExpression(builder);
+                return new ConstraintExpression(Builder);
             }
         }
         #endregion
@@ -335,7 +291,7 @@ namespace TCLite.Framework.Constraints
         public DelayedConstraint After(int delayInMilliseconds)
         {
             return new DelayedConstraint(
-                builder == null ? this : builder.Resolve(),
+                Builder == null ? this : Builder.Resolve(),
                 delayInMilliseconds);
         }
 
@@ -349,7 +305,7 @@ namespace TCLite.Framework.Constraints
         public DelayedConstraint After(int delayInMilliseconds, int pollingInterval)
         {
             return new DelayedConstraint(
-                builder == null ? this : builder.Resolve(),
+                Builder == null ? this : Builder.Resolve(),
                 delayInMilliseconds,
                 pollingInterval);
         }
@@ -359,7 +315,7 @@ namespace TCLite.Framework.Constraints
         #region IResolveConstraint Members
         Constraint IResolveConstraint.Resolve()
         {
-            return builder == null ? this : builder.Resolve();
+            return Builder == null ? this : Builder.Resolve();
         }
         #endregion
     }

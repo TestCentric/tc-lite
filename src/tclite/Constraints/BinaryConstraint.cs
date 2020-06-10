@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 namespace TCLite.Framework.Constraints
@@ -14,11 +14,11 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// The first constraint being combined
         /// </summary>
-        protected Constraint left;
+        protected Constraint _left;
         /// <summary>
         /// The second constraint being combined
         /// </summary>
-        protected Constraint right;
+        protected Constraint _right;
 
         /// <summary>
         /// Construct a BinaryConstraint from two other constraints
@@ -28,8 +28,8 @@ namespace TCLite.Framework.Constraints
         protected BinaryConstraint(Constraint left, Constraint right)
             : base(left, right)
         {
-            this.left = left;
-            this.right = right;
+            _left = left;
+            _right = right;
         }
     }
 }

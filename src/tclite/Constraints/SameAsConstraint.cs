@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 namespace TCLite.Framework.Constraints
@@ -11,7 +11,7 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     public class SameAsConstraint : Constraint
     {
-        private readonly object expected;
+        private readonly object _expected;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:SameAsConstraint"/> class.
@@ -19,7 +19,7 @@ namespace TCLite.Framework.Constraints
         /// <param name="expected">The expected object.</param>
         public SameAsConstraint(object expected) : base(expected)
         {
-            this.expected = expected;
+            _expected = expected;
         }
 
         /// <summary>
@@ -29,9 +29,9 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for success, false for failure</returns>
         public override bool Matches(object actual)
         {
-            this.actual = actual;
+            ActualValue = actual;
 
-            return ReferenceEquals(expected, actual);
+            return ReferenceEquals(_expected, actual);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace TCLite.Framework.Constraints
         public override void WriteDescriptionTo(MessageWriter writer)
         {
             writer.WritePredicate("same as");
-            writer.WriteExpectedValue(expected);
+            writer.WriteExpectedValue(_expected);
         }
     }
 }

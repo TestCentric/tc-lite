@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 namespace TCLite.Framework.Constraints
@@ -24,8 +24,8 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for if the base constraint fails, false if it succeeds</returns>
         public override bool Matches(object actual)
         {
-            this.actual = actual;
-            return !baseConstraint.Matches(actual);
+            ActualValue = actual;
+            return !BaseConstraint.Matches(actual);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace TCLite.Framework.Constraints
         public override void WriteDescriptionTo(MessageWriter writer)
         {
             writer.WritePredicate("not");
-            baseConstraint.WriteDescriptionTo(writer);
+            BaseConstraint.WriteDescriptionTo(writer);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The writer on which the actual value is displayed</param>
         public override void WriteActualValueTo(MessageWriter writer)
         {
-            baseConstraint.WriteActualValueTo(writer);
+            BaseConstraint.WriteActualValueTo(writer);
         }
     }
 }

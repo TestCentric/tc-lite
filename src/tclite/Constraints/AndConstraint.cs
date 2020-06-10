@@ -1,6 +1,5 @@
 // ***********************************************************************
-// Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Copyright (c) Charlie Poole and TestCentric contributors.// Licensed under the MIT License. See LICENSE.txt in root directory.
 // ***********************************************************************
 
 namespace TCLite.Framework.Constraints
@@ -34,10 +33,10 @@ namespace TCLite.Framework.Constraints
         /// <returns>True if the constraints both succeeded</returns>
         public override bool Matches(object actual)
         {
-            this.actual = actual;
+            ActualValue = actual;
 
-            failurePoint = left.Matches(actual)
-                ? right.Matches(actual)
+            failurePoint = _left.Matches(actual)
+                ? _right.Matches(actual)
                     ? FailurePoint.None
                     : FailurePoint.Right
                 : FailurePoint.Left;
@@ -51,9 +50,9 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The MessageWriter to receive the description</param>
         public override void WriteDescriptionTo(MessageWriter writer)
         {
-            left.WriteDescriptionTo(writer);
+            _left.WriteDescriptionTo(writer);
             writer.WriteConnector("and");
-            right.WriteDescriptionTo(writer);
+            _right.WriteDescriptionTo(writer);
         }
 
         /// <summary>
@@ -68,10 +67,10 @@ namespace TCLite.Framework.Constraints
             switch (failurePoint)
             {
                 case FailurePoint.Left:
-                    left.WriteActualValueTo(writer);
+                    _left.WriteActualValueTo(writer);
                     break;
                 case FailurePoint.Right:
-                    right.WriteActualValueTo(writer);
+                    _right.WriteActualValueTo(writer);
                     break;
                 default:
                     base.WriteActualValueTo(writer);

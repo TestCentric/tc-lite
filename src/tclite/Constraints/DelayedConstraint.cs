@@ -1,11 +1,10 @@
 ﻿// ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
 using System.Threading;
-//using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.Constraints
 {
@@ -14,8 +13,8 @@ namespace TCLite.Framework.Constraints
     ///</summary>
     public class DelayedConstraint : PrefixConstraint
     {
-        private readonly int delayInMilliseconds;
-        private readonly int pollingInterval;
+        private readonly int _delayInMilliseconds;
+        private readonly int _pollingInterval;
 
         ///<summary>
         /// Creates a new DelayedConstraint
@@ -39,8 +38,8 @@ namespace TCLite.Framework.Constraints
             if (delayInMilliseconds < 0)
                 throw new ArgumentException("Cannot check a condition in the past", "delayInMilliseconds");
 
-            this.delayInMilliseconds = delayInMilliseconds;
-            this.pollingInterval = pollingInterval;
+            _delayInMilliseconds = delayInMilliseconds;
+            _pollingInterval = pollingInterval;
         }
 
         /// <summary>
@@ -50,21 +49,21 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for if the base constraint fails, false if it succeeds</returns>
         public override bool Matches(object actual)
         {
-            int remainingDelay = delayInMilliseconds;
+            int remainingDelay = _delayInMilliseconds;
 
-            while (pollingInterval > 0 && pollingInterval < remainingDelay)
+            while (_pollingInterval > 0 && _pollingInterval < remainingDelay)
             {
-                remainingDelay -= pollingInterval;
-                Thread.Sleep(pollingInterval);
-                this.actual = actual;
-                if (baseConstraint.Matches(actual))
+                remainingDelay -= _pollingInterval;
+                Thread.Sleep(_pollingInterval);
+                ActualValue = actual;
+                if (BaseConstraint.Matches(actual))
                     return true;
             }
 
             if (remainingDelay > 0)
                 Thread.Sleep(remainingDelay);
-            this.actual = actual;
-            return baseConstraint.Matches(actual);
+            ActualValue = actual;
+            return BaseConstraint.Matches(actual);
         }
 
         /// <summary>
@@ -74,17 +73,17 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for if the base constraint fails, false if it succeeds</returns>
         public override bool Matches<T>(ActualValueDelegate<T> del)
         {
-            int remainingDelay = delayInMilliseconds;
+            int remainingDelay = _delayInMilliseconds;
 
-            while (pollingInterval > 0 && pollingInterval < remainingDelay)
+            while (_pollingInterval > 0 && _pollingInterval < remainingDelay)
             {
-                remainingDelay -= pollingInterval;
-                Thread.Sleep(pollingInterval);
-                this.actual = InvokeDelegate(del);
+                remainingDelay -= _pollingInterval;
+                Thread.Sleep(_pollingInterval);
+                ActualValue = InvokeDelegate(del);
 				
 				try
 				{
-	                if (baseConstraint.Matches(actual))
+	                if (BaseConstraint.Matches(ActualValue))
 	                    return true;
 				}
 				catch
@@ -95,8 +94,8 @@ namespace TCLite.Framework.Constraints
 
             if (remainingDelay > 0)
                 Thread.Sleep(remainingDelay);
-            this.actual = InvokeDelegate(del);
-            return baseConstraint.Matches(actual);
+            ActualValue = InvokeDelegate(del);
+            return BaseConstraint.Matches(ActualValue);
         }
 
         private static object InvokeDelegate<T>(ActualValueDelegate<T> del)
@@ -119,17 +118,17 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for success, false for failure</returns>
         public override bool Matches<T>(ref T actual)
         {
-            int remainingDelay = delayInMilliseconds;
+            int remainingDelay = _delayInMilliseconds;
 
-            while (pollingInterval > 0 && pollingInterval < remainingDelay)
+            while (_pollingInterval > 0 && _pollingInterval < remainingDelay)
             {
-                remainingDelay -= pollingInterval;
-                Thread.Sleep(pollingInterval);
-                this.actual = actual;
+                remainingDelay -= _pollingInterval;
+                Thread.Sleep(_pollingInterval);
+                ActualValue = actual;
 
                 try
                 {
-                    if (baseConstraint.Matches(actual))
+                    if (BaseConstraint.Matches(actual))
                         return true;
                 }
                 catch (Exception)
@@ -140,8 +139,8 @@ namespace TCLite.Framework.Constraints
 
             if (remainingDelay > 0)
                 Thread.Sleep(remainingDelay);
-            this.actual = actual;
-            return baseConstraint.Matches(actual);
+            ActualValue = actual;
+            return BaseConstraint.Matches(actual);
         }
 
         /// <summary>
@@ -150,8 +149,8 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The writer on which the description is displayed</param>
         public override void WriteDescriptionTo(MessageWriter writer)
         {
-            baseConstraint.WriteDescriptionTo(writer);
-            writer.Write(string.Format(" after {0} millisecond delay", delayInMilliseconds));
+            BaseConstraint.WriteDescriptionTo(writer);
+            writer.Write(string.Format(" after {0} millisecond delay", _delayInMilliseconds));
         }
 
         /// <summary>
@@ -160,7 +159,7 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The writer on which the actual value is displayed</param>
         public override void WriteActualValueTo(MessageWriter writer)
         {
-            baseConstraint.WriteActualValueTo(writer);
+            BaseConstraint.WriteActualValueTo(writer);
         }
 
         /// <summary>
@@ -168,7 +167,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         protected override string GetStringRepresentation()
         {
-            return string.Format("<after {0} {1}>", delayInMilliseconds, baseConstraint);
+            return string.Format("<after {0} {1}>", _delayInMilliseconds, BaseConstraint);
         }
     }
 }

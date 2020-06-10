@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -20,7 +20,7 @@ namespace TCLite.Framework.Constraints
         public InstanceOfTypeConstraint(Type type)
             : base(type)
         {
-            this.DisplayName = "instanceof";
+            DisplayName = "instanceof";
         }
 
         /// <summary>
@@ -30,8 +30,8 @@ namespace TCLite.Framework.Constraints
         /// <returns>True if the object is of the provided type or derives from it, otherwise false.</returns>
         public override bool Matches(object actual)
         {
-            this.actual = actual;
-            return actual != null && expectedType.IsInstanceOfType(actual);
+            ActualValue = actual;
+            return actual != null && ExpectedType.IsInstanceOfType(actual);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace TCLite.Framework.Constraints
         public override void WriteDescriptionTo(MessageWriter writer)
         {
             writer.WritePredicate("instance of");
-            writer.WriteExpectedValue(expectedType);
+            writer.WriteExpectedValue(ExpectedType);
         }
     }
 }
