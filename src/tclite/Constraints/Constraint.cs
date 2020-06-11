@@ -322,6 +322,8 @@ namespace TCLite.Framework.Constraints
 
     public abstract class Constraint<TExpected> : Constraint
     {
+        public Constraint() { }
+
         public Constraint(TExpected arg) : base(arg) { }
 
         public Constraint(TExpected arg1, TExpected arg2) : base(arg1, arg2) { }

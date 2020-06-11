@@ -12,7 +12,7 @@ namespace TCLite.Framework.Constraints
     /// CollectionConstraint is the abstract base class for
     /// constraints that operate on collections.
     /// </summary>
-    public abstract class CollectionConstraint : Constraint
+    public abstract class CollectionConstraint<TExpected> : Constraint<TExpected>
     {
         /// <summary>
         /// Construct an empty CollectionConstraint
@@ -23,7 +23,7 @@ namespace TCLite.Framework.Constraints
         /// Construct a CollectionConstraint
         /// </summary>
         /// <param name="arg"></param>
-        protected CollectionConstraint(object arg) : base(arg) { }
+        protected CollectionConstraint(TExpected arg) : base(arg) { }
 
         /// <summary>
         /// Determines whether the specified enumerable is empty.

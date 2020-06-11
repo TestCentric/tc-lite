@@ -11,18 +11,18 @@ namespace TCLite.Framework.Constraints
     /// CollectionContainsConstraint is used to test whether a collection
     /// contains an expected object as a member.
     /// </summary>
-    public class CollectionContainsConstraint : CollectionItemsEqualConstraint
+    public class CollectionContainsConstraint<TExpected> : CollectionItemsEqualConstraint<TExpected>
     {
-        private readonly object _expected;
+        private readonly TExpected ExpectedValue;
 
         /// <summary>
         /// Construct a CollectionContainsConstraint
         /// </summary>
         /// <param name="expected"></param>
-        public CollectionContainsConstraint(object expected)
+        public CollectionContainsConstraint(TExpected expected)
             : base(expected)
         {
-            _expected = expected;
+            ExpectedValue = expected;
             DisplayName = "contains";
         }
 
@@ -34,7 +34,7 @@ namespace TCLite.Framework.Constraints
         protected override bool doMatch(IEnumerable actual)
         {
             foreach (object obj in actual)
-                if (ItemsEqual(obj, _expected))
+                if (ItemsEqual(obj, ExpectedValue))
                     return true;
 
             return false;
@@ -47,7 +47,7 @@ namespace TCLite.Framework.Constraints
         public override void WriteDescriptionTo(MessageWriter writer)
         {
             writer.WritePredicate("collection containing");
-            writer.WriteExpectedValue(_expected);
+            writer.WriteExpectedValue(ExpectedValue);
         }
     }
 }
