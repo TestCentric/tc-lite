@@ -99,7 +99,8 @@ namespace TCLite.Framework.Constraints
         /// <returns>A ConstraintResult</returns>
         public virtual ConstraintResult ApplyTo<TActual>(TActual actual)
         {
-            return new ConstraintResult(this, ActualValue, Matches(ActualValue));
+            //ActualValue = actual;
+            return new ConstraintResult(this, actual, Matches(actual));
         }
 
         /// <summary>

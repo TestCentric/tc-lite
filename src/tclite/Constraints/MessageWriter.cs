@@ -56,6 +56,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="constraint">The constraint that failed</param>
         public abstract void DisplayDifferences(Constraint constraint);
+        public abstract void DisplayDifferences(ConstraintResult result);
 
         /// <summary>
         /// Display Expected and Actual lines for given values. This

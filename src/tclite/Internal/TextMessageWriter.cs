@@ -119,6 +119,18 @@ namespace TCLite.Framework.Internal
             WriteActualLine(constraint);
         }
 
+        /// <summary>
+        /// Display Expected and Actual lines for a constraint. This
+        /// is called by MessageWriter's default implementation of 
+        /// WriteMessageTo and provides the generic two-line display. 
+        /// </summary>
+        /// <param name="constraint">The constraint that failed</param>
+        public override void DisplayDifferences(ConstraintResult result)
+        {
+            WriteExpectedLine(result);
+            WriteActualLine(result);
+        }
+
 		/// <summary>
 		/// Display Expected and Actual lines for given values. This
 		/// method may be called by constraints that need more control over

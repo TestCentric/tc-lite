@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using TCLite.Framework.Constraints;
@@ -10,26 +10,7 @@ namespace TCLite.Framework
 {
     public abstract partial class Assert
     {
-        /// <summary>
-        /// Apply a constraint to an actual value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// </summary>
-        /// <param name="actual">The actual value to test</param>
-        /// <param name="expression">A Constraint expression to be applied</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        static public void That(object actual, IResolveConstraint expression, string message=null, params object[] args)
-        {
-            Constraint constraint = expression.Resolve();
-
-            IncrementAssertCount();
-            if (!constraint.Matches(actual))
-            {
-                MessageWriter writer = new TextMessageWriter(message, args);
-                constraint.WriteMessageTo(writer);
-                throw new AssertionException(writer.ToString());
-            }
-        }
+        #region Assert.That(bool...)
 
         /// <summary>
         /// Asserts that a condition is true. If the condition is false the method throws
@@ -57,6 +38,32 @@ namespace TCLite.Framework
 
             IncrementAssertCount();
             if (!constraint.Matches(ref actual))
+            {
+                MessageWriter writer = new TextMessageWriter(message, args);
+                constraint.WriteMessageTo(writer);
+                throw new AssertionException(writer.ToString());
+            }
+        }
+
+        #endregion
+
+        #region Assert.That<T>
+
+        /// <summary>
+        /// Apply a constraint to an actual value, succeeding if the constraint
+        /// is satisfied and throwing an assertion exception on failure.
+        /// </summary>
+        /// <param name="actual">The actual value to test</param>
+        /// <param name="expression">A Constraint expression to be applied</param>
+        /// <param name="message">The message that will be displayed on failure</param>
+        /// <param name="args">Arguments to be used in formatting the message</param>
+        static public void That<T>(T actual, IResolveConstraint expression, string message=null, params object[] args)
+        {
+            Constraint constraint = expression.Resolve();
+
+            IncrementAssertCount();
+            var result = constraint.ApplyTo(actual);
+            if (!result.IsSuccess)
             {
                 MessageWriter writer = new TextMessageWriter(message, args);
                 constraint.WriteMessageTo(writer);
@@ -106,6 +113,10 @@ namespace TCLite.Framework
             }
         }
 
+        #endregion
+
+        #region TestDelegate
+
         /// <summary>
         /// Asserts that the code represented by a delegate throws an exception
         /// that satisfies the constraint provided.
@@ -116,5 +127,7 @@ namespace TCLite.Framework
         {
             Assert.That((object)code, constraint, message, args);
         }
+
+        #endregion
     }
 }
