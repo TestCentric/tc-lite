@@ -8,7 +8,7 @@ namespace TCLite.Framework.Constraints
     /// <summary>
     /// FalseConstraint tests that the actual value is false
     /// </summary>
-    public class FalseConstraint : EqualConstraint
+    public class FalseConstraint : EqualConstraint<bool>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:FalseConstraint"/> class.

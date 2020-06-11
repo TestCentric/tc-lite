@@ -16,11 +16,11 @@ namespace TCLite.Framework.Constraints
     /// considered equal if both are null, or if both have the same 
     /// value. NUnit has special semantics for some object types.
     /// </summary>
-    public class EqualConstraint : Constraint
+    public class EqualConstraint<TExpected> : Constraint<TExpected>
     {
         #region Static and Instance Fields
 
-        private readonly object _expected;
+        private readonly TExpected _expected;
 
         private Tolerance _tolerance = Tolerance.Empty;
 
@@ -60,7 +60,7 @@ namespace TCLite.Framework.Constraints
         /// Initializes a new instance of the <see cref="EqualConstraint"/> class.
         /// </summary>
         /// <param name="expected">The expected value.</param>
-        public EqualConstraint(object expected) : base(expected)
+        public EqualConstraint(TExpected expected) : base(expected)
         {
             _expected = expected;
         }
@@ -70,7 +70,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// Flag the constraint to ignore case and return self.
         /// </summary>
-        public EqualConstraint IgnoreCase
+        public EqualConstraint<TExpected> IgnoreCase
         {
             get
             {
@@ -83,7 +83,7 @@ namespace TCLite.Framework.Constraints
         /// Flag the constraint to suppress string clipping 
         /// and return self.
         /// </summary>
-        public EqualConstraint NoClip
+        public EqualConstraint<TExpected> NoClip
         {
             get
             {
@@ -96,7 +96,7 @@ namespace TCLite.Framework.Constraints
         /// Flag the constraint to compare arrays as collections
         /// and return self.
         /// </summary>
-        public EqualConstraint AsCollection
+        public EqualConstraint<TExpected> AsCollection
         {
             get
             {
@@ -110,7 +110,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="amount">Tolerance value to be used</param>
         /// <returns>Self.</returns>
-        public EqualConstraint Within(object amount)
+        public EqualConstraint<TExpected> Within(object amount)
         {
             if (!_tolerance.IsEmpty)
                 throw new InvalidOperationException("Within modifier may appear only once in a constraint expression");
@@ -133,7 +133,7 @@ namespace TCLite.Framework.Constraints
         /// point results instead of fixed tolerances is safer because it will
         /// automatically compensate for the added inaccuracy of larger numbers.
         /// </remarks>
-        public EqualConstraint Ulps
+        public EqualConstraint<TExpected> Ulps
         {
             get
             {
@@ -148,7 +148,7 @@ namespace TCLite.Framework.Constraints
         /// the expected value.
         /// </summary>
         /// <returns>Self</returns>
-        public EqualConstraint Percent
+        public EqualConstraint<TExpected> Percent
         {
             get
             {
@@ -161,7 +161,7 @@ namespace TCLite.Framework.Constraints
         /// Causes the tolerance to be interpreted as a TimeSpan in days.
         /// </summary>
         /// <returns>Self</returns>
-        public EqualConstraint Days
+        public EqualConstraint<TExpected> Days
         {
             get
             {
@@ -174,7 +174,7 @@ namespace TCLite.Framework.Constraints
         /// Causes the tolerance to be interpreted as a TimeSpan in hours.
         /// </summary>
         /// <returns>Self</returns>
-        public EqualConstraint Hours
+        public EqualConstraint<TExpected> Hours
         {
             get
             {
@@ -187,7 +187,7 @@ namespace TCLite.Framework.Constraints
         /// Causes the tolerance to be interpreted as a TimeSpan in minutes.
         /// </summary>
         /// <returns>Self</returns>
-        public EqualConstraint Minutes
+        public EqualConstraint<TExpected> Minutes
         {
             get
             {
@@ -200,7 +200,7 @@ namespace TCLite.Framework.Constraints
         /// Causes the tolerance to be interpreted as a TimeSpan in seconds.
         /// </summary>
         /// <returns>Self</returns>
-        public EqualConstraint Seconds
+        public EqualConstraint<TExpected> Seconds
         {
             get
             {
@@ -213,7 +213,7 @@ namespace TCLite.Framework.Constraints
         /// Causes the tolerance to be interpreted as a TimeSpan in milliseconds.
         /// </summary>
         /// <returns>Self</returns>
-        public EqualConstraint Milliseconds
+        public EqualConstraint<TExpected> Milliseconds
         {
             get
             {
@@ -226,7 +226,7 @@ namespace TCLite.Framework.Constraints
         /// Causes the tolerance to be interpreted as a TimeSpan in clock ticks.
         /// </summary>
         /// <returns>Self</returns>
-        public EqualConstraint Ticks
+        public EqualConstraint<TExpected> Ticks
         {
             get
             {
@@ -240,7 +240,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="comparer">The IComparer object to use.</param>
         /// <returns>Self.</returns>
-        public EqualConstraint Using(IComparer comparer)
+        public EqualConstraint<TExpected> Using(IComparer comparer)
         {
             _comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
             return this;
@@ -251,7 +251,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="comparer">The IComparer object to use.</param>
         /// <returns>Self.</returns>
-        public EqualConstraint Using<T>(IComparer<T> comparer)
+        public EqualConstraint<TExpected> Using<T>(IComparer<T> comparer)
         {
             _comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
             return this;
@@ -262,7 +262,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="comparer">The IComparer object to use.</param>
         /// <returns>Self.</returns>
-        public EqualConstraint Using<T>(Comparison<T> comparer)
+        public EqualConstraint<TExpected> Using<T>(Comparison<T> comparer)
         {
             _comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
             return this;
@@ -273,7 +273,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="comparer">The IComparer object to use.</param>
         /// <returns>Self.</returns>
-        public EqualConstraint Using(IEqualityComparer comparer)
+        public EqualConstraint<TExpected> Using(IEqualityComparer comparer)
         {
             _comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
             return this;
@@ -284,7 +284,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="comparer">The IComparer object to use.</param>
         /// <returns>Self.</returns>
-        public EqualConstraint Using<T>(IEqualityComparer<T> comparer)
+        public EqualConstraint<TExpected> Using<T>(IEqualityComparer<T> comparer)
         {
             _comparer.ExternalComparers.Add(EqualityAdapter.For(comparer));
             return this;

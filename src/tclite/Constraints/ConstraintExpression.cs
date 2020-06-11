@@ -363,9 +363,9 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// Returns a constraint that tests two items for equality
         /// </summary>
-        public EqualConstraint EqualTo(object expected)
+        public EqualConstraint<T> EqualTo<T>(T expected)
         {
-            return (EqualConstraint)this.Append(new EqualConstraint(expected));
+            return (EqualConstraint<T>)Append(new EqualConstraint<T>(expected));
         }
 
         #endregion
@@ -377,7 +377,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public SameAsConstraint SameAs(object expected)
         {
-            return (SameAsConstraint)this.Append(new SameAsConstraint(expected));
+            return (SameAsConstraint)Append(new SameAsConstraint(expected));
         }
 
         #endregion

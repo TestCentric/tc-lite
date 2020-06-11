@@ -16,7 +16,7 @@ namespace TCLite.Framework.Constraints
     {
         public EqualConstraintTests()
         {
-            _constraint = new EqualConstraint(4);
+            _constraint = new EqualConstraint<int>(4);
             _expectedDescription = "4";
             _expectedRepresentation = "<equal 4>";
         }
@@ -30,15 +30,20 @@ namespace TCLite.Framework.Constraints
             new TestCaseData( double.NaN, "NaN" ),
             new TestCaseData( double.PositiveInfinity, "Infinity" ) };
 
-        [TestCase(double.NaN)]
-        [TestCase(double.PositiveInfinity)]
-        [TestCase(double.NegativeInfinity)]
         [TestCase(float.NaN)]
         [TestCase(float.PositiveInfinity)]
         [TestCase(float.NegativeInfinity)]
-        public void CanMatchSpecialFloatingPointValues(object value)
+        public void CanMatchSpecialFloatValues(float value)
         {
-            Assert.That(value, new EqualConstraint(value));
+            Assert.That(value, new EqualConstraint<float>(value));
+        }
+
+        [TestCase(double.NaN)]
+        [TestCase(double.PositiveInfinity)]
+        [TestCase(double.NegativeInfinity)]
+        public void CanMatchSpecialDoubleValues(double value)
+        {
+            Assert.That(value, new EqualConstraint<double>(value));
         }
 
         [Test]
@@ -46,7 +51,7 @@ namespace TCLite.Framework.Constraints
         {
             DateTime expected = new DateTime(2007, 4, 1);
             DateTime actual = new DateTime(2007, 4, 1);
-            Assert.That(actual, new EqualConstraint(expected));
+            Assert.That(actual, new EqualConstraint<DateTime>(expected));
         }
 
         [Test]
@@ -55,7 +60,7 @@ namespace TCLite.Framework.Constraints
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
             DateTime actual = new DateTime(2007, 4, 1, 13, 1, 0);
             TimeSpan tolerance = TimeSpan.FromMinutes(5.0);
-            Assert.That(actual, new EqualConstraint(expected).Within(tolerance));
+            Assert.That(actual, new EqualConstraint<DateTime>(expected).Within(tolerance));
         }
 
         [Test]
@@ -63,7 +68,7 @@ namespace TCLite.Framework.Constraints
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
             DateTime actual = new DateTime(2007, 4, 4, 13, 0, 0);
-            Assert.That(actual, new EqualConstraint(expected).Within(5).Days);
+            Assert.That(actual, new EqualConstraint<DateTime>(expected).Within(5).Days);
         }
 
         [Test]
@@ -71,7 +76,7 @@ namespace TCLite.Framework.Constraints
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
             DateTime actual = new DateTime(2007, 4, 1, 16, 0, 0);
-            Assert.That(actual, new EqualConstraint(expected).Within(5).Hours);
+            Assert.That(actual, new EqualConstraint<DateTime>(expected).Within(5).Hours);
         }
 
         [Test]
@@ -79,7 +84,7 @@ namespace TCLite.Framework.Constraints
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
             DateTime actual = new DateTime(2007, 4, 1, 13, 1, 0);
-            Assert.That(actual, new EqualConstraint(expected).Within(5).Minutes);
+            Assert.That(actual, new EqualConstraint<DateTime>(expected).Within(5).Minutes);
         }
 
         [Test]
@@ -87,7 +92,7 @@ namespace TCLite.Framework.Constraints
         {
             TimeSpan expected = new TimeSpan(10, 0, 0);
             TimeSpan actual = new TimeSpan(10, 2, 30);
-            Assert.That(actual, new EqualConstraint(expected).Within(5).Minutes);
+            Assert.That(actual, new EqualConstraint<TimeSpan>(expected).Within(5).Minutes);
         }
 
         [Test]
@@ -95,7 +100,7 @@ namespace TCLite.Framework.Constraints
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
             DateTime actual = new DateTime(2007, 4, 1, 13, 1, 0);
-            Assert.That(actual, new EqualConstraint(expected).Within(300).Seconds);
+            Assert.That(actual, new EqualConstraint<DateTime>(expected).Within(300).Seconds);
         }
 
         [Test]
@@ -103,7 +108,7 @@ namespace TCLite.Framework.Constraints
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
             DateTime actual = new DateTime(2007, 4, 1, 13, 1, 0);
-            Assert.That(actual, new EqualConstraint(expected).Within(300000).Milliseconds);
+            Assert.That(actual, new EqualConstraint<DateTime>(expected).Within(300000).Milliseconds);
         }
 
         [Test]
@@ -111,7 +116,7 @@ namespace TCLite.Framework.Constraints
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
             DateTime actual = new DateTime(2007, 4, 1, 13, 1, 0);
-            Assert.That(actual, new EqualConstraint(expected).Within(TimeSpan.TicksPerMinute * 5).Ticks);
+            Assert.That(actual, new EqualConstraint<DateTime>(expected).Within(TimeSpan.TicksPerMinute * 5).Ticks);
         }
 
         #region Dictionary Tests
@@ -188,71 +193,71 @@ namespace TCLite.Framework.Constraints
 
         [TestCase(20000000000000004.0)]
         [TestCase(19999999999999996.0)]
-        public void CanMatchDoublesWithUlpTolerance(object value)
+        public void CanMatchDoublesWithUlpTolerance(double value)
         {
-            Assert.That(value, new EqualConstraint(20000000000000000.0).Within(1).Ulps);
+            Assert.That(value, new EqualConstraint<double>(20000000000000000.0).Within(1).Ulps);
         }
 
         [TestCase(20000000000000008.0)]
         [TestCase(19999999999999992.0)]
-        public void FailsOnDoublesOutsideOfUlpTolerance(object value)
+        public void FailsOnDoublesOutsideOfUlpTolerance(double value)
         {
             Assert.Throws<AssertionException>(() =>
             {
-                Assert.That(value, new EqualConstraint(20000000000000000.0).Within(1).Ulps);
+                Assert.That(value, new EqualConstraint<double>(20000000000000000.0).Within(1).Ulps);
             });
         }
 
         [TestCase(19999998.0f)]
         [TestCase(20000002.0f)]
-        public void CanMatchSinglesWithUlpTolerance(object value)
+        public void CanMatchSinglesWithUlpTolerance(float value)
         {
-            Assert.That(value, new EqualConstraint(20000000.0f).Within(1).Ulps);
+            Assert.That(value, new EqualConstraint<float>(20000000.0f).Within(1).Ulps);
         }
 
         [TestCase(19999996.0f)]
         [TestCase(20000004.0f)]
-        public void FailsOnSinglesOutsideOfUlpTolerance(object value)
+        public void FailsOnSinglesOutsideOfUlpTolerance(float value)
         {
             Assert.Throws<AssertionException>(() =>
             {
-                Assert.That(value, new EqualConstraint(20000000.0f).Within(1).Ulps);
+                Assert.That(value, new EqualConstraint<float>(20000000.0f).Within(1).Ulps);
             });
         }
 
         [TestCase(9500.0)]
         [TestCase(10000.0)]
         [TestCase(10500.0)]
-        public void CanMatchDoublesWithRelativeTolerance(object value)
+        public void CanMatchDoublesWithRelativeTolerance(double value)
         {
-            Assert.That(value, new EqualConstraint(10000.0).Within(10.0).Percent);
+            Assert.That(value, new EqualConstraint<double>(10000.0).Within(10.0).Percent);
         }
 
         [TestCase(8500.0)]
         [TestCase(11500.0)]
-        public void FailsOnDoublesOutsideOfRelativeTolerance(object value)
+        public void FailsOnDoublesOutsideOfRelativeTolerance(double value)
         {
             Assert.Throws<AssertionException>(() =>
             {
-                Assert.That(value, new EqualConstraint(10000.0).Within(10.0).Percent);
+                Assert.That(value, new EqualConstraint<double>(10000.0).Within(10.0).Percent);
             });
         }
 
         [TestCase(9500.0f)]
         [TestCase(10000.0f)]
         [TestCase(10500.0f)]
-        public void CanMatchSinglesWithRelativeTolerance(object value)
+        public void CanMatchSinglesWithRelativeTolerance(float value)
         {
-            Assert.That(value, new EqualConstraint(10000.0f).Within(10.0f).Percent);
+            Assert.That(value, new EqualConstraint<float>(10000.0f).Within(10.0f).Percent);
         }
 
         [TestCase(8500.0f)]
         [TestCase(11500.0f)]
-        public void FailsOnSinglesOutsideOfRelativeTolerance(object value)
+        public void FailsOnSinglesOutsideOfRelativeTolerance(float value)
         {
             Assert.Throws<AssertionException>(() =>
             {
-                Assert.That(value, new EqualConstraint(10000.0f).Within(10.0f).Percent);
+                Assert.That(value, new EqualConstraint<float>(10000.0f).Within(10.0f).Percent);
             });
         }
 
@@ -262,7 +267,7 @@ namespace TCLite.Framework.Constraints
         {
             Assert.Throws<InvalidOperationException>(() =>
             {
-                EqualConstraint shouldFail = new EqualConstraint(100.0f).Within(10.0f).Percent.Ulps;
+                EqualConstraint<float> shouldFail = new EqualConstraint<float>(100.0f).Within(10.0f).Percent.Ulps;
             });
         }
 
@@ -272,7 +277,7 @@ namespace TCLite.Framework.Constraints
         {
             Assert.Throws<InvalidOperationException>(() =>
             {
-                EqualConstraint shouldFail = new EqualConstraint(100.0f).Within(10.0f).Ulps.Percent;
+                EqualConstraint<float> shouldFail = new EqualConstraint<float>(100.0f).Within(10.0f).Ulps.Percent;
             });
         }
 

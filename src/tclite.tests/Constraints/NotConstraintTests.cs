@@ -12,7 +12,7 @@ namespace TCLite.Framework.Constraints
     {
         public NotConstraintTests()
         {
-            _constraint = new NotConstraint( new EqualConstraint(null) );
+            _constraint = new NotConstraint( new EqualConstraint<object>(null) );
             _expectedDescription = "not null";
             _expectedRepresentation = "<not <equal null>>";
         }
@@ -26,7 +26,7 @@ namespace TCLite.Framework.Constraints
         {
             var ex = Assert.Throws<AssertionException>(() =>
             {
-                Assert.That("abc", new NotConstraint(new EqualConstraint("ABC").IgnoreCase));
+                Assert.That("abc", new NotConstraint(new EqualConstraint<string>("ABC").IgnoreCase));
             });
 
             Assert.That(ex.Message.Contains("ignoring case"));
@@ -57,7 +57,7 @@ namespace TCLite.Framework.Constraints
         [Test]
         public void CanUseNotOperator()
         {
-            Assert.That(42, !new EqualConstraint(99));
+            Assert.That(42, !new EqualConstraint<int>(99));
         }
     }
 }

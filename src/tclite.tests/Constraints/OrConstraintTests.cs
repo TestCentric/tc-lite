@@ -10,7 +10,7 @@ namespace TCLite.Framework.Constraints.Tests
     {
         public OrConstraintTests()
         {
-            _constraint = new OrConstraint(new EqualConstraint(42), new EqualConstraint(99));
+            _constraint = new OrConstraint(new EqualConstraint<int>(42), new EqualConstraint<int>(99));
             _expectedDescription = "42 or 99";
             _expectedRepresentation = "<or <equal 42> <equal 99>>";
         }
@@ -22,7 +22,7 @@ namespace TCLite.Framework.Constraints.Tests
 		[Test]
         public void CanCombineTestsWithOrOperator()
         {
-            Assert.That(99, new EqualConstraint(42) | new EqualConstraint(99) );
+            Assert.That(99, new EqualConstraint<int>(42) | new EqualConstraint<int>(99) );
         }
     }
 }

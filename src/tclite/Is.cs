@@ -172,9 +172,9 @@ namespace TCLite.Framework
         /// <summary>
         /// Returns a constraint that tests two items for equality
         /// </summary>
-        public static EqualConstraint EqualTo(object expected)
+        public static EqualConstraint<T> EqualTo<T>(T expected)
         {
-            return new EqualConstraint(expected);
+            return new EqualConstraint<T>(expected);
         }
 
         #endregion

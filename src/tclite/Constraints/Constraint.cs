@@ -320,10 +320,10 @@ namespace TCLite.Framework.Constraints
         #endregion
     }
 
-    public abstract class Constraint<T> : Constraint
+    public abstract class Constraint<TExpected> : Constraint
     {
-        public Constraint(T arg) : base(arg) { }
+        public Constraint(TExpected arg) : base(arg) { }
 
-        public Constraint(T arg1, T arg2) : base(arg1, arg2) { }
+        public Constraint(TExpected arg1, TExpected arg2) : base(arg1, arg2) { }
     }
 }
