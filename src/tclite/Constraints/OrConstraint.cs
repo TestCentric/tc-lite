@@ -27,7 +27,7 @@ namespace TCLite.Framework.Constraints
         {
             ActualValue = actual;
 
-            return _left.Matches(actual) || _right.Matches(actual);
+            return Left.Matches(actual) || Right.Matches(actual);
         }
 
         /// <summary>
@@ -36,9 +36,9 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The MessageWriter to receive the description</param>
         public override void WriteDescriptionTo(MessageWriter writer)
         {
-            _left.WriteDescriptionTo(writer);
+            Left.WriteDescriptionTo(writer);
             writer.WriteConnector("or");
-            _right.WriteDescriptionTo(writer);
+            Right.WriteDescriptionTo(writer);
         }
     }
 }

@@ -23,11 +23,11 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         string Description { get; }
 
-        /// <summary>
-        /// Arguments provided to this Constraint, for use in
-        /// formatting the description.
-        /// </summary>
-        object[] Arguments { get; }
+        // /// <summary>
+        // /// Arguments provided to this Constraint, for use in
+        // /// formatting the description.
+        // /// </summary>
+        // object[] Arguments { get; }
 
         /// <summary>
         /// The ConstraintBuilder holding this constraint

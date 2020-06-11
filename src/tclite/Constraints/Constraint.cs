@@ -12,7 +12,7 @@ namespace TCLite.Framework.Constraints
     /// within TCLite. It provides the operator overloads used to combine 
     /// constraints.
     /// </summary>
-    public abstract class Constraint : IResolveConstraint
+    public abstract class Constraint : IConstraint
     {
         /// <summary>
         /// Argument fields used by ToString();
@@ -48,13 +48,15 @@ namespace TCLite.Framework.Constraints
             _arg2 = arg2;
         }
 
+#region IConstraint Implementation
+
         /// <summary>
         /// The display name of this Constraint for use by ToString().
         /// The default value is the name of the constraint with
         /// trailing "Constraint" removed. Derived classes may set
         /// this to another name in their constructors.
         /// </summary>
-        protected string DisplayName
+        public string DisplayName
         {
             get
             {
@@ -75,6 +77,12 @@ namespace TCLite.Framework.Constraints
         private string _displayName;
 
         /// <summary>
+        /// The Description of what this constraint tests, for
+        /// use in messages and in the ConstraintResult.
+        /// </summary>
+        public string Description { get; protected set; } 
+
+        /// <summary>
         /// The actual value being tested against a constraint
         /// </summary>
         protected object ActualValue { get; set; }
@@ -82,7 +90,63 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// The builder holding this constraint
         /// </summary>
-        internal ConstraintBuilder Builder { get; set; }
+        public ConstraintBuilder Builder { get; set; }
+
+        /// <summary>
+        /// Applies the constraint to an actual value, returning a ConstraintResult.
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        public virtual ConstraintResult ApplyTo<TActual>(TActual actual)
+        {
+            return new ConstraintResult(this, ActualValue, Matches(ActualValue));
+        }
+
+        /// <summary>
+        /// Applies the constraint to an ActualValueDelegate that returns
+        /// the value to be tested. The default implementation simply evaluates
+        /// the delegate but derived classes may override it to provide for
+        /// delayed processing.
+        /// </summary>
+        /// <param name="del">An ActualValueDelegate</param>
+        /// <returns>A ConstraintResult</returns>
+        public virtual ConstraintResult ApplyTo<TActual>(ActualValueDelegate<TActual> del)
+        {
+#if NYI // async
+            if (AsyncToSyncAdapter.IsAsyncOperation(del))
+                return ApplyTo(AsyncToSyncAdapter.Await(() => del.Invoke()));
+#endif
+
+            return ApplyTo(GetTestObject(del));
+        }
+
+#pragma warning disable 3006
+        /// <summary>
+        /// Test whether the constraint is satisfied by a given reference.
+        /// The default implementation simply dereferences the value but
+        /// derived classes may override it to provide for delayed processing.
+        /// </summary>
+        /// <param name="actual">A reference to the value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        public virtual ConstraintResult ApplyTo<TActual>(ref TActual actual)
+        {
+            return ApplyTo(actual);
+        }
+#pragma warning restore 3006
+
+        /// <summary>
+        /// Retrieves the value to be tested from an ActualValueDelegate.
+        /// The default implementation simply evaluates the delegate but derived
+        /// classes may override it to provide for delayed processing.
+        /// </summary>
+        /// <param name="del">An ActualValueDelegate</param>
+        /// <returns>Delegate evaluation result</returns>
+        protected virtual object GetTestObject<TActual>(ActualValueDelegate<TActual> del)
+        {
+            return del();
+        }
+
+#endregion
 
         #region Abstract and Virtual Methods
         /// <summary>
@@ -92,7 +156,7 @@ namespace TCLite.Framework.Constraints
         /// then displays the constraint description and the value.
         /// 
         /// Constraints that need to provide additional details,
-        /// such as where the error occured can override this.
+        /// such as where the error occurred can override this.
         /// </summary>
         /// <param name="writer">The MessageWriter on which to display the message</param>
         public virtual void WriteMessageTo(MessageWriter writer)

@@ -14,11 +14,11 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// The first constraint being combined
         /// </summary>
-        protected Constraint _left;
+        protected Constraint Left;
         /// <summary>
         /// The second constraint being combined
         /// </summary>
-        protected Constraint _right;
+        protected Constraint Right;
 
         /// <summary>
         /// Construct a BinaryConstraint from two other constraints
@@ -28,8 +28,11 @@ namespace TCLite.Framework.Constraints
         protected BinaryConstraint(Constraint left, Constraint right)
             : base(left, right)
         {
-            _left = left;
-            _right = right;
+            Guard.ArgumentNotNull(left, nameof(left));
+            Left = left;
+
+            Guard.ArgumentNotNull(right, nameof(right));
+            Right = right;
         }
     }
 }
