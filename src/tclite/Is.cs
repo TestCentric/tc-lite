@@ -184,9 +184,9 @@ namespace TCLite.Framework
         /// <summary>
         /// Returns a constraint that tests that two references are the same object
         /// </summary>
-        public static SameAsConstraint SameAs(object expected)
+        public static SameAsConstraint<T> SameAs<T>(T expected)
         {
-            return new SameAsConstraint(expected);
+            return new SameAsConstraint<T>(expected);
         }
 
         #endregion

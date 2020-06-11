@@ -375,9 +375,9 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// Returns a constraint that tests that two references are the same object
         /// </summary>
-        public SameAsConstraint SameAs(object expected)
+        public SameAsConstraint<T> SameAs<T>(T expected)
         {
-            return (SameAsConstraint)Append(new SameAsConstraint(expected));
+            return (SameAsConstraint<T>)Append(new SameAsConstraint<T>(expected));
         }
 
         #endregion
@@ -391,7 +391,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public GreaterThanConstraint GreaterThan(object expected)
         {
-            return (GreaterThanConstraint)this.Append(new GreaterThanConstraint(expected));
+            return (GreaterThanConstraint)Append(new GreaterThanConstraint(expected));
         }
 
         #endregion

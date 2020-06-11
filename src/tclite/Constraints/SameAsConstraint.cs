@@ -9,17 +9,17 @@ namespace TCLite.Framework.Constraints
     /// SameAsConstraint tests whether an object is identical to
     /// the object passed to its constructor
     /// </summary>
-    public class SameAsConstraint : Constraint
+    public class SameAsConstraint<TExpected> : Constraint<TExpected>
     {
-        private readonly object _expected;
+        private readonly object ExpectedValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:SameAsConstraint"/> class.
         /// </summary>
         /// <param name="expected">The expected object.</param>
-        public SameAsConstraint(object expected) : base(expected)
+        public SameAsConstraint(TExpected expected) : base(expected)
         {
-            _expected = expected;
+            ExpectedValue = expected;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace TCLite.Framework.Constraints
         {
             ActualValue = actual;
 
-            return ReferenceEquals(_expected, actual);
+            return ReferenceEquals(ExpectedValue, actual);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace TCLite.Framework.Constraints
         public override void WriteDescriptionTo(MessageWriter writer)
         {
             writer.WritePredicate("same as");
-            writer.WriteExpectedValue(_expected);
+            writer.WriteExpectedValue(ExpectedValue);
         }
     }
 }
