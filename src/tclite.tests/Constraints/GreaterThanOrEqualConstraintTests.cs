@@ -14,7 +14,7 @@ namespace TCLite.Framework.Constraints
     {
         public GreaterThanOrEqualConstraintTests()
         {
-            _constraint = comparisonConstraint = new GreaterThanOrEqualConstraint(5);
+            _constraint = _comparisonConstraint = new GreaterThanOrEqualConstraint<int>(5);
             _expectedDescription = "greater than or equal to 5";
             _expectedRepresentation = "<greaterthanorequal 5>";
         }

@@ -14,13 +14,13 @@ namespace TCLite.Framework.Constraints
 
     public abstract class ComparisonConstraintTest : ConstraintTestBaseWithArgumentException
     {
-        protected ComparisonConstraint comparisonConstraint;
+        protected ComparisonConstraint<int> _comparisonConstraint;
 
         [Test]
         public void UsesProvidedIComparer()
         {
             SimpleObjectComparer comparer = new SimpleObjectComparer();
-            comparisonConstraint.Using(comparer).Matches(0);
+            _comparisonConstraint.Using(comparer).Matches(0);
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
@@ -28,7 +28,7 @@ namespace TCLite.Framework.Constraints
         public void UsesProvidedComparerOfT()
         {
             MyComparer<int> comparer = new MyComparer<int>();
-            comparisonConstraint.Using(comparer).Matches(0);
+            _comparisonConstraint.Using(comparer).Matches(0);
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
@@ -47,7 +47,7 @@ namespace TCLite.Framework.Constraints
         public void UsesProvidedComparisonOfT()
         {
             MyComparison<int> comparer = new MyComparison<int>();
-            comparisonConstraint.Using(new Comparison<int>(comparer.Compare)).Matches(0);
+            _comparisonConstraint.Using(new Comparison<int>(comparer.Compare)).Matches(0);
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
@@ -67,7 +67,7 @@ namespace TCLite.Framework.Constraints
         public void UsesProvidedLambda()
         {
             Comparison<int> comparer = (x, y) => x.CompareTo(y);
-            comparisonConstraint.Using(comparer).Matches(0);
+            _comparisonConstraint.Using(comparer).Matches(0);
         }
 #endif
     }
@@ -78,18 +78,18 @@ namespace TCLite.Framework.Constraints
 
     class ClassWithIComparable : IComparable
     {
-        private int val;
+        private int _val;
 
         public ClassWithIComparable(int val)
         {
-            this.val = val;
+            _val = val;
         }
 
         public int CompareTo(object x)
         {
             ClassWithIComparable other = x as ClassWithIComparable;
             if (x is ClassWithIComparable)
-                return val.CompareTo(other.val);
+                return _val.CompareTo(other._val);
 
             throw new ArgumentException();
         }
@@ -97,16 +97,16 @@ namespace TCLite.Framework.Constraints
 
     class ClassWithIComparableOfT : IComparable<ClassWithIComparableOfT>
     {
-        private int val;
+        private int _val;
 
         public ClassWithIComparableOfT(int val)
         {
-            this.val = val;
+            _val = val;
         }
 
         public int CompareTo(ClassWithIComparableOfT other)
         {
-            return val.CompareTo(other.val);
+            return _val.CompareTo(other._val);
         }
     }
 
