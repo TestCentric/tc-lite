@@ -39,10 +39,12 @@ namespace TCLite.Framework.Internal
             }
             catch (ThreadStateException)
             {
+#pragma warning disable 618
                 // Although obsolete, this use of Resume() takes care of
                 // the odd case where a ThreadStateException is received
                 // so we continue to use it.
                 thread.Resume();
+#pragma warning restore 618
             }
 
             if ( (thread.ThreadState & ThreadState.WaitSleepJoin) != 0 )

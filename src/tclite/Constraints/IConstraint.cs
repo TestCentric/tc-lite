@@ -23,11 +23,11 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         string Description { get; }
 
-        // /// <summary>
-        // /// Arguments provided to this Constraint, for use in
-        // /// formatting the description.
-        // /// </summary>
-        // object[] Arguments { get; }
+        /// <summary>
+        /// Arguments provided to this Constraint, for use in
+        /// formatting the description.
+        /// </summary>
+        object[] Arguments { get; }
 
         /// <summary>
         /// The ConstraintBuilder holding this constraint
@@ -44,6 +44,15 @@ namespace TCLite.Framework.Constraints
         /// <param name="actual">The value to be tested</param>
         /// <returns>A ConstraintResult</returns>
         ConstraintResult ApplyTo<TActual>(TActual actual);
+
+        /// <summary>
+        /// Applies the constraint to an actual value, returning a ConstraintResult.
+        /// This overload will be selected when (1) the passed value is cast as an 
+        /// object or (2) the argument is null and no Type parameter is specified.
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        ConstraintResult ApplyTo(object actual);
 
         /// <summary>
         /// Applies the constraint to an ActualValueDelegate that returns 

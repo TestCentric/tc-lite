@@ -3,6 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
+using System;
 using System.Collections;
 
 namespace TCLite.Framework.Constraints
@@ -14,41 +15,20 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     public abstract class Constraint : IConstraint
     {
-        /// <summary>
-        /// Argument fields used by ToString();
-        /// </summary>
-        private readonly int _argcnt;
-        private readonly object _arg1;
-        private readonly object _arg2;
+        #region Constructor
 
         /// <summary>
-        /// Construct a constraint with no arguments
+        /// Construct a constraint with optional arguments
         /// </summary>
-        protected Constraint()
+        /// <param name="args">Arguments to be saved</param>
+        protected Constraint(params object[] args)
         {
-            _argcnt = 0;
+            Arguments = args;
         }
 
-        /// <summary>
-        /// Construct a constraint with one argument
-        /// </summary>
-        protected Constraint(object arg)
-        {
-            _argcnt = 1;
-            _arg1 = arg;
-        }
+        #endregion
 
-        /// <summary>
-        /// Construct a constraint with two arguments
-        /// </summary>
-        protected Constraint(object arg1, object arg2)
-        {
-            _argcnt = 2;
-            _arg1 = arg1;
-            _arg2 = arg2;
-        }
-
-#region IConstraint Implementation
+        #region Properties
 
         /// <summary>
         /// The display name of this Constraint for use by ToString().
@@ -56,7 +36,7 @@ namespace TCLite.Framework.Constraints
         /// trailing "Constraint" removed. Derived classes may set
         /// this to another name in their constructors.
         /// </summary>
-        public string DisplayName
+        public virtual string DisplayName
         {
             get
             {
@@ -80,7 +60,13 @@ namespace TCLite.Framework.Constraints
         /// The Description of what this constraint tests, for
         /// use in messages and in the ConstraintResult.
         /// </summary>
-        public string Description { get; protected set; } 
+        public abstract string Description { get; } 
+
+        /// <summary>
+        /// Arguments provided to this Constraint, for use in
+        /// formatting the description.
+        /// </summary>
+        public object[] Arguments { get; }
 
         /// <summary>
         /// The actual value being tested against a constraint
@@ -92,16 +78,25 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public ConstraintBuilder Builder { get; set; }
 
+        #endregion
+
+        #region Abstract and Virtual Methods
+
         /// <summary>
         /// Applies the constraint to an actual value, returning a ConstraintResult.
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>A ConstraintResult</returns>
-        public virtual ConstraintResult ApplyTo<TActual>(TActual actual)
-        {
-            //ActualValue = actual;
-            return new ConstraintResult(this, actual, Matches(actual));
-        }
+        public abstract ConstraintResult ApplyTo<TActual>(TActual actual);
+
+        /// <summary>
+        /// Applies the constraint to an actual value, returning a ConstraintResult.
+        /// This overload will be selected when (1) the passed value is cast as an 
+        /// object or (2) the argument is null and no Type parameter is specified.
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        public abstract ConstraintResult ApplyTo(object actual);
 
         /// <summary>
         /// Applies the constraint to an ActualValueDelegate that returns
@@ -151,65 +146,6 @@ namespace TCLite.Framework.Constraints
 
         #region Abstract and Virtual Methods
         /// <summary>
-        /// Write the failure message to the MessageWriter provided
-        /// as an argument. The default implementation simply passes
-        /// the constraint and the actual value to the writer, which
-        /// then displays the constraint description and the value.
-        /// 
-        /// Constraints that need to provide additional details,
-        /// such as where the error occurred can override this.
-        /// </summary>
-        /// <param name="writer">The MessageWriter on which to display the message</param>
-        public virtual void WriteMessageTo(MessageWriter writer)
-        {
-            writer.DisplayDifferences(this);
-        }
-
-        /// <summary>
-        /// Test whether the constraint is satisfied by a given value
-        /// </summary>
-        /// <param name="actual">The value to be tested</param>
-        /// <returns>True for success, false for failure</returns>
-        public abstract bool Matches<TActual>(TActual actual);
-
-        /// <summary>
-        /// Test whether the constraint is satisfied by an
-        /// ActualValueDelegate that returns the value to be tested.
-        /// The default implementation simply evaluates the delegate
-        /// but derived classes may override it to provide for delayed 
-        /// processing.
-        /// </summary>
-        /// <param name="del">An <see cref="ActualValueDelegate{T}" /></param>
-        /// <returns>True for success, false for failure</returns>
-        public virtual bool Matches<TActual>(ActualValueDelegate<TActual> del)
-        {
-#if NYI
-            if (AsyncInvocationRegion.IsAsyncOperation(del))
-                using (var region = AsyncInvocationRegion.Create(del))
-                    return Matches(region.WaitForPendingOperationsToComplete(del()));
-#endif
-            return Matches(del());
-        }
-
-        /// <summary>
-        /// Test whether the constraint is satisfied by a given reference.
-        /// The default implementation simply dereferences the value but
-        /// derived classes may override it to provide for delayed processing.
-        /// </summary>
-        /// <param name="actual">A reference to the value to be tested</param>
-        /// <returns>True for success, false for failure</returns>
-        public virtual bool Matches<TActual>(ref TActual actual)
-        {
-            return Matches(actual);
-        }
-
-        /// <summary>
-        /// Write the constraint description to a MessageWriter
-        /// </summary>
-        /// <param name="writer">The writer on which the description is displayed</param>
-        public abstract void WriteDescriptionTo(MessageWriter writer);
-
-        /// <summary>
         /// Write the actual value for a failing constraint test to a
         /// MessageWriter. The default implementation simply writes
         /// the raw value of actual, leaving it to the writer to
@@ -223,6 +159,7 @@ namespace TCLite.Framework.Constraints
         #endregion
 
         #region ToString Override
+
         /// <summary>
         /// Default override of ToString returns the constraint DisplayName
         /// followed by any arguments within angle brackets.
@@ -232,7 +169,7 @@ namespace TCLite.Framework.Constraints
         {
             string rep = GetStringRepresentation();
 
-            return Builder == null ? rep : string.Format("<unresolved {0}>", rep);
+            return Builder == null ? rep : $"<unresolved {rep}>";
         }
 
         /// <summary>
@@ -240,16 +177,20 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         protected virtual string GetStringRepresentation()
         {
-            switch (_argcnt)
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            sb.Append("<");
+            sb.Append(DisplayName.ToLower());
+
+            foreach (object arg in Arguments)
             {
-                default:
-                case 0:
-                    return string.Format("<{0}>", DisplayName);
-                case 1:
-                    return string.Format("<{0} {1}>", DisplayName, _displayable(_arg1));
-                case 2:
-                    return string.Format("<{0} {1} {2}>", DisplayName, _displayable(_arg1), _displayable(_arg2));
+                sb.Append(" ");
+                sb.Append(_displayable(arg));
             }
+
+            sb.Append(">");
+
+            return sb.ToString();
         }
 
         private static string _displayable(object o)
@@ -259,6 +200,7 @@ namespace TCLite.Framework.Constraints
             string fmt = o is string ? "\"{0}\"" : "{0}";
             return string.Format(System.Globalization.CultureInfo.InvariantCulture, fmt, o);
         }
+
         #endregion
 
         #region Operator Overloads
@@ -347,7 +289,7 @@ namespace TCLite.Framework.Constraints
         #endregion
 
         #region After Modifier
-
+#if NYI
         /// <summary>
         /// Returns a DelayedConstraint with the specified delay time.
         /// </summary>
@@ -374,7 +316,7 @@ namespace TCLite.Framework.Constraints
                 delayInMilliseconds,
                 pollingInterval);
         }
-
+#endif
         #endregion
 
         #region IResolveConstraint Members

@@ -57,5 +57,34 @@ namespace TCLite.Framework.Constraints
             Comparer = ComparisonAdapter.For(comparer);
             return this;
         }
+
+        /// <summary>
+        /// Test whether the constraint is satisfied by a given value   
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        {
+            Guard.ArgumentValid(actual != null, "Cannot compare to a null reference.", nameof(actual));
+
+            return new ConstraintResult(this, actual, Matches(actual));
+        }
+
+        /// <summary>
+        /// Test whether the constraint is satisfied by a given value   
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        public override ConstraintResult ApplyTo(object actual)
+        {
+            Guard.ArgumentValid(actual != null, "Cannot compare to a null reference.", nameof(actual));
+
+            return new ConstraintResult(this, actual, Matches(actual));
+        }
+
+        /// <summary>
+        /// Protected function overridden by derived class to actually perform the comparison
+        /// </summary>
+        protected abstract bool Matches<TActual>(TActual actual);
     }
 }

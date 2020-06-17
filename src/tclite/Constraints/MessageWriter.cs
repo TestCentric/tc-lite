@@ -54,8 +54,7 @@ namespace TCLite.Framework.Constraints
         /// is called by MessageWriter's default implementation of 
         /// WriteMessageTo and provides the generic two-line display. 
         /// </summary>
-        /// <param name="constraint">The constraint that failed</param>
-        public abstract void DisplayDifferences(Constraint constraint);
+        /// <param name="result">The ConstraintResult of the constraint that failed</param>
         public abstract void DisplayDifferences(ConstraintResult result);
 
         /// <summary>
@@ -94,12 +93,6 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="connector">The connector.</param>
         public abstract void WriteConnector(string connector);
-
-        /// <summary>
-        /// Writes the text for a predicate.
-        /// </summary>
-        /// <param name="predicate">The predicate.</param>
-        public abstract void WritePredicate(string predicate);
 
         /// <summary>
         /// Writes the text for an expected value.

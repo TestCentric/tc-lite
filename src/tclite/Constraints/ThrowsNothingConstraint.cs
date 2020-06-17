@@ -15,31 +15,7 @@ namespace TCLite.Framework.Constraints
     {
         private Exception _caughtException;
 
-        /// <summary>
-        /// Test whether the constraint is satisfied by a given value
-        /// </summary>
-        /// <param name="actual">The value to be tested</param>
-        /// <returns>True if no exception is thrown, otherwise false</returns>
-        public override bool Matches<TActual>(TActual actual)
-        {
-            _caughtException = ExceptionInterceptor.Intercept(actual);
-
-            return _caughtException == null;
-        }
-
-        public override bool Matches<TActual>(ActualValueDelegate<TActual> del)
-        {
-            return Matches(new GenericInvocationDescriptor<TActual>(del));
-        }
-
-        /// <summary>
-        /// Write the constraint description to a MessageWriter
-        /// </summary>
-        /// <param name="writer">The writer on which the description is displayed</param>
-        public override void WriteDescriptionTo(MessageWriter writer)
-        {
-            writer.Write(string.Format("No Exception to be thrown"));
-        }
+        public override string Description => "No exception to be thrown";
 
         /// <summary>
         /// Write the actual value for a failing constraint test to a
@@ -51,6 +27,47 @@ namespace TCLite.Framework.Constraints
         {
             writer.WriteLine($"<{_caughtException.GetType().FullName}> ({_caughtException.Message})");
             writer.WriteLine(_caughtException.StackTrace);
+        }
+
+        /// <summary>
+        /// Test whether the constraint is satisfied by a given value
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>True if no exception is thrown, otherwise false</returns>
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        {
+            Guard.ArgumentIsRequiredType<Delegate>(actual, nameof(actual));
+
+            _caughtException = ExceptionInterceptor.Intercept(actual);
+
+            return new ConstraintResult(this, _caughtException, _caughtException == null);
+        }
+
+        /// <summary>
+        /// Test whether the constraint is satisfied by a given value
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>True if no exception is thrown, otherwise false</returns>
+        public override ConstraintResult ApplyTo(object actual)
+        {
+            Guard.ArgumentIsRequiredType<Delegate>(actual, nameof(actual));
+
+            _caughtException = ExceptionInterceptor.Intercept(actual);
+
+            return new ConstraintResult(this, _caughtException, _caughtException == null);
+        }
+
+        /// <summary>
+        /// Applies the constraint to an ActualValueDelegate that returns 
+        /// the value to be tested. The default implementation simply evaluates 
+        /// the delegate but derived classes may override it to provide for 
+        /// delayed processing.
+        /// </summary>
+        /// <param name="del">An ActualValueDelegate</param>
+        /// <returns>A ConstraintResult</returns>
+        public override ConstraintResult ApplyTo<TActual>(ActualValueDelegate<TActual> del)
+        {
+            return ApplyTo((Delegate)del);
         }
     }
 }

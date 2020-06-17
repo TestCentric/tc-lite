@@ -20,7 +20,7 @@ namespace TCLite.Framework.Constraints
         public void UsesProvidedIComparer()
         {
             SimpleObjectComparer comparer = new SimpleObjectComparer();
-            _comparisonConstraint.Using(comparer).Matches(0);
+            _comparisonConstraint.Using(comparer).ApplyTo(0);
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
@@ -28,7 +28,7 @@ namespace TCLite.Framework.Constraints
         public void UsesProvidedComparerOfT()
         {
             MyComparer<int> comparer = new MyComparer<int>();
-            _comparisonConstraint.Using(comparer).Matches(0);
+            _comparisonConstraint.Using(comparer).ApplyTo(0);
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
@@ -47,7 +47,7 @@ namespace TCLite.Framework.Constraints
         public void UsesProvidedComparisonOfT()
         {
             MyComparison<int> comparer = new MyComparison<int>();
-            _comparisonConstraint.Using(new Comparison<int>(comparer.Compare)).Matches(0);
+            _comparisonConstraint.Using(new Comparison<int>(comparer.Compare)).ApplyTo(0);
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
@@ -67,7 +67,7 @@ namespace TCLite.Framework.Constraints
         public void UsesProvidedLambda()
         {
             Comparison<int> comparer = (x, y) => x.CompareTo(y);
-            _comparisonConstraint.Using(comparer).Matches(0);
+            _comparisonConstraint.Using(comparer).ApplyTo(0);
         }
 #endif
     }

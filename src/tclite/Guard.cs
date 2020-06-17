@@ -36,5 +36,31 @@ namespace TCLite.Framework
             if (value == string.Empty)
                 throw new ArgumentException("Argument " + name +" must not be the empty string", name);
         }
+
+        /// <summary>
+        /// Throws an ArgumentException if the specified condition is not met.
+        /// </summary>
+        /// <param name="condition">The condition that must be met</param>
+        /// <param name="message">The exception message to be used</param>
+        /// <param name="paramName">The name of the argument</param>
+        public static void ArgumentValid(bool condition, string message, string paramName)
+        {
+            if (!condition)
+                throw new ArgumentException(message, paramName);
+        }
+
+        /// <summary>
+        /// Throws an ArgumentException if the argument is not of the required type.
+        /// We use this to give a runtime error until the Constraint system can be
+        /// made completely type-safe.
+        /// </summary>
+        /// <param name="condition">The condition that must be met</param>
+        /// <param name="message">The exception message to be used</param>
+        /// <param name="paramName">The name of the argument</param>
+        public static void ArgumentIsRequiredType<T>(object value, string paramName)
+        {
+            if (!(value is T))
+                throw new ArgumentException($"Argument must be of Type {typeof(T).Name}", paramName);
+        }
     }
 }

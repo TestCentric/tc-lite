@@ -3,24 +3,55 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using TCLite.Framework.Constraints;
+using System;
+using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.Constraints
 {
     [TestFixture]
-    public class NotConstraintTests : ConstraintTestBase
+    public class NotConstraintTests
     {
-        public NotConstraintTests()
+        private static readonly string NL = Environment.NewLine;
+        private const string DESCRIPTION = "not null"; // TODO: Should be "not equal to null"
+        private const string STRING_REPRESENTATION = "<not <equal null>>";
+
+        private NotConstraint _constraint = new NotConstraint( new EqualConstraint<object>(null) );
+
+        private static object[] SuccessData = { 42, "Hello" };
+
+        [Test]
+        public void DescriptionTest()
         {
-            _constraint = new NotConstraint( new EqualConstraint<object>(null) );
-            _expectedDescription = "not null";
-            _expectedRepresentation = "<not <equal null>>";
+            Assert.AreEqual(DESCRIPTION, _constraint.Description);
         }
 
-        internal object[] SuccessData = new object[] { 42, "Hello" };
+        [Test]
+        public void ToStringTest()
+        {
+            Assert.AreEqual(STRING_REPRESENTATION, _constraint.ToString());
+        }
 
-        internal object[] FailureData = new object[] { new object[] { null, "null" } };
+        [TestCase(42)]
+        [TestCase("Hello")]
+        public void ApplyConstraintSucceeds<T>(T actual)
+        {
+            Assert.That(_constraint.ApplyTo(actual).IsSuccess);
+        }
 
+        [TestCase(null, "null")]
+        public void ApplyConstraintFails(object actual, string message)
+        {
+            var result = _constraint.ApplyTo(actual);
+            Assert.False(result.IsSuccess);
+        
+            TextMessageWriter writer = new TextMessageWriter();
+            result.WriteMessageTo(writer);
+            Assert.That( writer.ToString(), Is.EqualTo(
+                TextMessageWriter.Pfx_Expected + DESCRIPTION + NL +
+                TextMessageWriter.Pfx_Actual + message + NL ));
+        }
+
+#if NYI
         [Test]
         public void NotHonorsIgnoreCaseUsingConstructors()
         {
@@ -29,7 +60,7 @@ namespace TCLite.Framework.Constraints
                 Assert.That("abc", new NotConstraint(new EqualConstraint<string>("ABC").IgnoreCase));
             });
 
-            Assert.That(ex.Message.Contains("ignoring case"));
+            Assert.That(ex.Message.Contains("ignoring case"), $"Message was {ex.Message}");
         }
 
         [Test]
@@ -53,7 +84,9 @@ namespace TCLite.Framework.Constraints
 
             Assert.That(ex.Message.Contains("+/-"));
         }
+#endif
 
+        // TODO: Move operator overrides to a separate test class
         [Test]
         public void CanUseNotOperator()
         {

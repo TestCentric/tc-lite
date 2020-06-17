@@ -28,7 +28,8 @@ namespace TCLite.Framework.Assertions
 		[Test] 
 		public void IsTrueFails()
 		{
-			ThrowsAssertionException(() => Assert.True(false), ISTRUE_MESSAGE);
+            var ex = Assert.Throws<AssertionException>(() => Assert.True(false));
+            Assert.AreEqual(ISTRUE_MESSAGE, ex.Message);
 		}
 
 		[Test]
@@ -40,7 +41,8 @@ namespace TCLite.Framework.Assertions
 		[Test]
 		public void IsFalseFails()
 		{
-			ThrowsAssertionException(() => Assert.False(true), ISFALSE_MESSAGE);
+            var ex = Assert.Throws<AssertionException>(() => Assert.False(true));
+            Assert.AreEqual(ISFALSE_MESSAGE, ex.Message);
 		}
 
 		[Test]
@@ -52,7 +54,8 @@ namespace TCLite.Framework.Assertions
 		[Test]
 		public void IsNullFails()
 		{
-			ThrowsAssertionException(() => Assert.Null(42), string.Format(ISNULL_MESSAGE, 42));
+            var ex = Assert.Throws<AssertionException>(() => Assert.Null(42));
+            Assert.AreEqual(string.Format(ISNULL_MESSAGE, 42) , ex.Message);
 		}
 
 		[Test]
@@ -63,9 +66,38 @@ namespace TCLite.Framework.Assertions
 		}
 
 		[Test]
+		public void WIPTest()
+		{
+			var NullConstraint = new Constraints.NullConstraint();
+			Assert.That(NullConstraint.ApplyTo(null).IsSuccess);
+			Assert.True(NullConstraint.ApplyTo(null).IsSuccess);
+			Assert.True(!NullConstraint.ApplyTo(42).IsSuccess);
+			Assert.False(NullConstraint.ApplyTo(42).IsSuccess);
+			Assert.True(Is.Null.ApplyTo(null).IsSuccess);
+			Assert.False(Is.Null.ApplyTo(42).IsSuccess);
+
+			var NotConstraint = new Constraints.NotConstraint(NullConstraint);
+			Assert.False(NotConstraint.ApplyTo(null).IsSuccess);
+			Assert.False(NotConstraint.ApplyTo(null).IsSuccess);
+			Assert.False(!NotConstraint.ApplyTo(42).IsSuccess);
+			Assert.True(NotConstraint.ApplyTo(42).IsSuccess);
+
+			Assert.AreEqual("<null>", Is.Null.ToString());
+			Assert.AreEqual("<unresolved <null>>", Is.Not.Null.ToString());
+			Assert.AreEqual("<not <null>>", ((Constraints.IResolveConstraint)Is.Not.Null).Resolve().ToString());
+			
+			Assert.False(((Constraints.IResolveConstraint)Is.Not.Null).Resolve().ApplyTo(null).IsSuccess);
+			Assert.True(((Constraints.IResolveConstraint)Is.Not.Null).Resolve().ApplyTo(42).IsSuccess);
+
+			Assert.That(null, Is.Null, "Assert.That(null, Is.Null)");
+			Assert.That(42, Is.Not.Null, "Assert.That(null, Is.Not.Null)");
+		}
+
+		[Test]
 		public void IsNotNullFails()
 		{
-			ThrowsAssertionException(() => Assert.NotNull(null), ISNOTNULL_MESSAGE);
+            var ex = Assert.Throws<AssertionException>(() => Assert.NotNull(null));
+            Assert.AreEqual(ISNOTNULL_MESSAGE, ex.Message);
 		}
 
 #if NYI

@@ -20,6 +20,50 @@ namespace TCLite.Framework.Constraints
         public ExceptionTypeConstraint(Type type) : base(type) { }
 
         /// <summary>
+        /// Applies the constraint to an actual value, returning a ConstraintResult.
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        {
+            Guard.ArgumentIsRequiredType<Exception>(actual, nameof(actual));
+
+            Type actualType = actual == null ? null : actual.GetType();
+
+            return new ExceptionTypeConstraintResult(this, actual, actualType, this.Matches(actual));
+        }
+
+        #region Nested Result Class
+        class ExceptionTypeConstraintResult : ConstraintResult
+        {
+            private readonly object caughtException;
+
+            public ExceptionTypeConstraintResult(ExceptionTypeConstraint constraint, object caughtException, Type type, bool matches)
+                : base(constraint, type, matches)
+            {
+                this.caughtException = caughtException;
+            }
+
+            public override void WriteActualValueTo(MessageWriter writer)
+            {
+                if (this.Status == ConstraintStatus.Failure)
+                {
+                    Exception ex = caughtException as Exception;
+
+                    if (ex == null)
+                    {
+                        base.WriteActualValueTo(writer);
+                    }
+                    else
+                    {
+                        writer.WriteActualValue(ex);
+                    }
+                }
+            }
+        }
+        #endregion
+    
+        /// <summary>
         /// Write the actual value for a failing constraint test to a
         /// MessageWriter. Overridden to write additional information 
         /// in the case of an Exception.

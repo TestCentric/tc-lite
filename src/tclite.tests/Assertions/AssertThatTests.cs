@@ -86,63 +86,67 @@ namespace TCLite.Framework.Assertions
         [Test]
         public void FailureThrowsAssertionException_Boolean()
         {
-            ThrowsAssertionException(() => Assert.That(2 + 2 == 5));
+            Assert.Throws<AssertionException>(() => Assert.That(2 + 2 == 5));
         }
 
         [Test]
         public void FailureThrowsAssertionException_BooleanWithMessage()
         {
-            ThrowsAssertionException(() => Assert.That(2 + 2 == 5, "message"),
-                "  message" + NL +
+            var ex = Assert.Throws<AssertionException>(() => Assert.That(2 + 2 == 5, "MESSAGE"));
+            Assert.That(ex.Message, Is.EqualTo(
+                "  MESSAGE" + NL +
                 "  Expected: True"  + NL +
-                "  But was:  False" + NL);
+                "  But was:  False" + NL));
         }
 
         [Test]
         public void FailureThrowsAssertionException_ActualAndConstraint()
         {
-            ThrowsAssertionException(() => Assert.That(2 + 2, Is.EqualTo(5)));
+            var ex = Assert.Throws<AssertionException>(() => Assert.That(2 + 2, Is.EqualTo(5)));
         }
 
         [Test,]
         public void FailureThrowsAssertionException_ActualAndConstraintWithMessage()
         {
-            ThrowsAssertionException(() => Assert.That(2 + 2, Is.EqualTo(5), "Error"),
+            var ex = Assert.Throws<AssertionException>(() => Assert.That(2 + 2, Is.EqualTo(5), "Error"));
+            Assert.That(ex.Message, Is.EqualTo(
                 "  Error" + NL +
                 "  Expected: 5" + NL +
-                "  But was:  4" + NL);
+                "  But was:  4" + NL));
         }
 
         [Test]
         public void FailureThrowsAssertionException_ReferenceAndConstraint()
         {
             bool value = false;
-            ThrowsAssertionException(() => Assert.That(ref value, Is.True));
+            Assert.Throws<AssertionException>(() => Assert.That(ref value, Is.True));
         }
 
         [Test]
         public void FailureThrowsAssertionException_ReferenceAndConstraintWithMessage()
         {
             bool value = false;
-            ThrowsAssertionException(() => Assert.That(ref value, Is.True, "message"),
+            var ex = Assert.Throws<AssertionException>(() => Assert.That(ref value, Is.True, "message"));
+            Assert.That(ex.Message, Is.EqualTo(
                 "  message" + NL +
                 "  Expected: True" + NL +
-                "  But was:  False" + NL);
+                "  But was:  False" + NL));
         }
 
         [Test]
         public void FailureThrowsAssertionException_DelegateAndConstraint()
         {
-            ThrowsAssertionException(() => Assert.That(new ActualValueDelegate<int>(ReturnsFive), Is.EqualTo(4)));
+            var ex = Assert.Throws<AssertionException>(() => Assert.That(ReturnsFive, Is.EqualTo(4)));
         }
 
         [Test]
         public void FailureThrowsAssertionException_DelegateAndConstraintWithMessage()
         {
-            ThrowsAssertionException(() => Assert.That(new ActualValueDelegate<int>(ReturnsFive), Is.EqualTo(4), "Error"),
+            var ex = Assert.Throws<AssertionException>(() => Assert.That(ReturnsFive, Is.EqualTo(4), "Error"));
+            Assert.That(ex.Message, Is.EqualTo(
                 "  Error" + NL +
                 "  Expected: 4" + NL +
-                "  But was:  5" + NL);
+                "  But was:  5" + NL));
         }
 
 #if NYI

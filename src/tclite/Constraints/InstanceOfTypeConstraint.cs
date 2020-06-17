@@ -23,25 +23,17 @@ namespace TCLite.Framework.Constraints
             DisplayName = "instanceof";
         }
 
+        public override string Description => $"Instance of Type {ExpectedType}";
+
         /// <summary>
         /// Test whether an object is of the specified type or a derived type
         /// </summary>
         /// <param name="actual">The object to be tested</param>
         /// <returns>True if the object is of the provided type or derives from it, otherwise false.</returns>
-        public override bool Matches<TActual>(TActual actual)
+        protected override bool Matches<TActual>(TActual actual)
         {
             ActualValue = actual;
             return actual != null && ExpectedType.IsInstanceOfType(actual);
-        }
-
-        /// <summary>
-        /// Write a description of this constraint to a MessageWriter
-        /// </summary>
-        /// <param name="writer">The MessageWriter to use</param>
-        public override void WriteDescriptionTo(MessageWriter writer)
-        {
-            writer.WritePredicate("instance of");
-            writer.WriteExpectedValue(ExpectedType);
         }
     }
 }

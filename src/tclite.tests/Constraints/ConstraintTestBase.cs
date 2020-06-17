@@ -18,8 +18,7 @@ namespace TCLite.Framework.Constraints
         public void ProvidesProperDescription()
         {
             TextMessageWriter writer = new TextMessageWriter();
-            _constraint.WriteDescriptionTo(writer);
-            Assert.That(writer.ToString(), Is.EqualTo(_expectedDescription));
+            Assert.That(_constraint.Description, Is.EqualTo(_expectedDescription));
         }
 
         [Test]
@@ -34,10 +33,11 @@ namespace TCLite.Framework.Constraints
         [Test, TestCaseSource("SuccessData")]
         public void SucceedsWithGoodValues(object value)
         {
-            if (!_constraint.Matches(value))
+            var result = _constraint.ApplyTo(value);
+            if (!result.IsSuccess)
             {
                 MessageWriter writer = new TextMessageWriter();
-                _constraint.WriteMessageTo(writer);
+                result.WriteMessageTo(writer);
                 Assert.Fail(writer.ToString());
             }
         }
@@ -47,10 +47,11 @@ namespace TCLite.Framework.Constraints
         {
             string NL = Environment.NewLine;
 
-            Assert.False(_constraint.Matches(badValue));
+            var result = _constraint.ApplyTo(badValue);
+            Assert.False(result.IsSuccess);
 
             TextMessageWriter writer = new TextMessageWriter();
-            _constraint.WriteMessageTo(writer);
+            result.WriteMessageTo(writer);
             Assert.That( writer.ToString(), Is.EqualTo(
                 TextMessageWriter.Pfx_Expected + _expectedDescription + NL +
                 TextMessageWriter.Pfx_Actual + message + NL ));
@@ -67,7 +68,7 @@ namespace TCLite.Framework.Constraints
         {
             Assert.Throws<ArgumentException>(() =>
             {
-                _constraint.Matches(value);
+                _constraint.ApplyTo(value);
             });
         }
     }
@@ -81,7 +82,7 @@ namespace TCLite.Framework.Constraints
         [Test, TestCaseSource("InvalidData")]
         public void InvalidDataThrowsException(object value)
         {
-            _constraint.Matches(value);
+            _constraint.ApplyTo(value);
         }
     }
 }

@@ -49,15 +49,25 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public override bool Matches<TActual>(TActual actual)
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
-            ActualValue = actual;
+            Guard.ArgumentIsRequiredType<IEnumerable>(actual, nameof(actual));
+            var enumerable = actual as IEnumerable;
 
-            IEnumerable enumerable = actual as IEnumerable;
-            if (enumerable == null)
-                throw new ArgumentException("The actual value must be an IEnumerable", "actual");
+            return new ConstraintResult(this, actual, doMatch(enumerable));
+        }
 
-            return doMatch(enumerable);
+        /// <summary>
+        /// Test whether the constraint is satisfied by a given value
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>True for success, false for failure</returns>
+        public override ConstraintResult ApplyTo(object actual)
+        {
+            Guard.ArgumentIsRequiredType<IEnumerable>(actual, nameof(actual));
+            var enumerable = actual as IEnumerable;
+
+            return new ConstraintResult(this, enumerable, doMatch(enumerable));
         }
 
         /// <summary>

@@ -125,7 +125,7 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The MessageWriter on which to display the message</param>
         public virtual void WriteMessageTo(MessageWriter writer)
         {
-            // NYI: writer.DisplayDifferences(this);
+            writer.DisplayDifferences(this);
         }
 
         /// <summary>

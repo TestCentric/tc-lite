@@ -20,8 +20,6 @@ namespace TCLite.Framework.Constraints
     {
         #region Static and Instance Fields
 
-        private readonly TExpected _expected;
-
         private Tolerance _tolerance = Tolerance.Empty;
 
         /// <summary>
@@ -62,9 +60,44 @@ namespace TCLite.Framework.Constraints
         /// <param name="expected">The expected value.</param>
         public EqualConstraint(TExpected expected) : base(expected)
         {
-            _expected = expected;
+            ExpectedValue = expected;
         }
         #endregion
+
+        public TExpected ExpectedValue { get; }
+
+        public override string Description => ExpectedValue?.ToString() ?? "null";
+
+        /// <summary>
+        /// Gets the tolerance for this comparison.
+        /// </summary>
+        /// <value>
+        /// The tolerance.
+        /// </value>
+        public Tolerance Tolerance
+        {
+            get { return _tolerance; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether to compare case insensitive.
+        /// </summary>
+        /// <value>
+        ///   <see langword="true"/> if comparing case insensitive; otherwise, <see langword="false"/>.
+        /// </value>
+        public bool CaseInsensitive
+        {
+            get { return _comparer.IgnoreCase; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether or not to clip strings.
+        /// </summary>
+        /// <value>
+        ///   <see langword="true"/> if set to clip strings otherwise, <see langword="false"/>.
+        /// </value>
+        public bool ClipStrings { get; private set; }
+
 
         #region Constraint Modifiers
         /// <summary>
@@ -299,42 +332,19 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public override bool Matches<TActual>(TActual actual)
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
-            ActualValue = actual;
-
-            return _comparer.AreEqual(_expected, actual, ref _tolerance);
+            return new EqualConstraintResult<TExpected>(this, actual, _comparer.AreEqual(ExpectedValue, actual, ref _tolerance));
         }
 
         /// <summary>
-        /// Write a failure message. Overridden to provide custom 
-        /// failure messages for EqualConstraint.
+        /// Test whether the constraint is satisfied by a given value
         /// </summary>
-        /// <param name="writer">The MessageWriter to write to</param>
-        public override void WriteMessageTo(MessageWriter writer)
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>True for success, false for failure</returns>
+        public override ConstraintResult ApplyTo(object actual)
         {
-            DisplayDifferences(writer, _expected, ActualValue, 0);
-        }
-
-
-        /// <summary>
-        /// Write description of this constraint
-        /// </summary>
-        /// <param name="writer">The MessageWriter to write to</param>
-        public override void WriteDescriptionTo(MessageWriter writer)
-        {
-            writer.WriteExpectedValue(_expected);
-
-            if (_tolerance != null && !_tolerance.IsEmpty)
-            {
-                writer.WriteConnector("+/-");
-                writer.WriteExpectedValue(_tolerance.Value);
-                if (_tolerance.Mode != ToleranceMode.Linear)
-                    writer.Write(" {0}", _tolerance.Mode);
-            }
-
-            if (_comparer.IgnoreCase)
-                writer.WriteModifier("ignoring case");
+            return new EqualConstraintResult<TExpected>(this, actual, _comparer.AreEqual(ExpectedValue, actual, ref _tolerance));
         }
 
         private void DisplayDifferences(MessageWriter writer, object expected, object actual, int depth)

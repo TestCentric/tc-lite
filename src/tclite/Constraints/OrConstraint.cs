@@ -6,7 +6,7 @@
 namespace TCLite.Framework.Constraints
 {
     /// <summary>
-    /// OrConstraint succeeds if either member succeeds
+    /// OrConstraint succeeds if either member succeeds{{
     /// </summary>
     public class OrConstraint : BinaryConstraint
     {
@@ -17,28 +17,29 @@ namespace TCLite.Framework.Constraints
         /// <param name="right">The second constraint</param>
         public OrConstraint(Constraint left, Constraint right) : base(left, right) { }
 
+        public override string  Description => $"{Left.Description} or {Right.Description}";
+
         /// <summary>
         /// Apply the member constraints to an actual value, succeeding 
         /// succeeding as soon as one of them succeeds.
         /// </summary>
         /// <param name="actual">The actual value</param>
         /// <returns>True if either constraint succeeded</returns>
-        public override bool Matches<TActual>(TActual actual)
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
-            ActualValue = actual;
-
-            return Left.Matches(actual) || Right.Matches(actual);
+            bool hasSucceeded = Left.ApplyTo(actual).IsSuccess || Right.ApplyTo(actual).IsSuccess;
+            return new ConstraintResult(this, actual, hasSucceeded);
         }
-
         /// <summary>
-        /// Write a description for this contraint to a MessageWriter
+        /// Apply the member constraints to an actual value, succeeding 
+        /// succeeding as soon as one of them succeeds.
         /// </summary>
-        /// <param name="writer">The MessageWriter to receive the description</param>
-        public override void WriteDescriptionTo(MessageWriter writer)
+        /// <param name="actual">The actual value</param>
+        /// <returns>True if either constraint succeeded</returns>
+        public override ConstraintResult ApplyTo(object actual)
         {
-            Left.WriteDescriptionTo(writer);
-            writer.WriteConnector("or");
-            Right.WriteDescriptionTo(writer);
+            bool hasSucceeded = Left.ApplyTo(actual).IsSuccess || Right.ApplyTo(actual).IsSuccess;
+            return new ConstraintResult(this, actual, hasSucceeded);
         }
     }
 }

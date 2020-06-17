@@ -22,26 +22,30 @@ namespace TCLite.Framework.Constraints
             ExpectedValue = expected;
         }
 
+        public override string Description => $"Same as {ExpectedValue}";
+
         /// <summary>
         /// Test whether the constraint is satisfied by a given value
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public override bool Matches<TActual>(TActual actual)
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
-            ActualValue = actual;
+            bool hasSucceeded = ReferenceEquals(ExpectedValue, actual);
 
-            return ReferenceEquals(ExpectedValue, actual);
+            return new ConstraintResult(this, actual, hasSucceeded);
         }
 
         /// <summary>
-        /// Write the constraint description to a MessageWriter
+        /// Test whether the constraint is satisfied by a given value
         /// </summary>
-        /// <param name="writer">The writer on which the description is displayed</param>
-        public override void WriteDescriptionTo(MessageWriter writer)
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>True for success, false for failure</returns>
+        public override ConstraintResult ApplyTo(object actual)
         {
-            writer.WritePredicate("same as");
-            writer.WriteExpectedValue(ExpectedValue);
+            bool hasSucceeded = ReferenceEquals(ExpectedValue, actual);
+
+            return new ConstraintResult(this, actual, hasSucceeded);
         }
     }
 }

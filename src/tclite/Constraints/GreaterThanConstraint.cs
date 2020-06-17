@@ -22,27 +22,19 @@ namespace TCLite.Framework.Constraints
             ExpectedValue = expected;
         }
 
+        public override string Description => $"greater than {ExpectedValue}";
+
         /// <summary>
         /// The value against which a comparison is to be made
         /// </summary>
         private TExpected ExpectedValue { get; set; }
 
         /// <summary>
-        /// Write the constraint description to a MessageWriter
-        /// </summary>
-        /// <param name="writer">The writer on which the description is displayed</param>
-        public override void WriteDescriptionTo(MessageWriter writer)
-        {
-            writer.WritePredicate("greater than");
-            writer.WriteExpectedValue(ExpectedValue);
-        }
-
-        /// <summary>
         /// Test whether the constraint is satisfied by a given value
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public override bool Matches<TActual>(TActual actual)
+        protected override bool Matches<TActual>(TActual actual)
         {
             ActualValue = actual;
 

@@ -113,22 +113,11 @@ namespace TCLite.Framework.Internal
         /// WriteMessageTo and provides the generic two-line display. 
         /// </summary>
         /// <param name="constraint">The constraint that failed</param>
-        public override void DisplayDifferences(Constraint constraint)
-        {
-            WriteExpectedLine(constraint);
-            WriteActualLine(constraint);
-        }
-
-        /// <summary>
-        /// Display Expected and Actual lines for a constraint. This
-        /// is called by MessageWriter's default implementation of 
-        /// WriteMessageTo and provides the generic two-line display. 
-        /// </summary>
-        /// <param name="constraint">The constraint that failed</param>
         public override void DisplayDifferences(ConstraintResult result)
         {
             WriteExpectedLine(result);
             WriteActualLine(result);
+            // NYI: WriteAdditionalLine(result);
         }
 
 		/// <summary>
@@ -205,20 +194,6 @@ namespace TCLite.Framework.Internal
         {
             Write(Fmt_Connector, connector);
         }
-
-		/// <summary>
-		/// Writes the text for a predicate.
-		/// </summary>
-		/// <param name="predicate">The predicate.</param>
-		public override void WritePredicate(string predicate)
-        {
-            Write(Fmt_Predicate, predicate);
-        }
-
-        //public override void WriteLabel(string label)
-        //{
-        //    Write(Fmt_Label, label);
-        //}
 
         /// <summary>
         /// Write the text for a modifier.
@@ -409,15 +384,15 @@ namespace TCLite.Framework.Internal
         #endregion
 
         #region Helper Methods
+
         /// <summary>
         /// Write the generic 'Expected' line for a constraint
         /// </summary>
-        /// <param name="constraint">The constraint that failed</param>
-        private void WriteExpectedLine(Constraint constraint)
+        /// <param name="result">The constraint that failed</param>
+        private void WriteExpectedLine(ConstraintResult result)
         {
             Write(Pfx_Expected);
-            constraint.WriteDescriptionTo(this);
-            WriteLine();
+            WriteLine(result.Description);
         }
 
 		/// <summary>
@@ -451,16 +426,22 @@ namespace TCLite.Framework.Internal
 			WriteLine();
 		}
 
-		/// <summary>
-		/// Write the generic 'Actual' line for a constraint
-		/// </summary>
-		/// <param name="constraint">The constraint for which the actual value is to be written</param>
-		private void WriteActualLine(Constraint constraint)
-		{
-			Write(Pfx_Actual);
-			constraint.WriteActualValueTo(this);
-			WriteLine();
-		}
+        /// <summary>
+        /// Write the generic 'Actual' line for a constraint
+        /// </summary>
+        /// <param name="result">The ConstraintResult for which the actual value is to be written</param>
+        private void WriteActualLine(ConstraintResult result)
+        {
+            Write(Pfx_Actual);
+            result.WriteActualValueTo(this);
+            WriteLine();
+            //WriteLine(MsgUtils.FormatValue(result.ActualValue));
+        }
+
+        private void WriteAdditionalLine(ConstraintResult result)
+        {
+            result.WriteAdditionalLinesTo(this);
+        }
 
 		/// <summary>
 		/// Write the generic 'Actual' line for a given value

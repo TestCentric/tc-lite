@@ -15,36 +15,31 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="baseConstraint">The base constraint to be negated.</param>
         public NotConstraint(Constraint baseConstraint)
-            : base(baseConstraint) { }
+            : base(baseConstraint)
+        {
+            DescriptionPrefix = "not";
+        }
 
         /// <summary>
         /// Test whether the constraint is satisfied by a given value
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for if the base constraint fails, false if it succeeds</returns>
-        public override bool Matches<TActual>(TActual actual)
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
-            ActualValue = actual;
-            return !BaseConstraint.Matches(actual);
+            var baseResult = BaseConstraint.ApplyTo(actual);
+            return new ConstraintResult(this, baseResult.ActualValue, !baseResult.IsSuccess);
         }
 
         /// <summary>
-        /// Write the constraint description to a MessageWriter
+        /// Test whether the constraint is satisfied by a given value
         /// </summary>
-        /// <param name="writer">The writer on which the description is displayed</param>
-        public override void WriteDescriptionTo(MessageWriter writer)
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>True for if the base constraint fails, false if it succeeds</returns>
+        public override ConstraintResult ApplyTo(object actual)
         {
-            writer.WritePredicate("not");
-            BaseConstraint.WriteDescriptionTo(writer);
-        }
-
-        /// <summary>
-        /// Write the actual value for a failing constraint test to a MessageWriter.
-        /// </summary>
-        /// <param name="writer">The writer on which the actual value is displayed</param>
-        public override void WriteActualValueTo(MessageWriter writer)
-        {
-            BaseConstraint.WriteActualValueTo(writer);
+            var baseResult = BaseConstraint.ApplyTo(actual);
+            return new ConstraintResult(this, baseResult.ActualValue, !baseResult.IsSuccess);
         }
     }
 }

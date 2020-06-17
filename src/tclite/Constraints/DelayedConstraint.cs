@@ -3,6 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
+#if NYI
 using System;
 using System.Threading;
 
@@ -171,3 +172,4 @@ namespace TCLite.Framework.Constraints
         }
     }
 }
+#endif

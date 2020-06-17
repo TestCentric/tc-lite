@@ -26,6 +26,8 @@ namespace TCLite.Framework.Constraints
             DisplayName = "contains";
         }
 
+        public override string Description => $"contains {ExpectedValue}";
+
         /// <summary>
         /// Test whether the expected item is contained in the collection
         /// </summary>
@@ -38,16 +40,6 @@ namespace TCLite.Framework.Constraints
                     return true;
 
             return false;
-        }
-
-        /// <summary>
-        /// Write a descripton of the constraint to a MessageWriter
-        /// </summary>
-        /// <param name="writer"></param>
-        public override void WriteDescriptionTo(MessageWriter writer)
-        {
-            writer.WritePredicate("collection containing");
-            writer.WriteExpectedValue(ExpectedValue);
         }
     }
 }

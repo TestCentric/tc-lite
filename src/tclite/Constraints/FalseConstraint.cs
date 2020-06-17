@@ -8,11 +8,20 @@ namespace TCLite.Framework.Constraints
     /// <summary>
     /// FalseConstraint tests that the actual value is false
     /// </summary>
-    public class FalseConstraint : EqualConstraint<bool>
+    public class FalseConstraint : Constraint<bool>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:FalseConstraint"/> class.
-        /// </summary>
-        public FalseConstraint() : base(false) { }
+        public override string Description => "False";
+
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        {
+            Guard.ArgumentIsRequiredType<bool>(actual, nameof(actual));
+            return new ConstraintResult(this, actual, false.Equals(actual));
+        }
+
+        public override ConstraintResult ApplyTo(object actual)
+        {
+            Guard.ArgumentIsRequiredType<bool>(actual, nameof(actual));
+            return new ConstraintResult(this, actual, false.Equals(actual));
+        }
     }
 }

@@ -12,16 +12,15 @@ using TCLite.TestUtilities;
 namespace TCLite.Framework.Constraints
 {
     [TestFixture]
-    public class EqualConstraintTests : ConstraintTestBase
+    public class EqualConstraintTests
     {
-        public EqualConstraintTests()
-        {
-            _constraint = new EqualConstraint<int>(4);
-            _expectedDescription = "4";
-            _expectedRepresentation = "<equal 4>";
-        }
+        private static readonly string NL = Environment.NewLine;
+        private const string DESCRIPTION = "4";
+        private const string STRING_REPRESENTATION = "<equal 4>";
 
-        internal object[] SuccessData = new object[] { 4, 4.0f, 4.0d, 4.0000m };
+        private EqualConstraint<int> _constraint = new EqualConstraint<int>(4);
+
+        internal static object[] SuccessData = new object[] { 4, 4.0f, 4.0d, 4.0000m };
 
         internal object[] FailureData = new object[] { 
             new TestCaseData( 5, "5" ), 
@@ -29,6 +28,12 @@ namespace TCLite.Framework.Constraints
             new TestCaseData( "Hello", "\"Hello\"" ),
             new TestCaseData( double.NaN, "NaN" ),
             new TestCaseData( double.PositiveInfinity, "Infinity" ) };
+
+        [TestCaseSource(nameof(SuccessData))]
+        public void ApplyConstraintSucceeds<T>(T actual)
+        {
+            Assert.That(_constraint.ApplyTo(actual).IsSuccess);
+        }
 
         [TestCase(float.NaN)]
         [TestCase(float.PositiveInfinity)]

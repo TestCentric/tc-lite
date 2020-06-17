@@ -23,24 +23,17 @@ namespace TCLite.Framework.Constraints
             DisplayName = "typeof";
         }
 
+        public override string Description => $"Value of Type {ExpectedType}";
+
         /// <summary>
         /// Test that an object is of the exact type specified
         /// </summary>
         /// <param name="actual">The actual value.</param>
         /// <returns>True if the tested object is of the exact type provided, otherwise false.</returns>
-        public override bool Matches<TActual>(TActual actual)
+        protected override bool Matches<TActual>(TActual actual)
         {
             ActualValue = actual;
             return actual != null && actual.GetType() == ExpectedType;
-        }
-
-        /// <summary>
-        /// Write the description of this constraint to a MessageWriter
-        /// </summary>
-        /// <param name="writer">The MessageWriter to use</param>
-        public override void WriteDescriptionTo(MessageWriter writer)
-        {
-            writer.WriteExpectedValue(ExpectedType);
         }
     }
 }

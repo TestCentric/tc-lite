@@ -41,53 +41,52 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">A delegate representing the code to be tested</param>
         /// <returns>True if an exception is thrown and the constraint succeeds, otherwise false</returns>
-        public override bool Matches<TActual>(TActual actual)
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
+            Guard.ArgumentIsRequiredType<Delegate>(actual, nameof(actual));
+
             _caughtException = ExceptionInterceptor.Intercept(actual);
 
-            if (_caughtException == null)
-                return false;
+            return new ThrowsConstraintResult(
+                this,
+                _caughtException,
+                _caughtException != null
+                    ? BaseConstraint.ApplyTo(_caughtException)
+                    : null);
+        }
 
-            return BaseConstraint == null || BaseConstraint.Matches(_caughtException);
+        /// <summary>
+        /// Executes the code of the delegate and captures any exception.
+        /// If a non-null base constraint was provided, it applies that
+        /// constraint to the exception.
+        /// </summary>
+        /// <param name="actual">A delegate representing the code to be tested</param>
+        /// <returns>True if an exception is thrown and the constraint succeeds, otherwise false</returns>
+        public override ConstraintResult ApplyTo(object actual)
+        {
+            Guard.ArgumentIsRequiredType<Delegate>(actual, nameof(actual));
+
+            _caughtException = ExceptionInterceptor.Intercept(actual);
+
+            return new ThrowsConstraintResult(
+                this,
+                _caughtException,
+                _caughtException != null
+                    ? BaseConstraint.ApplyTo(_caughtException)
+                    : null);
         }
 
         /// <summary>
         /// Converts an ActualValueDelegate to a TestDelegate
         /// before calling the primary overload.
         /// </summary>
-        public override bool Matches<TActual>(ActualValueDelegate<TActual> del)
+        /// <param name="del"></param>
+        /// <returns></returns>
+        public override ConstraintResult ApplyTo<TActual>(ActualValueDelegate<TActual> del)
         {
-            return Matches(new GenericInvocationDescriptor<TActual>(del));
+            return ApplyTo((Delegate)del);
         }
 
-        /// <summary>
-        /// Write the constraint description to a MessageWriter
-        /// </summary>
-        /// <param name="writer">The writer on which the description is displayed</param>
-        public override void WriteDescriptionTo(MessageWriter writer)
-        {
-            if (BaseConstraint == null)
-                writer.WritePredicate("an exception");
-            else
-                BaseConstraint.WriteDescriptionTo(writer);
-        }
-
-        /// <summary>
-        /// Write the actual value for a failing constraint test to a
-        /// MessageWriter. The default implementation simply writes
-        /// the raw value of actual, leaving it to the writer to
-        /// perform any formatting.
-        /// </summary>
-        /// <param name="writer">The writer on which the actual value is displayed</param>
-        public override void WriteActualValueTo(MessageWriter writer)
-        {
-            if (_caughtException == null)
-                writer.Write("no exception thrown");
-            else if (BaseConstraint != null)
-                BaseConstraint.WriteActualValueTo(writer);
-            else
-                writer.WriteActualValue(_caughtException);
-        }
         #endregion
 
         /// <summary>
@@ -100,6 +99,42 @@ namespace TCLite.Framework.Constraints
 
             return base.GetStringRepresentation();
         }
+
+        #region Nested Result Class
+
+        private sealed class ThrowsConstraintResult : ConstraintResult
+        {
+            private readonly ConstraintResult baseResult;
+
+            public ThrowsConstraintResult(ThrowsConstraint constraint,
+                Exception caughtException,
+                ConstraintResult baseResult)
+                : base(constraint, caughtException)
+            {
+                if (caughtException != null && baseResult.IsSuccess)
+                    Status = ConstraintStatus.Success;
+                else
+                    Status = ConstraintStatus.Failure;
+
+                this.baseResult = baseResult;
+            }
+
+            /// <summary>
+            /// Write the actual value for a failing constraint test to a
+            /// MessageWriter. This override only handles the special message
+            /// used when an exception is expected but none is thrown.
+            /// </summary>
+            /// <param name="writer">The writer on which the actual value is displayed</param>
+            public override void WriteActualValueTo(MessageWriter writer)
+            {
+                if (ActualValue == null)
+                    writer.Write("no exception thrown");
+                else
+                    baseResult.WriteActualValueTo(writer);
+            }
+        }
+        
+        #endregion
     }
 
     #region ExceptionInterceptor
