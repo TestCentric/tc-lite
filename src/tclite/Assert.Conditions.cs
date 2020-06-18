@@ -14,7 +14,7 @@ namespace TCLite.Framework
         /// <param name="condition">The evaluated condition</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        public static void True(bool condition, string message=null, params object[] args)
+        public static void IsTrue(bool condition, string message=null, params object[] args)
         {
             Assert.That(condition, Is.True ,message, args);
         }
@@ -26,7 +26,7 @@ namespace TCLite.Framework
         /// <param name="condition">The evaluated condition</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        public static void False(bool condition, string message=null, params object[] args)
+        public static void IsFalse(bool condition, string message=null, params object[] args)
         {
             Assert.That(condition, Is.False ,message, args);
         }
@@ -39,7 +39,7 @@ namespace TCLite.Framework
         /// <param name="anObject">The object that is to be tested</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        public static void NotNull(object anObject, string message=null, params object[] args)
+        public static void IsNotNull(object anObject, string message=null, params object[] args)
         {
             Assert.That(anObject, Is.Not.Null ,message, args);
         }
@@ -52,7 +52,7 @@ namespace TCLite.Framework
         /// <param name="anObject">The object that is to be tested</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        public static void Null(object anObject, string message=null, params object[] args)
+        public static void IsNull(object anObject, string message=null, params object[] args)
         {
             Assert.That(anObject, Is.Null ,message, args);
         }

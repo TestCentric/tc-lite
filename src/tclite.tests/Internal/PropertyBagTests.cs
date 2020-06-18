@@ -52,7 +52,7 @@ namespace TCLite.Framework.Internal
         {
             Assert.That(bag.ContainsKey("Answer"));
             Assert.That(bag.ContainsKey("Tag"));
-            Assert.False(bag.ContainsKey("Target"));
+            Assert.IsFalse(bag.ContainsKey("Target"));
         }
 
         [Test]

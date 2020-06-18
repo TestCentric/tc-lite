@@ -104,7 +104,7 @@ namespace TCLite.Framework.Api
 
             Assert.AreNotEqual(rs, s);
             Assert.AreNotEqual(s, rs);
-            Assert.False(rs.Equals(s));
+            Assert.IsFalse(rs.Equals(s));
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace TCLite.Framework.Api
             var rs = new ResultState(TestStatus.Passed);
             Assert.AreNotEqual(null, rs);
             Assert.AreNotEqual(rs, null);
-            Assert.False(rs.Equals(null));
+            Assert.IsFalse(rs.Equals(null));
         }
 
         #endregion

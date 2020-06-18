@@ -33,10 +33,10 @@ namespace TCLite.Framework.Tests
         private void CreateTestMethod()
         {
             var method = GetType().GetMethod(nameof(MyTestMethod), BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.NotNull(method);
+            Assert.IsNotNull(method);
             _testMethod = new TestMethod(method, null);
          
-            Assert.NotNull(_testMethod);
+            Assert.IsNotNull(_testMethod);
         }
     }
 }

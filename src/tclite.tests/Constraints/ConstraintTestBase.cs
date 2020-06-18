@@ -48,7 +48,7 @@ namespace TCLite.Framework.Constraints
             string NL = Environment.NewLine;
 
             var result = _constraint.ApplyTo(badValue);
-            Assert.False(result.IsSuccess);
+            Assert.IsFalse(result.IsSuccess);
 
             TextMessageWriter writer = new TextMessageWriter();
             result.WriteMessageTo(writer);

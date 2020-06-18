@@ -18,7 +18,7 @@ namespace TCLite.Framework
     /// provide test cases for a test method.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
-    public class TestCaseSourceAttribute : DataAttribute, ITestCaseSource
+    public class TestCaseSourceAttribute : DataAttribute, ITestCaseSource, IImplyFixture
     {
         private readonly string sourceName;
         private readonly Type sourceType;

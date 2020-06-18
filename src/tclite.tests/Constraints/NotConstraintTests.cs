@@ -42,7 +42,7 @@ namespace TCLite.Framework.Constraints
         public void ApplyConstraintFails(object actual, string message)
         {
             var result = _constraint.ApplyTo(actual);
-            Assert.False(result.IsSuccess);
+            Assert.IsFalse(result.IsSuccess);
         
             TextMessageWriter writer = new TextMessageWriter();
             result.WriteMessageTo(writer);

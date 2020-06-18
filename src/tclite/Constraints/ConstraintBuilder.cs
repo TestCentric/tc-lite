@@ -148,7 +148,6 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public ConstraintBuilder()
         {
-            Log("Creating new ConstraintBUilder");
             this.ops = new OperatorStack(this);
             this.constraints = new ConstraintStack(this);
         }
@@ -176,7 +175,6 @@ namespace TCLite.Framework.Constraints
         /// <param name="op">The operator to push.</param>
         public void Append(ConstraintOperator op)
         {
-            Log($"Append operator {op.GetType().Name}");
             op.LeftContext = lastPushed;
             if (lastPushed is ConstraintOperator)
                 SetTopOperatorRightContext(op);
@@ -195,7 +193,6 @@ namespace TCLite.Framework.Constraints
         /// <param name="constraint">The constraint to push.</param>
         public void Append(Constraint constraint)
         {
-            Log($"Append constraint {constraint.DisplayName}");
             if (lastPushed is ConstraintOperator)
                 SetTopOperatorRightContext(constraint);
 
@@ -256,12 +253,5 @@ namespace TCLite.Framework.Constraints
             return constraints.Pop();
         }
         #endregion
-
-        private void Log(string message)
-        {
-#if DEBUG
-            Console.WriteLine(message);
-#endif
-        }
     }
 }
