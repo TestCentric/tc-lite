@@ -1,6 +1,6 @@
 ﻿// ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -16,9 +16,6 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     public class Tolerance
     {
-        private readonly ToleranceMode mode;
-        private readonly object amount;
-
         private const string ModeMustFollowTolerance = "Tolerance amount must be specified before setting mode";
         private const string MultipleToleranceModes = "Tried to use multiple tolerance modes at the same time";
         private const string NumericToleranceRequired = "A numeric tolerance is required";
@@ -29,16 +26,15 @@ namespace TCLite.Framework.Constraints
         /// in an exact match but for floats and doubles a
         /// default tolerance may be used.
         /// </summary>
-        public static Tolerance Empty
+        public static Tolerance Default
         {
-            get { return new Tolerance(0, ToleranceMode.None); }
+            get { return new Tolerance(0, ToleranceMode.Default); }
         }
 
         /// <summary>
-        /// Returns a zero Tolerance object, equivalent to 
-        /// specifying an exact match.
+        /// Returns a default Tolerance object, equivalent to an exact match.
         /// </summary>
-        public static Tolerance Zero
+        public static Tolerance Exact
         {
             get { return new Tolerance(0, ToleranceMode.Linear); }
         }
@@ -53,41 +49,29 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         private Tolerance(object amount, ToleranceMode mode)
         {
-            this.amount = amount;
-            this.mode = mode;
+            Amount = amount;
+            Mode = mode;
         }
 
         /// <summary>
-        /// Gets the ToleranceMode for the current Tolerance
+        /// Gets the magnitude of the current Tolerance instance.
         /// </summary>
-        public ToleranceMode Mode
-        {
-            get { return this.mode; }
-        }
+        public object Amount { get; }
+
+        /// <summary>
+        /// the ToleranceMode for the current Tolerance
+        /// </summary>
+        public ToleranceMode Mode { get; }
         
-
         /// <summary>
-        /// Tests that the current Tolerance is linear with a 
-        /// numeric value, throwing an exception if it is not.
+        /// Returns true if the current tolerance is empty.
         /// </summary>
-        private void CheckLinearAndNumeric()
+        public bool IsDefault
         {
-            if (mode != ToleranceMode.Linear)
-                throw new InvalidOperationException(mode == ToleranceMode.None
-                    ? ModeMustFollowTolerance
-                    : MultipleToleranceModes);
-
-            if (!Numerics.IsNumericType(amount))
-                throw new InvalidOperationException(NumericToleranceRequired);
+            get { return Mode == ToleranceMode.Default; }
         }
 
-        /// <summary>
-        /// Gets the value of the current Tolerance instance.
-        /// </summary>
-        public object Value
-        {
-            get { return this.amount; }
-        }
+        #region Modifier Properties
 
         /// <summary>
         /// Returns a new tolerance, using the current amount as a percentage.
@@ -97,7 +81,7 @@ namespace TCLite.Framework.Constraints
             get
             {
                 CheckLinearAndNumeric();
-                return new Tolerance(this.amount, ToleranceMode.Percent);
+                return new Tolerance(Amount, ToleranceMode.Percent);
             }
         }
 
@@ -109,7 +93,7 @@ namespace TCLite.Framework.Constraints
             get
             {
                 CheckLinearAndNumeric();
-                return new Tolerance(this.amount, ToleranceMode.Ulps);
+                return new Tolerance(Amount, ToleranceMode.Ulps);
             }
         }
 
@@ -122,7 +106,7 @@ namespace TCLite.Framework.Constraints
             get
             {
                 CheckLinearAndNumeric();
-                return new Tolerance(TimeSpan.FromDays(Convert.ToDouble(amount)));
+                return new Tolerance(TimeSpan.FromDays(Convert.ToDouble(Amount)));
             }
         }
 
@@ -135,7 +119,7 @@ namespace TCLite.Framework.Constraints
             get
             {
                 CheckLinearAndNumeric();
-                return new Tolerance(TimeSpan.FromHours(Convert.ToDouble(amount)));
+                return new Tolerance(TimeSpan.FromHours(Convert.ToDouble(Amount)));
             }
         }
 
@@ -148,7 +132,7 @@ namespace TCLite.Framework.Constraints
             get
             {
                 CheckLinearAndNumeric();
-                return new Tolerance(TimeSpan.FromMinutes(Convert.ToDouble(amount)));
+                return new Tolerance(TimeSpan.FromMinutes(Convert.ToDouble(Amount)));
             }
         }
 
@@ -161,7 +145,7 @@ namespace TCLite.Framework.Constraints
             get
             {
                 CheckLinearAndNumeric();
-                return new Tolerance(TimeSpan.FromSeconds(Convert.ToDouble(amount)));
+                return new Tolerance(TimeSpan.FromSeconds(Convert.ToDouble(Amount)));
             }
         }
 
@@ -174,7 +158,7 @@ namespace TCLite.Framework.Constraints
             get
             {
                 CheckLinearAndNumeric();
-                return new Tolerance(TimeSpan.FromMilliseconds(Convert.ToDouble(amount)));
+                return new Tolerance(TimeSpan.FromMilliseconds(Convert.ToDouble(Amount)));
             }
         }
 
@@ -187,16 +171,25 @@ namespace TCLite.Framework.Constraints
             get
             {
                 CheckLinearAndNumeric();
-                return new Tolerance(TimeSpan.FromTicks(Convert.ToInt64(amount)));
+                return new Tolerance(TimeSpan.FromTicks(Convert.ToInt64(Amount)));
             }
         }
 
+        #endregion
+
         /// <summary>
-        /// Returns true if the current tolerance is empty.
+        /// Tests that the current Tolerance is linear with a 
+        /// numeric value, throwing an exception if it is not.
         /// </summary>
-        public bool IsEmpty
+        private void CheckLinearAndNumeric()
         {
-            get { return mode == ToleranceMode.None; }
+            if (Mode != ToleranceMode.Linear)
+                throw new InvalidOperationException(Mode == ToleranceMode.Default
+                    ? ModeMustFollowTolerance
+                    : MultipleToleranceModes);
+
+            if (!Numerics.IsNumericType(Amount))
+                throw new InvalidOperationException(NumericToleranceRequired);
         }
     }
 }

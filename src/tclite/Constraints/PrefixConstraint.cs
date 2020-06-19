@@ -13,7 +13,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// The base constraint
         /// </summary>
-        protected IConstraint BaseConstraint { get; }
+        protected Constraint BaseConstraint { get; }
 
         /// <summary>
         /// Prefix used in forming the constraint description

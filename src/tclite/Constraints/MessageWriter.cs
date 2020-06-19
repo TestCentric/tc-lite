@@ -49,13 +49,6 @@ namespace TCLite.Framework.Constraints
         /// <param name="args">Any arguments used in formatting the message</param>
         public abstract void WriteMessageLine(int level, string message, params object[] args);
 
-        /// <summary>
-        /// Display Expected and Actual lines for a constraint. This
-        /// is called by MessageWriter's default implementation of 
-        /// WriteMessageTo and provides the generic two-line display. 
-        /// </summary>
-        /// <param name="result">The ConstraintResult of the constraint that failed</param>
-        public abstract void DisplayDifferences(ConstraintResult result);
 
         /// <summary>
         /// Display Expected and Actual lines for given values. This
@@ -87,12 +80,11 @@ namespace TCLite.Framework.Constraints
         /// <param name="ignoreCase">If true, case is ignored in locating the point where the strings differ</param>
         /// <param name="clipping">If true, the strings should be clipped to fit the line</param>
         public abstract void DisplayStringDifferences(string expected, string actual, int mismatch, bool ignoreCase, bool clipping);
-
         /// <summary>
         /// Writes the text for a connector.
         /// </summary>
         /// <param name="connector">The connector.</param>
-        public abstract void WriteConnector(string connector);
+        //public abstract void WriteConnector(string connector);
 
         /// <summary>
         /// Writes the text for an expected value.
@@ -101,30 +93,9 @@ namespace TCLite.Framework.Constraints
         public abstract void WriteExpectedValue(object expected);
 
         /// <summary>
-        /// Writes the text for a modifier
-        /// </summary>
-        /// <param name="modifier">The modifier.</param>
-        public abstract void WriteModifier(string modifier);
-
-        /// <summary>
         /// Writes the text for an actual value.
         /// </summary>
         /// <param name="actual">The actual value.</param>
         public abstract void WriteActualValue(object actual);
-
-        /// <summary>
-        /// Writes the text for a generalized value.
-        /// </summary>
-        /// <param name="val">The value.</param>
-        public abstract void WriteValue(object val);
-
-        /// <summary>
-        /// Writes the text for a collection value,
-        /// starting at a particular point, to a max length
-        /// </summary>
-        /// <param name="collection">The collection containing elements to write.</param>
-        /// <param name="start">The starting point of the elements to write</param>
-        /// <param name="max">The maximum number of elements to write</param>
-        public abstract void WriteCollectionElements(IEnumerable collection, int start, int max);
     }
 }

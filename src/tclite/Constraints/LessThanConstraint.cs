@@ -36,8 +36,6 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for success, false for failure</returns>
         protected override bool Matches<TActual>(TActual actual)
         {
-            ActualValue = actual;
-
             if (ExpectedValue == null || actual == null)
                 throw new ArgumentException("Cannot compare using a null reference");
 

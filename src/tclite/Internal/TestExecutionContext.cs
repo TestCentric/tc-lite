@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using TCLite.Framework.Api;
+using TCLite.Framework.Constraints;
 using TCLite.Framework.Tests;
 //using System.Runtime.Remoting.Messaging;
 
@@ -265,6 +266,12 @@ namespace TCLite.Framework.Internal
             get { return listener; }
             set { listener = value; }
         }
+
+        /// <summary>
+        /// Default tolerance value used for floating point equality
+        /// when no other tolerance is specified.
+        /// </summary>
+        public Tolerance DefaultFloatingPointTolerance { get; set; }
 
         /// <summary>
         /// Gets the RandomGenerator specific to this Test

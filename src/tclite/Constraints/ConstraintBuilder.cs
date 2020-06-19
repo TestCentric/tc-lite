@@ -127,7 +127,7 @@ namespace TCLite.Framework.Constraints
             /// <returns></returns>
             public Constraint Pop()
             {
-                Constraint constraint = (Constraint)stack.Pop();
+                Constraint constraint = stack.Pop();
                 constraint.Builder = null;
                 return constraint;
             }
@@ -162,7 +162,7 @@ namespace TCLite.Framework.Constraints
         /// </value>
         public bool IsResolvable
         {
-            get { return lastPushed is Constraint || lastPushed is SelfResolvingOperator; }
+            get { return lastPushed is IConstraint || lastPushed is SelfResolvingOperator; }
         }
         #endregion
 

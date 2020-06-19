@@ -10,8 +10,6 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     public interface IConstraint : IResolveConstraint
     {
-        #region Properties
-
         /// <summary>
         /// The display name of this Constraint for use by ToString().
         /// </summary>
@@ -33,48 +31,5 @@ namespace TCLite.Framework.Constraints
         /// The ConstraintBuilder holding this constraint
         /// </summary>
         ConstraintBuilder Builder { get; set; }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Applies the constraint to an actual value, returning a ConstraintResult.
-        /// </summary>
-        /// <param name="actual">The value to be tested</param>
-        /// <returns>A ConstraintResult</returns>
-        ConstraintResult ApplyTo<TActual>(TActual actual);
-
-        /// <summary>
-        /// Applies the constraint to an actual value, returning a ConstraintResult.
-        /// This overload will be selected when (1) the passed value is cast as an 
-        /// object or (2) the argument is null and no Type parameter is specified.
-        /// </summary>
-        /// <param name="actual">The value to be tested</param>
-        /// <returns>A ConstraintResult</returns>
-        ConstraintResult ApplyTo(object actual);
-
-        /// <summary>
-        /// Applies the constraint to an ActualValueDelegate that returns 
-        /// the value to be tested. The default implementation simply evaluates 
-        /// the delegate but derived classes may override it to provide for 
-        /// delayed processing.
-        /// </summary>
-        /// <param name="del">An ActualValueDelegate</param>
-        /// <returns>A ConstraintResult</returns>
-        ConstraintResult ApplyTo<TActual>(ActualValueDelegate<TActual> del);
-
-        #pragma warning disable 3006
-        /// <summary>
-        /// Test whether the constraint is satisfied by a given reference.
-        /// The default implementation simply dereferences the value but
-        /// derived classes may override it to provide for delayed processing.
-        /// </summary>
-        /// <param name="actual">A reference to the value to be tested</param>
-        /// <returns>A ConstraintResult</returns>
-        ConstraintResult ApplyTo<TActual>(ref TActual actual);
-        #pragma warning restore 3006
-
-        #endregion
     }
 }

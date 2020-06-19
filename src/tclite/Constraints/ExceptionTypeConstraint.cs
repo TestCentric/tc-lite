@@ -36,19 +36,19 @@ namespace TCLite.Framework.Constraints
         #region Nested Result Class
         class ExceptionTypeConstraintResult : ConstraintResult
         {
-            private readonly object caughtException;
+            private readonly object _caughtException;
 
             public ExceptionTypeConstraintResult(ExceptionTypeConstraint constraint, object caughtException, Type type, bool matches)
                 : base(constraint, type, matches)
             {
-                this.caughtException = caughtException;
+                this._caughtException = caughtException;
             }
 
-            public override void WriteActualValueTo(MessageWriter writer)
+            public override void WriteActualLineTo(MessageWriter writer)
             {
                 if (this.Status == ConstraintStatus.Failure)
                 {
-                    Exception ex = caughtException as Exception;
+                    Exception ex = _caughtException as Exception;
 
                     if (ex == null)
                     {
@@ -62,24 +62,6 @@ namespace TCLite.Framework.Constraints
             }
         }
         #endregion
-    
-        /// <summary>
-        /// Write the actual value for a failing constraint test to a
-        /// MessageWriter. Overridden to write additional information 
-        /// in the case of an Exception.
-        /// </summary>
-        /// <param name="writer">The MessageWriter to use</param>
-        public override void WriteActualValueTo(MessageWriter writer)
-        {
-            Exception ex = ActualValue as Exception;
-            base.WriteActualValueTo(writer);
-
-            if (ex != null)
-            {
-                writer.WriteLine(" ({0})", ex.Message);
-                writer.Write(ex.StackTrace);
-            }
         }
-    }
 }
 

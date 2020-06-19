@@ -69,17 +69,21 @@ namespace TCLite.Framework.Constraints
         public object[] Arguments { get; }
 
         /// <summary>
-        /// The actual value being tested against a constraint
-        /// </summary>
-        protected object ActualValue { get; set; }
-
-        /// <summary>
         /// The builder holding this constraint
         /// </summary>
         public ConstraintBuilder Builder { get; set; }
 
         #endregion
 
+        #region IResolveConstraint
+
+        Constraint IResolveConstraint.Resolve()
+        {
+            return Builder == null ? this : Builder.Resolve();
+        }
+
+        #endregion
+        
         #region Abstract and Virtual Methods
 
         /// <summary>
@@ -144,20 +148,6 @@ namespace TCLite.Framework.Constraints
 
 #endregion
 
-        #region Abstract and Virtual Methods
-        /// <summary>
-        /// Write the actual value for a failing constraint test to a
-        /// MessageWriter. The default implementation simply writes
-        /// the raw value of actual, leaving it to the writer to
-        /// perform any formatting.
-        /// </summary>
-        /// <param name="writer">The writer on which the actual value is displayed</param>
-        public virtual void WriteActualValueTo(MessageWriter writer)
-        {
-            writer.WriteActualValue(ActualValue);
-        }
-        #endregion
-
         #region ToString Override
 
         /// <summary>
@@ -204,6 +194,7 @@ namespace TCLite.Framework.Constraints
         #endregion
 
         #region Operator Overloads
+        
         /// <summary>
         /// This operator creates a constraint that is satisfied only if both 
         /// argument constraints are satisfied.
@@ -235,9 +226,11 @@ namespace TCLite.Framework.Constraints
             IResolveConstraint r = constraint as IResolveConstraint;
             return new NotConstraint(r == null ? new NullConstraint() : r.Resolve());
         }
+
         #endregion
 
         #region Binary Operators
+
         /// <summary>
         /// Returns a ConstraintExpression by appending And
         /// to the current constraint.
@@ -286,6 +279,7 @@ namespace TCLite.Framework.Constraints
                 return new ConstraintExpression(Builder);
             }
         }
+
         #endregion
 
         #region After Modifier
@@ -317,13 +311,7 @@ namespace TCLite.Framework.Constraints
                 pollingInterval);
         }
 #endif
-        #endregion
 
-        #region IResolveConstraint Members
-        Constraint IResolveConstraint.Resolve()
-        {
-            return Builder == null ? this : Builder.Resolve();
-        }
         #endregion
     }
 

@@ -23,7 +23,7 @@ namespace TCLite.Framework.Constraints
             DisplayName = "typeof";
         }
 
-        public override string Description => $"Value of Type {ExpectedType}";
+        public override string Description => $"<{ExpectedType.FullName}>";
 
         /// <summary>
         /// Test that an object is of the exact type specified
@@ -32,7 +32,6 @@ namespace TCLite.Framework.Constraints
         /// <returns>True if the tested object is of the exact type provided, otherwise false.</returns>
         protected override bool Matches<TActual>(TActual actual)
         {
-            ActualValue = actual;
             return actual != null && actual.GetType() == ExpectedType;
         }
     }

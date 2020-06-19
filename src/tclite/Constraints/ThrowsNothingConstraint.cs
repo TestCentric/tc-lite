@@ -18,18 +18,6 @@ namespace TCLite.Framework.Constraints
         public override string Description => "No exception to be thrown";
 
         /// <summary>
-        /// Write the actual value for a failing constraint test to a
-        /// MessageWriter. Overridden in ThrowsNothingConstraint to write 
-        /// information about the exception that was actually caught.
-        /// </summary>
-        /// <param name="writer">The writer on which the actual value is displayed</param>
-        public override void WriteActualValueTo(MessageWriter writer)
-        {
-            writer.WriteLine($"<{_caughtException.GetType().FullName}> ({_caughtException.Message})");
-            writer.WriteLine(_caughtException.StackTrace);
-        }
-
-        /// <summary>
         /// Test whether the constraint is satisfied by a given value
         /// </summary>
         /// <param name="actual">The value to be tested</param>

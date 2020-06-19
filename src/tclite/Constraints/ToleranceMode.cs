@@ -16,7 +16,7 @@ namespace TCLite.Framework.Constraints
         /// the mode more than once and is generally changed to Linear
         /// upon execution of the test.
         /// </summary>
-        None,
+        Default,
         /// <summary>
         /// The tolerance is used as a numeric range within which
         /// two compared values are considered to be equal.

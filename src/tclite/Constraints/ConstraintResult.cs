@@ -6,39 +6,30 @@
 namespace TCLite.Framework.Constraints
 {
     /// <summary>
-    /// ConstraintStatus represents the status of a ConstraintResult
-    /// returned by a Constraint being applied to an actual value.
-    /// </summary>
-    public enum ConstraintStatus
-    {
-        /// <summary>
-        /// The status has not yet been set
-        /// </summary>
-        Unknown,
-
-        /// <summary>
-        /// The constraint succeeded
-        /// </summary>
-        Success,
-
-        /// <summary>
-        /// The constraint failed
-        /// </summary>
-        Failure,
-
-        /// <summary>
-        /// An error occurred in applying the constraint (reserved for future use)
-        /// </summary>
-        Error
-    }
-
-    /// <summary>
     /// Contains the result of matching a <see cref="Constraint"/> against an actual value.
     /// </summary>
-    public class ConstraintResult
+    public class ConstraintResult : IConstraintResult
     {
         readonly IConstraint _constraint;
 
+		// Prefixes used in all failure messages. All must be the same
+		// length, which is held in the PrefixLength field. Should not
+		// contain any tabs or newline characters.
+		/// <summary>
+		/// Prefix used for the expected value line of a message
+		/// </summary>
+		protected static readonly string Pfx_Expected = "  Expected: ";
+
+		/// <summary>
+		/// Prefix used for the actual value line of a message
+		/// </summary>
+		protected static readonly string Pfx_Actual = "  But was:  ";
+
+		/// <summary>
+		/// Length of a message prefix
+		/// </summary>
+		public static readonly int PrefixLength = Pfx_Expected.Length;
+		
         #region Constructors
 
         /// <summary>
@@ -78,12 +69,12 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-        #region Properties
+        #region IConstraintResult Members
 
         /// <summary>
-        /// The actual value that was passed to the <see cref="Constraint.ApplyTo{TActual}(TActual)"/> method.
+        /// Display friendly name of the constraint.
         /// </summary>
-        public object ActualValue { get; }
+        public string DisplayName => _constraint.DisplayName;
 
         /// <summary>
         /// Gets and sets the ResultStatus for this result.
@@ -93,21 +84,18 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// True if actual value meets the Constraint criteria otherwise false.
         /// </summary>
-        public virtual bool IsSuccess
-        {
-            get { return Status == ConstraintStatus.Success; }
-        }
-
-        /// <summary>
-        /// Display friendly name of the constraint.
-        /// </summary>
-        public string Name { get { return _constraint.DisplayName; } }
+        public virtual bool IsSuccess => Status == ConstraintStatus.Success;
 
         /// <summary>
         /// Description of the constraint may be affected by the state the constraint had
         /// when <see cref="Constraint.ApplyTo{TActual}(TActual)"/> was performed against the actual value.
         /// </summary>
-        public string Description { get { return _constraint.Description; } }
+        public string Description => _constraint.Description;
+
+        /// <summary>
+        /// The actual value that was passed to the <see cref="Constraint.ApplyTo{TActual}(TActual)"/> method.
+        /// </summary>
+        public object ActualValue { get; }
 
         #endregion
 
@@ -125,7 +113,22 @@ namespace TCLite.Framework.Constraints
         /// <param name="writer">The MessageWriter on which to display the message</param>
         public virtual void WriteMessageTo(MessageWriter writer)
         {
-            writer.DisplayDifferences(this);
+            WriteExpectedLineTo(writer);
+            WriteActualLineTo(writer);
+            WriteAdditionalLinesTo(writer);
+        }
+
+        public virtual void WriteExpectedLineTo(MessageWriter writer)
+        {
+            writer.Write(Pfx_Expected);
+            writer.WriteLine(Description);
+        }
+
+        public virtual void WriteActualLineTo(MessageWriter writer)
+        {
+            writer.Write(Pfx_Actual);
+            writer.WriteActualValue(ActualValue);
+            writer.WriteLine();
         }
 
         /// <summary>

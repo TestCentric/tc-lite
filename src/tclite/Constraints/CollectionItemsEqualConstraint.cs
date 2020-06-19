@@ -112,7 +112,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         protected bool ItemsEqual(object x, object y)
         {
-            Tolerance tolerance = Tolerance.Zero;
+            Tolerance tolerance = Tolerance.Exact;
             return _comparer.AreEqual(x, y, ref tolerance);
         }
 

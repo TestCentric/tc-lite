@@ -4,7 +4,7 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Internal;
+using System.Reflection;
 
 namespace TCLite.Framework.Constraints
 {
@@ -45,7 +45,18 @@ namespace TCLite.Framework.Constraints
         {
             Guard.ArgumentIsRequiredType<Delegate>(actual, nameof(actual));
 
-            _caughtException = ExceptionInterceptor.Intercept(actual);
+            try
+            {
+                (actual as Delegate).DynamicInvoke();
+            }
+            catch(TargetInvocationException ex)
+            {
+                _caughtException = ex.InnerException;
+            }
+            catch(Exception ex)
+            {
+                _caughtException = ex;
+            }
 
             return new ThrowsConstraintResult(
                 this,
@@ -66,7 +77,18 @@ namespace TCLite.Framework.Constraints
         {
             Guard.ArgumentIsRequiredType<Delegate>(actual, nameof(actual));
 
-            _caughtException = ExceptionInterceptor.Intercept(actual);
+            try
+            {
+                (actual as Delegate).DynamicInvoke();
+            }
+            catch(TargetInvocationException ex)
+            {
+                _caughtException = ex.InnerException;
+            }
+            catch(Exception ex)
+            {
+                _caughtException = ex;
+            }
 
             return new ThrowsConstraintResult(
                 this,

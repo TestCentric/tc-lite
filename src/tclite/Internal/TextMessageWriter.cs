@@ -19,6 +19,7 @@ namespace TCLite.Framework.Internal
     public class TextMessageWriter : MessageWriter
     {
         #region Message Formats and Constants
+
         private static readonly int DEFAULT_LINE_LENGTH = 78;
 
 		// Prefixes used in all failure messages. All must be the same
@@ -38,8 +39,6 @@ namespace TCLite.Framework.Internal
 		public static readonly int PrefixLength = Pfx_Expected.Length;
 		
 		private static readonly string Fmt_Connector = " {0} ";
-        private static readonly string Fmt_Predicate = "{0} ";
-        //private static readonly string Fmt_Label = "{0}";
 		private static readonly string Fmt_Modifier = ", {0}";
 
         private static readonly string Fmt_Null = "null";
@@ -51,11 +50,11 @@ namespace TCLite.Framework.Internal
 		private static readonly string Fmt_DateTime = "yyyy-MM-dd HH:mm:ss.fff";
         private static readonly string Fmt_ValueType = "{0}";
         private static readonly string Fmt_Default = "<{0}>";
+
         #endregion
 
-		private int maxLineLength = DEFAULT_LINE_LENGTH;
-
         #region Constructors
+
 		/// <summary>
 		/// Construct a TextMessageWriter
 		/// </summary>
@@ -72,20 +71,20 @@ namespace TCLite.Framework.Internal
 			if ( userMessage != null && userMessage != string.Empty)
 				this.WriteMessageLine(userMessage, args);
         }
+
         #endregion
 
         #region Properties
+
         /// <summary>
         /// Gets or sets the maximum line length for this writer
         /// </summary>
-        public override int MaxLineLength
-        {
-            get { return maxLineLength; }
-            set { maxLineLength = value; }
-        }
+        public override int MaxLineLength { get; set; }
+
         #endregion
 
-        #region Public Methods - High Level
+        #region Public Methods
+
         /// <summary>
         /// Method to write single line  message with optional args, usually
         /// written to precede the general failure message, at a givel 
@@ -105,19 +104,6 @@ namespace TCLite.Framework.Internal
 
                 WriteLine(message);
             }
-        }
-
-        /// <summary>
-        /// Display Expected and Actual lines for a constraint. This
-        /// is called by MessageWriter's default implementation of 
-        /// WriteMessageTo and provides the generic two-line display. 
-        /// </summary>
-        /// <param name="constraint">The constraint that failed</param>
-        public override void DisplayDifferences(ConstraintResult result)
-        {
-            WriteExpectedLine(result);
-            WriteActualLine(result);
-            // NYI: WriteAdditionalLine(result);
         }
 
 		/// <summary>
@@ -186,24 +172,6 @@ namespace TCLite.Framework.Internal
         #endregion
 
         #region Public Methods - Low Level
-		/// <summary>
-		/// Writes the text for a connector.
-		/// </summary>
-		/// <param name="connector">The connector.</param>
-		public override void WriteConnector(string connector)
-        {
-            Write(Fmt_Connector, connector);
-        }
-
-        /// <summary>
-        /// Write the text for a modifier.
-        /// </summary>
-        /// <param name="modifier">The modifier.</param>
-		public override void WriteModifier(string modifier)
-		{
-			Write(Fmt_Modifier, modifier);
-		}
-
 
 		/// <summary>
 		/// Writes the text for an expected value.
@@ -223,11 +191,15 @@ namespace TCLite.Framework.Internal
             WriteValue(actual);
         }
 
+        #endregion
+
+        #region Helper Methods
+
 		/// <summary>
 		/// Writes the text for a generalized value.
 		/// </summary>
 		/// <param name="val">The value.</param>
-		public override void WriteValue(object val)
+		private void WriteValue(object val)
         {
             if (val == null)
                 Write(Fmt_Null);
@@ -260,7 +232,7 @@ namespace TCLite.Framework.Internal
         /// <param name="collection">The collection containing elements to write.</param>
         /// <param name="start">The starting point of the elements to write</param>
         /// <param name="max">The maximum number of elements to write</param>
-		public override void WriteCollectionElements(IEnumerable collection, int start, int max)
+		private void WriteCollectionElements(IEnumerable collection, int start, int max)
 		{
 			int count = 0;
 			int index = 0;
@@ -381,19 +353,34 @@ namespace TCLite.Framework.Internal
 		{
 			Write(dt.ToString(Fmt_DateTime, CultureInfo.InvariantCulture));
 		}
-        #endregion
 
-        #region Helper Methods
+		/// <summary>
+		/// Writes the text for a connector.
+		/// </summary>
+		/// <param name="connector">The connector.</param>
+		private void WriteConnector(string connector)
+        {
+            Write(Fmt_Connector, connector);
+        }
 
         /// <summary>
-        /// Write the generic 'Expected' line for a constraint
+        /// Write the text for a modifier.
         /// </summary>
-        /// <param name="result">The constraint that failed</param>
-        private void WriteExpectedLine(ConstraintResult result)
-        {
-            Write(Pfx_Expected);
-            WriteLine(result.Description);
-        }
+        /// <param name="modifier">The modifier.</param>
+		private void WriteModifier(string modifier)
+		{
+			Write(Fmt_Modifier, modifier);
+		}
+
+        // /// <summary>
+        // /// Write the generic 'Expected' line for a constraint
+        // /// </summary>
+        // /// <param name="result">The constraint that failed</param>
+        // private void WriteExpectedLine(ConstraintResult result)
+        // {
+        //     Write(Pfx_Expected);
+        //     WriteLine(result.Description);
+        // }
 
 		/// <summary>
 		/// Write the generic 'Expected' line for a given value
@@ -415,10 +402,10 @@ namespace TCLite.Framework.Internal
 			Write(Pfx_Expected);
 			WriteExpectedValue(expected);
 
-            if (tolerance != null && !tolerance.IsEmpty)
+            if (tolerance != null && !tolerance.IsDefault)
             {
                 WriteConnector("+/-");
-                WriteExpectedValue(tolerance.Value);
+                WriteExpectedValue(tolerance.Amount);
                 if (tolerance.Mode != ToleranceMode.Linear)
                     Write(" {0}", tolerance.Mode);
             }
@@ -426,22 +413,22 @@ namespace TCLite.Framework.Internal
 			WriteLine();
 		}
 
-        /// <summary>
-        /// Write the generic 'Actual' line for a constraint
-        /// </summary>
-        /// <param name="result">The ConstraintResult for which the actual value is to be written</param>
-        private void WriteActualLine(ConstraintResult result)
-        {
-            Write(Pfx_Actual);
-            result.WriteActualValueTo(this);
-            WriteLine();
-            //WriteLine(MsgUtils.FormatValue(result.ActualValue));
-        }
+        // /// <summary>
+        // /// Write the generic 'Actual' line for a constraint
+        // /// </summary>
+        // /// <param name="result">The ConstraintResult for which the actual value is to be written</param>
+        // private void WriteActualLine(ConstraintResult result)
+        // {
+        //     Write(Pfx_Actual);
+        //     result.WriteActualValueTo(this);
+        //     WriteLine();
+        //     //WriteLine(MsgUtils.FormatValue(result.ActualValue));
+        // }
 
-        private void WriteAdditionalLine(ConstraintResult result)
-        {
-            result.WriteAdditionalLinesTo(this);
-        }
+        // private void WriteAdditionalLine(ConstraintResult result)
+        // {
+        //     result.WriteAdditionalLinesTo(this);
+        // }
 
 		/// <summary>
 		/// Write the generic 'Actual' line for a given value

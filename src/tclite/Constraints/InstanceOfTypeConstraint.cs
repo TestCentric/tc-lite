@@ -32,7 +32,6 @@ namespace TCLite.Framework.Constraints
         /// <returns>True if the object is of the provided type or derives from it, otherwise false.</returns>
         protected override bool Matches<TActual>(TActual actual)
         {
-            ActualValue = actual;
             return actual != null && ExpectedType.IsInstanceOfType(actual);
         }
     }

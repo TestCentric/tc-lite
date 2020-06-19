@@ -110,6 +110,7 @@ namespace TCLite.Framework.Constraints
 		
 		#endregion
 		
+#endif
         #region Property
 
         /// <summary>
@@ -176,6 +177,7 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
+#if NYI
         #region Attribute
 
         /// <summary>
@@ -452,7 +454,7 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-#if NYI
+
         #region TypeOf
 
         /// <summary>
@@ -497,6 +499,7 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
+#if NYI
         #region AssignableFrom
 
         /// <summary>

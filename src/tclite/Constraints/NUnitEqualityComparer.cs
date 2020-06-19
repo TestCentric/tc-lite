@@ -160,9 +160,9 @@ namespace TCLite.Framework.Constraints
             if (Numerics.IsNumericType(expected) && Numerics.IsNumericType(actual))
                 return Numerics.AreEqual(expected, actual, ref tolerance);
 
-            if (tolerance != null && tolerance.Value is TimeSpan)
+            if (tolerance != null && tolerance.Amount is TimeSpan)
             {
-                TimeSpan amount = (TimeSpan)tolerance.Value;
+                TimeSpan amount = (TimeSpan)tolerance.Amount;
 
                 if (expected is DateTime && actual is DateTime)
                     return ((DateTime)expected - (DateTime)actual).Duration() <= amount;

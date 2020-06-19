@@ -59,16 +59,5 @@ namespace TCLite.Framework.Constraints
         }
 
         protected abstract bool Matches<TActual>(TActual actual);
-
-        /// <summary>
-        /// Write the actual value for a failing constraint test to a
-        /// MessageWriter. TypeConstraints override this method to write
-        /// the name of the type.
-        /// </summary>
-        /// <param name="writer">The writer on which the actual value is displayed</param>
-        public override void WriteActualValueTo(MessageWriter writer)
-        {
-            writer.WriteActualValue(ActualValue == null ? null : ActualValue.GetType());
-        }
     }
 }
