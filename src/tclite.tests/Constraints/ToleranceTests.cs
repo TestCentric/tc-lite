@@ -28,7 +28,7 @@ namespace TCLite.Framework.Constraints
             var defaultTolerance = Tolerance.Default;
             Assert.IsTrue(defaultTolerance.IsDefault);
 
-            var comparer = new NUnitEqualityComparer();
+            var comparer = new TCLiteEqualityComparer();
             Assert.IsTrue(comparer.AreEqual(2.0d, 2.1d, ref defaultTolerance ));
         }
 
@@ -38,7 +38,7 @@ namespace TCLite.Framework.Constraints
             var noneTolerance = Tolerance.Exact;
             Assert.IsFalse(noneTolerance.IsDefault);
 
-            var comparer = new NUnitEqualityComparer();
+            var comparer = new TCLiteEqualityComparer();
             Assert.IsFalse(comparer.AreEqual(2.0d, 2.1d, ref noneTolerance));
         }
 

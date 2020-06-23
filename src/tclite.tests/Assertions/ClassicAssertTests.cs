@@ -67,7 +67,7 @@ namespace TCLite.Framework.Assertions
             Assert.AreEqual(StandardErrorMessage("not null", "null"), ex.Message);
 		}
 
-#if NYI
+#if NYI // IsNaN
 		[Test]
 		public void IsNaN()
 		{

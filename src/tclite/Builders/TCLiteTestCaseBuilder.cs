@@ -262,7 +262,7 @@ namespace TCLite.Framework.Builders
             }
             else
             {
-#if NYI
+#if NYI // async
                 if (MethodHelper.IsAsyncMethod(testMethod.Method))
                 {
                     bool returnsGenericTask = returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>);

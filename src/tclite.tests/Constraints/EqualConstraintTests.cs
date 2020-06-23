@@ -59,6 +59,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, new EqualConstraint<DateTime>(expected));
         }
 
+#if NYI // DateTime
         [Test]
         public void CanMatchDatesWithinTimeSpan()
         {
@@ -123,11 +124,10 @@ namespace TCLite.Framework.Constraints
             DateTime actual = new DateTime(2007, 4, 1, 13, 1, 0);
             Assert.That(actual, new EqualConstraint<DateTime>(expected).Within(TimeSpan.TicksPerMinute * 5).Ticks);
         }
+#endif
 
         #region Dictionary Tests
 
-#if !NETCF_2_0
-#if !SILVERLIGHT
         // TODO: Move these to a separate fixture
         [Test]
         public void CanMatchHashtables_SameOrder()
@@ -153,7 +153,6 @@ namespace TCLite.Framework.Constraints
             Assert.AreEqual(new Hashtable { { 0, 0 }, { 1, 1 }, { 2, 2 } },
                             new Hashtable { { 0, 0 }, { 2, 2 }, { 1, 1 } });
         }
-#endif
 
         [Test]
         public void CanMatchDictionaries_SameOrder()
@@ -173,7 +172,7 @@ namespace TCLite.Framework.Constraints
             });
         }
 
-#if NYI
+#if NYI // Dictionary
         [Test]
         public void CanMatchDictionaries_DifferentOrder()
         {
@@ -182,16 +181,13 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-#if !SILVERLIGHT
-#if NYI
+#if NYI // Dictionary
         [Test]
         public void CanMatchHashtableWithDictionary()
         {
             Assert.AreEqual(new Hashtable { { 0, 0 }, { 1, 1 }, { 2, 2 } },
                             new Dictionary<int, int> { { 0, 0 }, { 2, 2 }, { 1, 1 } });
         }
-#endif
-#endif
 #endif
 
         #endregion
@@ -367,7 +363,7 @@ namespace TCLite.Framework.Constraints
                 () => Assert.That(100m, Is.EqualTo(100m).Within(2).Ulps));
         }
 
-#if NYI
+#if NYI // Using
         [Test]
         public void UsesProvidedIComparer()
         {
@@ -419,7 +415,6 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-#if !NETCF_2_0
         [Test]
         public void UsesProvidedLambda_IntArgs()
         {
@@ -444,7 +439,6 @@ namespace TCLite.Framework.Constraints
 
             Assert.That(list11, new CollectionEquivalentConstraint(list22).Using(comparer));
         }
-#endif
 
         public class IntListEqualComparer : IEqualityComparer<List<int>>
         {

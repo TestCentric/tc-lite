@@ -12,9 +12,16 @@ namespace TCLite.Framework.Constraints
     public interface IResolveConstraint
     {
         /// <summary>
-        /// Return the top-level constraint for this expression
+        /// Returns True if the constraint or expression is complete,
+        /// False if still under construction.
         /// </summary>
-        /// <returns></returns>
+        /// <value></value>
+        bool IsResolvable { get; }
+
+        /// <summary>
+        /// Return the top-level constraint for the complete expression.
+        /// Throws InvalidOperationException if the expression is incomplete.
+        /// </summary>
         Constraint Resolve();
     }
 }

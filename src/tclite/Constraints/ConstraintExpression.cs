@@ -16,12 +16,13 @@ namespace TCLite.Framework.Constraints
     /// recognized. Once an actual Constraint is appended, the expression
     /// returns a resolvable Constraint.
     /// </summary>
-    public class ConstraintExpression : ConstraintExpressionBase
+    public class ConstraintExpression
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ConstraintExpression"/> class.
         /// </summary>
-        public ConstraintExpression() { }
+        public ConstraintExpression() 
+            : this(new ConstraintBuilder()) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ConstraintExpression"/> 
@@ -29,7 +30,49 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="builder">The builder.</param>
         public ConstraintExpression(ConstraintBuilder builder)
-            : base( builder ) { }
+        {
+            Builder = builder;
+        }
+
+        /// <summary>
+        /// The ConstraintBuilder associated with this expression
+        /// </summary>
+        public ConstraintBuilder Builder { get; set; }
+
+        #region Append Methods
+
+        /// <summary>
+        /// Appends an operator to the expression and returns the
+        /// resulting expression itself.
+        /// </summary>
+        public ConstraintExpression Append(ConstraintOperator op)
+        {
+            Builder.Append(op);
+            return this;
+        }
+
+        /// <summary>
+        /// Appends a self-resolving operator to the expression and
+        /// returns a new ResolvableConstraintExpression.
+        /// </summary>
+        public ResolvableConstraintExpression Append(SelfResolvingOperator op)
+        {
+            Builder.Append(op);
+            return new ResolvableConstraintExpression(Builder);
+        }
+
+        /// <summary>
+        /// Appends a constraint to the expression and returns that
+        /// constraint, which is associated with the current state
+        /// of the expression being built.
+        /// </summary>
+        public Constraint Append(Constraint constraint)
+        {
+            Builder.Append(constraint);
+            return constraint;
+        }
+
+        #endregion
 
         #region Not
 
@@ -53,7 +96,7 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-#if NYI
+#if NYI // All, Some, None, Exactly, Property, Length, Count, Message, InnerException, With, Attribute, Matches
         #region All
 
         /// <summary>
@@ -110,7 +153,6 @@ namespace TCLite.Framework.Constraints
 		
 		#endregion
 		
-#endif
         #region Property
 
         /// <summary>
@@ -177,7 +219,6 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-#if NYI
         #region Attribute
 
         /// <summary>
@@ -271,7 +312,7 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-#if NYI
+#if NYI // Positive, Negative, NaN, Empty
         #region Positive
  
         /// <summary>
@@ -322,7 +363,7 @@ namespace TCLite.Framework.Constraints
 
         #region Unique
 
-#if NYI
+#if NYI // Unique
         /// <summary>
         /// Returns a constraint that tests whether a collection 
         /// contains all unique items.
@@ -499,7 +540,7 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-#if NYI
+#if NYI // AssignableFrom, AssignableTo
         #region AssignableFrom
 
         /// <summary>
@@ -546,7 +587,7 @@ namespace TCLite.Framework.Constraints
 
         #region EquivalentTo
 
-#if NYI
+#if NYI // EquivalentTo
         /// <summary>
         /// Returns a constraint that tests whether the actual value
         /// is a collection containing the same elements as the 
@@ -562,7 +603,7 @@ namespace TCLite.Framework.Constraints
 
         #region SubsetOf
 
-#if NYI
+#if NYI // SubsetOf
         /// <summary>
         /// Returns a constraint that tests whether the actual value
         /// is a subset of the collection supplied as an argument.
@@ -717,7 +758,7 @@ namespace TCLite.Framework.Constraints
 
         #region SamePath
 
-#if NYI
+#if NYI // SamePath
         /// <summary>
         /// Returns a constraint that tests whether the path provided 
         /// is the same as an expected path after canonicalization.
@@ -732,7 +773,7 @@ namespace TCLite.Framework.Constraints
 
         #region SubPath
 
-#if NYI
+#if NYI // SubPath
         /// <summary>
         /// Returns a constraint that tests whether the path provided 
         /// is the same path or under an expected path after canonicalization.
@@ -747,7 +788,7 @@ namespace TCLite.Framework.Constraints
 
         #region SamePathOrUnder
 
-#if NYI
+#if NYI // SamePathOrUnder
         /// <summary>
         /// Returns a constraint that tests whether the path provided 
         /// is the same path or under an expected path after canonicalization.

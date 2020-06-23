@@ -13,7 +13,7 @@ namespace TCLite.Framework.Constraints
         public void CanDisplaySimpleConstraints_Unresolved()
         {
             Assert.That(Is.EqualTo(5).ToString(), Is.EqualTo("<equal 5>"));
-#if NYI
+#if NYI // Property, Attribute
             Assert.That(Has.Property("X").ToString(), Is.EqualTo("<propertyexists X>"));
             Assert.That(Has.Attribute(typeof(TestAttribute)).ToString(), 
                 Is.EqualTo("<attributeexists NUnit.Framework.TestAttribute>"));
@@ -26,7 +26,7 @@ namespace TCLite.Framework.Constraints
         {
             IResolveConstraint constraint = Is.EqualTo(5);
             Assert.That(constraint.Resolve().ToString(), Is.EqualTo("<equal 5>"));
-#if NYI
+#if NYI // Property, Attribute
             constraint = Has.Property("X");
             Assert.That(constraint.Resolve().ToString(), Is.EqualTo("<propertyexists X>"));
             constraint = Has.Attribute(typeof(TestAttribute)).With.Property("Description").EqualTo("smoke");
@@ -39,7 +39,7 @@ namespace TCLite.Framework.Constraints
         public void DisplayPrefixConstraints_Unresolved()
         {
             Assert.That(Is.Not.EqualTo(5).ToString(), Is.EqualTo("<unresolved <equal 5>>"));
-#if NYI
+#if NYI // Property, Attribute
             Assert.That(Is.Not.All.EqualTo(5).ToString(), Is.EqualTo("<unresolved <equal 5>>"));
             Assert.That(Has.Property("X").EqualTo(5).ToString(), Is.EqualTo("<unresolved <equal 5>>"));
             Assert.That(Has.Attribute(typeof(TestAttribute)).With.Property("Description").EqualTo("smoke").ToString(),
@@ -52,7 +52,7 @@ namespace TCLite.Framework.Constraints
         {
             IResolveConstraint constraint = Is.Not.EqualTo(5);
             Assert.That(constraint.Resolve().ToString(), Is.EqualTo("<not <equal 5>>"));
-#if NYI
+#if NYI // All, Property
             constraint = Is.Not.All.EqualTo(5);
             Assert.That(constraint.Resolve().ToString(), Is.EqualTo("<not <all <equal 5>>>"));
             constraint = Has.Property("X").EqualTo(5);

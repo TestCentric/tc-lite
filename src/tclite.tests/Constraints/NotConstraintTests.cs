@@ -51,7 +51,7 @@ namespace TCLite.Framework.Constraints
                 TextMessageWriter.Pfx_Actual + message + NL ));
         }
 
-#if NYI
+#if NYI // IgnoreCase
         [Test]
         public void NotHonorsIgnoreCaseUsingConstructors()
         {

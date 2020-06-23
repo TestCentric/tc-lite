@@ -37,7 +37,7 @@ namespace TCLite.Framework.Syntax
         }
     }
 
-#if NYI
+#if NYI // Positive
     public class PositiveTest : SyntaxTest
     {
         public PositiveTest()

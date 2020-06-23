@@ -19,7 +19,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="obj">The object to check</param>
         /// <returns>true if the object is a numeric type</returns>
-        public static bool IsNumericType(Object obj)
+        public static bool IsNumericType<T>(T obj)
         {
             return IsFloatingPointNumeric(obj) || IsFixedPointNumeric(obj);
         }
@@ -30,7 +30,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="obj">The object to check</param>
         /// <returns>true if the object is a floating point numeric type</returns>
-        public static bool IsFloatingPointNumeric(Object obj)
+        public static bool IsFloatingPointNumeric<T>(T obj)
         {
             if (null != obj)
             {
@@ -45,7 +45,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="obj">The object to check</param>
         /// <returns>true if the object is a fixed point numeric type</returns>
-        public static bool IsFixedPointNumeric(Object obj)
+        public static bool IsFixedPointNumeric<T>(T obj)
         {
             if (null != obj)
             {
@@ -64,6 +64,7 @@ namespace TCLite.Framework.Constraints
         #endregion
 
         #region Numeric Equality
+        
         /// <summary>
         /// Test two numeric values for equality, performing the usual numeric 
         /// conversions and using a provided or default tolerance. If the tolerance 
@@ -99,7 +100,7 @@ namespace TCLite.Framework.Constraints
             return AreEqual(Convert.ToInt32(expected), Convert.ToInt32(actual), tolerance);
         }
 
-        private static bool AreEqual(double expected, double actual, ref Tolerance tolerance)
+        public static bool AreEqual(double expected, double actual, ref Tolerance tolerance)
         {
             if (double.IsNaN(expected) && double.IsNaN(actual))
                 return true;
@@ -144,7 +145,7 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        private static bool AreEqual(float expected, float actual, ref Tolerance tolerance)
+        public static bool AreEqual(float expected, float actual, ref Tolerance tolerance)
         {
             if (float.IsNaN(expected) && float.IsNaN(actual))
                 return true;
@@ -184,7 +185,7 @@ namespace TCLite.Framework.Constraints
         }
 
 
-        private static bool AreEqual(decimal expected, decimal actual, Tolerance tolerance)
+        public static bool AreEqual(decimal expected, decimal actual, Tolerance tolerance)
         {
             switch (tolerance.Mode)
             {
@@ -211,7 +212,7 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        private static bool AreEqual(ulong expected, ulong actual, Tolerance tolerance)
+        public static bool AreEqual(ulong expected, ulong actual, Tolerance tolerance)
         {
             switch (tolerance.Mode)
             {
@@ -242,7 +243,7 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        private static bool AreEqual(long expected, long actual, Tolerance tolerance)
+        public static bool AreEqual(long expected, long actual, Tolerance tolerance)
         {
             switch (tolerance.Mode)
             {
@@ -269,7 +270,7 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        private static bool AreEqual(uint expected, uint actual, Tolerance tolerance)
+        public static bool AreEqual(uint expected, uint actual, Tolerance tolerance)
         {
             switch (tolerance.Mode)
             {
@@ -300,7 +301,7 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        private static bool AreEqual(int expected, int actual, Tolerance tolerance)
+        public static bool AreEqual(int expected, int actual, Tolerance tolerance)
         {
             switch (tolerance.Mode)
             {

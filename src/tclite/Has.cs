@@ -27,7 +27,7 @@ namespace TCLite.Framework
 
         #endregion
 
-#if NYI
+#if NYI // All, Some, None, Exactly, Property, Length, Count, Message, InnerException, Attribute
         #region All
 
         /// <summary>

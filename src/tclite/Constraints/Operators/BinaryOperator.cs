@@ -23,6 +23,7 @@ namespace TCLite.Framework.Constraints
             stack.Push(ApplyOperator(left, right));
         }
 
+#if NYI // Precedence Modification
         /// <summary>
         /// Gets the left precedence of the operator
         /// </summary>
@@ -48,6 +49,7 @@ namespace TCLite.Framework.Constraints
                     : base.RightPrecedence;
             }
         }
+#endif
 
         /// <summary>
         /// Abstract method that produces a constraint by applying

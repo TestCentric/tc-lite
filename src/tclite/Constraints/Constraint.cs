@@ -69,7 +69,8 @@ namespace TCLite.Framework.Constraints
         public object[] Arguments { get; }
 
         /// <summary>
-        /// The builder holding this constraint
+        /// A ConstraintBuilder holding this constraint. If not null
+        /// the constraint is under construction.
         /// </summary>
         public ConstraintBuilder Builder { get; set; }
 
@@ -77,9 +78,17 @@ namespace TCLite.Framework.Constraints
 
         #region IResolveConstraint
 
+        bool IResolveConstraint.IsResolvable => Builder == null || Builder.IsResolvable;
+
         Constraint IResolveConstraint.Resolve()
         {
-            return Builder == null ? this : Builder.Resolve();
+            if (Builder == null)
+                return this;
+
+            if (!Builder.IsResolvable)
+                throw new InvalidOperationException("Attempted to resolve a Constraint under construction");
+
+            return Builder.Resolve();
         }
 
         #endregion
@@ -283,7 +292,7 @@ namespace TCLite.Framework.Constraints
         #endregion
 
         #region After Modifier
-#if NYI
+#if NYI // DelayedConstraint
         /// <summary>
         /// Returns a DelayedConstraint with the specified delay time.
         /// </summary>
@@ -322,5 +331,16 @@ namespace TCLite.Framework.Constraints
         public Constraint(TExpected arg) : base(arg) { }
 
         public Constraint(TExpected arg1, TExpected arg2) : base(arg1, arg2) { }
+
+        /// <summary>
+        /// Applies the constraint to an actual value, of the same type as
+        /// the constraint expected value, returning a ConstraintResult.
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        public ConstraintResult ApplyTo(TExpected actual)
+        {
+            return ApplyTo<TExpected>(actual);
+        }
     }
 }

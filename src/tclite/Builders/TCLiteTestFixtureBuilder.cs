@@ -76,7 +76,7 @@ namespace TCLite.Framework.Builders
 		/// <returns></returns>
 		public Test BuildFrom(Type type)
 		{
-#if NYI
+#if NYI // Parameterized Fixtures
             TestFixtureAttribute[] attrs = GetTestFixtureAttributes(type);
 
             if (type.IsGenericType)
@@ -104,7 +104,7 @@ namespace TCLite.Framework.Builders
 
 		#region Helper Methods
 
-#if NYI
+#if NYI // Parameterized Fixtures
         private Test BuildMultipleFixtures(Type type, TestFixtureAttribute[] attrs)
         {
             TestSuite suite = new ParameterizedFixtureSuite(type);
@@ -253,7 +253,7 @@ namespace TCLite.Framework.Builders
             return type.IsAbstract && type.IsSealed;
         }
 
-#if NYI
+#if NYI // ParameterizedFixtures
         /// <summary>
         /// Get TestFixtureAttributes following a somewhat obscure
         /// set of rules to eliminate spurious duplication of fixtures.

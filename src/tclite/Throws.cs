@@ -28,7 +28,7 @@ namespace TCLite.Framework
 
         #endregion
 
-#if NYI
+#if NYI // InnerException
         #region InnerException
 
         /// <summary>

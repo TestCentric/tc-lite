@@ -24,7 +24,8 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public class OperatorStack
         {
-            private Stack<ConstraintOperator> stack = new Stack<ConstraintOperator>();
+            private Stack<ConstraintOperator> _stack = new Stack<ConstraintOperator>();
+
             /// <summary>
             /// Initializes a new instance of the <see cref="T:OperatorStack"/> class.
             /// </summary>
@@ -37,37 +38,25 @@ namespace TCLite.Framework.Constraints
             /// Gets a value indicating whether this <see cref="T:OpStack"/> is empty.
             /// </summary>
             /// <value><c>true</c> if empty; otherwise, <c>false</c>.</value>
-            public bool Empty
-            {
-                get { return stack.Count == 0; }
-            }
+            public bool Empty => _stack.Count == 0;
 
             /// <summary>
             /// Gets the topmost operator without modifying the stack.
             /// </summary>
             /// <value>The top.</value>
-            public ConstraintOperator Top
-            {
-                get { return stack.Peek(); }
-            }
+            public ConstraintOperator Top => _stack.Peek();
 
             /// <summary>
             /// Pushes the specified operator onto the stack.
             /// </summary>
             /// <param name="op">The op.</param>
-            public void Push(ConstraintOperator op)
-            {
-                stack.Push(op);
-            }
+            public void Push(ConstraintOperator op) => _stack.Push(op);
 
             /// <summary>
             /// Pops the topmost operator from the stack.
             /// </summary>
             /// <returns></returns>
-            public ConstraintOperator Pop()
-            {
-                return stack.Pop();
-            }
+            public ConstraintOperator Pop() => _stack.Pop();
         }
         #endregion
 
@@ -77,8 +66,9 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public class ConstraintStack
         {
-            private Stack<Constraint> stack = new Stack<Constraint>();
-            private ConstraintBuilder builder;
+            private Stack<Constraint> _stack = new Stack<Constraint>();
+
+            private ConstraintBuilder _builder;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="T:ConstraintStack"/> class.
@@ -86,26 +76,20 @@ namespace TCLite.Framework.Constraints
             /// <param name="builder">The builder.</param>
             public ConstraintStack(ConstraintBuilder builder)
             {
-                this.builder = builder;
+                _builder = builder;
             }
 
             /// <summary>
             /// Gets a value indicating whether this <see cref="T:ConstraintStack"/> is empty.
             /// </summary>
             /// <value><c>true</c> if empty; otherwise, <c>false</c>.</value>
-            public bool Empty
-            {
-                get { return stack.Count == 0; }
-            }
+            public bool Empty =>_stack.Count == 0;
 
             /// <summary>
             /// Gets the topmost constraint without modifying the stack.
             /// </summary>
             /// <value>The topmost constraint</value>
-            public Constraint Top
-            {
-                get { return (Constraint)stack.Peek(); }
-            }
+            public Constraint Top => _stack.Peek();
 
             /// <summary>
             /// Pushes the specified constraint. As a side effect,
@@ -115,8 +99,8 @@ namespace TCLite.Framework.Constraints
             /// <param name="constraint">The constraint.</param>
             public void Push(Constraint constraint)
             {
-                stack.Push(constraint);
-                constraint.Builder = builder;
+                _stack.Push(constraint);
+                constraint.Builder = _builder;
             }
 
             /// <summary>
@@ -127,7 +111,7 @@ namespace TCLite.Framework.Constraints
             /// <returns></returns>
             public Constraint Pop()
             {
-                Constraint constraint = stack.Pop();
+                Constraint constraint = _stack.Pop();
                 constraint.Builder = null;
                 return constraint;
             }
@@ -142,31 +126,30 @@ namespace TCLite.Framework.Constraints
         private object lastPushed;
         #endregion
 
-        #region Constructor
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:ConstraintBuilder"/> class.
+        /// Initializes a new instance of the <see cref="T:ConstraintExpression"/> class.
         /// </summary>
         public ConstraintBuilder()
         {
             this.ops = new OperatorStack(this);
             this.constraints = new ConstraintStack(this);
         }
-        #endregion
 
         #region Properties
+
         /// <summary>
-        /// Gets a value indicating whether this instance is resolvable.
+        /// Gets a value indicating whether the expression under construction
+        /// is currently resolvable, allowing the Resolve() method to be called.
         /// </summary>
-        /// <value>
-        /// 	<c>true</c> if this instance is resolvable; otherwise, <c>false</c>.
-        /// </value>
         public bool IsResolvable
         {
             get { return lastPushed is IConstraint || lastPushed is SelfResolvingOperator; }
         }
+
         #endregion
 
         #region Public Methods
+
         /// <summary>
         /// Appends the specified operator to the expression by first
         /// reducing the operator stack and then pushing the new
@@ -191,7 +174,7 @@ namespace TCLite.Framework.Constraints
         /// it on the constraint stack.
         /// </summary>
         /// <param name="constraint">The constraint to push.</param>
-        public void Append(Constraint constraint)
+        public Constraint Append(Constraint constraint)
         {
             if (lastPushed is ConstraintOperator)
                 SetTopOperatorRightContext(constraint);
@@ -199,6 +182,8 @@ namespace TCLite.Framework.Constraints
             constraints.Push(constraint);
             lastPushed = constraint;
             constraint.Builder = this;
+
+            return constraint;
         }
 
         /// <summary>
@@ -252,6 +237,7 @@ namespace TCLite.Framework.Constraints
 
             return constraints.Pop();
         }
+        
         #endregion
     }
 }

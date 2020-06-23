@@ -15,79 +15,43 @@ namespace TCLite.Framework.Constraints
     /// NUnitEqualityComparer encapsulates NUnit's handling of
     /// equality tests between objects.
     /// </summary>
-    public class NUnitEqualityComparer
+    public class TCLiteEqualityComparer
     {
-        #region Static and Instance Fields
-
-        /// <summary>
-        /// If true, all string comparisons will ignore case
-        /// </summary>
-        private bool caseInsensitive;
-
-        /// <summary>
-        /// If true, arrays will be treated as collections, allowing
-        /// those of different dimensions to be compared
-        /// </summary>
-        private bool compareAsCollection;
-
-        /// <summary>
-        /// Comparison objects used in comparisons for some constraints.
-        /// </summary>
-        private EqualityAdapterList externalComparers = new EqualityAdapterList();
-            
-        /// <summary>
-        /// List of points at which a failure occured.
-        /// </summary>
-        private FailurePointList failurePoints;
+        private const int BUFFER_SIZE = 4096;
 
         /// <summary>
         /// RecursionDetector used to check for recursion when
         /// evaluating self-referencing enumerables.
         /// </summary>
-        private RecursionDetector recursionDetector;
-
-        private static readonly int BUFFER_SIZE = 4096;
-
-        #endregion
+        private RecursionDetector _recursionDetector;
 
         #region Properties
 
         /// <summary>
         /// Returns the default NUnitEqualityComparer
         /// </summary>
-        public static NUnitEqualityComparer Default
+        public static TCLiteEqualityComparer Default
         {
-            get { return new NUnitEqualityComparer(); }
+            get { return new TCLiteEqualityComparer(); }
         }
+
         /// <summary>
-        /// Gets and sets a flag indicating whether case should
-        /// be ignored in determining equality.
+        /// If true, all string comparisons will ignore case
         /// </summary>
-        public bool IgnoreCase
-        {
-            get { return caseInsensitive; }
-            set { caseInsensitive = value; }
-        }
+        public bool IgnoreCase { get; set; }
 
         /// <summary>
         /// Gets and sets a flag indicating that arrays should be
         /// compared as collections, without regard to their shape.
         /// </summary>
-        public bool CompareAsCollection
-        {
-            get { return compareAsCollection; }
-            set { compareAsCollection = value; }
-        }
+        public bool CompareAsCollection { get; set; }
 
         /// <summary>
         /// Gets the list of external comparers to be used to
         /// test for equality. They are applied to members of
         /// collections, in place of NUnit's own logic.
         /// </summary>
-        public IList<EqualityAdapter> ExternalComparers
-        {
-            get { return externalComparers; }
-        }
+        public IList<EqualityAdapter> ExternalComparers { get; } = new EqualityAdapterList();
 
         /// <summary>
         /// Gets the list of failure points for the last Match performed.
@@ -95,31 +59,30 @@ namespace TCLite.Framework.Constraints
         /// This generally means that the caller may only make use of
         /// objects it has placed on the list at a particular depthy.
         /// </summary>
-        public IList<FailurePoint> FailurePoints
-        {
-            get { return failurePoints; }
-        }
+        public IList<FailurePoint> FailurePoints { get;  private set; }
+
         #endregion
 
         #region Public Methods
-        /// <summary>
-        /// Compares two objects for equality within a tolerance, setting
-        /// the tolerance to the actual tolerance used if an empty
-        /// tolerance is supplied.
-        /// </summary>
-        public bool AreEqual(object expected, object actual, ref Tolerance tolerance)
+
+        public bool AreEqual<TExpected,TActual>(TExpected expected, TActual actual, ref Tolerance tolerance)
         {
-            this.failurePoints = new FailurePointList();
-            this.recursionDetector = new RecursionDetector();
+            FailurePoints = new FailurePointList();
+            _recursionDetector = new RecursionDetector();
 
             return ObjectsEqual(expected, actual, ref tolerance);
+        }
+
+        public bool AreEqual(double expected, double actual, ref Tolerance tolerance)
+        {
+            return Numerics.AreEqual(expected, actual, ref tolerance);
         }
 
         #endregion
 
         #region Helper Methods
 
-        private bool ObjectsEqual(object expected, object actual, ref Tolerance tolerance)
+        private bool ObjectsEqual<TExpected,TActual>(TExpected expected, TActual actual, ref Tolerance tolerance)
         {
             if (expected == null && actual == null)
                 return true;
@@ -137,44 +100,45 @@ namespace TCLite.Framework.Constraints
             if (externalComparer != null)
                 return externalComparer.AreEqual(expected, actual);
 
-            if (xType.IsArray && yType.IsArray && !compareAsCollection)
-                return ArraysEqual((Array)expected, (Array)actual, ref tolerance);
+            //if (xType.IsArray && yType.IsArray && !CompareAsCollection)
+            if (expected is Array && actual is Array)
+                return ArraysEqual(expected as Array, actual as Array, ref tolerance);
 
-#if NYI
+#if NYI // Dictionary
             if (expected is IDictionary && actual is IDictionary)
-                return DictionariesEqual((IDictionary)expected, (IDictionary)actual, ref tolerance);
+                return DictionariesEqual(expected as IDictionary, actual as IDictionary, ref tolerance);
 #endif
 
             if (expected is IEnumerable && actual is IEnumerable && !(expected is string && actual is string))
                 return EnumerablesEqual((IEnumerable)expected, (IEnumerable)actual, ref tolerance);
 
             if (expected is string && actual is string)
-                return StringsEqual((string)expected, (string)actual);
+                return StringsEqual(expected as string, actual as string);
 
             if (expected is Stream && actual is Stream)
-                return StreamsEqual((Stream)expected, (Stream)actual);
+                return StreamsEqual(expected as Stream, actual as Stream);
 
             if (expected is DirectoryInfo && actual is DirectoryInfo)
-                return DirectoriesEqual((DirectoryInfo)expected, (DirectoryInfo)actual);
+                return DirectoriesEqual(expected as DirectoryInfo, actual as DirectoryInfo);
 
             if (Numerics.IsNumericType(expected) && Numerics.IsNumericType(actual))
                 return Numerics.AreEqual(expected, actual, ref tolerance);
 
-            if (tolerance != null && tolerance.Amount is TimeSpan)
-            {
-                TimeSpan amount = (TimeSpan)tolerance.Amount;
+            // if (tolerance != null && tolerance.Amount is TimeSpan)
+            // {
+            //     TimeSpan amount = (TimeSpan)tolerance.Amount;
 
-                if (expected is DateTime && actual is DateTime)
-                    return ((DateTime)expected - (DateTime)actual).Duration() <= amount;
+            //     if (expected is DateTime && actual is DateTime)
+            //         return ((DateTime)expected - (DateTime)actual).Duration() <= amount;
 
-                if (expected is TimeSpan && actual is TimeSpan)
-                    return ((TimeSpan)expected - (TimeSpan)actual).Duration() <= amount;
-            }
+            //     if (expected is TimeSpan && actual is TimeSpan)
+            //         return ((TimeSpan)expected - (TimeSpan)actual).Duration() <= amount;
+            // }
 
-            if (FirstImplementsIEquatableOfSecond(xType, yType))
-                return InvokeFirstIEquatableEqualsSecond(expected, actual);
-            else if (FirstImplementsIEquatableOfSecond(yType, xType))
-                return InvokeFirstIEquatableEqualsSecond(actual, expected);
+            if (expected is IEquatable<TActual>)
+                return (expected as IEquatable<TActual>).Equals(actual);
+            else if (actual is IEquatable<TExpected>)
+                return (actual as IEquatable<TExpected>).Equals(expected);
             
             return expected.Equals(actual);
         }
@@ -208,7 +172,7 @@ namespace TCLite.Framework.Constraints
         
         private EqualityAdapter GetExternalComparer(object x, object y)
         {
-            foreach (EqualityAdapter adapter in externalComparers)
+            foreach (EqualityAdapter adapter in ExternalComparers)
                 if (adapter.CanCompare(x, y))
                     return adapter;
 
@@ -232,7 +196,7 @@ namespace TCLite.Framework.Constraints
             return EnumerablesEqual((IEnumerable)expected, (IEnumerable)actual, ref tolerance);
         }
 
-#if NYI
+#if NYI // Dictionary
         private bool DictionariesEqual(IDictionary expected, IDictionary actual, ref Tolerance tolerance)
         {
             if (expected.Count != actual.Count)
@@ -252,15 +216,15 @@ namespace TCLite.Framework.Constraints
 
         private bool StringsEqual(string expected, string actual)
         {
-            string s1 = caseInsensitive ? expected.ToLower() : expected;
-            string s2 = caseInsensitive ? actual.ToLower() : actual;
+            string s1 = IgnoreCase ? expected.ToLower() : expected;
+            string s2 = IgnoreCase ? actual.ToLower() : actual;
 
             return s1.Equals(s2);
         }
 
         private bool EnumerablesEqual(IEnumerable expected, IEnumerable actual, ref Tolerance tolerance)
         {
-            if (recursionDetector.CheckRecursion(expected, actual))
+            if (_recursionDetector.CheckRecursion(expected, actual))
                 return false;
 
             IEnumerator expectedEnum = expected.GetEnumerator();
@@ -286,7 +250,7 @@ namespace TCLite.Framework.Constraints
                     fp.ActualHasData = actualHasData;
                     if (actualHasData)
                         fp.ActualValue = actualEnum.Current;
-                    failurePoints.Insert(0, fp);
+                    FailurePoints.Insert(0, fp);
                     return false;
                 }
             }
@@ -354,7 +318,7 @@ namespace TCLite.Framework.Constraints
                         {
                             FailurePoint fp = new FailurePoint();
                             fp.Position = (int)readByte + count;
-                            failurePoints.Insert(0, fp);
+                            FailurePoints.Insert(0, fp);
                             return false;
                         }
                     }
@@ -368,7 +332,7 @@ namespace TCLite.Framework.Constraints
 
             return true;
         }
-		
+
         #endregion
 
         #region Nested RecursionDetector class
@@ -408,19 +372,19 @@ namespace TCLite.Framework.Constraints
 
             class UnorderedReferencePair : IEquatable<UnorderedReferencePair>
             {
-                private readonly object first;
-                private readonly object second;
+                private readonly object _first;
+                private readonly object _second;
 
                 public UnorderedReferencePair(object first, object second)
                 {
-                    this.first = first;
-                    this.second = second;
+                    _first = first;
+                    _second = second;
                 }
 
                 public bool Equals(UnorderedReferencePair other)
                 {
-                    return (Equals(first, other.first) && Equals(second, other.second)) ||
-                           (Equals(first, other.second) && Equals(second, other.first));
+                    return (Equals(_first, other._first) && Equals(_second, other._second)) ||
+                           (Equals(_first, other._second) && Equals(_second, other._first));
                 }
 
                 public override bool Equals(object obj)
@@ -433,7 +397,7 @@ namespace TCLite.Framework.Constraints
                 {
                     unchecked
                     {
-                        return ((first != null ? first.GetHashCode() : 0) * 397) ^ ((second != null ? second.GetHashCode() : 0) * 397);
+                        return ((_first != null ? _first.GetHashCode() : 0) * 397) ^ ((_second != null ? _second.GetHashCode() : 0) * 397);
                     }
                 }
             }

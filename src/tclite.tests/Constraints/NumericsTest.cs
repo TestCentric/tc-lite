@@ -19,7 +19,7 @@ namespace TCLite.Framework.Constraints
         [TestCase(123456789UL)]
         [TestCase(1234.5678f)]
         [TestCase(1234.5678)]
-        public void CanMatchWithoutToleranceMode(object value)
+        public void CanMatchWithoutToleranceMode<T>(T value)
         {
             Assert.IsTrue(Numerics.AreEqual(value, value, ref _zeroTolerance));
         }

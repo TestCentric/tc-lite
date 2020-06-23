@@ -14,7 +14,7 @@ namespace TCLite.Framework.Tests
     /// </summary>
     public class ParameterizedMethodSuite : TestSuite
     {
-#if NYI
+#if NYI // Theory
         private bool _isTheory;
 #endif
         /// <summary>
@@ -25,7 +25,7 @@ namespace TCLite.Framework.Tests
             : base(method.ReflectedType.FullName, method.Name)
         {
             Method = method;
-#if NYI
+#if NYI // Theory
             _isTheory = method.IsDefined(typeof(TheoryAttribute), true);
 #endif
         }
@@ -38,7 +38,7 @@ namespace TCLite.Framework.Tests
         {
             get
             {
-#if NYI
+#if NYI // Theory
                 if (_isTheory)
                     return "Theory";
 #endif
@@ -48,7 +48,7 @@ namespace TCLite.Framework.Tests
                 return "ParameterizedMethod";
             }
         }
-#if NYI
+#if NYI // OneTimeTearDown
         /// <summary>
         /// Gets the command to be executed after all the child
         /// tests are run. Overridden in ParameterizedMethodSuite

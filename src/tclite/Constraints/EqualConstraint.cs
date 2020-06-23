@@ -25,7 +25,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// NUnitEqualityComparer used to test equality.
         /// </summary>
-        private NUnitEqualityComparer _comparer = new NUnitEqualityComparer();
+        private TCLiteEqualityComparer _comparer = new TCLiteEqualityComparer();
 
         #endregion
 

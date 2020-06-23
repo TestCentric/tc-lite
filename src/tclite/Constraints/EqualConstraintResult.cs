@@ -27,7 +27,7 @@ namespace TCLite.Framework.Constraints
             "String lengths are both {0}. Strings differ at index {1}.";
         private static readonly string StringsDiffer_2 =
             "Expected string length {0} but was {1}. Strings differ at index {2}.";
-#if NYI
+#if NYI // Streams
         private static readonly string StreamsDiffer_1 =
             "Stream lengths are both {0}. Streams differ at offset {1}.";
         private static readonly string StreamsDiffer_2 =
@@ -37,7 +37,7 @@ namespace TCLite.Framework.Constraints
             "Expected and actual are both {0}";
         private static readonly string CollectionType_2 =
             "Expected is {0}, actual is {1}";
-#if NYI
+#if NYI // ValuesDiffer
         private static readonly string ValuesDiffer_1 =
             "Values differ at index {0}";
         private static readonly string ValuesDiffer_2 =
@@ -75,7 +75,7 @@ namespace TCLite.Framework.Constraints
                 DisplayCollectionDifferences(writer, (ICollection)expected, (ICollection)actual, depth);
             else if (expected is IEnumerable && actual is IEnumerable)
                 DisplayEnumerableDifferences(writer, (IEnumerable)expected, (IEnumerable)actual, depth);
-#if NYI
+#if NYI // Streams
             else if (expected is Stream && actual is Stream)
                 DisplayStreamDifferences(writer, (Stream)expected, (Stream)actual, depth);
 #endif
@@ -100,7 +100,7 @@ namespace TCLite.Framework.Constraints
         #endregion
 
         #region DisplayStreamDifferences
-#if NYI
+#if NYI // Streams
         private void DisplayStreamDifferences(MessageWriter writer, Stream expected, Stream actual, int depth)
         {
             if (expected.Length == actual.Length)
@@ -126,7 +126,7 @@ namespace TCLite.Framework.Constraints
         {
             DisplayTypesAndSizes(writer, expected, actual, depth);
 
-#if NYI
+#if NYI // FailurePoints
             if (failurePoints.Count > depth)
             {
                 NUnitEqualityComparer.FailurePoint failurePoint = failurePoints[depth];
@@ -178,7 +178,7 @@ namespace TCLite.Framework.Constraints
                 writer.WriteMessageLine(indent, CollectionType_2, sExpected, sActual);
         }
 
-#if NYI
+#if NYI // FailurePoints
         /// <summary>
         /// Displays a single line showing the point in the expected and actual
         /// arrays at which the comparison failed. If the arrays have different
@@ -233,7 +233,7 @@ namespace TCLite.Framework.Constraints
         {
             DisplayTypesAndSizes(writer, expected, actual, depth);
 
-#if NYI
+#if NYI // FailurePoints
             if (failurePoints.Count > depth)
             {
                 NUnitEqualityComparer.FailurePoint failurePoint = failurePoints[depth];

@@ -28,7 +28,7 @@ namespace TCLite.Framework
 
         #endregion
 
-#if NYI
+#if NYI // All
         #region All
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace TCLite.Framework
 
         #endregion
 
-#if NYI
+#if NYI // Positive, Negative, NaN, Empty, Unique, BinarySerializable, XmlSerializable
         #region Positive
  
         /// <summary>
@@ -261,7 +261,6 @@ namespace TCLite.Framework
 
         #endregion
 
-#if NYI
         #region TypeOf
 
         /// <summary>
@@ -306,6 +305,7 @@ namespace TCLite.Framework
 
         #endregion
 
+#if NYI // AssignableFrom, AssignableTo
         #region AssignableFrom
 
         /// <summary>
@@ -349,10 +349,11 @@ namespace TCLite.Framework
         }
 
         #endregion
+#endif
 
         #region EquivalentTo
 
-#if NYI
+#if NYI // EquivalentTo
         /// <summary>
         /// Returns a constraint that tests whether the actual value
         /// is a collection containing the same elements as the 
@@ -368,7 +369,7 @@ namespace TCLite.Framework
 
         #region SubsetOf
 
-#if NYI
+#if NYI // SubsetOf
         /// <summary>
         /// Returns a constraint that tests whether the actual value
         /// is a subset of the collection supplied as an argument.
@@ -382,7 +383,7 @@ namespace TCLite.Framework
         #endregion
 
         #region Ordered
-
+#if NYI // Ordered
         /// <summary>
         /// Returns a constraint that tests whether a collection is ordered
         /// </summary>
@@ -390,9 +391,10 @@ namespace TCLite.Framework
         {
             get { return new CollectionOrderedConstraint(); }
         }
-
+#endif
         #endregion
 
+#if NYI // String Constraints
         #region StringContaining
 
         /// <summary>
@@ -444,10 +446,12 @@ namespace TCLite.Framework
         }
 
         #endregion
+#endif
 
         #region SamePath
 
-#if NYI
+#if NYI // SamePath
+
         /// <summary>
         /// Returns a constraint that tests whether the path provided 
         /// is the same as an expected path after canonicalization.
@@ -462,7 +466,7 @@ namespace TCLite.Framework
 
         #region SubPath
 
-#if NYI
+#if NYI // SubPath
         /// <summary>
         /// Returns a constraint that tests whether the path provided 
         /// is under an expected path after canonicalization.
@@ -477,7 +481,7 @@ namespace TCLite.Framework
 
         #region SamePathOrUnder
 
-#if NYI
+#if NYI // SamePathOrUnder
         /// <summary>
         /// Returns a constraint that tests whether the path provided 
         /// is the same path or under an expected path after canonicalization.
@@ -490,6 +494,7 @@ namespace TCLite.Framework
 
         #endregion
 
+#if NYI // InRange
         #region InRange
 
         /// <summary>

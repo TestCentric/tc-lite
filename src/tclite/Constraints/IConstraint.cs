@@ -26,10 +26,5 @@ namespace TCLite.Framework.Constraints
         /// formatting the description.
         /// </summary>
         object[] Arguments { get; }
-
-        /// <summary>
-        /// The ConstraintBuilder holding this constraint
-        /// </summary>
-        ConstraintBuilder Builder { get; set; }
     }
 }

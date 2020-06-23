@@ -22,7 +22,7 @@ namespace TCLite.Framework
         {
             Exception caughtException = null;
 
-#if NYI
+#if NYI // async
             if (AsyncInvocationRegion.IsAsyncOperation(code))
             {
                 using (AsyncInvocationRegion region = AsyncInvocationRegion.Create(code))

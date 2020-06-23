@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-#if NYI
+#if NYI // DelayedConstraint
 using System;
 using System.Threading;
 
@@ -101,7 +101,7 @@ namespace TCLite.Framework.Constraints
 
         private static object InvokeDelegate<T>(ActualValueDelegate<T> del)
         {
-#if NYI
+#if NYI // async
             if (AsyncInvocationRegion.IsAsyncOperation(del))
                 using (AsyncInvocationRegion region = AsyncInvocationRegion.Create(del))
                     return region.WaitForPendingOperationsToComplete(del());

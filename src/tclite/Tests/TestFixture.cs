@@ -25,7 +25,7 @@ namespace TCLite.Framework.Tests
         {
             FixtureType = fixtureType;
             FullName = fixtureType.FullName;
-#if NYI
+#if NYI // DisplayName Adjustment
             string name = TypeHelper.GetDisplayName(fixtureType, arguments);
             this.Name = name;
             

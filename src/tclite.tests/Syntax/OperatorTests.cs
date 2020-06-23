@@ -28,7 +28,7 @@ namespace TCLite.Framework.Syntax
         }
     }
     #endregion
-#if NYI
+#if NYI // All, Some, None, Exactly, One
     #region All
     public class AllTest : SyntaxTest
     {
@@ -199,8 +199,7 @@ namespace TCLite.Framework.Syntax
     #region And
     public class AndTest : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public AndTest()
         {
             ParseTree = "<and <greaterthan 5> <lessthan 10>>";
             StaticSyntax = Is.GreaterThan(5).And.LessThan(10);
@@ -210,8 +209,7 @@ namespace TCLite.Framework.Syntax
 
     public class AndTest_ThreeAndsWithNot : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public AndTest_ThreeAndsWithNot()
         {
             ParseTree = "<and <not <null>> <and <not <lessthan 5>> <not <greaterthan 10>>>>";
             StaticSyntax = Is.Not.Null.And.Not.LessThan(5).And.Not.GreaterThan(10);
@@ -223,8 +221,7 @@ namespace TCLite.Framework.Syntax
     #region Or
     public class OrTest : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public OrTest()
         {
             ParseTree = "<or <lessthan 5> <greaterthan 10>>";
             StaticSyntax = Is.LessThan(5).Or.GreaterThan(10);
@@ -234,8 +231,7 @@ namespace TCLite.Framework.Syntax
 
     public class OrTest_ThreeOrs : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public OrTest_ThreeOrs()
         {
             ParseTree = "<or <lessthan 5> <or <greaterthan 10> <equal 7>>>";
             StaticSyntax = Is.LessThan(5).Or.GreaterThan(10).Or.EqualTo(7);
@@ -247,8 +243,7 @@ namespace TCLite.Framework.Syntax
     #region Binary Operator Precedence
     public class AndIsEvaluatedBeforeFollowingOr : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public AndIsEvaluatedBeforeFollowingOr()
         {
             ParseTree = "<or <and <lessthan 100> <greaterthan 0>> <equal 999>>";
             StaticSyntax = Is.LessThan(100).And.GreaterThan(0).Or.EqualTo(999);
@@ -258,8 +253,7 @@ namespace TCLite.Framework.Syntax
 
     public class AndIsEvaluatedBeforePrecedingOr : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public AndIsEvaluatedBeforePrecedingOr()
         {
             ParseTree = "<or <equal 999> <and <greaterthan 0> <lessthan 100>>>";
             StaticSyntax = Is.EqualTo(999).Or.GreaterThan(0).And.LessThan(100);
@@ -301,6 +295,7 @@ namespace TCLite.Framework.Syntax
             }
         }
 
+#if NYI // Property
         [Test]
         public void WithTests()
         {
@@ -327,6 +322,7 @@ namespace TCLite.Framework.Syntax
             Assert.That(array, Has.None.StartsWith("a").And.Length.EqualTo(3));
             Assert.That(array, Has.Some.StartsWith("x").And.Length.EqualTo(3));
         }
+#endif
     }
 #endif
 }

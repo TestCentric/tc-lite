@@ -19,11 +19,6 @@ namespace TCLite.Framework.Constraints
     public class ResolvableConstraintExpression : ConstraintExpression, IResolveConstraint
     {
         /// <summary>
-        /// Create a new instance of ResolvableConstraintExpression
-        /// </summary>
-        public ResolvableConstraintExpression() { }
-
-        /// <summary>
         /// Create a new instance of ResolvableConstraintExpression,
         /// passing in a pre-populated ConstraintBuilder.
         /// </summary>
@@ -47,13 +42,17 @@ namespace TCLite.Framework.Constraints
         }
 
         #region IResolveConstraint Members
+
+        bool IResolveConstraint.IsResolvable => true;
+
         /// <summary>
         /// Resolve the current expression to a Constraint
         /// </summary>
         Constraint IResolveConstraint.Resolve()
         {
-            return builder.Resolve();
+            return Builder.Resolve();
         }
+        
         #endregion
 
         #region Operator Overloads

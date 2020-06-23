@@ -5,6 +5,7 @@
 
 using System;
 using System.Globalization;
+using System.Text;
 using System.Xml;
 
 namespace TCLite.Framework.Internal
@@ -42,7 +43,7 @@ namespace TCLite.Framework.Internal
         public static void AddAttribute(this XmlNode node, string name, string value)
         {
             XmlAttribute attr = node.OwnerDocument.CreateAttribute(name);
-            attr.Value = value;
+            attr.Value = EscapeInvalidXmlCharacters(value);
             node.Attributes.Append(attr);
         }
 
@@ -137,6 +138,76 @@ namespace TCLite.Framework.Internal
                 return defaultValue;
 
             return date;
+        }
+
+        private static string EscapeInvalidXmlCharacters(string str)
+        {
+            if (str == null) return null;
+
+            StringBuilder builder = null;
+            for (int i = 0; i < str.Length; i++)
+            {
+                char c = str[i];
+                if(c > 0x20 && c < 0x7F)
+                {
+                    // ASCII characters - break quickly for these
+                    if (builder != null)
+                        builder.Append(c);
+                }
+                // From the XML specification: https://www.w3.org/TR/xml/#charsets
+                // Char ::= #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+                // Any Unicode character, excluding the surrogate blocks, FFFE, and FFFF.
+                else if (!(0x0 <= c && c <= 0x8) &&
+                    c != 0xB &&
+                    c != 0xC &&
+                    !(0xE <= c && c <= 0x1F) &&
+                    !(0x7F <= c && c <= 0x84) &&
+                    !(0x86 <= c && c <= 0x9F) &&
+                    !(0xD800 <= c && c <= 0xDFFF) &&
+                    c != 0xFFFE &&
+                    c != 0xFFFF)
+                {
+                    if (builder != null)
+                        builder.Append(c);
+                }
+                // Also check if the char is actually a high/low surrogate pair of two characters.
+                // If it is, then it is a valid XML character (from above based on the surrogate blocks).
+                else if (char.IsHighSurrogate(c) &&
+                    i + 1 != str.Length &&
+                    char.IsLowSurrogate(str[i + 1]))
+                {
+                    if (builder != null)
+                    {
+                        builder.Append(c);
+                        builder.Append(str[i + 1]);
+                    }
+                    i++;
+                }
+                else
+                {
+                    // We keep the builder null so that we don't allocate a string
+                    // when doing this conversion until we encounter a unicode character.
+                    // Then, we allocate the rest of the string and escape the invalid
+                    // character.
+                    if (builder == null)
+                    {
+                        builder = new StringBuilder();
+                        for (int index = 0; index < i; index++)
+                            builder.Append(str[index]);
+                    }
+                    builder.Append(CharToUnicodeSequence(c));
+                }
+            }
+
+            if (builder != null)
+                return builder.ToString();
+            else
+                return str;
+        }
+
+        private static string CharToUnicodeSequence(char symbol)
+        {
+            return string.Format("\\u{0}", ((int)symbol).ToString("x4"));
         }
     }
 }

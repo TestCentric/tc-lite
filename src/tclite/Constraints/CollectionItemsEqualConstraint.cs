@@ -16,7 +16,7 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     public abstract class CollectionItemsEqualConstraint<TExpected> : CollectionConstraint<TExpected>
     {
-        private readonly NUnitEqualityComparer _comparer = NUnitEqualityComparer.Default;
+        private readonly TCLiteEqualityComparer _comparer = new TCLiteEqualityComparer();
 
         /// <summary>
         /// Construct an empty CollectionConstraint
@@ -116,7 +116,7 @@ namespace TCLite.Framework.Constraints
             return _comparer.AreEqual(x, y, ref tolerance);
         }
 
-#if NYI
+#if NYI // EquivalentTo
         /// <summary>
         /// Return a new CollectionTally for use in making tests
         /// </summary>

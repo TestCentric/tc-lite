@@ -59,7 +59,7 @@ namespace TCLite.Framework.Constraints
             new TestCaseData( 2+2==4, "True" )};
     }
 
-#if NYI
+#if NYI // NaN
     [TestFixture]
     public class NaNConstraintTest : ConstraintTestBase
     {

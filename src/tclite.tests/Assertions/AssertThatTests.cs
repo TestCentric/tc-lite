@@ -149,7 +149,7 @@ namespace TCLite.Framework.Assertions
                 "  But was:  5" + NL));
         }
 
-#if NYI
+#if NYI // TestBuilder
         [Test]
         public void AssertionsAreCountedCorrectly()
         {
@@ -172,7 +172,7 @@ namespace TCLite.Framework.Assertions
             return 5;
         }
 
-#if NYI
+#if NYI // async
         [Test]
         public void AssertThatSuccess()
         {
