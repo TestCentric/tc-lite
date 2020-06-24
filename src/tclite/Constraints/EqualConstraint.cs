@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 namespace TCLite.Framework.Constraints
 {
@@ -42,7 +43,25 @@ namespace TCLite.Framework.Constraints
 
         public TExpected ExpectedValue { get; }
 
-        public override string Description => ExpectedValue?.ToString() ?? "null";
+        public override string Description
+        {
+            get
+            {
+                var sb = new StringBuilder(ExpectedValue?.ToString() ?? "null");
+
+                if (_tolerance != null && !_tolerance.IsDefault)
+                {
+                    sb.Append($" +/- {_tolerance.Amount}");
+                    if (_tolerance.Mode != ToleranceMode.Linear)
+                        sb.Append($" {_tolerance.Mode}");
+                }
+
+                if (_comparer.IgnoreCase)
+                    sb.Append(", ignoring case");
+
+                return sb.ToString();
+            }
+        }
 
         /// <summary>
         /// Gets the tolerance for this comparison.

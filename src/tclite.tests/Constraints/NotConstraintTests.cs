@@ -51,7 +51,6 @@ namespace TCLite.Framework.Constraints
                 TextMessageWriter.Pfx_Actual + message + NL ));
         }
 
-#if NYI // IgnoreCase
         [Test]
         public void NotHonorsIgnoreCaseUsingConstructors()
         {
@@ -84,7 +83,6 @@ namespace TCLite.Framework.Constraints
 
             Assert.That(ex.Message.Contains("+/-"));
         }
-#endif
 
         // TODO: Move operator overrides to a separate test class
         [Test]

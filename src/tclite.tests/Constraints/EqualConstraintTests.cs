@@ -59,7 +59,6 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, new EqualConstraint<DateTime>(expected));
         }
 
-#if NYI // DateTime
         [Test]
         public void CanMatchDatesWithinTimeSpan()
         {
@@ -124,7 +123,18 @@ namespace TCLite.Framework.Constraints
             DateTime actual = new DateTime(2007, 4, 1, 13, 1, 0);
             Assert.That(actual, new EqualConstraint<DateTime>(expected).Within(TimeSpan.TicksPerMinute * 5).Ticks);
         }
-#endif
+
+        [Test]
+        public void CanMatchStrings()
+        {
+            Assert.That("hello", Is.EqualTo("hello"));
+        }
+
+        [Test]
+        public void CanMatchStringsIgnoringCase()
+        {
+            Assert.That("Hello", Is.EqualTo("HELLO").IgnoreCase);
+        }
 
         #region Dictionary Tests
 

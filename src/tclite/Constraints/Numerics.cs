@@ -19,7 +19,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="obj">The object to check</param>
         /// <returns>true if the object is a numeric type</returns>
-        public static bool IsNumericType<T>(T obj)
+        public static bool IsNumericType(object obj)
         {
             return IsFloatingPointNumeric(obj) || IsFixedPointNumeric(obj);
         }
@@ -30,7 +30,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="obj">The object to check</param>
         /// <returns>true if the object is a floating point numeric type</returns>
-        public static bool IsFloatingPointNumeric<T>(T obj)
+        public static bool IsFloatingPointNumeric(object obj)
         {
             if (null != obj)
             {
@@ -45,7 +45,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="obj">The object to check</param>
         /// <returns>true if the object is a fixed point numeric type</returns>
-        public static bool IsFixedPointNumeric<T>(T obj)
+        public static bool IsFixedPointNumeric(object obj)
         {
             if (null != obj)
             {

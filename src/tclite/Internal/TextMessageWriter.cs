@@ -79,7 +79,7 @@ namespace TCLite.Framework.Internal
         /// <summary>
         /// Gets or sets the maximum line length for this writer
         /// </summary>
-        public override int MaxLineLength { get; set; }
+        public override int MaxLineLength { get; set; } = DEFAULT_LINE_LENGTH;
 
         #endregion
 

@@ -67,15 +67,13 @@ namespace TCLite.Framework.Constraints
 
         public bool AreEqual<TExpected,TActual>(TExpected expected, TActual actual, ref Tolerance tolerance)
         {
+            if (Numerics.IsNumericType(expected) && Numerics.IsNumericType(actual))
+                return Numerics.AreEqual(expected, actual, ref tolerance);
+
             FailurePoints = new FailurePointList();
             _recursionDetector = new RecursionDetector();
 
             return ObjectsEqual(expected, actual, ref tolerance);
-        }
-
-        public bool AreEqual(double expected, double actual, ref Tolerance tolerance)
-        {
-            return Numerics.AreEqual(expected, actual, ref tolerance);
         }
 
         #endregion
@@ -93,24 +91,17 @@ namespace TCLite.Framework.Constraints
             if (object.ReferenceEquals(expected, actual))
                 return true;
 
-            Type xType = expected.GetType();
-            Type yType = actual.GetType();
-
             EqualityAdapter externalComparer = GetExternalComparer(expected, actual);
             if (externalComparer != null)
                 return externalComparer.AreEqual(expected, actual);
 
-            //if (xType.IsArray && yType.IsArray && !CompareAsCollection)
-            if (expected is Array && actual is Array)
+            if (expected is Array && actual is Array && !CompareAsCollection)
                 return ArraysEqual(expected as Array, actual as Array, ref tolerance);
 
 #if NYI // Dictionary
             if (expected is IDictionary && actual is IDictionary)
                 return DictionariesEqual(expected as IDictionary, actual as IDictionary, ref tolerance);
 #endif
-
-            if (expected is IEnumerable && actual is IEnumerable && !(expected is string && actual is string))
-                return EnumerablesEqual((IEnumerable)expected, (IEnumerable)actual, ref tolerance);
 
             if (expected is string && actual is string)
                 return StringsEqual(expected as string, actual as string);
@@ -121,25 +112,32 @@ namespace TCLite.Framework.Constraints
             if (expected is DirectoryInfo && actual is DirectoryInfo)
                 return DirectoriesEqual(expected as DirectoryInfo, actual as DirectoryInfo);
 
-            if (Numerics.IsNumericType(expected) && Numerics.IsNumericType(actual))
-                return Numerics.AreEqual(expected, actual, ref tolerance);
+            if (tolerance != null && tolerance.Amount is TimeSpan)
+            {
+                TimeSpan amount = (TimeSpan)tolerance.Amount;
 
-            // if (tolerance != null && tolerance.Amount is TimeSpan)
-            // {
-            //     TimeSpan amount = (TimeSpan)tolerance.Amount;
+                if (expected is DateTime && actual is DateTime)
+                    return (Convert.ToDateTime(expected) - Convert.ToDateTime(actual)).Duration() <= amount;
 
-            //     if (expected is DateTime && actual is DateTime)
-            //         return ((DateTime)expected - (DateTime)actual).Duration() <= amount;
+                if (expected is TimeSpan && actual is TimeSpan)
+                {
+                    var tsExpected = (TimeSpan)Convert.ChangeType(expected, typeof(TimeSpan));
+                    var tsActual = (TimeSpan)Convert.ChangeType(actual, typeof(TimeSpan));
+                    return (tsExpected - tsActual).Duration() <= amount;
+                }
+            }
 
-            //     if (expected is TimeSpan && actual is TimeSpan)
-            //         return ((TimeSpan)expected - (TimeSpan)actual).Duration() <= amount;
-            // }
+            if (expected is IEnumerable && actual is IEnumerable && CompareAsCollection)
+                return EnumerablesEqual((IEnumerable)expected, (IEnumerable)actual, ref tolerance);
 
             if (expected is IEquatable<TActual>)
                 return (expected as IEquatable<TActual>).Equals(actual);
             else if (actual is IEquatable<TExpected>)
                 return (actual as IEquatable<TExpected>).Equals(expected);
-            
+
+            if (expected is IEnumerable && actual is IEnumerable)
+                return EnumerablesEqual((IEnumerable)expected, (IEnumerable)actual, ref tolerance);
+
             return expected.Equals(actual);
         }
 

@@ -67,7 +67,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(comparer.AreEqual(x, y, ref tolerance));
         }
 
-#if NYI
+#if NYI // Directories
         [Test]
         public void SameDirectoriesAreEqual()
         {
@@ -165,7 +165,6 @@ namespace TCLite.Framework.Constraints
             Assert.IsFalse(comparer.AreEqual(x, y, ref tolerance));
         }
 
-#if NYI
         [Test]
         public void IEquatableHasPrecedenceOverEnumerableEquals()
         {
@@ -183,7 +182,6 @@ namespace TCLite.Framework.Constraints
             Assert.That(z, Is.Not.EqualTo(x));
             Assert.That(x, Is.Not.EqualTo(z));
         }
-#endif
 
         [Test]
         public void IEquatableIsIgnoredAndEnumerableEqualsUsedWithAsCollection()
