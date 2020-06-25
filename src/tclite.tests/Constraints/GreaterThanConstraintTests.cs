@@ -14,7 +14,7 @@ namespace TCLite.Framework.Constraints
     {
         public GreaterThanConstraintTests()
         {
-            _constraint = _comparisonConstraint = new GreaterThanConstraint<int>(5);
+            _constraint = _comparisonConstraint = new GreaterThanConstraint(5);
             _expectedDescription = "greater than 5";
             _expectedRepresentation = "<greaterthan 5>";
         }

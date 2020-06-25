@@ -14,7 +14,7 @@ namespace TCLite.Framework.Constraints
 
     public abstract class ComparisonConstraintTest : ConstraintTestBaseWithArgumentException
     {
-        protected ComparisonConstraint<int> _comparisonConstraint;
+        protected ComparisonConstraint _comparisonConstraint;
 
         [Test]
         public void UsesProvidedIComparer()

@@ -4,6 +4,7 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
@@ -34,18 +35,49 @@ namespace TCLite.Framework.Internal
                 if (index >= 0) name = name.Substring(index+1);
 
                 index = name.IndexOf('`');
-                if (index >= 0) name = name.Substring(0, index);
+                //if (index >= 0) name = name.Substring(0, index);
 
-                StringBuilder sb = new StringBuilder(name);
+                var genericArguments = type.GetGenericArguments();
+                var currentArgument = 0;
 
-                sb.Append("<");
-                int cnt = 0;
-                foreach (Type t in type.GetGenericArguments())
+                StringBuilder sb = new StringBuilder();
+
+                bool needPlus = false;
+                foreach(string nestedClass in name.Split('+'))
                 {
-                    if (cnt++ > 0) sb.Append(",");
-                    sb.Append(GetDisplayName(t));
+                    if (needPlus)
+                        sb.Append("+");
+                    needPlus = true;
+
+                    index = nestedClass.IndexOf('`');
+                    if (index >= 0)
+                    {
+                        var nestedClassName = nestedClass.Substring(0, index);
+                        sb.Append(nestedClassName);
+                        sb.Append("<");
+
+                        var argumentCount = Int32.Parse(nestedClass.Substring(index + 1));
+                        for (int i = 0; i < argumentCount; i++)
+                        {
+                            if (i > 0)
+                                sb.Append(",");
+
+                            sb.Append(GetDisplayName(genericArguments[currentArgument++]));
+                        }
+
+                        sb.Append(">");
+                    }
+                    else
+                        sb.Append(nestedClass);
                 }
-                sb.Append(">");
+                // sb.Append("<");
+                // int cnt = 0;
+                // foreach (Type t in type.GetGenericArguments())
+                // {
+                //     if (cnt++ > 0) sb.Append(",");
+                //     sb.Append(GetDisplayName(t));
+                // }
+                // sb.Append(">");
 
                 return sb.ToString();
             }
@@ -145,7 +177,13 @@ namespace TCLite.Framework.Internal
                 if (type2 == typeof(sbyte)) return type2;
             }
 
-            return type1;
+            if (type1.IsAssignableFrom(type2))
+                return type1;
+
+            if (type2.IsAssignableFrom(type1))
+                return type2;
+
+            return null;
         }
 
         /// <summary>
@@ -269,6 +307,97 @@ namespace TCLite.Framework.Internal
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Return the interfaces implemented by a Type.
+        /// </summary>
+        /// <param name="type">The Type to be examined.</param>
+        /// <returns>An array of Types for the interfaces.</returns>
+        public static Type[] GetDeclaredInterfaces(Type type)
+        {
+            List<Type> interfaces = new List<Type>(type.GetInterfaces());
+
+            if (type.GetTypeInfo().BaseType == typeof(object))
+                return interfaces.ToArray();
+
+            List<Type> baseInterfaces = new List<Type>(type.GetTypeInfo().BaseType.GetInterfaces());
+            List<Type> declaredInterfaces = new List<Type>();
+
+            foreach (Type interfaceType in interfaces)
+            {
+                if (!baseInterfaces.Contains(interfaceType))
+                    declaredInterfaces.Add(interfaceType);
+            }
+
+            return declaredInterfaces.ToArray();
+        }
+
+        /// <summary>
+        /// Return whether or not the given type is a ValueTuple.
+        /// </summary>
+        /// <param name="type">Type.</param>
+        /// <returns>Whether or not the given type is a ValueTuple.</returns>
+        public static bool IsValueTuple(Type type)
+        {
+            return IsTupleInternal(type, "System.ValueTuple");
+        }
+
+        /// <summary>
+        /// Return whether or not the given type is a Tuple.
+        /// </summary>
+        /// <param name="type">Type.</param>
+        /// <returns>Whether or not the given type is a Tuple.</returns>
+        public static bool IsTuple(Type type)
+        {
+            return IsTupleInternal(type, "System.Tuple");
+        }
+
+        private static bool IsTupleInternal(Type type, string tupleName)
+        {
+            string typeName = type.FullName;
+
+            if (typeName.EndsWith("[]"))
+                return false;
+
+            string typeNameWithoutGenerics = GetTypeNameWithoutGenerics(typeName);
+            return typeNameWithoutGenerics == tupleName;
+        }
+
+        private static string GetTypeNameWithoutGenerics(string fullTypeName)
+        {
+            int index = fullTypeName.IndexOf('`');
+            return index == -1 ? fullTypeName : fullTypeName.Substring(0, index);
+        }
+
+        /// <summary>
+        /// Determines whether the cast to the given type would succeed.
+        /// If <paramref name="obj"/> is <see langword="null"/> and <typeparamref name="T"/>
+        /// can be <see langword="null"/>, the cast succeeds just like the C# language feature.
+        /// </summary>
+        /// <param name="obj">The object to cast.</param>
+        internal static bool CanCast<T>(object obj)
+        {
+            return obj is T || (obj == null && default(T) == null);
+        }
+
+        /// <summary>
+        /// Casts to a value of the given type if possible.
+        /// If <paramref name="obj"/> is <see langword="null"/> and <typeparamref name="T"/>
+        /// can be <see langword="null"/>, the cast succeeds just like the C# language feature.
+        /// </summary>
+        /// <param name="obj">The object to cast.</param>
+        /// <param name="value">The value of the object, if the cast succeeded.</param>
+        internal static bool TryCast<T>(object obj, out T value)
+        {
+            if (obj is T)
+            {
+                value = (T)obj;
+                return true;
+            }
+
+            value = default(T);
+            return obj == null && default(T) == null;
         }
     }
 }

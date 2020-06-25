@@ -14,7 +14,7 @@ namespace TCLite.Framework.Constraints
     /// collection constraints that apply some notion of item equality
     /// as a part of their operation.
     /// </summary>
-    public abstract class CollectionItemsEqualConstraint<TExpected> : CollectionConstraint<TExpected>
+    public abstract class CollectionItemsEqualConstraint : CollectionConstraint
     {
         private readonly TCLiteEqualityComparer _comparer = new TCLiteEqualityComparer();
 
@@ -27,14 +27,14 @@ namespace TCLite.Framework.Constraints
         /// Construct a CollectionConstraint
         /// </summary>
         /// <param name="arg"></param>
-        protected CollectionItemsEqualConstraint(TExpected arg) : base(arg) { }
+        protected CollectionItemsEqualConstraint(object arg) : base(arg) { }
 
         #region Modifiers
 
         /// <summary>
         /// Flag the constraint to ignore case and return self.
         /// </summary>
-        public CollectionItemsEqualConstraint<TExpected> IgnoreCase
+        public CollectionItemsEqualConstraint IgnoreCase
         {
             get
             {
@@ -49,7 +49,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="adapter">The EqualityAdapter to use.</param>
         /// <returns>Self.</returns>
-        internal CollectionItemsEqualConstraint<TExpected> Using(EqualityAdapter adapter)
+        internal CollectionItemsEqualConstraint Using(EqualityAdapter adapter)
         {
             _comparer.ExternalComparers.Add(adapter);
             return this;
@@ -60,7 +60,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="comparer">The IComparer object to use.</param>
         /// <returns>Self.</returns>
-        public CollectionItemsEqualConstraint<TExpected> Using(IComparer comparer)
+        public CollectionItemsEqualConstraint Using(IComparer comparer)
         {
             return Using(EqualityAdapter.For(comparer));
         }
@@ -70,7 +70,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="comparer">The IComparer object to use.</param>
         /// <returns>Self.</returns>
-        public CollectionItemsEqualConstraint<TExpected> Using<T>(IComparer<T> comparer)
+        public CollectionItemsEqualConstraint Using<T>(IComparer<T> comparer)
         {
             return Using(EqualityAdapter.For(comparer));
         }
@@ -80,7 +80,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="comparer">The IComparer object to use.</param>
         /// <returns>Self.</returns>
-        public CollectionItemsEqualConstraint<TExpected> Using<T>(Comparison<T> comparer)
+        public CollectionItemsEqualConstraint Using<T>(Comparison<T> comparer)
         {
             return Using(EqualityAdapter.For(comparer));
         }
@@ -90,7 +90,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="comparer">The IComparer object to use.</param>
         /// <returns>Self.</returns>
-        public CollectionItemsEqualConstraint<TExpected> Using(IEqualityComparer comparer)
+        public CollectionItemsEqualConstraint Using(IEqualityComparer comparer)
         {
             return Using(EqualityAdapter.For(comparer));
         }
@@ -100,7 +100,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="comparer">The IComparer object to use.</param>
         /// <returns>Self.</returns>
-        public CollectionItemsEqualConstraint<TExpected> Using<T>(IEqualityComparer<T> comparer)
+        public CollectionItemsEqualConstraint Using<T>(IEqualityComparer<T> comparer)
         {
             return Using(EqualityAdapter.For(comparer));
         }

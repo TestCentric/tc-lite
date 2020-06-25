@@ -179,9 +179,9 @@ namespace TCLite.Framework
         /// Returns a new CollectionContainsConstraint checking for the
         /// presence of a particular object in the collection.
         /// </summary>
-        public static CollectionContainsConstraint<T> Member<T>(T expected)
+        public static CollectionContainsConstraint Member(object expected)
         {
-            return new CollectionContainsConstraint<T>(expected);
+            return new CollectionContainsConstraint(expected);
         }
 
         #endregion

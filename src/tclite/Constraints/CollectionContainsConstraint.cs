@@ -11,15 +11,15 @@ namespace TCLite.Framework.Constraints
     /// CollectionContainsConstraint is used to test whether a collection
     /// contains an expected object as a member.
     /// </summary>
-    public class CollectionContainsConstraint<TExpected> : CollectionItemsEqualConstraint<TExpected>
+    public class CollectionContainsConstraint : CollectionItemsEqualConstraint
     {
-        private readonly TExpected ExpectedValue;
+        private readonly object ExpectedValue;
 
         /// <summary>
         /// Construct a CollectionContainsConstraint
         /// </summary>
         /// <param name="expected"></param>
-        public CollectionContainsConstraint(TExpected expected)
+        public CollectionContainsConstraint(object expected)
             : base(expected)
         {
             ExpectedValue = expected;

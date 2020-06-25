@@ -10,13 +10,13 @@ namespace TCLite.Framework.Constraints
     /// <summary>
     /// Tests whether a value is greater than the value supplied to its constructor
     /// </summary>
-    public class GreaterThanConstraint<TExpected> : ComparisonConstraint<TExpected>
+    public class GreaterThanConstraint : ComparisonConstraint
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:GreaterThanConstraint"/> class.
         /// </summary>
         /// <param name="expected">The expected value.</param>
-        public GreaterThanConstraint(TExpected expected)
+        public GreaterThanConstraint(object expected)
             : base(expected)
         {
             ExpectedValue = expected;
@@ -27,7 +27,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// The value against which a comparison is to be made
         /// </summary>
-        private TExpected ExpectedValue { get; set; }
+        private object ExpectedValue { get; set; }
 
         /// <summary>
         /// Test whether the constraint is satisfied by a given value

@@ -67,7 +67,6 @@ namespace TCLite.Framework.Assertions
             Assert.AreEqual(StandardErrorMessage("not null", "null"), ex.Message);
 		}
 
-#if NYI // IsNaN
 		[Test]
 		public void IsNaN()
 		{
@@ -98,6 +97,5 @@ namespace TCLite.Framework.Assertions
 			Assert.IsNotEmpty( hash, "Failed on Hashtable" );
 			Assert.IsNotEmpty( (IEnumerable)array, "Failed on IEnumerable" );
 		}
-#endif
-	}
+    }
 }

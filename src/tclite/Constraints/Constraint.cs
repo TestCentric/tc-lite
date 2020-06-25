@@ -10,8 +10,8 @@ namespace TCLite.Framework.Constraints
 {
     /// <summary>
     /// The Constraint class is the base of all built-in constraints
-    /// within TCLite. It provides the operator overloads used to combine 
-    /// constraints.
+    /// within TCLite. The class models a constraint, which puts no
+    /// limitations on the type of actual value it is able to handle.
     /// </summary>
     public abstract class Constraint : IConstraint
     {
@@ -100,7 +100,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>A ConstraintResult</returns>
-        public abstract ConstraintResult ApplyTo<TActual>(TActual actual);
+        //public abstract ConstraintResult ApplyTo<TActual>(TActual actual);
 
         /// <summary>
         /// Applies the constraint to an actual value, returning a ConstraintResult.
@@ -324,13 +324,14 @@ namespace TCLite.Framework.Constraints
         #endregion
     }
 
-    public abstract class Constraint<TExpected> : Constraint
+    /// <summary>
+    /// The Constraint<TActual> class is derived from non-generic
+    /// Constraint and class models a constraint, which requires
+    /// the actual values supplied to be of a certain Type.
+    /// </summary>
+    public abstract class Constraint<TActual> : Constraint
     {
-        public Constraint() { }
-
-        public Constraint(TExpected arg) : base(arg) { }
-
-        public Constraint(TExpected arg1, TExpected arg2) : base(arg1, arg2) { }
+        public Constraint(params object[] args) : base(args) { }
 
         /// <summary>
         /// Applies the constraint to an actual value, of the same type as
@@ -338,9 +339,6 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>A ConstraintResult</returns>
-        public ConstraintResult ApplyTo(TExpected actual)
-        {
-            return ApplyTo<TExpected>(actual);
-        }
+        public abstract ConstraintResult ApplyTo(TActual actual);
     }
 }

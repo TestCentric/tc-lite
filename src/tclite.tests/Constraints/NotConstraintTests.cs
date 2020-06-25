@@ -15,7 +15,7 @@ namespace TCLite.Framework.Constraints
         private const string DESCRIPTION = "not null"; // TODO: Should be "not equal to null"
         private const string STRING_REPRESENTATION = "<not <equal null>>";
 
-        private NotConstraint _constraint = new NotConstraint( new EqualConstraint<object>(null) );
+        private NotConstraint _constraint = new NotConstraint( new EqualConstraint(null) );
 
         private static object[] SuccessData = { 42, "Hello" };
 
@@ -56,7 +56,7 @@ namespace TCLite.Framework.Constraints
         {
             var ex = Assert.Throws<AssertionException>(() =>
             {
-                Assert.That("abc", new NotConstraint(new EqualConstraint<string>("ABC").IgnoreCase));
+                Assert.That("abc", new NotConstraint(new EqualConstraint("ABC").IgnoreCase));
             });
 
             Assert.That(ex.Message.Contains("ignoring case"), $"Message was {ex.Message}");
@@ -88,7 +88,7 @@ namespace TCLite.Framework.Constraints
         [Test]
         public void CanUseNotOperator()
         {
-            Assert.That(42, !new EqualConstraint<int>(99));
+            Assert.That(42, !new EqualConstraint(99));
         }
     }
 }

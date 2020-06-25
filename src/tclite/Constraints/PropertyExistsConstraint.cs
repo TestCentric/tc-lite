@@ -42,15 +42,15 @@ namespace TCLite.Framework.Constraints
             get { return "property " + name; }
         }
 
-        /// <summary>
-        /// Test whether the property exists for a given object
-        /// </summary>
-        /// <param name="actual">The object to be tested</param>
-        /// <returns>True for success, false for failure</returns>
-        public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        {
-            return ApplyTo((object)actual);
-        }
+        // /// <summary>
+        // /// Test whether the property exists for a given object
+        // /// </summary>
+        // /// <param name="actual">The object to be tested</param>
+        // /// <returns>True for success, false for failure</returns>
+        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        // {
+        //     return ApplyTo((object)actual);
+        // }
 
         /// <summary>
         /// Test whether the property exists for a given object

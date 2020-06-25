@@ -27,7 +27,7 @@ namespace TCLite.Framework
         public TestCaseAttribute(params object[] arguments)
         {
 			RunState = RunState.Runnable;			
-            Arguments = arguments;
+            Arguments = arguments ?? new object[] { null };
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace TCLite.Framework
         /// <summary>
         /// Gets the list of arguments to a test case
         /// </summary>
-        public object[] Arguments { get; private set; }
+        public object[] Arguments { get; }
 
         /// <summary>
         /// Gets or sets the expected result.

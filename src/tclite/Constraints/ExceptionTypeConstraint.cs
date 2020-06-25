@@ -19,19 +19,19 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public ExceptionTypeConstraint(Type type) : base(type) { }
 
-        /// <summary>
-        /// Applies the constraint to an actual value, returning a ConstraintResult.
-        /// </summary>
-        /// <param name="actual">The value to be tested</param>
-        /// <returns>A ConstraintResult</returns>
-        public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        {
-            Guard.ArgumentIsRequiredType<Exception>(actual, nameof(actual));
+        // /// <summary>
+        // /// Applies the constraint to an actual value, returning a ConstraintResult.
+        // /// </summary>
+        // /// <param name="actual">The value to be tested</param>
+        // /// <returns>A ConstraintResult</returns>
+        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        // {
+        //     Guard.ArgumentOfType<Exception>(actual, nameof(actual));
 
-            Type actualType = actual == null ? null : actual.GetType();
+        //     Type actualType = actual == null ? null : actual.GetType();
 
-            return new ExceptionTypeConstraintResult(this, actual, actualType, this.Matches(actual));
-        }
+        //     return new ExceptionTypeConstraintResult(this, actual, actualType, this.Matches(actual));
+        // }
 
         #region Nested Result Class
         class ExceptionTypeConstraintResult : ConstraintResult

@@ -14,7 +14,7 @@ namespace TCLite.Framework.Constraints
     /// The EqualConstraintResult class is tailored for formatting
     /// and displaying the result of an EqualConstraint.
     /// </summary>
-    public class EqualConstraintResult<TExpected> : ConstraintResult
+    public class EqualConstraintResult : ConstraintResult
     {
         private readonly object expectedValue;
         private readonly Tolerance tolerance;
@@ -48,7 +48,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// Construct an EqualConstraintResult
         /// </summary>
-        public EqualConstraintResult(EqualConstraint<TExpected> constraint, object actual, bool hasSucceeded)
+        public EqualConstraintResult(EqualConstraint constraint, object actual, bool hasSucceeded)
             : base(constraint, actual, hasSucceeded)
         {
             this.expectedValue = constraint.ExpectedValue;

@@ -12,7 +12,7 @@ namespace TCLite.Framework.Constraints
     /// CollectionConstraint is the abstract base class for
     /// constraints that operate on collections.
     /// </summary>
-    public abstract class CollectionConstraint<TExpected> : Constraint<TExpected>
+    public abstract class CollectionConstraint : Constraint
     {
         /// <summary>
         /// Construct an empty CollectionConstraint
@@ -23,7 +23,7 @@ namespace TCLite.Framework.Constraints
         /// Construct a CollectionConstraint
         /// </summary>
         /// <param name="arg"></param>
-        protected CollectionConstraint(TExpected arg) : base(arg) { }
+        protected CollectionConstraint(object arg) : base(arg) { }
 
         /// <summary>
         /// Determines whether the specified enumerable is empty.
@@ -44,18 +44,18 @@ namespace TCLite.Framework.Constraints
             return true;
         }
 
-        /// <summary>
-        /// Test whether the constraint is satisfied by a given value
-        /// </summary>
-        /// <param name="actual">The value to be tested</param>
-        /// <returns>True for success, false for failure</returns>
-        public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        {
-            Guard.ArgumentIsRequiredType<IEnumerable>(actual, nameof(actual));
-            var enumerable = actual as IEnumerable;
+        // /// <summary>
+        // /// Test whether the constraint is satisfied by a given value
+        // /// </summary>
+        // /// <param name="actual">The value to be tested</param>
+        // /// <returns>True for success, false for failure</returns>
+        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        // {
+        //     Guard.ArgumentNotNullOfType<IEnumerable>(actual, nameof(actual));
+        //     var enumerable = actual as IEnumerable;
 
-            return new ConstraintResult(this, actual, doMatch(enumerable));
-        }
+        //     return new ConstraintResult(this, actual, doMatch(enumerable));
+        // }
 
         /// <summary>
         /// Test whether the constraint is satisfied by a given value
@@ -64,7 +64,7 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for success, false for failure</returns>
         public override ConstraintResult ApplyTo(object actual)
         {
-            Guard.ArgumentIsRequiredType<IEnumerable>(actual, nameof(actual));
+            Guard.ArgumentNotNullOfType<IEnumerable>(actual, nameof(actual));
             var enumerable = actual as IEnumerable;
 
             return new ConstraintResult(this, enumerable, doMatch(enumerable));

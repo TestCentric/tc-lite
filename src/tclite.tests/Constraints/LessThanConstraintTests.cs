@@ -14,7 +14,7 @@ namespace TCLite.Framework.Constraints.Tests
     {
         public LessThanConstraintTests()
         {
-            _constraint = _comparisonConstraint = new LessThanConstraint<int>(5);
+            _constraint = _comparisonConstraint = new LessThanConstraint(5);
             _expectedDescription = "less than 5";
             _expectedRepresentation = "<lessthan 5>";
         }

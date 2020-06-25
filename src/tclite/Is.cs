@@ -80,7 +80,7 @@ namespace TCLite.Framework
 
         #endregion
 
-#if NYI // Positive, Negative, NaN, Empty, Unique, BinarySerializable, XmlSerializable
+#if NYI // Positive, Negative
         #region Positive
  
         /// <summary>
@@ -104,6 +104,7 @@ namespace TCLite.Framework
         }
  
         #endregion
+#endif
 
         #region NaN
 
@@ -117,6 +118,7 @@ namespace TCLite.Framework
 
         #endregion
 
+#if NYI // Empty, Unique, BinarySerializable, XmlSerializable
         #region Empty
 
         /// <summary>
@@ -172,9 +174,9 @@ namespace TCLite.Framework
         /// <summary>
         /// Returns a constraint that tests two items for equality
         /// </summary>
-        public static EqualConstraint<T> EqualTo<T>(T expected)
+        public static EqualConstraint EqualTo(object expected)
         {
-            return new EqualConstraint<T>(expected);
+            return new EqualConstraint(expected);
         }
 
         #endregion
@@ -184,9 +186,9 @@ namespace TCLite.Framework
         /// <summary>
         /// Returns a constraint that tests that two references are the same object
         /// </summary>
-        public static SameAsConstraint<T> SameAs<T>(T expected)
+        public static SameAsConstraint SameAs(object expected)
         {
-            return new SameAsConstraint<T>(expected);
+            return new SameAsConstraint(expected);
         }
 
         #endregion
@@ -197,9 +199,9 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is greater than the suppled argument
         /// </summary>
-        public static GreaterThanConstraint<T> GreaterThan<T>(T expected)
+        public static GreaterThanConstraint GreaterThan(object expected)
         {
-            return new GreaterThanConstraint<T>(expected);
+            return new GreaterThanConstraint(expected);
         }
 
         #endregion
@@ -210,18 +212,18 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is greater than or equal to the suppled argument
         /// </summary>
-        public static GreaterThanOrEqualConstraint<T> GreaterThanOrEqualTo<T>(T expected)
+        public static GreaterThanOrEqualConstraint GreaterThanOrEqualTo(object expected)
         {
-            return new GreaterThanOrEqualConstraint<T>(expected);
+            return new GreaterThanOrEqualConstraint(expected);
         }
 
         /// <summary>
         /// Returns a constraint that tests whether the
         /// actual value is greater than or equal to the suppled argument
         /// </summary>
-        public static GreaterThanOrEqualConstraint<T> AtLeast<T>(T expected)
+        public static GreaterThanOrEqualConstraint AtLeast(object expected)
         {
-            return new GreaterThanOrEqualConstraint<T>(expected);
+            return new GreaterThanOrEqualConstraint(expected);
         }
 
         #endregion
@@ -232,9 +234,9 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is less than the suppled argument
         /// </summary>
-        public static LessThanConstraint<T> LessThan<T>(T expected)
+        public static LessThanConstraint LessThan(object expected)
         {
-            return new LessThanConstraint<T>(expected);
+            return new LessThanConstraint(expected);
         }
 
         #endregion
@@ -245,18 +247,18 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is less than or equal to the suppled argument
         /// </summary>
-        public static LessThanOrEqualConstraint<T> LessThanOrEqualTo<T>(T expected)
+        public static LessThanOrEqualConstraint LessThanOrEqualTo(object expected)
         {
-            return new LessThanOrEqualConstraint<T>(expected);
+            return new LessThanOrEqualConstraint(expected);
         }
 
         /// <summary>
         /// Returns a constraint that tests whether the
         /// actual value is less than or equal to the suppled argument
         /// </summary>
-        public static LessThanOrEqualConstraint<T> AtMost<T>(T expected)
+        public static LessThanOrEqualConstraint AtMost(object expected)
         {
-            return new LessThanOrEqualConstraint<T>(expected);
+            return new LessThanOrEqualConstraint(expected);
         }
 
         #endregion

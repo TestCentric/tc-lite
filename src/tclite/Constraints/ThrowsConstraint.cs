@@ -34,37 +34,37 @@ namespace TCLite.Framework.Constraints
 
         #region Constraint Overrides
 
-        /// <summary>
-        /// Executes the code of the delegate and captures any exception.
-        /// If a non-null base constraint was provided, it applies that
-        /// constraint to the exception.
-        /// </summary>
-        /// <param name="actual">A delegate representing the code to be tested</param>
-        /// <returns>True if an exception is thrown and the constraint succeeds, otherwise false</returns>
-        public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        {
-            Guard.ArgumentIsRequiredType<Delegate>(actual, nameof(actual));
+        // /// <summary>
+        // /// Executes the code of the delegate and captures any exception.
+        // /// If a non-null base constraint was provided, it applies that
+        // /// constraint to the exception.
+        // /// </summary>
+        // /// <param name="actual">A delegate representing the code to be tested</param>
+        // /// <returns>True if an exception is thrown and the constraint succeeds, otherwise false</returns>
+        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        // {
+        //     Guard.ArgumentNotNullOfType<Delegate>(actual, nameof(actual));
 
-            try
-            {
-                (actual as Delegate).DynamicInvoke();
-            }
-            catch(TargetInvocationException ex)
-            {
-                _caughtException = ex.InnerException;
-            }
-            catch(Exception ex)
-            {
-                _caughtException = ex;
-            }
+        //     try
+        //     {
+        //         (actual as Delegate).DynamicInvoke();
+        //     }
+        //     catch(TargetInvocationException ex)
+        //     {
+        //         _caughtException = ex.InnerException;
+        //     }
+        //     catch(Exception ex)
+        //     {
+        //         _caughtException = ex;
+        //     }
 
-            return new ThrowsConstraintResult(
-                this,
-                _caughtException,
-                _caughtException != null
-                    ? BaseConstraint.ApplyTo(_caughtException)
-                    : null);
-        }
+        //     return new ThrowsConstraintResult(
+        //         this,
+        //         _caughtException,
+        //         _caughtException != null
+        //             ? BaseConstraint.ApplyTo(_caughtException)
+        //             : null);
+        // }
 
         /// <summary>
         /// Executes the code of the delegate and captures any exception.
@@ -75,7 +75,7 @@ namespace TCLite.Framework.Constraints
         /// <returns>True if an exception is thrown and the constraint succeeds, otherwise false</returns>
         public override ConstraintResult ApplyTo(object actual)
         {
-            Guard.ArgumentIsRequiredType<Delegate>(actual, nameof(actual));
+            Guard.ArgumentNotNullOfType<Delegate>(actual, nameof(actual));
 
             try
             {

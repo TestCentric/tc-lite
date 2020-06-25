@@ -52,9 +52,9 @@ namespace TCLite.Framework.Constraints
 
             TextMessageWriter writer = new TextMessageWriter();
             result.WriteMessageTo(writer);
-            Assert.That( writer.ToString(), Is.EqualTo(
+            Assert.That(writer.ToString(), Is.EqualTo(
                 TextMessageWriter.Pfx_Expected + _expectedDescription + NL +
-                TextMessageWriter.Pfx_Actual + message + NL ));
+                TextMessageWriter.Pfx_Actual + message + NL));
         }
     }
 

@@ -10,18 +10,18 @@ namespace TCLite.Framework.Constraints
     /// <summary>
     /// Tests whether a value is less than the value supplied to its constructor
     /// </summary>
-    public class LessThanConstraint<TExpected> : ComparisonConstraint<TExpected>
+    public class LessThanConstraint : ComparisonConstraint
     {
         /// <summary>
         /// The value against which a comparison is to be made
         /// </summary>
-        private TExpected ExpectedValue { get; set; }
+        private object ExpectedValue { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:LessThanConstraint"/> class.
         /// </summary>
         /// <param name="expected">The expected value.</param>
-        public LessThanConstraint(TExpected expected)
+        public LessThanConstraint(object expected)
             : base(expected)
         {
             ExpectedValue = expected;

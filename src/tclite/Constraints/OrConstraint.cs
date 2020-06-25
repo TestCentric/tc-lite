@@ -19,17 +19,17 @@ namespace TCLite.Framework.Constraints
 
         public override string  Description => $"{Left.Description} or {Right.Description}";
 
-        /// <summary>
-        /// Apply the member constraints to an actual value, succeeding 
-        /// succeeding as soon as one of them succeeds.
-        /// </summary>
-        /// <param name="actual">The actual value</param>
-        /// <returns>True if either constraint succeeded</returns>
-        public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        {
-            bool hasSucceeded = Left.ApplyTo(actual).IsSuccess || Right.ApplyTo(actual).IsSuccess;
-            return new ConstraintResult(this, actual, hasSucceeded);
-        }
+        // /// <summary>
+        // /// Apply the member constraints to an actual value, succeeding 
+        // /// succeeding as soon as one of them succeeds.
+        // /// </summary>
+        // /// <param name="actual">The actual value</param>
+        // /// <returns>True if either constraint succeeded</returns>
+        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        // {
+        //     bool hasSucceeded = Left.ApplyTo(actual).IsSuccess || Right.ApplyTo(actual).IsSuccess;
+        //     return new ConstraintResult(this, actual, hasSucceeded);
+        // }
         /// <summary>
         /// Apply the member constraints to an actual value, succeeding 
         /// succeeding as soon as one of them succeeds.

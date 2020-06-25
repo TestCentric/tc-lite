@@ -25,6 +25,21 @@ namespace TCLite.Framework
         }
 
         /// <summary>
+        /// Throws an exception if an argument is null or if
+        /// it is not of the specified Type.
+        /// </summary>
+        /// <param name="value">The value to be tested</param>
+        /// <param name="name">The name of the argument</param>
+        public static void ArgumentNotNullOfType<T>(object value, string name)
+        {
+            if (value == null)
+                throw new ArgumentNullException("Argument must not be null", name);
+
+            if (!(value is T))
+                throw new ArgumentException($"Argument must be of Type {typeof(T).Name}", name);
+        }
+
+        /// <summary>
         /// Throws an exception if a string argument is null or empty
         /// </summary>
         /// <param name="value">The value to be tested</param>
@@ -57,7 +72,7 @@ namespace TCLite.Framework
         /// <param name="condition">The condition that must be met</param>
         /// <param name="message">The exception message to be used</param>
         /// <param name="paramName">The name of the argument</param>
-        public static void ArgumentIsRequiredType<T>(object value, string paramName)
+        public static void ArgumentOfType<T>(object value, string paramName)
         {
             if (!(value is T))
                 throw new ArgumentException($"Argument must be of Type {typeof(T).Name}", paramName);

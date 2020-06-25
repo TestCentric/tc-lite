@@ -10,7 +10,7 @@ namespace TCLite.Framework.Constraints
     {
         public AndConstraintTests()
         {
-            _constraint = new AndConstraint(new GreaterThanConstraint<int>(40), new LessThanConstraint<int>(50));
+            _constraint = new AndConstraint(new GreaterThanConstraint(40), new LessThanConstraint(50));
             _expectedDescription = "greater than 40 and less than 50";
             _expectedRepresentation = "<and <greaterthan 40> <lessthan 50>>";
         }
@@ -22,7 +22,7 @@ namespace TCLite.Framework.Constraints
 		[Test]
         public void CanCombineTestsWithAndOperator()
         {
-            Assert.That(42, new GreaterThanConstraint<int>(40) & new LessThanConstraint<int>(50));
+            Assert.That(42, new GreaterThanConstraint(40) & new LessThanConstraint(50));
         }
     }
 }

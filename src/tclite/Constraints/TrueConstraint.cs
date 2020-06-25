@@ -8,19 +8,19 @@ namespace TCLite.Framework.Constraints
     /// <summary>
     /// TrueConstraint tests that the actual value is true
     /// </summary>
-    public class TrueConstraint : Constraint<bool>
+    public class TrueConstraint : Constraint
     {
         public override string Description => "True";
 
-        public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        {
-            Guard.ArgumentIsRequiredType<bool>(actual, nameof(actual));
-            return new ConstraintResult(this, actual, true.Equals(actual));
-        }
+        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        // {
+        //     Guard.ArgumentNotNullOfType<bool>(actual, nameof(actual));
+        //     return new ConstraintResult(this, actual, true.Equals(actual));
+        // }
 
         public override ConstraintResult ApplyTo(object actual)
         {
-            Guard.ArgumentIsRequiredType<bool>(actual, nameof(actual));
+            Guard.ArgumentNotNullOfType<bool>(actual, nameof(actual));
             return new ConstraintResult(this, actual, true.Equals(actual));
         }
     }
