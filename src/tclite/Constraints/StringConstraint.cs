@@ -12,7 +12,7 @@ namespace TCLite.Framework.Constraints
     /// that operate on strings. It supports the IgnoreCase
     /// modifier for string operations.
     /// </summary>
-    public abstract class StringConstraint : Constraint
+    public abstract class StringConstraint : Constraint<string>
     {
         /// <summary>
         /// The expected value
@@ -20,7 +20,7 @@ namespace TCLite.Framework.Constraints
 #pragma warning disable IDE1006
         // ReSharper disable once InconsistentNaming
         // Disregarding naming convention for back-compat
-        protected string expected;
+        protected string _expected;
 #pragma warning restore IDE1006
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace TCLite.Framework.Constraints
 #pragma warning disable IDE1006
         // ReSharper disable once InconsistentNaming
         // Disregarding naming convention for back-compat
-        protected bool caseInsensitive;
+        protected bool _caseInsensitive;
 #pragma warning restore IDE1006
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace TCLite.Framework.Constraints
 #pragma warning disable IDE1006
         // ReSharper disable once InconsistentNaming
         // Disregarding naming convention for back-compat
-        protected string descriptionText;
+        protected string _descriptionText;
 #pragma warning restore IDE1006
 
         /// <summary>
@@ -49,8 +49,8 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                string desc = string.Format("{0} {1}", descriptionText, $"\"{expected}\"");
-                if (caseInsensitive)
+                string desc = $"{_descriptionText} \"{_expected}\"";
+                if (_caseInsensitive)
                     desc += ", ignoring case";
                 return desc;
             }
@@ -68,7 +68,7 @@ namespace TCLite.Framework.Constraints
         protected StringConstraint(string expected)
             : base(expected)
         {
-            this.expected = expected;
+            _expected = expected;
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public virtual StringConstraint IgnoreCase
         {
-            get { caseInsensitive = true; return this; }
+            get { _caseInsensitive = true; return this; }
         }
 
         // /// <summary>
@@ -97,10 +97,19 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
+        public override ConstraintResult ApplyTo(string actual)
+        {
+            return new ConstraintResult(this, actual, Matches(actual as string));
+        }
+
+        /// <summary>
+        /// Test whether the constraint is satisfied by a given value
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>True for success, false for failure</returns>
         public override ConstraintResult ApplyTo(object actual)
         {
             Guard.ArgumentOfType<string>(actual, nameof(actual));
-            //var stringValue = ConstraintUtils.RequireActual<string>(actual, nameof(actual), allowNull: true);
 
             return new ConstraintResult(this, actual, Matches(actual as string));
         }

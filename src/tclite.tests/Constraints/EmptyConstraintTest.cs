@@ -32,12 +32,11 @@ namespace TCLite.Framework.Constraints
             new TestCaseData( new object[] { 1, 2, 3 }, "< 1, 2, 3 >" )
         };
 
-        [TestCase(null)]
-        [TestCase(5)]
-        public void InvalidDataThrowsArgumentException(object data)
+        protected override TestCaseData[] InvalidData => new TestCaseData[]
         {
-            Assert.Throws<ArgumentException>(() => Constraint.ApplyTo(data));
-        }
+            new TestCaseData(null, typeof(ArgumentException)),
+            new TestCaseData(5, typeof(ArgumentException))
+        };
 
 #if NYI // Null string
         [Test]
@@ -58,28 +57,29 @@ namespace TCLite.Framework.Constraints
         // }
     }
 
-    // [TestFixture]
-    // public class EmptyStringConstraintTest : StringConstraintTests
-    // {
-    //     [SetUp]
-    //     public void SetUp()
-    //     {
-    //         TheConstraint = new EmptyStringConstraint();
-    //         ExpectedDescription = "<empty>";
-    //         StringRepresentation = "<emptystring>";
-    //     }
+    [TestFixture]
+    public class EmptyStringConstraintTest : ConstraintTestBase<string>
+    {
+        protected override Constraint Constraint => new EmptyStringConstraint();
+        protected override string ExpectedDescription => "<empty>";
+        protected override string ExpectedRepresentation => "<emptystring>";
 
-    //     static object[] SuccessData = new object[]
-    //     {
-    //         string.Empty
-    //     };
+        protected override string[] SuccessData => new string[]
+        {
+            string.Empty
+        };
 
-    //     static object[] FailureData = new object[]
-    //     {
-    //         new TestCaseData( "Hello", "\"Hello\"" ),
-    //         new TestCaseData( null, "null")
-    //     };
-    // }
+        protected override TestCaseData[] FailureData => new TestCaseData[]
+        {
+            new TestCaseData( "Hello", "\"Hello\"" ),
+            new TestCaseData( null, "null")
+        };
+
+        protected override TestCaseData[] InvalidData => new TestCaseData[]
+        {
+            new TestCaseData(5, typeof(ArgumentException))
+        };
+    }
 
     // [TestFixture]
     // public class EmptyDirectoryConstraintTest

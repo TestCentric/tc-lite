@@ -74,7 +74,8 @@ namespace TCLite.Framework
         /// <param name="paramName">The name of the argument</param>
         public static void ArgumentOfType<T>(object value, string paramName)
         {
-            if (!(value is T))
+            // Specifically excludes null, which must be checked separately
+            if (value != null && !(value is T))
                 throw new ArgumentException($"Argument must be of Type {typeof(T).Name}", paramName);
         }
     }
