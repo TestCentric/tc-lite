@@ -8,32 +8,37 @@ using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.Constraints
 {
-    public abstract class ConstraintTestBaseNoData
+    /// <summary>
+    /// Base class for constraint tests
+    /// </summary>
+    /// <typeparam name="TActual">Type required for actual parameters.</typeparam>
+    public abstract class ConstraintTestBase<TActual>
     {
-        protected Constraint _constraint;
-        protected string _expectedDescription = "<NOT SET>";
-        protected string _expectedRepresentation = "<NOT SET>";
+        protected abstract Constraint Constraint { get; }
+        protected abstract string ExpectedDescription { get; }
+        protected abstract string ExpectedRepresentation { get; }
+
+        protected abstract TActual[] SuccessData { get; }
+        protected abstract TestCaseData[] FailureData { get; }
+        // TODO: Make this abstract after all classes define it
+        protected virtual TestCaseData[] InvalidData => new TestCaseData[0];
 
         [Test]
         public void ProvidesProperDescription()
         {
-            TextMessageWriter writer = new TextMessageWriter();
-            Assert.That(_constraint.Description, Is.EqualTo(_expectedDescription));
+            Assert.That(Constraint.Description, Is.EqualTo(ExpectedDescription));
         }
 
         [Test]
         public void ProvidesProperStringRepresentation()
         {
-            Assert.That(_constraint.ToString(), Is.EqualTo(_expectedRepresentation));
+            Assert.That(Constraint.ToString(), Is.EqualTo(ExpectedRepresentation));
         }
-    }
 
-    public abstract class ConstraintTestBase : ConstraintTestBaseNoData
-    {
-        [Test, TestCaseSource("SuccessData")]
-        public void SucceedsWithGoodValues(object value)
+        [TestCaseSource(nameof(SuccessData))]
+        public void SucceedsWithGoodValues(TActual value)
         {
-            var result = _constraint.ApplyTo(value);
+            var result = Constraint.ApplyTo(value);
             if (!result.IsSuccess)
             {
                 MessageWriter writer = new TextMessageWriter();
@@ -42,47 +47,28 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        [Test, TestCaseSource("FailureData")]
-        public void FailsWithBadValues(object badValue, string message)
+        [TestCaseSource(nameof(FailureData))]
+        public void FailsWithBadValues(TActual badValue, string message)
         {
             string NL = Environment.NewLine;
 
-            var result = _constraint.ApplyTo(badValue);
+            var result = Constraint.ApplyTo(badValue);
             Assert.IsFalse(result.IsSuccess);
 
             TextMessageWriter writer = new TextMessageWriter();
             result.WriteMessageTo(writer);
             Assert.That(writer.ToString(), Is.EqualTo(
-                TextMessageWriter.Pfx_Expected + _expectedDescription + NL +
+                TextMessageWriter.Pfx_Expected + ExpectedDescription + NL +
                 TextMessageWriter.Pfx_Actual + message + NL));
         }
-    }
 
-    /// <summary>
-    /// Base class for testing constraints that can throw an ArgumentException
-    /// </summary>
-    public abstract class ConstraintTestBaseWithArgumentException : ConstraintTestBase
-    {
-        [Test, TestCaseSource("InvalidData")]
-        public void InvalidDataThrowsArgumentException(object value)
+        [TestCaseSource(nameof(InvalidData))]
+        public void InvalidDataThrowsException(object value, Type exType)
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws(exType, () =>
             {
-                _constraint.ApplyTo(value);
+                Constraint.ApplyTo(value);
             });
-        }
-    }
-
-    /// <summary>
-    /// Base class for tests that can throw multiple exceptions. Use
-    /// TestCaseData class to specify the expected exception type.
-    /// </summary>
-    public abstract class ConstraintTestBaseWithExceptionTests : ConstraintTestBase
-    {
-        [Test, TestCaseSource("InvalidData")]
-        public void InvalidDataThrowsException(object value)
-        {
-            _constraint.ApplyTo(value);
         }
     }
 }

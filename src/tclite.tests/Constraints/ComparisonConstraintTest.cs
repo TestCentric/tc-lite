@@ -12,15 +12,21 @@ namespace TCLite.Framework.Constraints
 {
     #region ComparisonConstraintTest
 
-    public abstract class ComparisonConstraintTest : ConstraintTestBaseWithArgumentException
+    public abstract class ComparisonConstraintTest : ConstraintTestBase<object>
     {
-        protected ComparisonConstraint _comparisonConstraint;
+        private ComparisonConstraint ComparisonConstraint => Constraint as ComparisonConstraint;
+
+        protected override TestCaseData[] InvalidData => new TestCaseData[]
+        { 
+            new TestCaseData(null, typeof(ArgumentException)),
+            new TestCaseData("xxx", typeof(ArgumentException))
+        };
 
         [Test]
         public void UsesProvidedIComparer()
         {
             SimpleObjectComparer comparer = new SimpleObjectComparer();
-            _comparisonConstraint.Using(comparer).ApplyTo(0);
+            ComparisonConstraint.Using(comparer).ApplyTo(0);
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
@@ -28,7 +34,7 @@ namespace TCLite.Framework.Constraints
         public void UsesProvidedComparerOfT()
         {
             MyComparer<int> comparer = new MyComparer<int>();
-            _comparisonConstraint.Using(comparer).ApplyTo(0);
+            ComparisonConstraint.Using(comparer).ApplyTo(0);
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
@@ -47,7 +53,7 @@ namespace TCLite.Framework.Constraints
         public void UsesProvidedComparisonOfT()
         {
             MyComparison<int> comparer = new MyComparison<int>();
-            _comparisonConstraint.Using(new Comparison<int>(comparer.Compare)).ApplyTo(0);
+            ComparisonConstraint.Using(new Comparison<int>(comparer.Compare)).ApplyTo(0);
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
@@ -62,14 +68,12 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-#if !NETCF_2_0
         [Test]
         public void UsesProvidedLambda()
         {
             Comparison<int> comparer = (x, y) => x.CompareTo(y);
-            _comparisonConstraint.Using(comparer).ApplyTo(0);
+            ComparisonConstraint.Using(comparer).ApplyTo(0);
         }
-#endif
     }
 
     #endregion

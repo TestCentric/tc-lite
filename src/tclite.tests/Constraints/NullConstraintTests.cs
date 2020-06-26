@@ -10,36 +10,18 @@ using TCLite.Framework.Internal;
 namespace TCLite.Framework.Constraints
 {
     [TestFixture]
-    public class NullConstraintTests
+    public class NullConstraintTests : ConstraintTestBase<object>
     {
-        [Test]
-        public void ProvidesProperDescription()
-        {
-            Assert.That(new NullConstraint().Description, Is.EqualTo("null"));
-        }
+        protected override Constraint Constraint => new NullConstraint();
 
-        [Test]
-        public void ProvidesProperStringRepresentation()
-        {
-            Assert.That(new NullConstraint().ToString(), Is.EqualTo("<null>"));
-        }
+        protected override string ExpectedDescription => "null";
+        protected override string ExpectedRepresentation => "<null>";
 
-        [TestCase(null)]
-        [TestCase((string)null)]
-        public void SucceedsWithGoodValues(object value)
+        protected override object[] SuccessData => new object[] { null, (string)null };
+        protected override TestCaseData[] FailureData => new TestCaseData[]
         {
-            Assert.IsNull(value);
-            Assert.That(value, Is.Null);
-        }
-
-        [TestCase("hello", "\"hello\"")]
-        public void FailsWithBadValues(object badValue, string message)
-        {
-            var ex = Assert.Throws<AssertionException>(() =>
-                Assert.IsNull(badValue));
-
-            Assert.That(ex.Message, Is.EqualTo(
-                $"  Expected: null\n  But was:  {message}\n"));
-        }
+            new TestCaseData("hello", "\"hello\""),
+            new TestCaseData(42, "42")
+        };
     }
 }

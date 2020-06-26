@@ -20,7 +20,7 @@ namespace TCLite.Framework.Constraints
 
         private EqualConstraint _constraint = new EqualConstraint(4);
 
-        internal static object[] SuccessData = new object[] { 4, 4.0f, 4.0d, 4.0000m };
+        internal static object[] SuccessData => new object[] { 4, 4.0f, 4.0d, 4.0000m };
 
         internal object[] FailureData = new object[] { 
             new TestCaseData( 5, "5" ), 

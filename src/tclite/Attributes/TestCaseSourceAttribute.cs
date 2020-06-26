@@ -109,10 +109,10 @@ namespace TCLite.Framework
                             ? array
                             : new object[] { item };
                     }
-                    //else if (parameters.Length == 1 && parameters[0].ParameterType.IsAssignableFrom(item.GetType()))
-                    //{
+                    // else if (parameters.Length == 1 && parameters[0].ParameterType.IsAssignableFrom(item.GetType()))
+                    // {
                     //    parms.Arguments = new object[] { item };
-                    //}
+                    // }
                     else if (item is Array)
                     {
                         Array array = item as Array;
@@ -158,8 +158,8 @@ namespace TCLite.Framework
             }
 
             MemberInfo[] members = sourceType.GetMember(sourceName,
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
-            if (members.Length == 1)
+                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+            if (members.Length >= 1)
             {
                 MemberInfo member = members[0];
                 object sourceobject = Internal.Reflect.Construct(sourceType);

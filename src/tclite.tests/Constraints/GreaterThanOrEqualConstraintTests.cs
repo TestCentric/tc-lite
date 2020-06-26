@@ -12,18 +12,15 @@ namespace TCLite.Framework.Constraints
     [TestFixture]
     public class GreaterThanOrEqualConstraintTests : ComparisonConstraintTest
     {
-        public GreaterThanOrEqualConstraintTests()
+        protected override Constraint Constraint => new GreaterThanOrEqualConstraint(5);
+        protected override string ExpectedDescription => "greater than or equal to 5";
+        protected override string ExpectedRepresentation => "<greaterthanorequal 5>";
+
+        protected override object[] SuccessData => new object[] { 6, 5 };
+        protected override TestCaseData[] FailureData => new TestCaseData[]
         {
-            _constraint = _comparisonConstraint = new GreaterThanOrEqualConstraint(5);
-            _expectedDescription = "greater than or equal to 5";
-            _expectedRepresentation = "<greaterthanorequal 5>";
-        }
-
-        internal object[] SuccessData = new object[] { 6, 5 };
-
-        internal object[] FailureData = new object[] { new object[] { 4, "4" } };
-
-        internal object[] InvalidData = new object[] { null, "xxx" };
+            new TestCaseData(4, "4")
+        };
 
         [Test]
         public void CanCompareIComparables()

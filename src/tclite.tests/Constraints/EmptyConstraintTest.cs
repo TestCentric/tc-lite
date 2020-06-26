@@ -12,16 +12,13 @@ using TCLite.TestUtilities;
 namespace TCLite.Framework.Constraints
 {
     [TestFixture]
-    public class EmptyConstraintTest : ConstraintTestBase
+    public class EmptyConstraintTest : ConstraintTestBase<object>
     {
-        public EmptyConstraintTest()
-        {
-            _constraint = new EmptyConstraint();
-            _expectedDescription = "<empty>";
-            _expectedRepresentation = "<empty>";
-        }
+        protected override Constraint Constraint => new EmptyConstraint();
+        protected override string ExpectedDescription => "<empty>";
+        protected override string ExpectedRepresentation => "<empty>";
 
-        static object[] SuccessData = new object[]
+        protected override object[] SuccessData => new object[]
         {
             string.Empty,
             new object[0],
@@ -29,7 +26,7 @@ namespace TCLite.Framework.Constraints
             new System.Collections.Generic.List<int>()
         };
 
-        static object[] FailureData = new object[]
+        protected override TestCaseData[] FailureData => new TestCaseData[]
         {
             new TestCaseData( "Hello", "\"Hello\"" ),
             new TestCaseData( new object[] { 1, 2, 3 }, "< 1, 2, 3 >" )
@@ -39,7 +36,7 @@ namespace TCLite.Framework.Constraints
         [TestCase(5)]
         public void InvalidDataThrowsArgumentException(object data)
         {
-            Assert.Throws<ArgumentException>(() => _constraint.ApplyTo(data));
+            Assert.Throws<ArgumentException>(() => Constraint.ApplyTo(data));
         }
 
 #if NYI // Null string
@@ -47,7 +44,7 @@ namespace TCLite.Framework.Constraints
         public void NullStringGivesFailureResult()
         {
             string actual = null;
-            var result = _constraint.ApplyTo(actual);
+            var result = Constraint.ApplyTo(actual);
             Assert.That(result.Status, Is.EqualTo(ConstraintStatus.Failure));
         }
 #endif

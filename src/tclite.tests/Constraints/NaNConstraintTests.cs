@@ -10,52 +10,26 @@ using TCLite.Framework.Internal;
 namespace TCLite.Framework.Constraints
 {
     [TestFixture]
-    public class NaNConstraintTests
+    public class NaNConstraintTests : ConstraintTestBase<double>
     {
-        [Test]
-        public void ProvidesProperDescription()
-        {
-            Assert.That(new NaNConstraint().Description, Is.EqualTo("NaN"));
-        }
+        protected override Constraint Constraint => new NaNConstraint();
+        protected override string ExpectedDescription => "NaN";
+        protected override string ExpectedRepresentation => "<nan>";
 
-        [Test]
-        public void ProvidesProperStringRepresentation()
+        protected override double[] SuccessData => new double[] { double.NaN, float.NaN };
+        protected override TestCaseData[] FailureData => new TestCaseData[]
         {
-            Assert.That(new NaNConstraint().ToString(), Is.EqualTo("<nan>"));
-        }
-
-        [TestCase(double.NaN)]
-        [TestCase(float.NaN)]
-        public void SucceedsWithGoodValues(double value)
+            new TestCaseData(42, "42.0d"),
+            new TestCaseData(42.0, "42.0d"),
+            new TestCaseData(double.PositiveInfinity, "Infinity"),
+            new TestCaseData(double.NegativeInfinity, "-Infinity"),
+            new TestCaseData(float.PositiveInfinity, "Infinity"),
+            new TestCaseData(float.NegativeInfinity, "-Infinity")
+        };
+        protected override TestCaseData[] InvalidData => new TestCaseData[]
         {
-            Assert.IsNaN(value);
-            Assert.That(value, Is.NaN);
-        }
-
-        //[TestCase( null, "null" )]
-        //[TestCase( "hello", "\"hello\"" )]
-        [TestCase( 42, "42.0d" )]
-        [TestCase( 42.0, "42.0d")]
-        [TestCase( double.PositiveInfinity, "Infinity" )]
-        [TestCase( double.NegativeInfinity, "-Infinity" )]
-        [TestCase( float.PositiveInfinity, "Infinity" )]
-        [TestCase( float.NegativeInfinity, "-Infinity" )]
-        public void FailsWithBadValues(double badValue, string message)
-        {
-            var ex = Assert.Throws<AssertionException>(() =>
-                Assert.IsNaN(badValue));
-
-            Assert.That(ex.Message, Is.EqualTo(
-                $"  Expected: NaN\n  But was:  {message}\n"));
-        }
-
-        [TestCase("InvalidData")]
-        public void InvalidDataThrowsArgumentException(object value)
-        {
-            Assert.Throws<ArgumentException>(() =>
-            {
-                new NaNConstraint().ApplyTo(value);
-            });
-        }
+            new TestCaseData("hello", typeof(ArgumentException)),
+            new TestCaseData(null, typeof(ArgumentNullException))
+        };
     }
 }

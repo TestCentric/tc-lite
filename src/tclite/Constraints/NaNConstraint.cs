@@ -38,7 +38,8 @@ namespace TCLite.Framework.Constraints
 
         public override ConstraintResult ApplyTo(object actual)
         {
-            Guard.ArgumentNotNullOfType<double>(actual, nameof(actual));
+            Guard.ArgumentNotNull(actual, nameof(actual));
+            Guard.ArgumentValid(actual is float || actual is double, "Argument must be float or double", nameof(actual));
             return new ConstraintResult(this, actual, double.IsNaN((double)(object) actual));
         }
     }

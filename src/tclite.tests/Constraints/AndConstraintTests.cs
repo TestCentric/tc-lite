@@ -6,18 +6,19 @@
 namespace TCLite.Framework.Constraints
 {
     [TestFixture]
-    public class AndConstraintTests : ConstraintTestBase
-    {
-        public AndConstraintTests()
+    public class AndConstraintTests : ConstraintTestBase<object>
+    {        
+        protected override Constraint Constraint =>
+            new AndConstraint(new GreaterThanConstraint(40), new LessThanConstraint(50));
+        protected override string ExpectedDescription => "greater than 40 and less than 50";
+        protected override string ExpectedRepresentation => "<and <greaterthan 40> <lessthan 50>>";
+
+        protected override object[] SuccessData => new object[] { 42 };
+        protected override TestCaseData[] FailureData => new TestCaseData[]
         {
-            _constraint = new AndConstraint(new GreaterThanConstraint(40), new LessThanConstraint(50));
-            _expectedDescription = "greater than 40 and less than 50";
-            _expectedRepresentation = "<and <greaterthan 40> <lessthan 50>>";
-        }
-
-		internal object[] SuccessData = new object[] { 42 };
-
-        internal object[] FailureData = new object[] { new object[] { 37, "37" }, new object[] { 53, "53" } };
+            new TestCaseData(37, "37"),
+            new TestCaseData(53, "53")
+        };
 
 		[Test]
         public void CanCombineTestsWithAndOperator()

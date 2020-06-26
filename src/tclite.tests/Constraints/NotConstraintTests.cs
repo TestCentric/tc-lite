@@ -9,47 +9,19 @@ using TCLite.Framework.Internal;
 namespace TCLite.Framework.Constraints
 {
     [TestFixture]
-    public class NotConstraintTests
+    public class NotConstraintTests : ConstraintTestBase<object>
     {
+        protected override Constraint Constraint => new NotConstraint(new EqualConstraint(null));
+        protected override string ExpectedDescription => "not null";
+        protected override string ExpectedRepresentation => "<not <equal null>>";
         private static readonly string NL = Environment.NewLine;
-        private const string DESCRIPTION = "not null"; // TODO: Should be "not equal to null"
-        private const string STRING_REPRESENTATION = "<not <equal null>>";
 
-        private NotConstraint _constraint = new NotConstraint( new EqualConstraint(null) );
+        protected override object[] SuccessData => new object[] { 42, "Hello" };
 
-        private static object[] SuccessData = { 42, "Hello" };
-
-        [Test]
-        public void DescriptionTest()
+        protected override TestCaseData[] FailureData => new TestCaseData[]
         {
-            Assert.AreEqual(DESCRIPTION, _constraint.Description);
-        }
-
-        [Test]
-        public void ToStringTest()
-        {
-            Assert.AreEqual(STRING_REPRESENTATION, _constraint.ToString());
-        }
-
-        [TestCase(42)]
-        [TestCase("Hello")]
-        public void ApplyConstraintSucceeds<T>(T actual)
-        {
-            Assert.That(_constraint.ApplyTo(actual).IsSuccess);
-        }
-
-        [TestCase(null, "null")]
-        public void ApplyConstraintFails(object actual, string message)
-        {
-            var result = _constraint.ApplyTo(actual);
-            Assert.IsFalse(result.IsSuccess);
-        
-            TextMessageWriter writer = new TextMessageWriter();
-            result.WriteMessageTo(writer);
-            Assert.That( writer.ToString(), Is.EqualTo(
-                TextMessageWriter.Pfx_Expected + DESCRIPTION + NL +
-                TextMessageWriter.Pfx_Actual + message + NL ));
-        }
+            new TestCaseData(null, "null")
+        };
 
         [Test]
         public void NotHonorsIgnoreCaseUsingConstructors()

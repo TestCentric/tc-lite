@@ -10,41 +10,23 @@ using TCLite.Framework.Internal;
 namespace TCLite.Framework.Constraints
 {
     [TestFixture]
-    public class TrueConstraintTests
+    public class TrueConstraintTests : ConstraintTestBase<bool>
     {
-        [Test]
-        public void ProvidesProperDescription()
+        protected override Constraint Constraint => new TrueConstraint();
+
+        protected override string ExpectedDescription => "True";
+        protected override string ExpectedRepresentation => "<true>";
+
+        protected override bool[] SuccessData => new bool[] { true, 2 + 2 == 4 };
+        protected override TestCaseData[] FailureData => new TestCaseData[]
         {
-            Assert.That(new TrueConstraint().Description, Is.EqualTo("True"));
-        }
-
-        [Test]
-        public void ProvidesProperStringRepresentation()
+            new TestCaseData(false, "False"),
+            new TestCaseData(2 + 2 == 5, "False")
+        };
+        protected override TestCaseData[] InvalidData => new TestCaseData[]
         {
-            Assert.That(new TrueConstraint().ToString(), Is.EqualTo("<true>"));
-        }
-
-        [TestCase(true)]
-        [TestCase(2 + 2 == 4)]
-        public void SucceedsWithGoodValues(bool goodValue)
-        {
-            Assert.IsTrue(goodValue);
-            Assert.That(goodValue, Is.True);
-        }
-
-        [TestCase(false)]
-        [TestCase(2 + 2 == 5)]
-        public void FailsWithBadValues(bool badValue)
-        {
-            var ex = Assert.Throws<AssertionException>(() =>
-                Assert.IsTrue(badValue));
-
-            Assert.That(ex.Message, Is.EqualTo(
-                $"  Expected: True\n  But was:  False\n"));
-        }
-
-        static object[] FailureData = new object[] { 
-            //new object[] { null, "null" }, new object[] { "hello", "\"hello\"" },
-            new object[] { false, "False"}, new object[] { 2+2==5, "False" } };
+            new TestCaseData("hello", typeof(ArgumentException)),
+            new TestCaseData(null, typeof(ArgumentNullException))
+        };
     }
 }

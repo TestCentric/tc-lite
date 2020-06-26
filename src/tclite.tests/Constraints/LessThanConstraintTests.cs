@@ -12,18 +12,17 @@ namespace TCLite.Framework.Constraints.Tests
     [TestFixture]
     public class LessThanConstraintTests : ComparisonConstraintTest
     {
-        public LessThanConstraintTests()
+        protected override Constraint Constraint => new LessThanConstraint(5);
+        protected override string ExpectedDescription => "less than 5";
+        protected override string ExpectedRepresentation => "<lessthan 5>";
+
+        protected override object[] SuccessData => new object[] { 4, 4.999 };
+
+        protected override TestCaseData[] FailureData => new TestCaseData[]
         {
-            _constraint = _comparisonConstraint = new LessThanConstraint(5);
-            _expectedDescription = "less than 5";
-            _expectedRepresentation = "<lessthan 5>";
-        }
-
-        internal object[] SuccessData = new object[] { 4, 4.999 };
-
-        internal object[] FailureData = new object[] { new object[] { 6, "6" }, new object[] { 5, "5" } };
-
-        internal object[] InvalidData = new object[] { null, "xxx" };
+            new TestCaseData(6, "6"),
+            new TestCaseData(5, "5")
+        };
 
         [Test]
         public void CanCompareIComparables()

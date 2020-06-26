@@ -6,18 +6,18 @@
 namespace TCLite.Framework.Constraints.Tests
 {
     [TestFixture]
-    public class OrConstraintTests : ConstraintTestBase
+    public class OrConstraintTests : ConstraintTestBase<object>
     {
-        public OrConstraintTests()
+        protected override Constraint Constraint => new OrConstraint(new EqualConstraint(42), new EqualConstraint(99));
+        protected override string ExpectedDescription => "42 or 99";
+        protected override string ExpectedRepresentation => "<or <equal 42> <equal 99>>";
+
+        protected override object[] SuccessData => new object[] { 99, 42 };
+
+        protected override TestCaseData[] FailureData => new TestCaseData[]
         {
-            _constraint = new OrConstraint(new EqualConstraint(42), new EqualConstraint(99));
-            _expectedDescription = "42 or 99";
-            _expectedRepresentation = "<or <equal 42> <equal 99>>";
-        }
-
-        internal object[] SuccessData = new object[] { 99, 42 };
-
-        internal object[] FailureData = new object[] { new object[] { 37, "37" } };
+            new TestCaseData(37, "37")
+        };
 
 		[Test]
         public void CanCombineTestsWithOrOperator()

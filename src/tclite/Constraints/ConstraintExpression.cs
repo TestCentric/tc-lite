@@ -431,7 +431,7 @@ namespace TCLite.Framework.Constraints
         /// Returns a constraint that tests whether the
         /// actual value is greater than the suppled argument
         /// </summary>
-        public GreaterThanConstraint GreaterThan(object expected)
+        public GreaterThanConstraint GreaterThan(IComparable expected)
         {
             return (GreaterThanConstraint)Append(new GreaterThanConstraint(expected));
         }
@@ -444,7 +444,7 @@ namespace TCLite.Framework.Constraints
         /// Returns a constraint that tests whether the
         /// actual value is greater than or equal to the suppled argument
         /// </summary>
-        public GreaterThanOrEqualConstraint GreaterThanOrEqualTo(object expected)
+        public GreaterThanOrEqualConstraint GreaterThanOrEqualTo(IComparable expected)
         {
             return (GreaterThanOrEqualConstraint)this.Append(new GreaterThanOrEqualConstraint(expected));
         }
@@ -453,7 +453,7 @@ namespace TCLite.Framework.Constraints
         /// Returns a constraint that tests whether the
         /// actual value is greater than or equal to the suppled argument
         /// </summary>
-        public GreaterThanOrEqualConstraint AtLeast(object expected)
+        public GreaterThanOrEqualConstraint AtLeast(IComparable expected)
         {
             return (GreaterThanOrEqualConstraint)this.Append(new GreaterThanOrEqualConstraint(expected));
         }
@@ -466,7 +466,7 @@ namespace TCLite.Framework.Constraints
         /// Returns a constraint that tests whether the
         /// actual value is less than the suppled argument
         /// </summary>
-        public LessThanConstraint LessThan(object expected)
+        public LessThanConstraint LessThan(IComparable expected)
         {
             return (LessThanConstraint)this.Append(new LessThanConstraint(expected));
         }
@@ -479,7 +479,7 @@ namespace TCLite.Framework.Constraints
         /// Returns a constraint that tests whether the
         /// actual value is less than or equal to the suppled argument
         /// </summary>
-        public LessThanOrEqualConstraint LessThanOrEqualTo(object expected)
+        public LessThanOrEqualConstraint LessThanOrEqualTo(IComparable expected)
         {
             return (LessThanOrEqualConstraint)this.Append(new LessThanOrEqualConstraint(expected));
         }
@@ -488,7 +488,7 @@ namespace TCLite.Framework.Constraints
         /// Returns a constraint that tests whether the
         /// actual value is less than or equal to the suppled argument
         /// </summary>
-        public LessThanOrEqualConstraint AtMost(object expected)
+        public LessThanOrEqualConstraint AtMost(IComparable expected)
         {
             return (LessThanOrEqualConstraint)this.Append(new LessThanOrEqualConstraint(expected));
         }
