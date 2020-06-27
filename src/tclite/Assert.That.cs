@@ -44,28 +44,6 @@ namespace TCLite.Framework
 
         #endregion
 
-        #region Assert.That(object...)
-
-        /// <summary>
-        /// Apply a constraint to an actual value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// </summary>
-        /// <param name="actual">The actual value to test</param>
-        /// <param name="expression">A Constraint expression to be applied</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        static public void That(object actual, IResolveConstraint expression, string message=null, params object[] args)
-        {
-            Constraint constraint = expression.Resolve();
-
-            IncrementAssertCount();
-            var result = constraint.ApplyTo(actual);
-            if (!result.IsSuccess)
-                ReportFailure(result, message, args);
-        }
-
-        #endregion
-
         #region Assert.That<T>
 
         /// <summary>
@@ -124,21 +102,6 @@ namespace TCLite.Framework
 
         #endregion
 
-        #region TestDelegate
-
-        // /// <summary>
-        // /// Asserts that the code represented by a delegate throws an exception
-        // /// that satisfies the constraint provided.
-        // /// </summary>
-        // /// <param name="code">A TestDelegate to be executed</param>
-        // /// <param name="constraint">A ThrowsConstraint used in the test</param>
-        // static public void That(TestDelegate code, IResolveConstraint constraint, string message=null, params object[] args)
-        // {
-        //     Assert.That((object)code, constraint, message, args);
-        // }
-
-        #endregion
-        
         private static void ReportFailure(ConstraintResult result, string message = null, params object[] args)
         {
             MessageWriter writer = new TextMessageWriter(message, args);

@@ -55,21 +55,6 @@ namespace TCLite.Framework
             AssertDoublesAreEqual(expected, (double)actual, delta, message, args);
         }
 
-       /// <summary>
-        /// Verifies that two objects are equal.  Two objects are considered
-        /// equal if both are null, or if both have the same value. TCLite
-        /// has special semantics for some object types.
-        /// If they are not equal an <see cref="AssertionException"/> is thrown.
-        /// </summary>
-        /// <param name="expected">The value that is expected</param>
-        /// <param name="actual">The actual value</param>
-        /// <param name="message">The message to display in case of failure</param>
-        /// <param name="args">Array of objects to be used in formatting the message</param>
-        public static void AreEqual(object expected, object actual, string message=null, params object[] args)
-        {
-            Assert.That(actual, Is.EqualTo(expected), message, args);
-        }
-
         /// <summary>
         /// Verifies that two instances of a type are not equal. If they are equal, then an 
         /// <see cref="AssertionException"/> is thrown.
@@ -79,21 +64,6 @@ namespace TCLite.Framework
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void AreNotEqual<T>(T expected, T actual, string message=null, params object[] args)
-        {
-            Assert.That(actual, Is.Not.EqualTo(expected), message, args);
-        }
-
-        /// <summary>
-        /// Verifies that two objects are not equal.  Two objects are considered
-        /// equal if both are null, or if both have the same value. TCLite
-        /// has special semantics for some object types.
-        /// If they are equal an <see cref="AssertionException"/> is thrown.
-        /// </summary>
-        /// <param name="expected">The value that is expected</param>
-        /// <param name="actual">The actual value</param>
-        /// <param name="message">The message to display in case of failure</param>
-        /// <param name="args">Array of objects to be used in formatting the message</param>
-        public static void AreNotEqual(object expected, object actual, string message=null, params object[] args)
         {
             Assert.That(actual, Is.Not.EqualTo(expected), message, args);
         }

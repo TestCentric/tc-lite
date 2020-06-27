@@ -28,21 +28,6 @@ namespace TCLite.Framework.Constraints
             ExpectedType = type;
         }
 
-        // /// <summary>
-        // /// Applies the constraint to an actual value, returning a ConstraintResult.
-        // /// </summary>
-        // /// <param name="actual">The value to be tested</param>
-        // /// <returns>A ConstraintResult</returns>
-        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        // {
-        //     ActualType = actual == null ? null : actual.GetType();
-
-        //     if (actual is Exception)
-        //         return new ConstraintResult(this, actual, this.Matches(actual));
-
-        //     return new ConstraintResult(this, ActualType, this.Matches(actual));
-        // }
-
         /// <summary>
         /// Applies the constraint to an actual value, returning a ConstraintResult.
         /// </summary>

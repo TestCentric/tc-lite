@@ -72,133 +72,55 @@ namespace TCLite.Framework.Api
 
         #region EqualityTests
 
-        [Test]
-        public void TestEquality_StatusSpecified()
+        private TestCaseData[] SuccessData = new TestCaseData[]
         {
-            Assert.AreEqual(new ResultState(TestStatus.Failed), new ResultState(TestStatus.Failed));
+            new TestCaseData(new ResultState(TestStatus.Failed), new ResultState(TestStatus.Failed)),
+            new TestCaseData(new ResultState(TestStatus.Skipped, "Ignored"), new ResultState(TestStatus.Skipped, "Ignored")),
+            new TestCaseData(new ResultState(TestStatus.Failed), new ResultState(TestStatus.Failed)),
+        };
+
+        [TestCaseSource(nameof(SuccessData))]
+        public void TestEquality(ResultState expected, ResultState actual)
+        {
+            Assert.AreEqual(expected, actual);
         }
 
-        [Test]
-        public void TestEquality_StatusAndLabelSpecified()
+        private TestCaseData[] FailureData = new TestCaseData[]
         {
-            Assert.AreEqual(new ResultState(TestStatus.Skipped, "Ignored"), new ResultState(TestStatus.Skipped, "Ignored"));
-        }
+            new TestCaseData(new ResultState(TestStatus.Passed), new ResultState(TestStatus.Failed)),
+            new TestCaseData(new ResultState(TestStatus.Failed, "Error"), new ResultState(TestStatus.Failed)),
+            new TestCaseData(null, new ResultState(TestStatus.Passed)),
+            new TestCaseData(new ResultState(TestStatus.Passed), null)
+        };
 
-        [Test]
-        public void TestEquality_StatusDiffers()
+        [TestCaseSource(nameof(FailureData))]
+        public void TestInequality(ResultState expected, ResultState actual)
         {
-            Assert.AreNotEqual(new ResultState(TestStatus.Passed), new ResultState(TestStatus.Failed));
-        }
-
-        [Test]
-        public void TestEquality_LabelDiffers()
-        {
-            Assert.AreNotEqual(new ResultState(TestStatus.Failed, "Error"), new ResultState(TestStatus.Failed));
-        }
-
-        [Test]
-        public void TestEquality_WrongType()
-        {
-            var rs = new ResultState(TestStatus.Passed);
-            var s = "123";
-
-            Assert.AreNotEqual(rs, s);
-            Assert.AreNotEqual(s, rs);
-            Assert.IsFalse(rs.Equals(s));
-        }
-
-        [Test]
-        public void TestEquality_Null()
-        {
-            var rs = new ResultState(TestStatus.Passed);
-            Assert.AreNotEqual(null, rs);
-            Assert.AreNotEqual(rs, null);
-            Assert.IsFalse(rs.Equals(null));
+            Assert.AreNotEqual(expected, actual);
         }
 
         #endregion
 
         #region Test Static Fields with standard ResultStates
 
-        [Test]
-        public void Inconclusive_ReturnsResultStateWithPropertiesCorrectlySet()
+        private static TestCaseData[] StandardResults = new TestCaseData[]
         {
-            ResultState resultState = ResultState.Inconclusive;
+            new TestCaseData(ResultState.Inconclusive, TestStatus.Inconclusive, string.Empty),
+            new TestCaseData(ResultState.NotRunnable, TestStatus.Failed, "Invalid"),
+            new TestCaseData(ResultState.Skipped, TestStatus.Skipped, string.Empty),
+            new TestCaseData(ResultState.Ignored, TestStatus.Skipped, "Ignored"),
+            new TestCaseData(ResultState.Success, TestStatus.Passed, string.Empty),
+            new TestCaseData(ResultState.Warning, TestStatus.Warning, string.Empty),
+            new TestCaseData(ResultState.Failure, TestStatus.Failed, string.Empty),
+            new TestCaseData(ResultState.Error, TestStatus.Failed, "Error"),
+            new TestCaseData(ResultState.Cancelled, TestStatus.Failed, "Cancelled"),
+        };
 
-            Assert.AreEqual(TestStatus.Inconclusive, resultState.Status, "Status not correct.");
-            Assert.AreEqual(string.Empty, resultState.Label, "Label not correct.");
-        }
-
-        [Test]
-        public void NotRunnable_ReturnsResultStateWithPropertiesCorrectlySet()
+        [TestCaseSource(nameof(StandardResults))]
+        public void StandardResultTests(ResultState resultState, TestStatus status, string label)
         {
-            ResultState resultState = ResultState.NotRunnable;
-
-            Assert.AreEqual(TestStatus.Failed, resultState.Status, "Status not correct.");
-            Assert.AreEqual("Invalid", resultState.Label, "Label not correct.");
-        }
-
-        [Test]
-        public void Skipped_ReturnsResultStateWithPropertiesCorrectlySet()
-        {
-            ResultState resultState = ResultState.Skipped;
-
-            Assert.AreEqual(TestStatus.Skipped, resultState.Status, "Status not correct.");
-            Assert.AreEqual(string.Empty, resultState.Label, "Label not correct.");
-        }
-
-        [Test]
-        public void Ignored_ReturnsResultStateWithPropertiesCorrectlySet()
-        {
-            ResultState resultState = ResultState.Ignored;
-
-            Assert.AreEqual(TestStatus.Skipped, resultState.Status, "Status not correct.");
-            Assert.AreEqual("Ignored", resultState.Label, "Label not correct.");
-        }
-
-        [Test]
-        public void Success_ReturnsResultStateWithPropertiesCorrectlySet()
-        {
-            ResultState resultState = ResultState.Success;
-
-            Assert.AreEqual(TestStatus.Passed, resultState.Status, "Status not correct.");
-            Assert.AreEqual(string.Empty, resultState.Label, "Label not correct.");
-        }
-
-        [Test]
-        public void Warning_ReturnsResultStateWithPropertiesCorrectlySet()
-        {
-            ResultState resultState = ResultState.Warning;
-
-            Assert.AreEqual(TestStatus.Warning, resultState.Status, "Status not correct.");
-            Assert.AreEqual(string.Empty, resultState.Label, "Label not correct.");
-        }
-
-        [Test]
-        public void Failure_ReturnsResultStateWithPropertiesCorrectlySet()
-        {
-            ResultState resultState = ResultState.Failure;
-
-            Assert.AreEqual(TestStatus.Failed, resultState.Status, "Status not correct.");
-            Assert.AreEqual(string.Empty, resultState.Label, "Label not correct.");
-        }
-
-        [Test]
-        public void Error_ReturnsResultStateWithPropertiesCorrectlySet()
-        {
-            ResultState resultState = ResultState.Error;
-
-            Assert.AreEqual(TestStatus.Failed, resultState.Status, "Status not correct.");
-            Assert.AreEqual("Error", resultState.Label, "Label not correct.");
-        }
-
-        [Test]
-        public void Cancelled_ReturnsResultStateWithPropertiesCorrectlySet()
-        {
-            ResultState resultState = ResultState.Cancelled;
-
-            Assert.AreEqual(TestStatus.Failed, resultState.Status, "Status not correct.");
-            Assert.AreEqual("Cancelled", resultState.Label, "Label not correct.");
+            Assert.AreEqual(status, resultState.Status, "Status not correct.");
+            Assert.AreEqual(label, resultState.Label, "Label not correct.");
         }
 
         #endregion
