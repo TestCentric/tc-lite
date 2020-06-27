@@ -9,7 +9,7 @@ using TCLite.Framework.Internal;
 namespace TCLite.Framework.Constraints
 {
     [TestFixture]
-    public class StartsWithConstraintTests : ConstraintTestBase<string>
+    public class StartsWithConstraintTests : StringConstraintTestBase
     {
         protected override Constraint Constraint => new StartsWithConstraint("hello");
         protected override string ExpectedDescription => "String starting with \"hello\"";

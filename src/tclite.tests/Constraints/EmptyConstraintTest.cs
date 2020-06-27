@@ -58,7 +58,7 @@ namespace TCLite.Framework.Constraints
     }
 
     [TestFixture]
-    public class EmptyStringConstraintTest : ConstraintTestBase<string>
+    public class EmptyStringConstraintTests : StringConstraintTestBase
     {
         protected override Constraint Constraint => new EmptyStringConstraint();
         protected override string ExpectedDescription => "<empty>";

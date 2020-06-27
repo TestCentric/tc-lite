@@ -29,7 +29,7 @@ namespace TCLite.Framework
         #endregion
 
         #region Substring
-#if NYI // Substring
+
         /// <summary>
         /// Returns a constraint that succeeds if the actual
         /// value contains the substring supplied as an argument.
@@ -38,7 +38,7 @@ namespace TCLite.Framework
         {
             return new SubstringConstraint(expected);;
         }
-#endif
+
         #endregion
     }
 }
