@@ -17,10 +17,9 @@ namespace TCLite.Framework.Constraints
         /// Initializes a new instance of the <see cref="RegexConstraint"/> class.
         /// </summary>
         /// <param name="pattern">The pattern.</param>
-        public RegexConstraint(string pattern) : base(pattern) 
-        {
-            _descriptionText = "String matching";
-        }
+        public RegexConstraint(string pattern) : base(pattern) { }
+
+        public override string Description => "String matching " + base.Description;
 
         /// <summary>
         /// Test whether the constraint is satisfied by a given value

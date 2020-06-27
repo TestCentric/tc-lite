@@ -15,11 +15,10 @@ namespace TCLite.Framework.Constraints
         /// Initializes a new instance of the <see cref="EndsWithConstraint"/> class.
         /// </summary>
         /// <param name="expected">The expected string</param>
-        public EndsWithConstraint(string expected) : base(expected) 
-        {
-            _descriptionText = "String ending with";
-        }
+        public EndsWithConstraint(string expected) : base(expected) { }
 
+        public override string Description => "String ending with " + base.Description;
+        
         /// <summary>
         /// Test whether the constraint is matched by the actual value.
         /// This is a template method, which calls the IsMatch method

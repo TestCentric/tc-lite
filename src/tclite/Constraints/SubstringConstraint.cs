@@ -14,16 +14,15 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     public class SubstringConstraint : StringConstraint
     {
-        private StringComparison? comparisonType;
+        private StringComparison? _comparisonType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SubstringConstraint"/> class.
         /// </summary>
         /// <param name="expected">The expected.</param>
-        public SubstringConstraint(string expected) : base(expected) 
-        {
-            _descriptionText = "String containing";
-        }
+        public SubstringConstraint(string expected) : base(expected) { }
+
+        public override string Description => "String containing " + base.Description;
 
         /// <summary>
         /// Modify the constraint to ignore case in matching.
@@ -45,7 +44,7 @@ namespace TCLite.Framework.Constraints
         {
             if (actual == null) return false;
 
-            var actualComparison = comparisonType ?? StringComparison.CurrentCulture;
+            var actualComparison = _comparisonType ?? StringComparison.CurrentCulture;
             return actual.IndexOf(_expected, actualComparison) >= 0;
         }
 
@@ -56,9 +55,9 @@ namespace TCLite.Framework.Constraints
         /// than <paramref name="comparisonType"/> was already set.</exception>
         public SubstringConstraint Using(StringComparison comparisonType)
         {
-            if (this.comparisonType == null)
-                this.comparisonType = comparisonType;
-            else if (this.comparisonType != comparisonType)
+            if (this._comparisonType == null)
+                this._comparisonType = comparisonType;
+            else if (this._comparisonType != comparisonType)
                 throw new InvalidOperationException("A different comparison type was already set.");
 
             return this;

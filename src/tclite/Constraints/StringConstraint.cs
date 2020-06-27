@@ -33,15 +33,6 @@ namespace TCLite.Framework.Constraints
 #pragma warning restore IDE1006
 
         /// <summary>
-        /// Description of this constraint
-        /// </summary>
-#pragma warning disable IDE1006
-        // ReSharper disable once InconsistentNaming
-        // Disregarding naming convention for back-compat
-        protected string _descriptionText;
-#pragma warning restore IDE1006
-
-        /// <summary>
         /// The Description of what this constraint tests, for
         /// use in messages and in the ConstraintResult.
         /// </summary>
@@ -49,7 +40,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                string desc = $"{_descriptionText} \"{_expected}\"";
+                var desc = $"\"{_expected}\"";
                 if (_caseInsensitive)
                     desc += ", ignoring case";
                 return desc;

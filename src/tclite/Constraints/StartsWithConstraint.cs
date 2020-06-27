@@ -15,10 +15,9 @@ namespace TCLite.Framework.Constraints
         /// Initializes a new instance of the <see cref="StartsWithConstraint"/> class.
         /// </summary>
         /// <param name="expected">The expected string</param>
-        public StartsWithConstraint(string expected) : base(expected) 
-        {
-            _descriptionText = "String starting with";
-        }
+        public StartsWithConstraint(string expected) : base(expected) { }
+
+        public override string Description => "String starting with " + base.Description;
 
         /// <summary>
         /// Test whether the constraint is matched by the actual value.
