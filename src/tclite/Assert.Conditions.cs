@@ -105,7 +105,7 @@ namespace TCLite.Framework
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNotEmpty(string aString, string message=null, params object[] args)
         {
-            Assert.That(aString, Is.Not.Empty, message, args);
+            Assert.That(aString, new NotConstraint(new EmptyStringConstraint()), message, args);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace TCLite.Framework
         /// <param name="args">Array of objects to be used in formatting the message</param>
         public static void IsNotEmpty(IEnumerable collection, string message=null, params object[] args)
         {
-            Assert.That(collection, Is.Not.Empty, message, args);
+            Assert.That(collection, new NotConstraint(new EmptyCollectionConstraint()), message, args);
         }
     }
 }

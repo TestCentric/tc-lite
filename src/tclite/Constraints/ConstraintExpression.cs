@@ -350,18 +350,6 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-        #region Empty
-
-        /// <summary>
-        /// Returns a constraint that tests for empty
-        /// </summary>
-        public EmptyConstraint Empty
-        {
-            get { return (EmptyConstraint)this.Append(new EmptyConstraint()); }
-        }
-
-        #endregion
-
 #if NYI // Unique, BinarySerializable, XmlSerializable
         #region Unique
 
