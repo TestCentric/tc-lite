@@ -23,13 +23,13 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// Construct given a base constraint
         /// </summary>
-        /// <param name="resolvable"></param>
-        protected PrefixConstraint(IResolveConstraint resolvable)
-            : base(resolvable)
+        /// <param name="baseConstraint"></param>
+        protected PrefixConstraint(Constraint baseConstraint)
+            : base(baseConstraint)
         {
-            Guard.ArgumentNotNull(resolvable, nameof(resolvable));
+            Guard.ArgumentNotNull(baseConstraint, nameof(baseConstraint));
 
-            BaseConstraint = resolvable.Resolve();
+            BaseConstraint = baseConstraint;
         }
         
         /// <summary>

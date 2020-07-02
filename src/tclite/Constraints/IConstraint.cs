@@ -8,7 +8,7 @@ namespace TCLite.Framework.Constraints
     /// <summary>
     /// Interface for all constraints
     /// </summary>
-    public interface IConstraint : IResolveConstraint
+    public interface IConstraint
     {
         /// <summary>
         /// The display name of this Constraint for use by ToString().

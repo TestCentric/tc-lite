@@ -13,7 +13,7 @@ namespace TCLite.Framework.Constraints
     /// within TCLite. The class models a constraint, which puts no
     /// limitations on the type of actual value it is able to handle.
     /// </summary>
-    public abstract class Constraint : IConstraint
+    public abstract class Constraint : IConstraint, IResolveConstraint
     {
         #region Constructor
 
