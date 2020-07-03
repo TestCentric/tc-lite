@@ -14,7 +14,7 @@ namespace TCLite.Framework.Constraints
     /// determine if one is greater than, equal to or less than
     /// the other. This class supplies the Using modifiers.
     /// </summary>
-    public abstract class ComparisonConstraint : Constraint
+    public abstract class ComparisonConstraint : Constraint<IComparable>
     {
         /// <summary>
         /// ComparisonAdapter to be used in making the comparison
@@ -24,7 +24,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ComparisonConstraint"/> class.
         /// </summary>
-        public ComparisonConstraint(object arg) : base(arg) { }
+        public ComparisonConstraint(IComparable arg) : base(arg) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ComparisonConstraint"/> class.
@@ -67,12 +67,24 @@ namespace TCLite.Framework.Constraints
         {
             Guard.ArgumentValid(actual != null, "Cannot compare to a null reference.", nameof(actual));
 
+            return new ConstraintResult(this, actual, Matches((IComparable)actual));
+        }
+
+        /// <summary>
+        /// Test whether the constraint is satisfied by a given value   
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        public override ConstraintResult ApplyTo(IComparable actual)
+        {
+            Guard.ArgumentValid(actual != null, "Cannot compare to a null reference.", nameof(actual));
+
             return new ConstraintResult(this, actual, Matches(actual));
         }
 
         /// <summary>
         /// Protected function overridden by derived class to actually perform the comparison
         /// </summary>
-        protected abstract bool Matches<TActual>(TActual actual);
+        protected abstract bool Matches(IComparable actual);
     }
 }

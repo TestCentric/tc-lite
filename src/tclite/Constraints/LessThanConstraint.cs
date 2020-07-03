@@ -21,7 +21,7 @@ namespace TCLite.Framework.Constraints
         /// Initializes a new instance of the <see cref="T:LessThanConstraint"/> class.
         /// </summary>
         /// <param name="expected">The expected value.</param>
-        public LessThanConstraint(object expected)
+        public LessThanConstraint(IComparable expected)
             : base(expected)
         {
             ExpectedValue = expected;
@@ -34,7 +34,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        protected override bool Matches<TActual>(TActual actual)
+        protected override bool Matches(IComparable actual)
         {
             if (ExpectedValue == null || actual == null)
                 throw new ArgumentException("Cannot compare using a null reference");

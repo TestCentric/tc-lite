@@ -199,7 +199,7 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is greater than the suppled argument
         /// </summary>
-        public static GreaterThanConstraint GreaterThan(object expected)
+        public static GreaterThanConstraint GreaterThan(IComparable expected)
         {
             return new GreaterThanConstraint(expected);
         }
@@ -212,7 +212,7 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is greater than or equal to the suppled argument
         /// </summary>
-        public static GreaterThanOrEqualConstraint GreaterThanOrEqualTo(object expected)
+        public static GreaterThanOrEqualConstraint GreaterThanOrEqualTo(IComparable expected)
         {
             return new GreaterThanOrEqualConstraint(expected);
         }
@@ -221,7 +221,7 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is greater than or equal to the suppled argument
         /// </summary>
-        public static GreaterThanOrEqualConstraint AtLeast(object expected)
+        public static GreaterThanOrEqualConstraint AtLeast(IComparable expected)
         {
             return new GreaterThanOrEqualConstraint(expected);
         }
@@ -234,7 +234,7 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is less than the suppled argument
         /// </summary>
-        public static LessThanConstraint LessThan(object expected)
+        public static LessThanConstraint LessThan(IComparable expected)
         {
             return new LessThanConstraint(expected);
         }
@@ -247,7 +247,7 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is less than or equal to the suppled argument
         /// </summary>
-        public static LessThanOrEqualConstraint LessThanOrEqualTo(object expected)
+        public static LessThanOrEqualConstraint LessThanOrEqualTo(IComparable expected)
         {
             return new LessThanOrEqualConstraint(expected);
         }
@@ -256,7 +256,7 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is less than or equal to the suppled argument
         /// </summary>
-        public static LessThanOrEqualConstraint AtMost(object expected)
+        public static LessThanOrEqualConstraint AtMost(IComparable expected)
         {
             return new LessThanOrEqualConstraint(expected);
         }
