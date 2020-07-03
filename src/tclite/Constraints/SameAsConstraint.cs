@@ -9,7 +9,7 @@ namespace TCLite.Framework.Constraints
     /// SameAsConstraint tests whether an object is identical to
     /// the object passed to its constructor
     /// </summary>
-    public class SameAsConstraint : Constraint
+    public class SameAsConstraint : Constraint<object>
     {
         private readonly object ExpectedValue;
 
@@ -30,6 +30,18 @@ namespace TCLite.Framework.Constraints
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
         public override ConstraintResult ApplyTo<T>(T actual)
+        {
+            bool hasSucceeded = ReferenceEquals(ExpectedValue, actual);
+
+            return new ConstraintResult(this, actual, hasSucceeded);
+        }
+
+        /// <summary>
+        /// Test whether the constraint is satisfied by a given value
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>True for success, false for failure</returns>
+        public override ConstraintResult ApplyTo(object actual)
         {
             bool hasSucceeded = ReferenceEquals(ExpectedValue, actual);
 
