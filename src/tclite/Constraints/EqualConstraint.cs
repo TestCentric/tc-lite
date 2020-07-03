@@ -17,7 +17,7 @@ namespace TCLite.Framework.Constraints
     /// considered equal if both are null, or if both have the same 
     /// value. NUnit has special semantics for some object types.
     /// </summary>
-    public class EqualConstraint : Constraint
+    public class EqualConstraint : Constraint<object>
     {
         #region Static and Instance Fields
 
@@ -333,6 +333,16 @@ namespace TCLite.Framework.Constraints
             return new EqualConstraintResult(this, actual, _comparer.AreEqual(ExpectedValue, actual, ref _tolerance));
         }
 
+        /// <summary>
+        /// Test whether the constraint is satisfied by a given value
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>True for success, false for failure</returns>
+        public override ConstraintResult ApplyTo(object actual)
+        {
+            return new EqualConstraintResult(this, actual, _comparer.AreEqual(ExpectedValue, actual, ref _tolerance));
+        }
+
         #endregion
-	}
+    }
 }

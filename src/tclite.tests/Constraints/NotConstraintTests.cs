@@ -11,16 +11,16 @@ namespace TCLite.Framework.Constraints
     [TestFixture]
     public class NotConstraintTests : ConstraintTestBase<object>
     {
-        protected override Constraint Constraint => new NotConstraint(new EqualConstraint(null));
-        protected override string ExpectedDescription => "not null";
-        protected override string ExpectedRepresentation => "<not <equal null>>";
+        protected override Constraint Constraint => new NotConstraint(new EqualConstraint(42));
+        protected override string ExpectedDescription => "not 42";
+        protected override string ExpectedRepresentation => "<not <equal 42>>";
         private static readonly string NL = Environment.NewLine;
 
-        protected override object[] SuccessData => new object[] { 42, "Hello" };
+        protected override object[] SuccessData => new object[] { 99, null, "Hello" };
 
         protected override TestCaseData[] FailureData => new TestCaseData[]
         {
-            new TestCaseData(null, "null")
+            new TestCaseData(42, "42")
         };
 
         [Test]
@@ -28,7 +28,7 @@ namespace TCLite.Framework.Constraints
         {
             var ex = Assert.Throws<AssertionException>(() =>
             {
-                Assert.That("abc", new NotConstraint(new EqualConstraint("ABC").IgnoreCase));
+                Assert.That("abc", Is.Not.EqualTo("ABC").IgnoreCase);
             });
 
             Assert.That(ex.Message.Contains("ignoring case"), $"Message was {ex.Message}");
