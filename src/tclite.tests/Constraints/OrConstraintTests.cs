@@ -18,11 +18,5 @@ namespace TCLite.Framework.Constraints.Tests
         {
             new TestCaseData(37, "37")
         };
-
-		[Test]
-        public void CanCombineTestsWithOrOperator()
-        {
-            Assert.That(99, new EqualConstraint(42) | new EqualConstraint(99) );
-        }
     }
 }

@@ -202,42 +202,6 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-        #region Operator Overloads
-        
-        /// <summary>
-        /// This operator creates a constraint that is satisfied only if both 
-        /// argument constraints are satisfied.
-        /// </summary>
-        public static Constraint operator &(Constraint left, Constraint right)
-        {
-            IResolveConstraint l = (IResolveConstraint)left;
-            IResolveConstraint r = (IResolveConstraint)right;
-            return new AndConstraint(l.Resolve(), r.Resolve());
-        }
-
-        /// <summary>
-        /// This operator creates a constraint that is satisfied if either 
-        /// of the argument constraints is satisfied.
-        /// </summary>
-        public static Constraint operator |(Constraint left, Constraint right)
-        {
-            IResolveConstraint l = (IResolveConstraint)left;
-            IResolveConstraint r = (IResolveConstraint)right;
-            return new OrConstraint(l.Resolve(), r.Resolve());
-        }
-
-        /// <summary>
-        /// This operator creates a constraint that is satisfied if the 
-        /// argument constraint is not satisfied.
-        /// </summary>
-        public static Constraint operator !(Constraint constraint)
-        {
-            IResolveConstraint r = constraint as IResolveConstraint;
-            return new NotConstraint(r == null ? new NullConstraint() : r.Resolve());
-        }
-
-        #endregion
-
         #region Binary Operators
 
         /// <summary>

@@ -19,11 +19,5 @@ namespace TCLite.Framework.Constraints
             new TestCaseData(37, "37"),
             new TestCaseData(53, "53")
         };
-
-		[Test]
-        public void CanCombineTestsWithAndOperator()
-        {
-            Assert.That(42, new GreaterThanConstraint(40) & new LessThanConstraint(50));
-        }
     }
 }

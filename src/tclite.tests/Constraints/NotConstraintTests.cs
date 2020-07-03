@@ -55,12 +55,5 @@ namespace TCLite.Framework.Constraints
 
             Assert.That(ex.Message.Contains("+/-"));
         }
-
-        // TODO: Move operator overrides to a separate test class
-        [Test]
-        public void CanUseNotOperator()
-        {
-            Assert.That(42, !new EqualConstraint(99));
-        }
     }
 }
