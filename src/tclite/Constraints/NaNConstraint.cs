@@ -29,18 +29,12 @@ namespace TCLite.Framework.Constraints
             return new ConstraintResult(this, actual, double.IsNaN(actual));
         }
 
-        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        // {
-        //     return new ConstraintResult(this, actual,
-        //         actual is double && double.IsNaN((double)(object)actual) ||
-        //         actual is float && float.IsNaN((float)(object)actual));
-        // }
-
-        public override ConstraintResult ApplyTo(object actual)
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
-            Guard.ArgumentNotNull(actual, nameof(actual));
-            Guard.ArgumentValid(actual is float || actual is double, "Argument must be float or double", nameof(actual));
-            return new ConstraintResult(this, actual, double.IsNaN((double)(object) actual));
+            Guard.ArgumentNotNullOfType<double>(actual, nameof(actual));
+            return new ConstraintResult(this, actual,
+                actual is double && double.IsNaN((double)(object)actual) ||
+                actual is float && float.IsNaN((float)(object)actual));
         }
     }
 }

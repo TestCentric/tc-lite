@@ -12,26 +12,12 @@ namespace TCLite.Framework.Constraints
     {
         public override string Description => "null";       
 
-        // /// <summary>
-        // /// Applies the constraint to an actual value, returning a ConstraintResult.
-        // /// </summary>
-        // /// <param name="actual">The value to be tested</param>
-        // /// <returns>A ConstraintResult</returns>
-        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        // {
-        //     return new ConstraintResult(this, actual, actual == null);
-        // }
-
         /// <summary>
         /// Applies the constraint to an actual value, returning a ConstraintResult.
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>A ConstraintResult</returns>
-        /// <remarks>
-        /// This non-generic overload is used when the type cannot be
-        /// determined, as when actual is null.
-        /// </remarks>
-        public override ConstraintResult ApplyTo(object actual)
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
             return new ConstraintResult(this, actual, actual == null);
         }

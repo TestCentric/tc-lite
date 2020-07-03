@@ -59,7 +59,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public override ConstraintResult ApplyTo(object actual)
+        public override ConstraintResult ApplyTo<T>(T actual)
         {
             Guard.ArgumentNotNullOfType<IEnumerable>(actual, nameof(actual));
             var enumerable = actual as IEnumerable;

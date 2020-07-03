@@ -30,20 +30,11 @@ namespace TCLite.Framework.Constraints
             this.DescriptionPrefix = "property " + name;
         }
 
-        // /// <summary>
-        // /// Test whether the constraint is satisfied by a given value
-        // /// </summary>
-        // /// <param name="actual">The value to be tested</param>
-        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        // {
-        //     return ApplyTo((object)actual);
-        // }
-        
         /// <summary>
         /// Test whether the constraint is satisfied by a given value
         /// </summary>
         /// <param name="actual">The value to be tested</param>
-        public override ConstraintResult ApplyTo(object actual)
+        public override ConstraintResult ApplyTo<T>(T actual)
         {
             // TODO: Use an error result for null
             Guard.ArgumentNotNull(actual, nameof(actual));

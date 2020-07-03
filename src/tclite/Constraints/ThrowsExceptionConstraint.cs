@@ -24,21 +24,12 @@ namespace TCLite.Framework.Constraints
             get { return "an exception to be thrown"; }
         }
 
-        // /// <summary>
-        // /// Executes the code and returns success if an exception is thrown.
-        // /// </summary>
-        // /// <param name="actual">A delegate representing the code to be tested</param>
-        // /// <returns>True if an exception is thrown, otherwise false</returns>
-        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        // {
-        //     Guard.ArgumentNotNullOfType<Delegate>(actual, nameof(actual));
-
-        //     var exception = ExceptionInterceptor.Intercept(actual);
-
-        //     return new ThrowsExceptionConstraintResult(this, exception);
-        // }
-
-        public override ConstraintResult ApplyTo(object actual)
+        /// <summary>
+        /// Executes the code and returns success if an exception is thrown.
+        /// </summary>
+        /// <param name="actual">A delegate representing the code to be tested</param>
+        /// <returns>True if an exception is thrown, otherwise false</returns>
+        public override ConstraintResult ApplyTo<T>(T actual)
         {
             Guard.ArgumentNotNullOfType<Delegate>(actual, nameof(actual));
 

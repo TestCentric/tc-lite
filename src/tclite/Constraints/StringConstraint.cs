@@ -70,26 +70,16 @@ namespace TCLite.Framework.Constraints
             get { _caseInsensitive = true; return this; }
         }
 
-        // /// <summary>
-        // /// Test whether the constraint is satisfied by a given value
-        // /// </summary>
-        // /// <param name="actual">The value to be tested</param>
-        // /// <returns>True for success, false for failure</returns>
-        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        // {
-        //     Guard.ArgumentOfType<string>(actual, nameof(actual));
-        //     //var stringValue = ConstraintUtils.RequireActual<string>(actual, nameof(actual), allowNull: true);
-
-        //     return new ConstraintResult(this, actual, Matches(actual as string));
-        // }
-
         /// <summary>
         /// Test whether the constraint is satisfied by a given value
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public override ConstraintResult ApplyTo(string actual)
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
+            Guard.ArgumentOfType<string>(actual, nameof(actual));
+            //var stringValue = ConstraintUtils.RequireActual<string>(actual, nameof(actual), allowNull: true);
+
             return new ConstraintResult(this, actual, Matches(actual as string));
         }
 
@@ -98,10 +88,8 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public override ConstraintResult ApplyTo(object actual)
+        public override ConstraintResult ApplyTo(string actual)
         {
-            Guard.ArgumentOfType<string>(actual, nameof(actual));
-
             return new ConstraintResult(this, actual, Matches(actual as string));
         }
 

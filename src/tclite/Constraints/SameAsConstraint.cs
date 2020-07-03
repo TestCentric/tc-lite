@@ -24,24 +24,12 @@ namespace TCLite.Framework.Constraints
 
         public override string Description => $"Same as {ExpectedValue}";
 
-        // /// <summary>
-        // /// Test whether the constraint is satisfied by a given value
-        // /// </summary>
-        // /// <param name="actual">The value to be tested</param>
-        // /// <returns>True for success, false for failure</returns>
-        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        // {
-        //     bool hasSucceeded = ReferenceEquals(ExpectedValue, actual);
-
-        //     return new ConstraintResult(this, actual, hasSucceeded);
-        // }
-
         /// <summary>
         /// Test whether the constraint is satisfied by a given value
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public override ConstraintResult ApplyTo(object actual)
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
             bool hasSucceeded = ReferenceEquals(ExpectedValue, actual);
 

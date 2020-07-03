@@ -323,22 +323,12 @@ namespace TCLite.Framework.Constraints
 
         #region Public Methods
 
-        // /// <summary>
-        // /// Test whether the constraint is satisfied by a given value
-        // /// </summary>
-        // /// <param name="actual">The value to be tested</param>
-        // /// <returns>True for success, false for failure</returns>
-        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        // {
-        //     return new EqualConstraintResult(this, actual, _comparer.AreEqual(ExpectedValue, actual, ref _tolerance));
-        // }
-
         /// <summary>
         /// Test whether the constraint is satisfied by a given value
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public override ConstraintResult ApplyTo(object actual)
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
             return new EqualConstraintResult(this, actual, _comparer.AreEqual(ExpectedValue, actual, ref _tolerance));
         }

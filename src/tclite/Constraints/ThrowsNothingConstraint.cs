@@ -17,26 +17,12 @@ namespace TCLite.Framework.Constraints
 
         public override string Description => "No exception to be thrown";
 
-        // /// <summary>
-        // /// Test whether the constraint is satisfied by a given value
-        // /// </summary>
-        // /// <param name="actual">The value to be tested</param>
-        // /// <returns>True if no exception is thrown, otherwise false</returns>
-        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        // {
-        //     Guard.ArgumentNotNullOfType<Delegate>(actual, nameof(actual));
-
-        //     _caughtException = ExceptionInterceptor.Intercept(actual);
-
-        //     return new ConstraintResult(this, _caughtException, _caughtException == null);
-        // }
-
         /// <summary>
         /// Test whether the constraint is satisfied by a given value
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True if no exception is thrown, otherwise false</returns>
-        public override ConstraintResult ApplyTo(object actual)
+        public override ConstraintResult ApplyTo<T>(T actual)
         {
             Guard.ArgumentNotNullOfType<Delegate>(actual, nameof(actual));
 

@@ -24,23 +24,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The actual value</param>
         /// <returns>True if the constraints both succeeded</returns>
-        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
-        // {
-        //     var leftResult = Left.ApplyTo(actual);
-        //     var rightResult = leftResult.IsSuccess
-        //         ? Right.ApplyTo(actual)
-        //         : new ConstraintResult(Right, actual);
-
-        //     return new AndConstraintResult(this, actual, leftResult, rightResult);
-        // }
-
-        /// <summary>
-        /// Apply both member constraints to an actual value, succeeding 
-        /// succeeding only if both of them succeed.
-        /// </summary>
-        /// <param name="actual">The actual value</param>
-        /// <returns>True if the constraints both succeeded</returns>
-        public override ConstraintResult ApplyTo(object actual)
+        public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
             var leftResult = Left.ApplyTo(actual);
             var rightResult = leftResult.IsSuccess

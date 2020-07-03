@@ -100,7 +100,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>A ConstraintResult</returns>
-        //public abstract ConstraintResult ApplyTo<TActual>(TActual actual);
+        public abstract ConstraintResult ApplyTo<TActual>(TActual actual);
 
         /// <summary>
         /// Applies the constraint to an actual value, returning a ConstraintResult.
@@ -109,7 +109,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>A ConstraintResult</returns>
-        public abstract ConstraintResult ApplyTo(object actual);
+        //public abstract ConstraintResult ApplyTo(object actual);
 
         /// <summary>
         /// Applies the constraint to an ActualValueDelegate that returns
