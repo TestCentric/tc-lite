@@ -18,7 +18,7 @@ namespace TCLite.Framework.Constraints
         private const string DESCRIPTION = "4";
         private const string STRING_REPRESENTATION = "<equal 4>";
 
-        private EqualConstraint _constraint = new EqualConstraint(4);
+        private EqualConstraint<int> _constraint = Is.EqualTo(4);
 
         internal static object[] SuccessData => new object[] { 4, 4.0f, 4.0d, 4.0000m };
 

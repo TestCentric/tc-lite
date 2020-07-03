@@ -8,7 +8,7 @@ namespace TCLite.Framework.Constraints.Tests
     [TestFixture]
     public class OrConstraintTests : ConstraintTestBase<object>
     {
-        protected override Constraint Constraint => new OrConstraint(new EqualConstraint(42), new EqualConstraint(99));
+        protected override Constraint Constraint => new OrConstraint(new EqualConstraint<int>(42), new EqualConstraint<int>(99));
         protected override string ExpectedDescription => "42 or 99";
         protected override string ExpectedRepresentation => "<or <equal 42> <equal 99>>";
 

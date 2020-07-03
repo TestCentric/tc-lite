@@ -11,7 +11,7 @@ namespace TCLite.Framework.Constraints
     [TestFixture]
     public class NotConstraintTests : ConstraintTestBase<object>
     {
-        protected override Constraint Constraint => new NotConstraint(new EqualConstraint(42));
+        protected override Constraint Constraint => new NotConstraint(new EqualConstraint<int>(42));
         protected override string ExpectedDescription => "not 42";
         protected override string ExpectedRepresentation => "<not <equal 42>>";
         private static readonly string NL = Environment.NewLine;

@@ -16,7 +16,7 @@ namespace TCLite.Framework.Constraints
     /// recognized. Once an actual Constraint is appended, the expression
     /// returns a resolvable Constraint.
     /// </summary>
-    public class ConstraintExpression
+    public partial class ConstraintExpression
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ConstraintExpression"/> class.
@@ -391,13 +391,6 @@ namespace TCLite.Framework.Constraints
 
         #region EqualTo
 
-        /// <summary>
-        /// Returns a constraint that tests two items for equality
-        /// </summary>
-        public EqualConstraint EqualTo(object expected)
-        {
-            return (EqualConstraint)Append(new EqualConstraint(expected));
-        }
 
         #endregion
 

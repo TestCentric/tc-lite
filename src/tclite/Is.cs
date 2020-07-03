@@ -13,7 +13,7 @@ namespace TCLite.Framework
     /// Helper class with properties and methods that supply
     /// a number of constraints used in Asserts.
     /// </summary>
-    public class Is
+    public partial class Is
     {
         #region Not
 
@@ -171,13 +171,6 @@ namespace TCLite.Framework
 
         #region EqualTo
 
-        /// <summary>
-        /// Returns a constraint that tests two items for equality
-        /// </summary>
-        public static EqualConstraint EqualTo(object expected)
-        {
-            return new EqualConstraint(expected);
-        }
 
         #endregion
 
