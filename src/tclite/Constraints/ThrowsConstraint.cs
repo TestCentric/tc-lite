@@ -72,7 +72,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="del"></param>
         /// <returns></returns>
-        public override ConstraintResult ApplyTo<TActual>(ActualValueDelegate<TActual> del)
+        public override ConstraintResult ApplyTo<T>(ActualValueDelegate<T> del)
         {
             return ApplyTo((Delegate)del);
         }

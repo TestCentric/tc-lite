@@ -100,7 +100,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>A ConstraintResult</returns>
-        public abstract ConstraintResult ApplyTo<TActual>(TActual actual);
+        public abstract ConstraintResult ApplyTo<T>(T actual);
 
         /// <summary>
         /// Applies the constraint to an actual value, returning a ConstraintResult.
@@ -119,7 +119,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="del">An ActualValueDelegate</param>
         /// <returns>A ConstraintResult</returns>
-        public virtual ConstraintResult ApplyTo<TActual>(ActualValueDelegate<TActual> del)
+        public virtual ConstraintResult ApplyTo<T>(ActualValueDelegate<T> del)
         {
 #if NYI // async
             if (AsyncToSyncAdapter.IsAsyncOperation(del))
@@ -137,7 +137,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">A reference to the value to be tested</param>
         /// <returns>A ConstraintResult</returns>
-        public virtual ConstraintResult ApplyTo<TActual>(ref TActual actual)
+        public virtual ConstraintResult ApplyTo<T>(ref T actual)
         {
             return ApplyTo(actual);
         }

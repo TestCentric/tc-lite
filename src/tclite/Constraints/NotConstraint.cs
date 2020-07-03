@@ -25,7 +25,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for if the base constraint fails, false if it succeeds</returns>
-        public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        public override ConstraintResult ApplyTo<T>(T actual)
         {
             var baseResult = BaseConstraint.ApplyTo(actual);
             return new ConstraintResult(this, baseResult.ActualValue, !baseResult.IsSuccess);

@@ -29,7 +29,7 @@ namespace TCLite.Framework.Constraints
             return new ConstraintResult(this, actual, double.IsNaN(actual));
         }
 
-        public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        public override ConstraintResult ApplyTo<T>(T actual)
         {
             Guard.ArgumentNotNullOfType<double>(actual, nameof(actual));
             return new ConstraintResult(this, actual,

@@ -44,7 +44,7 @@ namespace TCLite.Framework.Constraints
         /// the delegate but derived classes may override it to provide for
         /// delayed processing.
         /// </summary>
-        public override ConstraintResult ApplyTo<TActual>(ActualValueDelegate<TActual> del)
+        public override ConstraintResult ApplyTo<T>(ActualValueDelegate<T> del)
         {
             return ApplyTo((Delegate)del);
         }

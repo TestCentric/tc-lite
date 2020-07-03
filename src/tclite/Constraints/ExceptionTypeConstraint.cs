@@ -24,7 +24,7 @@ namespace TCLite.Framework.Constraints
         // /// </summary>
         // /// <param name="actual">The value to be tested</param>
         // /// <returns>A ConstraintResult</returns>
-        // public override ConstraintResult ApplyTo<TActual>(TActual actual)
+        // public override ConstraintResult ApplyTo<T>(T actual)
         // {
         //     Guard.ArgumentOfType<Exception>(actual, nameof(actual));
 
