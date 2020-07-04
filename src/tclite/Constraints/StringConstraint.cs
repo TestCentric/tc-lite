@@ -12,25 +12,14 @@ namespace TCLite.Framework.Constraints
     /// that operate on strings. It supports the IgnoreCase
     /// modifier for string operations.
     /// </summary>
-    public abstract class StringConstraint : Constraint<string>
+    public abstract class StringConstraint : ExpectedValueConstraint<string>
     {
-        /// <summary>
-        /// The expected value
-        /// </summary>
-#pragma warning disable IDE1006
-        // ReSharper disable once InconsistentNaming
-        // Disregarding naming convention for back-compat
-        protected string _expected;
-#pragma warning restore IDE1006
-
         /// <summary>
         /// Indicates whether tests should be case-insensitive
         /// </summary>
-#pragma warning disable IDE1006
         // ReSharper disable once InconsistentNaming
         // Disregarding naming convention for back-compat
         protected bool _caseInsensitive;
-#pragma warning restore IDE1006
 
         /// <summary>
         /// The Description of what this constraint tests, for
@@ -40,7 +29,7 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                var desc = $"\"{_expected}\"";
+                var desc = $"\"{ExpectedValue}\"";
                 if (_caseInsensitive)
                     desc += ", ignoring case";
                 return desc;
@@ -48,19 +37,10 @@ namespace TCLite.Framework.Constraints
         }
 
         /// <summary>
-        /// Constructs a StringConstraint without an expected value
-        /// </summary>
-        protected StringConstraint() { }
-
-        /// <summary>
         /// Constructs a StringConstraint given an expected value
         /// </summary>
         /// <param name="expected">The expected value</param>
-        protected StringConstraint(string expected)
-            : base(expected)
-        {
-            _expected = expected;
-        }
+        protected StringConstraint(string expected) : base(expected) { }
 
         /// <summary>
         /// Modify the constraint to ignore case in matching.
@@ -78,18 +58,7 @@ namespace TCLite.Framework.Constraints
         public override ConstraintResult ApplyTo<T>(T actual)
         {
             Guard.ArgumentOfType<string>(actual, nameof(actual));
-            //var stringValue = ConstraintUtils.RequireActual<string>(actual, nameof(actual), allowNull: true);
 
-            return new ConstraintResult(this, actual, Matches(actual as string));
-        }
-
-        /// <summary>
-        /// Test whether the constraint is satisfied by a given value
-        /// </summary>
-        /// <param name="actual">The value to be tested</param>
-        /// <returns>True for success, false for failure</returns>
-        public override ConstraintResult ApplyTo(string actual)
-        {
             return new ConstraintResult(this, actual, Matches(actual as string));
         }
 

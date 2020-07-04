@@ -30,7 +30,7 @@ namespace TCLite.Framework.Constraints
         {
             return actual != null && Regex.IsMatch(
                     actual,
-                    _expected,
+                    ExpectedValue,
                     _caseInsensitive ? RegexOptions.IgnoreCase : RegexOptions.None);
         }
     }

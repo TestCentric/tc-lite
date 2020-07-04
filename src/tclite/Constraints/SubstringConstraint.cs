@@ -45,7 +45,7 @@ namespace TCLite.Framework.Constraints
             if (actual == null) return false;
 
             var actualComparison = _comparisonType ?? StringComparison.CurrentCulture;
-            return actual.IndexOf(_expected, actualComparison) >= 0;
+            return actual.IndexOf(ExpectedValue, actualComparison) >= 0;
         }
 
         /// <summary>

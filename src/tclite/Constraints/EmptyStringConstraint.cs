@@ -8,7 +8,7 @@ namespace TCLite.Framework.Constraints
     /// <summary>
     /// EmptyStringConstraint tests whether a string is empty.
     /// </summary>
-    public class EmptyStringConstraint : StringConstraint
+    public class EmptyStringConstraint : Constraint<string>
     {
         /// <summary>
         /// The Description of what this constraint tests, for
@@ -20,13 +20,26 @@ namespace TCLite.Framework.Constraints
         }
 
         /// <summary>
-        /// Test whether the constraint is satisfied by a given value
+        /// Applies the constraint to an actual value, of the same type as
+        /// the constraint expected value, returning a ConstraintResult.
         /// </summary>
         /// <param name="actual">The value to be tested</param>
-        /// <returns>True for success, false for failure</returns>
-        protected override bool Matches(string actual)
+        /// <returns>A ConstraintResult</returns>
+        public override ConstraintResult ApplyTo<T>(T actual)
         {
-            return actual == string.Empty;
+            Guard.ArgumentNotNullOfType<string>(actual, nameof(actual));
+            return new ConstraintResult(this, actual, actual as string == string.Empty);
+        }
+
+        /// <summary>
+        /// Applies the constraint to an actual value, of the same type as
+        /// the constraint expected value, returning a ConstraintResult.
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        public override ConstraintResult ApplyTo(string actual)
+        {
+            return new ConstraintResult(this, actual, actual == string.Empty);
         }
     }
 }

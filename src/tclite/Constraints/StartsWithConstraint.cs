@@ -29,9 +29,9 @@ namespace TCLite.Framework.Constraints
         protected override bool Matches(string actual)
         {
             if (_caseInsensitive)
-                return actual != null && actual.ToLower().StartsWith(_expected.ToLower());
+                return actual != null && actual.ToLower().StartsWith(ExpectedValue.ToLower());
             else
-                return actual != null && actual.StartsWith(_expected);
+                return actual != null && actual.StartsWith(ExpectedValue);
         }
     }
 }
