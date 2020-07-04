@@ -12,9 +12,9 @@ namespace TCLite.Framework.Constraints
 {
     #region ComparisonConstraintTest
 
-    public abstract class ComparisonConstraintTest : ConstraintTestBase<object>
+    public abstract class ComparisonConstraintTest<TExpected> : ConstraintTestBase<TExpected>
     {
-        private ComparisonConstraint ComparisonConstraint => Constraint as ComparisonConstraint;
+        private ComparisonConstraint<int> ComparisonConstraint => Constraint as ComparisonConstraint<int>;
 
         protected override TestCaseData[] InvalidData => new TestCaseData[]
         { 

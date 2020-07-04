@@ -412,9 +412,9 @@ namespace TCLite.Framework.Constraints
         /// Returns a constraint that tests whether the
         /// actual value is greater than the suppled argument
         /// </summary>
-        public GreaterThanConstraint GreaterThan(IComparable expected)
+        public GreaterThanConstraint<T> GreaterThan<T>(T expected)
         {
-            return (GreaterThanConstraint)Append(new GreaterThanConstraint(expected));
+            return (GreaterThanConstraint<T>)Append(new GreaterThanConstraint<T>(expected));
         }
 
         #endregion
@@ -425,18 +425,18 @@ namespace TCLite.Framework.Constraints
         /// Returns a constraint that tests whether the
         /// actual value is greater than or equal to the suppled argument
         /// </summary>
-        public GreaterThanOrEqualConstraint GreaterThanOrEqualTo(IComparable expected)
+        public GreaterThanOrEqualConstraint<T> GreaterThanOrEqualTo<T>(T expected)
         {
-            return (GreaterThanOrEqualConstraint)this.Append(new GreaterThanOrEqualConstraint(expected));
+            return (GreaterThanOrEqualConstraint<T>)this.Append(new GreaterThanOrEqualConstraint<T>(expected));
         }
 
         /// <summary>
         /// Returns a constraint that tests whether the
         /// actual value is greater than or equal to the suppled argument
         /// </summary>
-        public GreaterThanOrEqualConstraint AtLeast(IComparable expected)
+        public GreaterThanOrEqualConstraint<T> AtLeast<T>(T expected)
         {
-            return (GreaterThanOrEqualConstraint)this.Append(new GreaterThanOrEqualConstraint(expected));
+            return (GreaterThanOrEqualConstraint<T>)this.Append(new GreaterThanOrEqualConstraint<T>(expected));
         }
 
         #endregion
@@ -447,9 +447,9 @@ namespace TCLite.Framework.Constraints
         /// Returns a constraint that tests whether the
         /// actual value is less than the suppled argument
         /// </summary>
-        public LessThanConstraint LessThan(IComparable expected)
+        public LessThanConstraint<T> LessThan<T>(T expected)
         {
-            return (LessThanConstraint)this.Append(new LessThanConstraint(expected));
+            return (LessThanConstraint<T>)Append(new LessThanConstraint<T>(expected));
         }
 
         #endregion
@@ -460,18 +460,18 @@ namespace TCLite.Framework.Constraints
         /// Returns a constraint that tests whether the
         /// actual value is less than or equal to the suppled argument
         /// </summary>
-        public LessThanOrEqualConstraint LessThanOrEqualTo(IComparable expected)
+        public LessThanOrEqualConstraint<T> LessThanOrEqualTo<T>(T expected)
         {
-            return (LessThanOrEqualConstraint)this.Append(new LessThanOrEqualConstraint(expected));
+            return (LessThanOrEqualConstraint<T>)Append(new LessThanOrEqualConstraint<T>(expected));
         }
 
         /// <summary>
         /// Returns a constraint that tests whether the
         /// actual value is less than or equal to the suppled argument
         /// </summary>
-        public LessThanOrEqualConstraint AtMost(IComparable expected)
+        public LessThanOrEqualConstraint<T> AtMost<T>(T expected)
         {
-            return (LessThanOrEqualConstraint)this.Append(new LessThanOrEqualConstraint(expected));
+            return (LessThanOrEqualConstraint<T>)Append(new LessThanOrEqualConstraint<T>(expected));
         }
 
         #endregion

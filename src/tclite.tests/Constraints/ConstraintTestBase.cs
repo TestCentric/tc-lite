@@ -11,14 +11,14 @@ namespace TCLite.Framework.Constraints
     /// <summary>
     /// Base class for constraint tests
     /// </summary>
-    /// <typeparam name="TActual">Type required for actual parameters.</typeparam>
-    public abstract class ConstraintTestBase<TActual>
+    /// <typeparam name="TExpected">Type required for actual parameters.</typeparam>
+    public abstract class ConstraintTestBase<TExpected>
     {
         protected abstract Constraint Constraint { get; }
         protected abstract string ExpectedDescription { get; }
         protected abstract string ExpectedRepresentation { get; }
 
-        protected abstract TActual[] SuccessData { get; }
+        protected abstract TExpected[] SuccessData { get; }
         protected abstract TestCaseData[] FailureData { get; }
         // TODO: Make this abstract after all classes define it
         protected virtual TestCaseData[] InvalidData => new TestCaseData[0];
@@ -36,7 +36,7 @@ namespace TCLite.Framework.Constraints
         }
 
         [TestCaseSource(nameof(SuccessData))]
-        public void SucceedsWithGoodValues(TActual value)
+        public void SucceedsWithGoodValues(TExpected value)
         {
             var result = Constraint.ApplyTo(value);
             if (!result.IsSuccess)
@@ -48,7 +48,7 @@ namespace TCLite.Framework.Constraints
         }
 
         [TestCaseSource(nameof(FailureData))]
-        public void FailsWithBadValues(TActual badValue, string message)
+        public void FailsWithBadValues(TExpected badValue, string message)
         {
             string NL = Environment.NewLine;
 

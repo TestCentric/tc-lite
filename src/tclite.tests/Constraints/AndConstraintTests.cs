@@ -9,7 +9,7 @@ namespace TCLite.Framework.Constraints
     public class AndConstraintTests : ConstraintTestBase<object>
     {        
         protected override Constraint Constraint =>
-            new AndConstraint(new GreaterThanConstraint(40), new LessThanConstraint(50));
+            new AndConstraint(new GreaterThanConstraint<int>(40), new LessThanConstraint<int>(50));
         protected override string ExpectedDescription => "greater than 40 and less than 50";
         protected override string ExpectedRepresentation => "<and <greaterthan 40> <lessthan 50>>";
 

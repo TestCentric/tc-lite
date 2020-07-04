@@ -10,13 +10,13 @@ using System.Collections.Generic;
 namespace TCLite.Framework.Constraints
 {
     [TestFixture]
-    public class GreaterThanOrEqualConstraintTests : ComparisonConstraintTest
+    public class GreaterThanOrEqualConstraintTests : ComparisonConstraintTest<IComparable>
     {
-        protected override Constraint Constraint => new GreaterThanOrEqualConstraint(5);
+        protected override Constraint Constraint => new GreaterThanOrEqualConstraint<int>(5);
         protected override string ExpectedDescription => "greater than or equal to 5";
         protected override string ExpectedRepresentation => "<greaterthanorequal 5>";
 
-        protected override object[] SuccessData => new object[] { 6, 5 };
+        protected override IComparable[] SuccessData => new IComparable[] { 6, 5 };
         protected override TestCaseData[] FailureData => new TestCaseData[]
         {
             new TestCaseData(4, "4")

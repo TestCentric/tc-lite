@@ -192,9 +192,9 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is greater than the suppled argument
         /// </summary>
-        public static GreaterThanConstraint GreaterThan(IComparable expected)
+        public static GreaterThanConstraint<T> GreaterThan<T>(T expected)
         {
-            return new GreaterThanConstraint(expected);
+            return new GreaterThanConstraint<T>(expected);
         }
 
         #endregion
@@ -205,18 +205,18 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is greater than or equal to the suppled argument
         /// </summary>
-        public static GreaterThanOrEqualConstraint GreaterThanOrEqualTo(IComparable expected)
+        public static GreaterThanOrEqualConstraint<T> GreaterThanOrEqualTo<T>(T expected)
         {
-            return new GreaterThanOrEqualConstraint(expected);
+            return new GreaterThanOrEqualConstraint<T>(expected);
         }
 
         /// <summary>
         /// Returns a constraint that tests whether the
         /// actual value is greater than or equal to the suppled argument
         /// </summary>
-        public static GreaterThanOrEqualConstraint AtLeast(IComparable expected)
+        public static GreaterThanOrEqualConstraint<T> AtLeast<T>(T expected)
         {
-            return new GreaterThanOrEqualConstraint(expected);
+            return new GreaterThanOrEqualConstraint<T>(expected);
         }
 
         #endregion
@@ -227,9 +227,9 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is less than the suppled argument
         /// </summary>
-        public static LessThanConstraint LessThan(IComparable expected)
+        public static LessThanConstraint<T> LessThan<T>(T expected)
         {
-            return new LessThanConstraint(expected);
+            return new LessThanConstraint<T>(expected);
         }
 
         #endregion
@@ -240,18 +240,18 @@ namespace TCLite.Framework
         /// Returns a constraint that tests whether the
         /// actual value is less than or equal to the suppled argument
         /// </summary>
-        public static LessThanOrEqualConstraint LessThanOrEqualTo(IComparable expected)
+        public static LessThanOrEqualConstraint<T> LessThanOrEqualTo<T>(T expected)
         {
-            return new LessThanOrEqualConstraint(expected);
+            return new LessThanOrEqualConstraint<T>(expected);
         }
 
         /// <summary>
         /// Returns a constraint that tests whether the
         /// actual value is less than or equal to the suppled argument
         /// </summary>
-        public static LessThanOrEqualConstraint AtMost(IComparable expected)
+        public static LessThanOrEqualConstraint<T> AtMost<T>(T expected)
         {
-            return new LessThanOrEqualConstraint(expected);
+            return new LessThanOrEqualConstraint<T>(expected);
         }
 
         #endregion

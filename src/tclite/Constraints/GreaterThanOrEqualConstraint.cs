@@ -10,22 +10,13 @@ namespace TCLite.Framework.Constraints
     /// <summary>
     /// Tests whether a value is greater than or equal to the value supplied to its constructor
     /// </summary>
-    public class GreaterThanOrEqualConstraint : ComparisonConstraint
+    public class GreaterThanOrEqualConstraint<TExpected> : ComparisonConstraint<TExpected>
     {
-        /// <summary>
-        /// The value against which a comparison is to be made
-        /// </summary>
-        private object ExpectedValue { get; set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="T:GreaterThanOrEqualConstraint"/> class.
         /// </summary>
         /// <param name="expected">The expected value.</param>
-        public GreaterThanOrEqualConstraint(IComparable expected)
-            : base(expected)
-        {
-            ExpectedValue = expected;
-        }
+        public GreaterThanOrEqualConstraint(TExpected expected) : base(expected) { }
 
         public override string Description => $"greater than or equal to {ExpectedValue}";
 
