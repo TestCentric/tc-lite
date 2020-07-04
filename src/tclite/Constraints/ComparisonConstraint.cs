@@ -58,6 +58,12 @@ namespace TCLite.Framework.Constraints
             return this;
         }
 
+        public override void ValidateActualValue(object actual)
+        {
+            Guard.ArgumentNotNull(actual, nameof(actual));
+            Guard.ArgumentOfType<TExpected>(actual, nameof(actual));
+        }
+
         /// <summary>
         /// Test whether the constraint is satisfied by a given value   
         /// </summary>
@@ -65,8 +71,6 @@ namespace TCLite.Framework.Constraints
         /// <returns>A ConstraintResult</returns>
         public override ConstraintResult ApplyTo<T>(T actual)
         {
-            Guard.ArgumentValid(actual != null, "Cannot compare to a null reference.", nameof(actual));
-
             return new ConstraintResult(this, actual, Matches((IComparable)actual));
         }
 

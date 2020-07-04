@@ -54,6 +54,12 @@ namespace TCLite.Framework.Constraints
             return new ConstraintResult(this, actual, doMatch(actual));
         }
 
+        public override void ValidateActualValue(object actual)
+        {
+            Guard.ArgumentNotNull(actual, nameof(actual));
+            Guard.ArgumentOfType<IEnumerable>(actual, nameof(actual));
+        }
+
         /// <summary>
         /// Test whether the constraint is satisfied by a given value
         /// </summary>
@@ -61,7 +67,6 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for success, false for failure</returns>
         public override ConstraintResult ApplyTo<T>(T actual)
         {
-            Guard.ArgumentNotNullOfType<IEnumerable>(actual, nameof(actual));
             var enumerable = actual as IEnumerable;
 
             return new ConstraintResult(this, enumerable, doMatch(enumerable));

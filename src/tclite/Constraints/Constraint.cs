@@ -15,8 +15,6 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     public abstract class Constraint : IConstraint, IResolveConstraint
     {
-        #region Constructor
-
         /// <summary>
         /// Construct a constraint with optional arguments
         /// </summary>
@@ -25,8 +23,6 @@ namespace TCLite.Framework.Constraints
         {
             Arguments = args;
         }
-
-        #endregion
 
         #region Properties
 
@@ -94,6 +90,8 @@ namespace TCLite.Framework.Constraints
         #endregion
         
         #region Abstract and Virtual Methods
+
+        public virtual void ValidateActualValue(object actual) { }
 
         /// <summary>
         /// Applies the constraint to an actual value, returning a ConstraintResult.

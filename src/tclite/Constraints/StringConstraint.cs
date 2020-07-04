@@ -50,6 +50,11 @@ namespace TCLite.Framework.Constraints
             get { _caseInsensitive = true; return this; }
         }
 
+        public override void ValidateActualValue(object actual)
+        {
+            Guard.ArgumentOfType<string>(actual, nameof(actual));
+        }
+
         /// <summary>
         /// Test whether the constraint is satisfied by a given value
         /// </summary>
@@ -57,8 +62,6 @@ namespace TCLite.Framework.Constraints
         /// <returns>True for success, false for failure</returns>
         public override ConstraintResult ApplyTo<T>(T actual)
         {
-            Guard.ArgumentOfType<string>(actual, nameof(actual));
-
             return new ConstraintResult(this, actual, Matches(actual as string));
         }
 

@@ -19,6 +19,12 @@ namespace TCLite.Framework.Constraints
             get { return "<empty>"; }
         }
 
+        public override void ValidateActualValue(object actual)
+        {
+            Guard.ArgumentNotNull(actual, nameof(actual));
+            Guard.ArgumentOfType<string>(actual, nameof(actual));
+        }
+
         /// <summary>
         /// Applies the constraint to an actual value, of the same type as
         /// the constraint expected value, returning a ConstraintResult.
@@ -27,7 +33,6 @@ namespace TCLite.Framework.Constraints
         /// <returns>A ConstraintResult</returns>
         public override ConstraintResult ApplyTo<T>(T actual)
         {
-            Guard.ArgumentNotNullOfType<string>(actual, nameof(actual));
             return new ConstraintResult(this, actual, actual as string == string.Empty);
         }
 

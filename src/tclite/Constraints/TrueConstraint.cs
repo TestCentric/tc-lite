@@ -12,6 +12,12 @@ namespace TCLite.Framework.Constraints
     {
         public override string Description => "True";
 
+        public override void ValidateActualValue(object actual)
+        {
+            Guard.ArgumentNotNull(actual, nameof(actual));
+            Guard.ArgumentOfType<bool>(actual, nameof(actual));
+        }
+
         public override ConstraintResult ApplyTo(bool actual)
         {
             return new ConstraintResult(this, actual, true.Equals(actual));
@@ -19,7 +25,6 @@ namespace TCLite.Framework.Constraints
 
         public override ConstraintResult ApplyTo<T>(T actual)
         {
-            Guard.ArgumentNotNullOfType<bool>(actual, nameof(actual));
             return new ConstraintResult(this, actual, true.Equals(actual));
         }
     }

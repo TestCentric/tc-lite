@@ -67,7 +67,7 @@ namespace TCLite.Framework.Constraints
         {
             Assert.Throws(exType, () =>
             {
-                Constraint.ApplyTo(value);
+                Constraint.ValidateActualValue(value);
             });
         }
     }

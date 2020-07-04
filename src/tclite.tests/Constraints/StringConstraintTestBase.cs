@@ -13,7 +13,7 @@ namespace TCLite.Framework.Constraints
         [Test]
         public void NonStringDataThrowsArgumentException()
         {
-            Assert.Throws<ArgumentException>(() => Constraint.ApplyTo(123));
+            Assert.Throws<ArgumentException>(() => Constraint.ValidateActualValue(123));
         }
     }
 }

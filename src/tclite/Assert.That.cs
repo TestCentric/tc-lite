@@ -37,6 +37,7 @@ namespace TCLite.Framework
             Constraint constraint = expression.Resolve();
 
             IncrementAssertCount();
+            constraint.ValidateActualValue(actual);
             var result = constraint.ApplyTo(ref actual);
             if (!result.IsSuccess)
                 ReportFailure(result, message, args);
@@ -59,6 +60,7 @@ namespace TCLite.Framework
             Constraint constraint = expression.Resolve();
 
             IncrementAssertCount();
+            constraint.ValidateActualValue(actual);
             var result = constraint.ApplyTo(actual);
             if (!result.IsSuccess)
                 ReportFailure(result, message, args);
@@ -77,6 +79,7 @@ namespace TCLite.Framework
             Constraint constraint = expr.Resolve();
 
             IncrementAssertCount();
+            constraint.ValidateActualValue(del);
             var result = constraint.ApplyTo(del);
             if (!result.IsSuccess)
                 ReportFailure(result, message, args);
@@ -95,6 +98,7 @@ namespace TCLite.Framework
             Constraint constraint = expression.Resolve();
 
             IncrementAssertCount();
+            constraint.ValidateActualValue(actual);
             var result = constraint.ApplyTo(ref actual);
             if (!result.IsSuccess)
                 ReportFailure(result, message, args);

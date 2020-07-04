@@ -34,6 +34,12 @@ namespace TCLite.Framework.Constraints
 
         #region Constraint Overrides
 
+        public override void ValidateActualValue(object actual)
+        {
+            Guard.ArgumentNotNull(actual, nameof(actual));
+            Guard.ArgumentOfType<Delegate>(actual, nameof(actual));
+        }
+
         /// <summary>
         /// Executes the code of the delegate and captures any exception.
         /// If a non-null base constraint was provided, it applies that
@@ -43,8 +49,6 @@ namespace TCLite.Framework.Constraints
         /// <returns>True if an exception is thrown and the constraint succeeds, otherwise false</returns>
         public override ConstraintResult ApplyTo<T>(T actual)
         {
-            Guard.ArgumentNotNullOfType<Delegate>(actual, nameof(actual));
-
             try
             {
                 (actual as Delegate).DynamicInvoke();

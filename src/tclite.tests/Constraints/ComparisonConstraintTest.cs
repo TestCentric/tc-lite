@@ -18,7 +18,7 @@ namespace TCLite.Framework.Constraints
 
         protected override TestCaseData[] InvalidData => new TestCaseData[]
         { 
-            new TestCaseData(null, typeof(ArgumentException)),
+            new TestCaseData(null, typeof(ArgumentNullException)),
             new TestCaseData("xxx", typeof(ArgumentException))
         };
 

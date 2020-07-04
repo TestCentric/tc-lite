@@ -19,6 +19,12 @@ namespace TCLite.Framework.Constraints
             get { return "NaN"; }
         }
 
+        public override void ValidateActualValue(object actual)
+        {
+            Guard.ArgumentNotNull(actual, nameof(actual));
+            Guard.ArgumentOfType<double>(actual, nameof(actual));
+        }
+
         /// <summary>
         /// Test that the actual value is an NaN
         /// </summary>
@@ -31,7 +37,6 @@ namespace TCLite.Framework.Constraints
 
         public override ConstraintResult ApplyTo<T>(T actual)
         {
-            Guard.ArgumentNotNullOfType<double>(actual, nameof(actual));
             return new ConstraintResult(this, actual,
                 actual is double && double.IsNaN((double)(object)actual) ||
                 actual is float && float.IsNaN((float)(object)actual));
