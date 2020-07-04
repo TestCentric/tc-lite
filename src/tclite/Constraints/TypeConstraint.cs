@@ -11,7 +11,7 @@ namespace TCLite.Framework.Constraints
     /// TypeConstraint is the abstract base for constraints
     /// that take a Type as their expected value.
     /// </summary>
-    public abstract class TypeConstraint : Constraint<object>
+    public abstract class TypeConstraint : ExpectedValueConstraint<Type>
     {
         /// <summary>
         /// The expected Type used by the constraint
@@ -34,21 +34,6 @@ namespace TCLite.Framework.Constraints
         /// <param name="actual">The value to be tested</param>
         /// <returns>A ConstraintResult</returns>
         public override ConstraintResult ApplyTo<T>(T actual)
-        {
-            ActualType = actual == null ? null : actual.GetType();
-
-            if (actual is Exception)
-                return new ConstraintResult(this, actual, this.Matches(actual));
-
-            return new ConstraintResult(this, ActualType, this.Matches(actual));
-        }
-
-        /// <summary>
-        /// Applies the constraint to an actual value, returning a ConstraintResult.
-        /// </summary>
-        /// <param name="actual">The value to be tested</param>
-        /// <returns>A ConstraintResult</returns>
-        public override ConstraintResult ApplyTo(object actual)
         {
             ActualType = actual == null ? null : actual.GetType();
 
