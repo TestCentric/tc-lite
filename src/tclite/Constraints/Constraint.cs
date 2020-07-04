@@ -281,36 +281,6 @@ namespace TCLite.Framework.Constraints
         /// <param name="actual">The value to be tested</param>
         /// <returns>A ConstraintResult</returns>
         public abstract ConstraintResult ApplyTo(TActual actual);
-
-//         /// <summary>
-//         /// Applies the constraint to an ActualValueDelegate that returns
-//         /// the value to be tested. The default implementation simply evaluates
-//         /// the delegate but derived classes may override it to provide for
-//         /// delayed processing.
-//         /// </summary>
-//         /// <param name="del">An ActualValueDelegate</param>
-//         /// <returns>A ConstraintResult</returns>
-//         public virtual ConstraintResult ApplyTo(ActualValueDelegate<TActual> del)
-//         {
-// #if NYI // async
-//             if (AsyncToSyncAdapter.IsAsyncOperation(del))
-//                 return ApplyTo(AsyncToSyncAdapter.Await(() => del.Invoke()));
-// #endif
-
-//             return ApplyTo(del());
-//         }
-
-        // /// <summary>
-        // /// Test whether the constraint is satisfied by a given reference.
-        // /// The default implementation simply dereferences the value but
-        // /// derived classes may override it to provide for delayed processing.
-        // /// </summary>
-        // /// <param name="actual">A reference to the value to be tested</param>
-        // /// <returns>A ConstraintResult</returns>
-        // public virtual ConstraintResult ApplyTo(ref TActual actual)
-        // {
-        //     return ApplyTo(actual);
-        // }
     }
 
     public abstract class ExpectedValueConstraint<TExpected> : Constraint

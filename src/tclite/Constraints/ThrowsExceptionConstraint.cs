@@ -48,23 +48,5 @@ namespace TCLite.Framework.Constraints
         {
             return ApplyTo((Delegate)del);
         }
-
-        #region Nested Result Class
-
-        class ThrowsExceptionConstraintResult : ConstraintResult
-        {
-            public ThrowsExceptionConstraintResult(ThrowsExceptionConstraint constraint, Exception caughtException)
-                : base(constraint, caughtException, caughtException != null) { }
-
-            public override void WriteActualValueTo(MessageWriter writer)
-            {
-                if (this.Status == ConstraintStatus.Failure)
-                    writer.Write("no exception thrown");
-                else
-                    base.WriteActualValueTo(writer);
-            }
-        }
-
-        #endregion
     }
 }
