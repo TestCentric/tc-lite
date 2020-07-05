@@ -13,7 +13,7 @@ namespace TCLite.Framework.Constraints
     /// within TCLite. The class models a constraint, which puts no
     /// limitations on the type of actual value it is able to handle.
     /// </summary>
-    public abstract class Constraint : IConstraint, IResolveConstraint
+    public abstract partial class Constraint : IConstraint, IResolveConstraint
     {
         /// <summary>
         /// Construct a constraint with optional arguments
@@ -233,119 +233,5 @@ namespace TCLite.Framework.Constraints
         }
 
         #endregion
-
-        #region Binary Operators
-
-        /// <summary>
-        /// Returns a ConstraintExpression by appending And
-        /// to the current constraint.
-        /// </summary>
-        public ConstraintExpression And
-        {
-            get
-            {
-                if (Builder == null)
-                {
-                    Builder = new ConstraintBuilder();
-                    Builder.Append(this);
-                }
-
-                Builder.Append(new AndOperator());
-
-                return new ConstraintExpression(Builder);
-            }
-        }
-
-        /// <summary>
-        /// Returns a ConstraintExpression by appending And
-        /// to the current constraint.
-        /// </summary>
-        public ConstraintExpression With
-        {
-            get { return And; }
-        }
-
-        /// <summary>
-        /// Returns a ConstraintExpression by appending Or
-        /// to the current constraint.
-        /// </summary>
-        public ConstraintExpression Or
-        {
-            get
-            {
-                if (Builder == null)
-                {
-                    Builder = new ConstraintBuilder();
-                    Builder.Append(this);
-                }
-
-                Builder.Append(new OrOperator());
-
-                return new ConstraintExpression(Builder);
-            }
-        }
-
-        #endregion
-
-        #region After Modifier
-#if NYI // DelayedConstraint
-        /// <summary>
-        /// Returns a DelayedConstraint with the specified delay time.
-        /// </summary>
-        /// <param name="delayInMilliseconds">The delay in milliseconds.</param>
-        /// <returns></returns>
-        public DelayedConstraint After(int delayInMilliseconds)
-        {
-            return new DelayedConstraint(
-                Builder == null ? this : Builder.Resolve(),
-                delayInMilliseconds);
-        }
-
-        /// <summary>
-        /// Returns a DelayedConstraint with the specified delay time
-        /// and polling interval.
-        /// </summary>
-        /// <param name="delayInMilliseconds">The delay in milliseconds.</param>
-        /// <param name="pollingInterval">The interval at which to test the constraint.</param>
-        /// <returns></returns>
-        public DelayedConstraint After(int delayInMilliseconds, int pollingInterval)
-        {
-            return new DelayedConstraint(
-                Builder == null ? this : Builder.Resolve(),
-                delayInMilliseconds,
-                pollingInterval);
-        }
-#endif
-
-        #endregion
-    }
-
-    /// <summary>
-    /// The Constraint<TActual> class is derived from non-generic
-    /// Constraint and class models a constraint, which requires
-    /// the actual values supplied to be of a certain Type.
-    /// </summary>
-    public abstract class Constraint<TActual> : Constraint
-    {
-        public Constraint(params object[] args) : base(args) { }
-
-        /// <summary>
-        /// Applies the constraint to an actual value, of the same type as
-        /// the constraint expected value, returning a ConstraintResult.
-        /// </summary>
-        /// <param name="actual">The value to be tested</param>
-        /// <returns>A ConstraintResult</returns>
-        public abstract ConstraintResult ApplyTo(TActual actual);
-    }
-
-    public abstract class ExpectedValueConstraint<TExpected> : Constraint
-    {
-        public TExpected ExpectedValue;
-
-        public ExpectedValueConstraint(TExpected expected)
-            : base(expected)
-        {
-            ExpectedValue = expected;
-        }
     }
 }

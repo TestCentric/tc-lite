@@ -8,7 +8,7 @@ namespace TCLite.Framework.Constraints
     /// <summary>
     /// TrueConstraint tests that the actual value is true
     /// </summary>
-    public class TrueConstraint : Constraint<bool>
+    public class TrueConstraint : ConditionConstraint<bool>
     {
         public override string Description => "True";
 
@@ -16,11 +16,6 @@ namespace TCLite.Framework.Constraints
         {
             Guard.ArgumentNotNull(actual, nameof(actual));
             Guard.ArgumentOfType<bool>(actual, nameof(actual));
-        }
-
-        public override ConstraintResult ApplyTo(bool actual)
-        {
-            return new ConstraintResult(this, actual, true.Equals(actual));
         }
 
         protected override ConstraintResult ApplyConstraint<T>(T actual)

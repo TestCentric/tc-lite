@@ -12,7 +12,7 @@ namespace TCLite.Framework.Constraints
     /// CollectionConstraint is the abstract base class for
     /// constraints that operate on collections.
     /// </summary>
-    public abstract class CollectionConstraint : Constraint<IEnumerable>
+    public abstract class CollectionConstraint : ConditionConstraint<IEnumerable>
     {
         /// <summary>
         /// Construct an empty CollectionConstraint
@@ -42,16 +42,6 @@ namespace TCLite.Framework.Constraints
                 return false;
 
             return true;
-        }
-
-        /// <summary>
-        /// Test whether the constraint is satisfied by a given value
-        /// </summary>
-        /// <param name="actual">The value to be tested</param>
-        /// <returns>True for success, false for failure</returns>
-        public override ConstraintResult ApplyTo(IEnumerable actual)
-        {
-            return new ConstraintResult(this, actual, doMatch(actual));
         }
 
         public override void ValidateActualValue(object actual)

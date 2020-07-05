@@ -8,7 +8,7 @@ namespace TCLite.Framework.Constraints
     /// <summary>
     /// NaNConstraint tests that the actual value is a double or float NaN
     /// </summary>
-    public class NaNConstraint : Constraint<double>
+    public class NaNConstraint : ConditionConstraint<double>
     {
         /// <summary>
         /// The Description of what this constraint tests, for
@@ -23,16 +23,6 @@ namespace TCLite.Framework.Constraints
         {
             Guard.ArgumentNotNull(actual, nameof(actual));
             Guard.ArgumentOfType<double>(actual, nameof(actual));
-        }
-
-        /// <summary>
-        /// Test that the actual value is an NaN
-        /// </summary>
-        /// <param name="actual"></param>
-        /// <returns></returns>
-        public override ConstraintResult ApplyTo(double actual)
-        {
-            return new ConstraintResult(this, actual, double.IsNaN(actual));
         }
 
         protected override ConstraintResult ApplyConstraint<T>(T actual)
