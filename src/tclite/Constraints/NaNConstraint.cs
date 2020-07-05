@@ -35,7 +35,7 @@ namespace TCLite.Framework.Constraints
             return new ConstraintResult(this, actual, double.IsNaN(actual));
         }
 
-        public override ConstraintResult ApplyTo<T>(T actual)
+        protected override ConstraintResult ApplyConstraint<T>(T actual)
         {
             return new ConstraintResult(this, actual,
                 actual is double && double.IsNaN((double)(object)actual) ||

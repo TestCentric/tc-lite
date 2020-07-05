@@ -20,12 +20,17 @@ namespace TCLite.Framework.Constraints
             DescriptionPrefix = "not";
         }
 
+        public override void ValidateActualValue(object actual)
+        {
+            BaseConstraint.ValidateActualValue(actual);
+        }
+
         /// <summary>
         /// Test whether the constraint is satisfied by a given value
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for if the base constraint fails, false if it succeeds</returns>
-        public override ConstraintResult ApplyTo<T>(T actual)
+        protected override ConstraintResult ApplyConstraint<T>(T actual)
         {
             var baseResult = BaseConstraint.ApplyTo(actual);
             return new ConstraintResult(this, baseResult.ActualValue, !baseResult.IsSuccess);

@@ -60,7 +60,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        public override ConstraintResult ApplyTo<T>(T actual)
+        protected override ConstraintResult ApplyConstraint<T>(T actual)
         {
             return new ConstraintResult(this, actual, Matches(actual as string));
         }

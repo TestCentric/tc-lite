@@ -61,7 +61,11 @@ namespace TCLite.Framework.Constraints
         public override void ValidateActualValue(object actual)
         {
             Guard.ArgumentNotNull(actual, nameof(actual));
-            Guard.ArgumentOfType<TExpected>(actual, nameof(actual));
+            if (!(actual is TExpected))
+                Guard.ArgumentValid(
+                    Numerics.IsNumericType(actual) && Numerics.IsNumericType(typeof(TExpected)),
+                    "Comparisons between objects of different types require both to be numeric types.",
+                    nameof(actual));
         }
 
         /// <summary>
@@ -69,7 +73,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>A ConstraintResult</returns>
-        public override ConstraintResult ApplyTo<T>(T actual)
+        protected override ConstraintResult ApplyConstraint<T>(T actual)
         {
             return new ConstraintResult(this, actual, Matches((IComparable)actual));
         }

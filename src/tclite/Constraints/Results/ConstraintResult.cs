@@ -88,12 +88,12 @@ namespace TCLite.Framework.Constraints
 
         /// <summary>
         /// Description of the constraint may be affected by the state the constraint had
-        /// when <see cref="Constraint.ApplyTo{TActual}(TActual)"/> was performed against the actual value.
+        /// when <see cref="Constraint.ApplyConstraint{TActual}(TActual)"/> was performed against the actual value.
         /// </summary>
         public string Description => _constraint.Description;
 
         /// <summary>
-        /// The actual value that was passed to the <see cref="Constraint.ApplyTo{TActual}(TActual)"/> method.
+        /// The actual value that was passed to the <see cref="Constraint.ApplyConstraint{TActual}(TActual)"/> method.
         /// </summary>
         public object ActualValue { get; }
 

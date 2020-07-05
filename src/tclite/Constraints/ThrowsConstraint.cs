@@ -47,7 +47,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">A delegate representing the code to be tested</param>
         /// <returns>True if an exception is thrown and the constraint succeeds, otherwise false</returns>
-        public override ConstraintResult ApplyTo<T>(T actual)
+        protected override ConstraintResult ApplyConstraint<T>(T actual)
         {
             try
             {
@@ -76,9 +76,9 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="del"></param>
         /// <returns></returns>
-        public override ConstraintResult ApplyTo<T>(ActualValueDelegate<T> del)
+        protected override ConstraintResult ApplyConstraint<T>(ActualValueDelegate<T> del)
         {
-            return ApplyTo((Delegate)del);
+            return ApplyConstraint((Delegate)del);
         }
 
         #endregion

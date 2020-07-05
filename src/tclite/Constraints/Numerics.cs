@@ -13,6 +13,36 @@ namespace TCLite.Framework.Constraints
     public class Numerics
     {
         #region Numeric Type Recognition
+
+        static Type[] NUMERIC_TYPES = new Type[]
+        {
+            typeof(Double),
+            typeof(Single),
+            typeof(Int32),
+            typeof(UInt32),
+            typeof(Int64),
+            typeof(UInt64),
+            typeof(Int16),
+            typeof(UInt16),
+            typeof(SByte),
+            typeof(Byte),
+            typeof(Char)
+        };
+
+        /// <summary>
+        /// Checks a Type, returning true if it is a numeric Type.
+        /// </summary>
+        /// <param name="type">The Type to check</param>
+        /// <returns>true if the Type is a numeric type</returns>
+        public static bool IsNumericType(Type type)
+        {
+            foreach (Type numericType in NUMERIC_TYPES)
+                if (type == numericType)
+                    return true;
+
+            return false;
+        }
+
         /// <summary>
         /// Checks the type of the object, returning true if
         /// the object is a numeric type.

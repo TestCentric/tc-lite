@@ -45,16 +45,12 @@ namespace TCLite.Framework
         /// </summary>
         public class EqualConstraint<TExpected> : ExpectedValueConstraint<TExpected>
         {
-            #region Static and Instance Fields
-
             private Tolerance _tolerance = Tolerance.Default;
 
             /// <summary>
             /// NUnitEqualityComparer used to test equality.
             /// </summary>
             private TCLiteEqualityComparer _comparer = new TCLiteEqualityComparer();
-
-            #endregion
 
             /// <summary>
             /// Initializes a new instance of the <see cref="EqualConstraint"/> class.
@@ -112,8 +108,6 @@ namespace TCLite.Framework
             /// </value>
             public bool ClipStrings { get; private set; } = true;
 
-
-            #region Constraint Modifiers
 
             /// <summary>
             /// Flag the constraint to ignore case and return self.
@@ -338,21 +332,15 @@ namespace TCLite.Framework
                 return this;
             }
 
-            #endregion
-
-            #region Public Methods
-
             /// <summary>
             /// Test whether the constraint is satisfied by a given value
             /// </summary>
             /// <param name="actual">The value to be tested</param>
             /// <returns>True for success, false for failure</returns>
-            public override ConstraintResult ApplyTo<T>(T actual)
+            protected override ConstraintResult ApplyConstraint<T>(T actual)
             {
                 return new EqualConstraintResult<TExpected>(this, actual, _comparer.AreEqual(ExpectedValue, actual, ref _tolerance));
             }
-
-            #endregion
-        }
+       }
     }
 }

@@ -24,7 +24,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The actual value</param>
         /// <returns>True if the constraints both succeeded</returns>
-        public override ConstraintResult ApplyTo<T>(T actual)
+        protected override ConstraintResult ApplyConstraint<T>(T actual)
         {
             var leftResult = Left.ApplyTo(actual);
             var rightResult = leftResult.IsSuccess

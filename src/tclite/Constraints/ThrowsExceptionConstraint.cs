@@ -35,7 +35,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">A delegate representing the code to be tested</param>
         /// <returns>True if an exception is thrown, otherwise false</returns>
-        public override ConstraintResult ApplyTo<T>(T actual)
+        protected override ConstraintResult ApplyConstraint<T>(T actual)
         {
             var exception = ExceptionInterceptor.Intercept(actual);
 
@@ -48,9 +48,9 @@ namespace TCLite.Framework.Constraints
         /// the delegate but derived classes may override it to provide for
         /// delayed processing.
         /// </summary>
-        public override ConstraintResult ApplyTo<T>(ActualValueDelegate<T> del)
+        protected override ConstraintResult ApplyConstraint<T>(ActualValueDelegate<T> del)
         {
-            return ApplyTo((Delegate)del);
+            return ApplyConstraint((Delegate)del);
         }
     }
 }

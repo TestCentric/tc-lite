@@ -23,7 +23,7 @@ namespace TCLite.Framework.Constraints
             return new ConstraintResult(this, actual, true.Equals(actual));
         }
 
-        public override ConstraintResult ApplyTo<T>(T actual)
+        protected override ConstraintResult ApplyConstraint<T>(T actual)
         {
             return new ConstraintResult(this, actual, true.Equals(actual));
         }

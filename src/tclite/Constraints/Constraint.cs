@@ -72,7 +72,107 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-        #region IResolveConstraint
+        #region Public Methods
+
+        /// <summary>
+        /// Validate the actual value argument based on what the
+        /// particular constraint allows.virtual The default 
+        /// implementation does nothing, implying that the constraint
+        /// can handle any Type as well as null values.
+        /// </summary>
+        /// <param name="actual"></param>
+        public virtual void ValidateActualValue(object actual) { }
+
+        /// <summary>
+        /// Validates the actual value argument and applies the constraint 
+        /// to it, returning a ConstraintResult.
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        public ConstraintResult ApplyTo<T>(T actual)
+        {
+            ValidateActualValue(actual);
+            return ApplyConstraint(actual);
+        }
+
+        /// <summary>
+        /// Validates the ActualValueDelegate and applies the constraint
+        /// to the value it returns.
+        /// </summary>
+        /// <param name="del">The delegate to be evaluated and tested</param>
+        /// <returns>A ConstraintResult</returns>
+        public ConstraintResult ApplyTo<T>(ActualValueDelegate<T> del)
+        {
+            ValidateActualValue(del);
+            return ApplyConstraint(del);
+        }
+
+        /// <summary>
+        /// Validates the actual value argument and applies the constraint 
+        /// to it, returning a ConstraintResult.
+        /// </summary>
+        /// <param name="actual">A reference to the value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        public ConstraintResult ApplyTo<T>(ref T actual)
+        {
+            ValidateActualValue(actual);
+            return ApplyConstraint(ref actual);
+        }
+
+        #endregion
+
+        #region Protected Methods
+
+        /// <summary>
+        /// Applies the constraint to the value to be tested and returns
+        /// a ConstraintResult.
+        /// </summary>
+        /// <param name="actual">The value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        /// <remarks>
+        /// The value has already been validated when this method is called.
+        /// </remarks>
+        protected abstract ConstraintResult ApplyConstraint<T>(T actual);
+
+        /// <summary>
+        /// Applies the constraint to an ActualValueDelegate that returns
+        /// the value to be tested. The default implementation simply evaluates
+        /// the delegate but derived classes may override it to provide for
+        /// delayed processing.
+        /// </summary>
+        /// <param name="del">An ActualValueDelegate</param>
+        /// <returns>A ConstraintResult</returns>
+        /// <remarks>
+        /// The value has already been validated when this method is called.
+        /// </remarks>
+        protected virtual ConstraintResult ApplyConstraint<T>(ActualValueDelegate<T> del)
+        {
+#if NYI // async
+            if (AsyncToSyncAdapter.IsAsyncOperation(del))
+                return ApplyConstraint(AsyncToSyncAdapter.Await(() => del.Invoke()));
+#endif
+
+            return ApplyConstraint(del());
+        }
+
+        /// <summary>
+        /// Test whether the constraint is satisfied by a given reference.
+        /// The default implementation simply dereferences the value but
+        /// derived classes may override it to provide for delayed processing.
+        /// </summary>
+        /// <param name="actual">A reference to the value to be tested</param>
+        /// <returns>A ConstraintResult</returns>
+        /// <remarks>
+        /// The value has already been validated when this method is called.
+        /// </remarks>
+        protected virtual ConstraintResult ApplyConstraint<T>(ref T actual)
+        {
+            return ApplyConstraint(actual);
+        }
+
+        #endregion
+
+        #region IResolveConstraint Implementation
 
         bool IResolveConstraint.IsResolvable => Builder == null || Builder.IsResolvable;
 
@@ -85,49 +185,6 @@ namespace TCLite.Framework.Constraints
                 throw new InvalidOperationException("Attempted to resolve a Constraint under construction");
 
             return Builder.Resolve();
-        }
-
-        #endregion
-        
-        #region Abstract and Virtual Methods
-
-        public virtual void ValidateActualValue(object actual) { }
-
-        /// <summary>
-        /// Applies the constraint to an actual value, returning a ConstraintResult.
-        /// </summary>
-        /// <param name="actual">The value to be tested</param>
-        /// <returns>A ConstraintResult</returns>
-        public abstract ConstraintResult ApplyTo<T>(T actual);
-
-        /// <summary>
-        /// Applies the constraint to an ActualValueDelegate that returns
-        /// the value to be tested. The default implementation simply evaluates
-        /// the delegate but derived classes may override it to provide for
-        /// delayed processing.
-        /// </summary>
-        /// <param name="del">An ActualValueDelegate</param>
-        /// <returns>A ConstraintResult</returns>
-        public virtual ConstraintResult ApplyTo<T>(ActualValueDelegate<T> del)
-        {
-#if NYI // async
-            if (AsyncToSyncAdapter.IsAsyncOperation(del))
-                return ApplyTo(AsyncToSyncAdapter.Await(() => del.Invoke()));
-#endif
-
-            return ApplyTo(del());
-        }
-
-        /// <summary>
-        /// Test whether the constraint is satisfied by a given reference.
-        /// The default implementation simply dereferences the value but
-        /// derived classes may override it to provide for delayed processing.
-        /// </summary>
-        /// <param name="actual">A reference to the value to be tested</param>
-        /// <returns>A ConstraintResult</returns>
-        public virtual ConstraintResult ApplyTo<T>(ref T actual)
-        {
-            return ApplyTo(actual);
         }
 
         #endregion
