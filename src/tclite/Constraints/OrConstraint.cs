@@ -15,7 +15,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="left">The first constraint</param>
         /// <param name="right">The second constraint</param>
-        public OrConstraint(Constraint left, Constraint right) : base(left, right) { }
+        public OrConstraint(IConstraint left, IConstraint right) : base(left, right) { }
 
         public override string  Description => $"{Left.Description} or {Right.Description}";
 

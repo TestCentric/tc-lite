@@ -33,7 +33,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual"></param>
         /// <returns></returns>
-        protected override bool doMatch(IEnumerable actual)
+        protected override bool Match(IEnumerable actual)
         {
             foreach (object obj in actual)
                 if (ItemsEqual(obj, ExpectedValue))

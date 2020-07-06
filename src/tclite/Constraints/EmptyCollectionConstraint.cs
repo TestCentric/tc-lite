@@ -26,7 +26,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="collection"></param>
         /// <returns></returns>
-        protected override bool doMatch(IEnumerable collection)
+        protected override bool Match(IEnumerable collection)
         {
             return IsEmpty(collection);
         }

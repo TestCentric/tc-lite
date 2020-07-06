@@ -14,7 +14,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="left">The first constraint</param>
         /// <param name="right">The second constraint</param>
-        public AndConstraint(Constraint left, Constraint right) : base(left, right) { }
+        public AndConstraint(IConstraint left, IConstraint right) : base(left, right) { }
 
         public override string Description => $"{Left.Description} and {Right.Description}";
 

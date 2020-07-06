@@ -59,7 +59,7 @@ namespace TCLite.Framework.Constraints
         {
             var enumerable = actual as IEnumerable;
 
-            return new ConstraintResult(this, enumerable, doMatch(enumerable));
+            return new ConstraintResult(this, enumerable, Match(enumerable));
         }
 
         /// <summary>
@@ -67,6 +67,6 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="collection"></param>
         /// <returns></returns>
-        protected abstract bool doMatch(IEnumerable collection);
+        protected abstract bool Match(IEnumerable collection);
     }
 }

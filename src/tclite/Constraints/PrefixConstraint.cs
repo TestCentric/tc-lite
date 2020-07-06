@@ -13,7 +13,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// The base constraint
         /// </summary>
-        protected Constraint BaseConstraint { get; }
+        protected IConstraint BaseConstraint { get; }
 
         /// <summary>
         /// Prefix used in forming the constraint description
@@ -24,7 +24,7 @@ namespace TCLite.Framework.Constraints
         /// Construct given a base constraint
         /// </summary>
         /// <param name="baseConstraint"></param>
-        protected PrefixConstraint(Constraint baseConstraint)
+        protected PrefixConstraint(IConstraint baseConstraint)
             : base(baseConstraint)
         {
             Guard.ArgumentNotNull(baseConstraint, nameof(baseConstraint));
