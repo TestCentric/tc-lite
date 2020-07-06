@@ -176,7 +176,7 @@ namespace TCLite.Framework.Constraints
 
         bool IResolveConstraint.IsResolvable => Builder == null || Builder.IsResolvable;
 
-        Constraint IResolveConstraint.Resolve()
+        IConstraint IResolveConstraint.Resolve()
         {
             if (Builder == null)
                 return this;

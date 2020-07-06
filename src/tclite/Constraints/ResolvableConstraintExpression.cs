@@ -48,7 +48,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// Resolve the current expression to a Constraint
         /// </summary>
-        Constraint IResolveConstraint.Resolve()
+        IConstraint IResolveConstraint.Resolve()
         {
             return Builder.Resolve();
         }

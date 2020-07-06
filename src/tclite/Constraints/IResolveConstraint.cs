@@ -22,6 +22,6 @@ namespace TCLite.Framework.Constraints
         /// Return the top-level constraint for the complete expression.
         /// Throws InvalidOperationException if the expression is incomplete.
         /// </summary>
-        Constraint Resolve();
+        IConstraint Resolve();
     }
 }

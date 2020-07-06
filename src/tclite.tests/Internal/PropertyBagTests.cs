@@ -17,11 +17,11 @@ namespace TCLite.Framework.Internal
         public void IndexGetsListOfValues()
         {
             Assert.That(bag["Answer"].Count, Is.EqualTo(1));
-            Assert.That(bag["Answer"], Contains.Item(42));
+            Assert.That(bag["Answer"], Contains.Item.EqualTo(42));
 
             Assert.That(bag["Tag"].Count, Is.EqualTo(2));
-            Assert.That(bag["Tag"], Contains.Item("bug"));
-            Assert.That(bag["Tag"], Contains.Item("easy"));
+            Assert.That(bag["Tag"], Contains.Item.EqualTo("bug"));
+            Assert.That(bag["Tag"], Contains.Item.EqualTo("easy"));
         }
 
         [Test]
@@ -35,16 +35,16 @@ namespace TCLite.Framework.Internal
         {
             bag["Zip"] = new string[] {"junk", "more junk"};
             Assert.That(bag["Zip"].Count, Is.EqualTo(2));
-            Assert.That(bag["Zip"], Contains.Item("junk"));
-            Assert.That(bag["Zip"], Contains.Item("more junk"));
+            Assert.That(bag["Zip"], Contains.Item.EqualTo("junk"));
+            Assert.That(bag["Zip"], Contains.Item.EqualTo("more junk"));
         }
 
         [Test]
         public void AllKeysAreListed()
         {
             Assert.That(bag.Keys.Count, Is.EqualTo(2));
-            Assert.That(bag.Keys, Has.Member("Answer"));
-            Assert.That(bag.Keys, Has.Member("Tag"));
+            Assert.That(bag.Keys, Has.Member.EqualTo("Answer"));
+            Assert.That(bag.Keys, Has.Member.EqualTo("Tag"));
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace TCLite.Framework.Internal
         {
             bag.Set("Zip", "ZAP");
             Assert.That(bag["Zip"].Count, Is.EqualTo(1));
-            Assert.That(bag["Zip"], Has.Member("ZAP"));
+            Assert.That(bag["Zip"], Has.Member.EqualTo("ZAP"));
             Assert.That(bag.Get("Zip"), Is.EqualTo("ZAP"));
         }
 

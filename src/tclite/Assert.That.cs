@@ -34,7 +34,7 @@ namespace TCLite.Framework
         /// <param name="args">Arguments to be used in formatting the message</param>
         static public void That(ref bool actual, IResolveConstraint expression, string message=null, params object[] args)
         {
-            Constraint constraint = expression.Resolve();
+            IConstraint constraint = expression.Resolve();
 
             IncrementAssertCount();
             var result = constraint.ApplyTo(ref actual);
@@ -56,7 +56,7 @@ namespace TCLite.Framework
         /// <param name="args">Arguments to be used in formatting the message</param>
         static public void That<T>(T actual, IResolveConstraint expression, string message=null, params object[] args)
         {
-            Constraint constraint = expression.Resolve();
+            IConstraint constraint = expression.Resolve();
 
             IncrementAssertCount();
             var result = constraint.ApplyTo(actual);
@@ -74,7 +74,7 @@ namespace TCLite.Framework
         /// <param name="args">Arguments to be used in formatting the message</param>
         static public void That<T>(ActualValueDelegate<T> del, IResolveConstraint expr, string message=null, params object[] args)
         {
-            Constraint constraint = expr.Resolve();
+            IConstraint constraint = expr.Resolve();
 
             IncrementAssertCount();
             var result = constraint.ApplyTo(del);
@@ -92,7 +92,7 @@ namespace TCLite.Framework
         /// <param name="args">Arguments to be used in formatting the message</param>
         static public void That<T>(ref T actual, IResolveConstraint expression, string message=null, params object[] args)
         {
-            Constraint constraint = expression.Resolve();
+            IConstraint constraint = expression.Resolve();
 
             IncrementAssertCount();
             var result = constraint.ApplyTo(ref actual);

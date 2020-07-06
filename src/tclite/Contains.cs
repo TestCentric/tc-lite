@@ -18,13 +18,11 @@ namespace TCLite.Framework
         #region Item
 
         /// <summary>
-        /// Returns a new CollectionContainsConstraint checking for the
-        /// presence of a particular object in the collection.
+        /// Returns a ConstraintExpression, which will apply
+        /// the following constraint to all members of a collection,
+        /// succeeding if at least one of them succeeds.
         /// </summary>
-        public static CollectionContainsConstraint Item(object expected)
-        {
-            return new CollectionContainsConstraint(expected);
-        }
+        public static ConstraintExpression Item => new ConstraintExpression().Some;
 
         #endregion
 

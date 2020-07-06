@@ -28,6 +28,6 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="constraint"></param>
         /// <returns></returns>
-        public abstract Constraint ApplyPrefix(Constraint constraint);
+        public abstract IConstraint ApplyPrefix(IConstraint constraint);
     }
 }

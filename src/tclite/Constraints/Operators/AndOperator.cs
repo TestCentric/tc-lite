@@ -21,7 +21,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// Apply the operator to produce an AndConstraint
         /// </summary>
-        public override Constraint ApplyOperator(Constraint left, Constraint right)
+        public override IConstraint ApplyOperator(IConstraint left, IConstraint right)
         {
             return new AndConstraint(left, right);
         }

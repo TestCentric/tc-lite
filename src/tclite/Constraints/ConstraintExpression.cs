@@ -96,7 +96,7 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-#if NYI // All, Some, None, Exactly, Property, Length, Count, Message, InnerException, With, Attribute, Matches
+#if NYI // All
         #region All
 
         /// <summary>
@@ -110,6 +110,7 @@ namespace TCLite.Framework.Constraints
         }
 
         #endregion
+#endif
 
         #region Some
 
@@ -123,9 +124,10 @@ namespace TCLite.Framework.Constraints
             get { return this.Append(new SomeOperator()); }
         }
 
-        #endregion
+#endregion
 
-        #region None
+#if NYI // None, Exactly, Property, Length, Count, Message, InnerException, With, Attribute, Matches
+#region None
 
         /// <summary>
         /// Returns a ConstraintExpression, which will apply
@@ -137,9 +139,9 @@ namespace TCLite.Framework.Constraints
             get { return this.Append(new NoneOperator()); }
         }
 
-        #endregion
+#endregion
 
-		#region Exactly(n)
+#region Exactly(n)
 		
         /// <summary>
         /// Returns a ConstraintExpression, which will apply
@@ -151,9 +153,9 @@ namespace TCLite.Framework.Constraints
             return this.Append(new ExactCountOperator(expectedCount));
         }
 		
-		#endregion
+#endregion
 		
-        #region Property
+#region Property
 
         /// <summary>
         /// Returns a new PropertyConstraintExpression, which will either
@@ -165,9 +167,9 @@ namespace TCLite.Framework.Constraints
             return this.Append(new PropOperator(name));
         }
 
-        #endregion
+#endregion
 
-        #region Length
+#region Length
 
         /// <summary>
         /// Returns a new ConstraintExpression, which will apply the following
@@ -178,9 +180,9 @@ namespace TCLite.Framework.Constraints
             get { return Property("Length"); }
         }
 
-        #endregion
+#endregion
 
-        #region Count
+#region Count
 
         /// <summary>
         /// Returns a new ConstraintExpression, which will apply the following
@@ -191,9 +193,9 @@ namespace TCLite.Framework.Constraints
             get { return Property("Count"); }
         }
 
-        #endregion
+#endregion
 
-        #region Message
+#region Message
 
         /// <summary>
         /// Returns a new ConstraintExpression, which will apply the following
@@ -204,9 +206,9 @@ namespace TCLite.Framework.Constraints
             get { return Property("Message"); }
         }
 
-        #endregion
+#endregion
 
-        #region InnerException
+#region InnerException
 
         /// <summary>
         /// Returns a new ConstraintExpression, which will apply the following
@@ -217,9 +219,9 @@ namespace TCLite.Framework.Constraints
             get { return Property("InnerException"); }
         }
 
-        #endregion
+#endregion
 
-        #region Attribute
+#region Attribute
 
         /// <summary>
         /// Returns a new AttributeConstraint checking for the
@@ -239,9 +241,9 @@ namespace TCLite.Framework.Constraints
             return Attribute(typeof(T));
         }
 
-        #endregion
+#endregion
 
-        #region With
+#region With
 
         /// <summary>
         /// With is currently a NOP - reserved for future use.
@@ -251,9 +253,9 @@ namespace TCLite.Framework.Constraints
             get { return this.Append(new WithOperator()); }
         }
 
-        #endregion
+#endregion
 
-        #region Matches
+#region Matches
 
         /// <summary>
         /// Returns the constraint provided as an argument - used to allow custom
@@ -273,10 +275,10 @@ namespace TCLite.Framework.Constraints
             return this.Append(new PredicateConstraint<T>(predicate));
         }
 
-        #endregion
+#endregion
 #endif
 
-        #region Null
+#region Null
 
         /// <summary>
         /// Returns a constraint that tests for null
@@ -286,9 +288,9 @@ namespace TCLite.Framework.Constraints
             get { return (NullConstraint)this.Append(new NullConstraint()); }
         }
 
-        #endregion
+#endregion
 
-        #region True
+#region True
 
         /// <summary>
         /// Returns a constraint that tests for True
@@ -298,9 +300,9 @@ namespace TCLite.Framework.Constraints
             get { return (TrueConstraint)this.Append(new TrueConstraint()); }
         }
 
-        #endregion
+#endregion
 
-        #region False
+#region False
 
         /// <summary>
         /// Returns a constraint that tests for False
@@ -310,10 +312,10 @@ namespace TCLite.Framework.Constraints
             get { return (FalseConstraint)this.Append(new FalseConstraint()); }
         }
 
-        #endregion
+#endregion
 
 #if NYI // Positive, Negative
-        #region Positive
+#region Positive
  
         /// <summary>
         /// Returns a constraint that tests for a positive value
@@ -323,9 +325,9 @@ namespace TCLite.Framework.Constraints
             get { return (GreaterThanConstraint)this.Append(new GreaterThanConstraint(0)); }
         }
  
-        #endregion
+#endregion
  
-        #region Negative
+#region Negative
  
         /// <summary>
         /// Returns a constraint that tests for a negative value
@@ -335,10 +337,10 @@ namespace TCLite.Framework.Constraints
             get { return (LessThanConstraint)this.Append(new LessThanConstraint(0)); }
         }
  
-        #endregion
+#endregion
 #endif
 
-        #region NaN
+#region NaN
 
         /// <summary>
         /// Returns a constraint that tests for NaN
@@ -348,10 +350,10 @@ namespace TCLite.Framework.Constraints
             get { return (NaNConstraint)this.Append(new NaNConstraint()); }
         }
 
-        #endregion
+#endregion
 
 #if NYI // Unique, BinarySerializable, XmlSerializable
-        #region Unique
+#region Unique
 
         /// <summary>
         /// Returns a constraint that tests whether a collection 
@@ -362,9 +364,9 @@ namespace TCLite.Framework.Constraints
             get { return (UniqueItemsConstraint)this.Append(new UniqueItemsConstraint()); }
         }
 
-        #endregion
+#endregion
 
-        #region BinarySerializable
+#region BinarySerializable
 
         /// <summary>
         /// Returns a constraint that tests whether an object graph is serializable in binary format.
@@ -374,9 +376,9 @@ namespace TCLite.Framework.Constraints
             get { return (BinarySerializableConstraint)this.Append(new BinarySerializableConstraint()); }
         }
 
-        #endregion
+#endregion
 
-        #region XmlSerializable
+#region XmlSerializable
 
         /// <summary>
         /// Returns a constraint that tests whether an object graph is serializable in xml format.
@@ -386,15 +388,15 @@ namespace TCLite.Framework.Constraints
             get { return (XmlSerializableConstraint)this.Append(new XmlSerializableConstraint()); }
         }
 
-        #endregion
+#endregion
 #endif
 
-        #region EqualTo
+#region EqualTo
 
 
-        #endregion
+#endregion
 
-        #region SameAs
+#region SameAs
 
         /// <summary>
         /// Returns a constraint that tests that two references are the same object
@@ -404,9 +406,9 @@ namespace TCLite.Framework.Constraints
             return (SameAsConstraint)Append(new SameAsConstraint(expected));
         }
 
-        #endregion
+#endregion
 
-        #region GreaterThan
+#region GreaterThan
 
         /// <summary>
         /// Returns a constraint that tests whether the
@@ -417,9 +419,9 @@ namespace TCLite.Framework.Constraints
             return (GreaterThanConstraint<T>)Append(new GreaterThanConstraint<T>(expected));
         }
 
-        #endregion
+#endregion
 
-        #region GreaterThanOrEqualTo
+#region GreaterThanOrEqualTo
 
         /// <summary>
         /// Returns a constraint that tests whether the
@@ -439,9 +441,9 @@ namespace TCLite.Framework.Constraints
             return (GreaterThanOrEqualConstraint<T>)this.Append(new GreaterThanOrEqualConstraint<T>(expected));
         }
 
-        #endregion
+#endregion
 
-        #region LessThan
+#region LessThan
 
         /// <summary>
         /// Returns a constraint that tests whether the
@@ -452,9 +454,9 @@ namespace TCLite.Framework.Constraints
             return (LessThanConstraint<T>)Append(new LessThanConstraint<T>(expected));
         }
 
-        #endregion
+#endregion
 
-        #region LessThanOrEqualTo
+#region LessThanOrEqualTo
 
         /// <summary>
         /// Returns a constraint that tests whether the
@@ -474,10 +476,10 @@ namespace TCLite.Framework.Constraints
             return (LessThanOrEqualConstraint<T>)Append(new LessThanOrEqualConstraint<T>(expected));
         }
 
-        #endregion
+#endregion
 
 
-        #region TypeOf
+#region TypeOf
 
         /// <summary>
         /// Returns a constraint that tests whether the actual
@@ -497,9 +499,9 @@ namespace TCLite.Framework.Constraints
             return (ExactTypeConstraint)this.Append(new ExactTypeConstraint(typeof(T)));
         }
 
-        #endregion
+#endregion
 
-        #region InstanceOf
+#region InstanceOf
 
         /// <summary>
         /// Returns a constraint that tests whether the actual value
@@ -519,10 +521,10 @@ namespace TCLite.Framework.Constraints
             return (InstanceOfTypeConstraint)this.Append(new InstanceOfTypeConstraint(typeof(T)));
         }
 
-        #endregion
+#endregion
 
 #if NYI // AssignableFrom, AssignableTo
-        #region AssignableFrom
+#region AssignableFrom
 
         /// <summary>
         /// Returns a constraint that tests whether the actual value
@@ -542,9 +544,9 @@ namespace TCLite.Framework.Constraints
             return (AssignableFromConstraint)this.Append(new AssignableFromConstraint(typeof(T)));
         }
 
-        #endregion
+#endregion
 
-        #region AssignableTo
+#region AssignableTo
 
         /// <summary>
         /// Returns a constraint that tests whether the actual value
@@ -564,9 +566,9 @@ namespace TCLite.Framework.Constraints
             return (AssignableToConstraint)this.Append(new AssignableToConstraint(typeof(T)));
         }
 
-        #endregion
+#endregion
 
-        #region EquivalentTo
+#region EquivalentTo
 
 #if NYI // EquivalentTo
         /// <summary>
@@ -580,9 +582,9 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-        #endregion
+#endregion
 
-        #region SubsetOf
+#region SubsetOf
 
 #if NYI // SubsetOf
         /// <summary>
@@ -595,9 +597,9 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-        #endregion
+#endregion
 
-        #region Ordered
+#region Ordered
 
         /// <summary>
         /// Returns a constraint that tests whether a collection is ordered
@@ -607,9 +609,9 @@ namespace TCLite.Framework.Constraints
             get { return (CollectionOrderedConstraint)this.Append(new CollectionOrderedConstraint()); }
         }
 
-        #endregion
+#endregion
 
-        #region Member
+#region Member
 
 
         /// <summary>
@@ -630,9 +632,9 @@ namespace TCLite.Framework.Constraints
             return (CollectionContainsConstraint)this.Append(new CollectionContainsConstraint(expected));
         }
 
-        #endregion
+#endregion
 
-        #region Contains
+#region Contains
 
         /// <summary>
         /// Returns a new ContainsConstraint. This constraint
@@ -647,9 +649,9 @@ namespace TCLite.Framework.Constraints
             return (ContainsConstraint)this.Append(new ContainsConstraint(expected));
         }
 
-        #endregion
+#endregion
 
-        #region StringContaining
+#region StringContaining
 
         /// <summary>
         /// Returns a constraint that succeeds if the actual
@@ -669,9 +671,9 @@ namespace TCLite.Framework.Constraints
             return (SubstringConstraint)this.Append(new SubstringConstraint(expected));
         }
 
-        #endregion
+#endregion
 
-        #region StartsWith
+#region StartsWith
 
         /// <summary>
         /// Returns a constraint that succeeds if the actual
@@ -691,9 +693,9 @@ namespace TCLite.Framework.Constraints
             return (StartsWithConstraint)this.Append(new StartsWithConstraint(expected));
         }
 
-        #endregion
+#endregion
 
-        #region EndsWith
+#region EndsWith
 
         /// <summary>
         /// Returns a constraint that succeeds if the actual
@@ -713,9 +715,9 @@ namespace TCLite.Framework.Constraints
             return (EndsWithConstraint)this.Append(new EndsWithConstraint(expected));
         }
 
-        #endregion
+#endregion
 
-        #region Matches
+#region Matches
 
         /// <summary>
         /// Returns a constraint that succeeds if the actual
@@ -735,9 +737,9 @@ namespace TCLite.Framework.Constraints
             return (RegexConstraint)this.Append(new RegexConstraint(pattern));
         }
 
-        #endregion
+#endregion
 
-        #region SamePath
+#region SamePath
 
 #if NYI // SamePath
         /// <summary>
@@ -750,9 +752,9 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-        #endregion
+#endregion
 
-        #region SubPath
+#region SubPath
 
 #if NYI // SubPath
         /// <summary>
@@ -765,9 +767,9 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-        #endregion
+#endregion
 
-        #region SamePathOrUnder
+#region SamePathOrUnder
 
 #if NYI // SamePathOrUnder
         /// <summary>
@@ -780,9 +782,9 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-        #endregion
+#endregion
 
-        #region InRange
+#region InRange
 
         /// <summary>
         /// Returns a constraint that tests whether the actual value falls 
@@ -793,7 +795,7 @@ namespace TCLite.Framework.Constraints
             return (RangeConstraint<T>)this.Append(new RangeConstraint<T>(from, to));
         }
 
-        #endregion
+#endregion
 #endif
     }
 }

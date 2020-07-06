@@ -27,7 +27,7 @@ namespace TCLite.Framework
 
         #endregion
 
-#if NYI // All, Some, None, Exactly, Property, Length, Count, Message, InnerException, Attribute
+#if NYI // All
         #region All
 
         /// <summary>
@@ -41,21 +41,27 @@ namespace TCLite.Framework
         }
 
         #endregion
+#endif
 
-        #region Some
+        #region Some, Member
 
         /// <summary>
         /// Returns a ConstraintExpression, which will apply
         /// the following constraint to all members of a collection,
         /// succeeding if at least one of them succeeds.
         /// </summary>
-        public static ConstraintExpression Some
-        {
-            get { return new ConstraintExpression().Some; }
-        }
+        public static ConstraintExpression Some => new ConstraintExpression().Some;
+
+        /// <summary>
+        /// Returns a ConstraintExpression, which will apply
+        /// the following constraint to all members of a collection,
+        /// succeeding if at least one of them succeeds.
+        /// </summary>
+        public static ConstraintExpression Member => new ConstraintExpression().Some;
 
         #endregion
 
+#if NYI // None, Exactly, Property, Length, Count, Message, InnerException, Attribute
         #region None
 
         /// <summary>
@@ -172,19 +178,5 @@ namespace TCLite.Framework
 
         #endregion
 #endif
-
-        #region Member
-
-        /// <summary>
-        /// Returns a new CollectionContainsConstraint checking for the
-        /// presence of a particular object in the collection.
-        /// </summary>
-        public static CollectionContainsConstraint Member(object expected)
-        {
-            return new CollectionContainsConstraint(expected);
-        }
-
-        #endregion
-
     }
 }

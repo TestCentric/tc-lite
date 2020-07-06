@@ -66,7 +66,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         public class ConstraintStack
         {
-            private Stack<Constraint> _stack = new Stack<Constraint>();
+            private Stack<IConstraint> _stack = new Stack<IConstraint>();
 
             private ConstraintBuilder _builder;
 
@@ -89,7 +89,7 @@ namespace TCLite.Framework.Constraints
             /// Gets the topmost constraint without modifying the stack.
             /// </summary>
             /// <value>The topmost constraint</value>
-            public Constraint Top => _stack.Peek();
+            public IConstraint Top => _stack.Peek();
 
             /// <summary>
             /// Pushes the specified constraint. As a side effect,
@@ -97,7 +97,7 @@ namespace TCLite.Framework.Constraints
             /// ConstraintBuilder owning this stack.
             /// </summary>
             /// <param name="constraint">The constraint.</param>
-            public void Push(Constraint constraint)
+            public void Push(IConstraint constraint)
             {
                 _stack.Push(constraint);
                 constraint.Builder = _builder;
@@ -109,9 +109,9 @@ namespace TCLite.Framework.Constraints
             /// field is set to null.
             /// </summary>
             /// <returns></returns>
-            public Constraint Pop()
+            public IConstraint Pop()
             {
-                Constraint constraint = _stack.Pop();
+                IConstraint constraint = _stack.Pop();
                 constraint.Builder = null;
                 return constraint;
             }
@@ -224,7 +224,7 @@ namespace TCLite.Framework.Constraints
         /// is not currently in a resolvable state, an exception is thrown.
         /// </summary>
         /// <returns>The resolved constraint</returns>
-        public Constraint Resolve()
+        public IConstraint Resolve()
         {
             if (!IsResolvable)
                 throw new InvalidOperationException("A partial expression may not be resolved");

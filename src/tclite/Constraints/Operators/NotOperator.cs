@@ -23,7 +23,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// Returns a NotConstraint applied to its argument.
         /// </summary>
-        public override Constraint ApplyPrefix(Constraint constraint)
+        public override IConstraint ApplyPrefix(IConstraint constraint)
         {
             return new NotConstraint(constraint);
         }
