@@ -74,70 +74,6 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-        #region Not
-
-        /// <summary>
-        /// Returns a ConstraintExpression that negates any
-        /// following constraint.
-        /// </summary>
-        public ConstraintExpression Not
-        {
-            get { return this.Append(new NotOperator()); }
-        }
-
-        /// <summary>
-        /// Returns a ConstraintExpression that negates any
-        /// following constraint.
-        /// </summary>
-        public ConstraintExpression No
-        {
-            get { return this.Append(new NotOperator()); }
-        }
-
-        #endregion
-
-        #region All
-
-        /// <summary>
-        /// Returns a ConstraintExpression, which will apply
-        /// the following constraint to all members of a collection,
-        /// succeeding if all of them succeed.
-        /// </summary>
-        public ConstraintExpression All
-        {
-            get { return this.Append(new AllOperator()); }
-        }
-
-        #endregion
-
-        #region Some
-
-        /// <summary>
-        /// Returns a ConstraintExpression, which will apply
-        /// the following constraint to all members of a collection,
-        /// succeeding if at least one of them succeeds.
-        /// </summary>
-        public ConstraintExpression Some
-        {
-            get { return this.Append(new SomeOperator()); }
-        }
-
-#endregion
-
-#region None
-
-        /// <summary>
-        /// Returns a ConstraintExpression, which will apply
-        /// the following constraint to all members of a collection,
-        /// succeeding if all of them fail.
-        /// </summary>
-        public ConstraintExpression None
-        {
-            get { return this.Append(new NoneOperator()); }
-        }
-
-        #endregion
-
 #if NYI // Exactly, Property, Length, Count, Message, InnerException, With, Attribute, Matches
         #region Exactly(n)
 		
@@ -276,42 +212,6 @@ namespace TCLite.Framework.Constraints
         #endregion
 #endif
 
-        #region Null
-
-        /// <summary>
-        /// Returns a constraint that tests for null
-        /// </summary>
-        public NullConstraint Null
-        {
-            get { return (NullConstraint)this.Append(new NullConstraint()); }
-        }
-
-#endregion
-
-#region True
-
-        /// <summary>
-        /// Returns a constraint that tests for True
-        /// </summary>
-        public TrueConstraint True
-        {
-            get { return (TrueConstraint)this.Append(new TrueConstraint()); }
-        }
-
-#endregion
-
-#region False
-
-        /// <summary>
-        /// Returns a constraint that tests for False
-        /// </summary>
-        public FalseConstraint False
-        {
-            get { return (FalseConstraint)this.Append(new FalseConstraint()); }
-        }
-
-#endregion
-
 #if NYI // Positive, Negative
 #region Positive
  
@@ -337,18 +237,6 @@ namespace TCLite.Framework.Constraints
  
 #endregion
 #endif
-
-#region NaN
-
-        /// <summary>
-        /// Returns a constraint that tests for NaN
-        /// </summary>
-        public NaNConstraint NaN
-        {
-            get { return (NaNConstraint)this.Append(new NaNConstraint()); }
-        }
-
-#endregion
 
 #if NYI // Unique, BinarySerializable, XmlSerializable
 #region Unique
@@ -388,138 +276,6 @@ namespace TCLite.Framework.Constraints
 
 #endregion
 #endif
-
-#region EqualTo
-
-
-#endregion
-
-#region SameAs
-
-        /// <summary>
-        /// Returns a constraint that tests that two references are the same object
-        /// </summary>
-        public SameAsConstraint SameAs(object expected)
-        {
-            return (SameAsConstraint)Append(new SameAsConstraint(expected));
-        }
-
-#endregion
-
-#region GreaterThan
-
-        /// <summary>
-        /// Returns a constraint that tests whether the
-        /// actual value is greater than the suppled argument
-        /// </summary>
-        public GreaterThanConstraint<T> GreaterThan<T>(T expected)
-        {
-            return (GreaterThanConstraint<T>)Append(new GreaterThanConstraint<T>(expected));
-        }
-
-#endregion
-
-#region GreaterThanOrEqualTo
-
-        /// <summary>
-        /// Returns a constraint that tests whether the
-        /// actual value is greater than or equal to the suppled argument
-        /// </summary>
-        public GreaterThanOrEqualConstraint<T> GreaterThanOrEqualTo<T>(T expected)
-        {
-            return (GreaterThanOrEqualConstraint<T>)this.Append(new GreaterThanOrEqualConstraint<T>(expected));
-        }
-
-        /// <summary>
-        /// Returns a constraint that tests whether the
-        /// actual value is greater than or equal to the suppled argument
-        /// </summary>
-        public GreaterThanOrEqualConstraint<T> AtLeast<T>(T expected)
-        {
-            return (GreaterThanOrEqualConstraint<T>)this.Append(new GreaterThanOrEqualConstraint<T>(expected));
-        }
-
-#endregion
-
-#region LessThan
-
-        /// <summary>
-        /// Returns a constraint that tests whether the
-        /// actual value is less than the suppled argument
-        /// </summary>
-        public LessThanConstraint<T> LessThan<T>(T expected)
-        {
-            return (LessThanConstraint<T>)Append(new LessThanConstraint<T>(expected));
-        }
-
-#endregion
-
-#region LessThanOrEqualTo
-
-        /// <summary>
-        /// Returns a constraint that tests whether the
-        /// actual value is less than or equal to the suppled argument
-        /// </summary>
-        public LessThanOrEqualConstraint<T> LessThanOrEqualTo<T>(T expected)
-        {
-            return (LessThanOrEqualConstraint<T>)Append(new LessThanOrEqualConstraint<T>(expected));
-        }
-
-        /// <summary>
-        /// Returns a constraint that tests whether the
-        /// actual value is less than or equal to the suppled argument
-        /// </summary>
-        public LessThanOrEqualConstraint<T> AtMost<T>(T expected)
-        {
-            return (LessThanOrEqualConstraint<T>)Append(new LessThanOrEqualConstraint<T>(expected));
-        }
-
-#endregion
-
-
-#region TypeOf
-
-        /// <summary>
-        /// Returns a constraint that tests whether the actual
-        /// value is of the exact type supplied as an argument.
-        /// </summary>
-        public ExactTypeConstraint TypeOf(Type expectedType)
-        {
-            return (ExactTypeConstraint)this.Append(new ExactTypeConstraint(expectedType));
-        }
-
-        /// <summary>
-        /// Returns a constraint that tests whether the actual
-        /// value is of the exact type supplied as an argument.
-        /// </summary>
-        public ExactTypeConstraint TypeOf<T>()
-        {
-            return (ExactTypeConstraint)this.Append(new ExactTypeConstraint(typeof(T)));
-        }
-
-#endregion
-
-#region InstanceOf
-
-        /// <summary>
-        /// Returns a constraint that tests whether the actual value
-        /// is of the type supplied as an argument or a derived type.
-        /// </summary>
-        public InstanceOfTypeConstraint InstanceOf(Type expectedType)
-        {
-            return (InstanceOfTypeConstraint)this.Append(new InstanceOfTypeConstraint(expectedType));
-        }
-
-        /// <summary>
-        /// Returns a constraint that tests whether the actual value
-        /// is of the type supplied as an argument or a derived type.
-        /// </summary>
-        public InstanceOfTypeConstraint InstanceOf<T>()
-        {
-            return (InstanceOfTypeConstraint)this.Append(new InstanceOfTypeConstraint(typeof(T)));
-        }
-
-#endregion
 
 #if NYI // AssignableFrom, AssignableTo
 #region AssignableFrom

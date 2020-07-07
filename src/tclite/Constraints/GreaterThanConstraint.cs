@@ -7,6 +7,18 @@ using System;
 
 namespace TCLite.Framework.Constraints
 {
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests whether the
+        /// actual value is greater than the suppled argument
+        /// </summary>
+        public GreaterThanConstraint<T> GreaterThan<T>(T expected)
+        {
+            return (GreaterThanConstraint<T>)Append(new GreaterThanConstraint<T>(expected));
+        }
+    }
+    
     /// <summary>
     /// Tests whether a value is greater than the value supplied to its constructor
     /// </summary>

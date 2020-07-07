@@ -67,9 +67,6 @@ namespace TCLite.Framework.Constraints
 
         public bool AreEqual<TExpected,TActual>(TExpected expected, TActual actual, ref Tolerance tolerance)
         {
-            if (Numerics.IsNumericType(expected) && Numerics.IsNumericType(actual))
-                return Numerics.AreEqual(expected, actual, ref tolerance);
-
             FailurePoints = new FailurePointList();
             _recursionDetector = new RecursionDetector();
 
@@ -94,6 +91,9 @@ namespace TCLite.Framework.Constraints
             EqualityAdapter externalComparer = GetExternalComparer(expected, actual);
             if (externalComparer != null)
                 return externalComparer.AreEqual(expected, actual);
+
+            if (Numerics.IsNumericType(expected) && Numerics.IsNumericType(actual))
+                return Numerics.AreEqual(expected, actual, ref tolerance);
 
             if (expected is Array && actual is Array && !CompareAsCollection)
                 return ArraysEqual(expected as Array, actual as Array, ref tolerance);

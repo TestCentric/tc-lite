@@ -15,7 +15,7 @@ namespace TCLite.Framework.Constraints
     /// </summary>
     /// <remarks>
     /// This file contains Modifers that apply to all constraints as
-    /// well as Binary Operators.
+    /// well as the two Binary Operators.
     /// </remarks>
     public abstract partial class Constraint : IConstraint, IResolveConstraint
     {
@@ -73,6 +73,7 @@ namespace TCLite.Framework.Constraints
         #endregion
 
         #region After Modifier
+
 
 #if NYI // DelayedConstraint
         /// <summary>

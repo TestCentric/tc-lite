@@ -5,6 +5,17 @@
 
 namespace TCLite.Framework.Constraints
 {
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests that two references are the same object
+        /// </summary>
+        public SameAsConstraint SameAs(object expected)
+        {
+            return (SameAsConstraint)Append(new SameAsConstraint(expected));
+        }
+    }
+
     /// <summary>
     /// SameAsConstraint tests whether an object is identical to
     /// the object passed to its constructor

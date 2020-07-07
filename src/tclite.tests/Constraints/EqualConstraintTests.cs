@@ -373,7 +373,6 @@ namespace TCLite.Framework.Constraints
                 () => Assert.That(100m, Is.EqualTo(100m).Within(2).Ulps));
         }
 
-#if NYI // Using
         [Test]
         public void UsesProvidedIComparer()
         {
@@ -434,7 +433,7 @@ namespace TCLite.Framework.Constraints
         [Test]
         public void UsesProvidedLambda_StringArgs()
         {
-            Assert.That("hello", Is.EqualTo("HELLO").Using<string>((x, y) => StringUtil.Compare(x, y, true)));
+            Assert.That("hello", Is.EqualTo("HELLO").Using<string>((x, y) => x.ToLower().CompareTo(y.ToLower())));
         }
 
         [Test]
@@ -447,7 +446,7 @@ namespace TCLite.Framework.Constraints
             var list22 = new List<List<int>>() { list2 };
             var comparer = new IntListEqualComparer();
 
-            Assert.That(list11, new CollectionEquivalentConstraint(list22).Using(comparer));
+            Assert.That(list11, Is.EqualTo(list22).Using(comparer));
         }
 
         public class IntListEqualComparer : IEqualityComparer<List<int>>
@@ -463,7 +462,6 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-#if !NETCF_2_0
         [Test]
         public void UsesProvidedArrayComparer()
         {
@@ -474,7 +472,8 @@ namespace TCLite.Framework.Constraints
             var list22 = new List<int[]>() { array2 };
             var comparer = new IntArrayEqualComparer();
 
-            Assert.That(list11, new CollectionEquivalentConstraint(list22).Using(comparer));
+            Assert.That(list11, Is.EqualTo(list22).Using(comparer));
+            //Assert.That(list11, new CollectionEquivalentConstraint(list22).Using(comparer));
         }
 
         public class IntArrayEqualComparer : IEqualityComparer<int[]>
@@ -489,7 +488,5 @@ namespace TCLite.Framework.Constraints
                 return obj.Length.GetHashCode();
             }
         }
-#endif
-#endif
     }
 }

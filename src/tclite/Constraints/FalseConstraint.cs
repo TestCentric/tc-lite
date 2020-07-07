@@ -5,6 +5,17 @@
 
 namespace TCLite.Framework.Constraints
 {
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests for False
+        /// </summary>
+        public FalseConstraint False
+        {
+            get { return (FalseConstraint)this.Append(new FalseConstraint()); }
+        }
+    }
+
     /// <summary>
     /// FalseConstraint tests that the actual value is false
     /// </summary>

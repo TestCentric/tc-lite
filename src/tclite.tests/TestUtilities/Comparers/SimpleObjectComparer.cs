@@ -9,11 +9,8 @@ namespace TCLite.TestUtilities
         public int Compare(object x, object y)
         {
             Called = true;
-#if SILVERLIGHT
             return System.Collections.Generic.Comparer<object>.Default.Compare(x, y);
-#else
-            return System.Collections.Comparer.Default.Compare(x, y);
-#endif
+            //return System.Collections.Comparer.Default.Compare(x, y);
         }
     }
 }

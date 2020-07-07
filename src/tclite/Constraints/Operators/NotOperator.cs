@@ -5,6 +5,27 @@
 
 namespace TCLite.Framework.Constraints
 {
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a ConstraintExpression that negates any
+        /// following constraint.
+        /// </summary>
+        public ConstraintExpression Not
+        {
+            get { return this.Append(new NotOperator()); }
+        }
+
+        /// <summary>
+        /// Returns a ConstraintExpression that negates any
+        /// following constraint.
+        /// </summary>
+        public ConstraintExpression No
+        {
+            get { return this.Append(new NotOperator()); }
+        }
+    }
+
     /// <summary>
     /// Negates the test of the constraint it wraps.
     /// </summary>

@@ -61,7 +61,6 @@ namespace TCLite.Framework
 
         #endregion
 
-#if NYI // None, Exactly, Property, Length, Count, Message, InnerException, Attribute
         #region None
 
         /// <summary>
@@ -76,6 +75,7 @@ namespace TCLite.Framework
 
         #endregion
 
+#if NYI // Exactly, Property, Length, Count, Message, InnerException, Attribute
         #region Exactly(n)
  
         /// <summary>

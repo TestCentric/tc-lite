@@ -5,6 +5,17 @@
 
 namespace TCLite.Framework.Constraints
 {
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests for null
+        /// </summary>
+        public NullConstraint Null
+        {
+            get { return (NullConstraint)this.Append(new NullConstraint()); }
+        }
+    }
+
     /// <summary>
     /// NullConstraint tests that the actual value is null
     /// </summary>

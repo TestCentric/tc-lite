@@ -52,9 +52,9 @@ namespace TCLite.Framework.Constraints
         {
             IResolveConstraint constraint = Is.Not.EqualTo(5);
             Assert.That(constraint.Resolve().ToString(), Is.EqualTo("<not <equal 5>>"));
-#if NYI // All, Property
             constraint = Is.Not.All.EqualTo(5);
             Assert.That(constraint.Resolve().ToString(), Is.EqualTo("<not <all <equal 5>>>"));
+#if NYI // Property
             constraint = Has.Property("X").EqualTo(5);
             Assert.That(constraint.Resolve().ToString(), Is.EqualTo("<property X <equal 5>>"));
 #endif

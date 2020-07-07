@@ -5,6 +5,19 @@
 
 namespace TCLite.Framework.Constraints
 {
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a ConstraintExpression, which will apply
+        /// the following constraint to all members of a collection,
+        /// succeeding if all of them fail.
+        /// </summary>
+        public ConstraintExpression None
+        {
+            get { return this.Append(new NoneOperator()); }
+        }
+    }
+
     /// <summary>
     /// Represents a constraint that succeeds if none of the 
     /// members of a collection match a base constraint.

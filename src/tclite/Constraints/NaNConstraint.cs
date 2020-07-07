@@ -5,6 +5,17 @@
 
 namespace TCLite.Framework.Constraints
 {
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests for NaN
+        /// </summary>
+        public NaNConstraint NaN
+        {
+            get { return (NaNConstraint)this.Append(new NaNConstraint()); }
+        }
+    }
+
     /// <summary>
     /// NaNConstraint tests that the actual value is a double or float NaN
     /// </summary>

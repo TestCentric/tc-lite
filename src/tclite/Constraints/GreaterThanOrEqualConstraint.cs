@@ -7,6 +7,27 @@ using System;
 
 namespace TCLite.Framework.Constraints
 {
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests whether the
+        /// actual value is greater than or equal to the suppled argument
+        /// </summary>
+        public GreaterThanOrEqualConstraint<T> GreaterThanOrEqualTo<T>(T expected)
+        {
+            return (GreaterThanOrEqualConstraint<T>)this.Append(new GreaterThanOrEqualConstraint<T>(expected));
+        }
+
+        /// <summary>
+        /// Returns a constraint that tests whether the
+        /// actual value is greater than or equal to the suppled argument
+        /// </summary>
+        public GreaterThanOrEqualConstraint<T> AtLeast<T>(T expected)
+        {
+            return (GreaterThanOrEqualConstraint<T>)this.Append(new GreaterThanOrEqualConstraint<T>(expected));
+        }
+    }
+
     /// <summary>
     /// Tests whether a value is greater than or equal to the value supplied to its constructor
     /// </summary>
