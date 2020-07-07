@@ -5,27 +5,6 @@
 
 namespace TCLite.Framework.Constraints
 {
-    public partial class ConstraintExpression
-    {
-        /// <summary>
-        /// Returns a ConstraintExpression that negates any
-        /// following constraint.
-        /// </summary>
-        public ConstraintExpression Not
-        {
-            get { return this.Append(new NotOperator()); }
-        }
-
-        /// <summary>
-        /// Returns a ConstraintExpression that negates any
-        /// following constraint.
-        /// </summary>
-        public ConstraintExpression No
-        {
-            get { return this.Append(new NotOperator()); }
-        }
-    }
-
     /// <summary>
     /// Negates the test of the constraint it wraps.
     /// </summary>
@@ -47,6 +26,44 @@ namespace TCLite.Framework.Constraints
         public override IConstraint ApplyPrefix(IConstraint constraint)
         {
             return new NotConstraint(constraint);
+        }
+    }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a ConstraintExpression that negates any
+        /// following constraint.
+        /// </summary>
+        public ConstraintExpression Not
+        {
+            get { return this.Append(new NotOperator()); }
+        }
+
+        /// <summary>
+        /// Returns a ConstraintExpression that negates any
+        /// following constraint.
+        /// </summary>
+        public ConstraintExpression No
+        {
+            get { return this.Append(new NotOperator()); }
+        }
+    }
+}
+
+namespace TCLite.Framework
+{
+    using Constraints;
+
+    public partial class Has
+    {
+        /// <summary>
+        /// Returns a ConstraintExpression that negates any
+        /// following constraint.
+        /// </summary>
+        public static ConstraintExpression No
+        {
+            get { return new ConstraintExpression().Not; }
         }
     }
 }

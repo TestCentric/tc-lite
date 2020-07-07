@@ -16,6 +16,12 @@ namespace TCLite.Framework.Constraints
     /// recognized. Once an actual Constraint is appended, the expression
     /// returns a resolvable Constraint.
     /// </summary>
+    /// <remarks>
+    /// This is a partial class, with the individual syntactic elements
+    /// like "Not", "All" or "EqualTo" distributed in individual files
+    /// for the constraint or operator they generate. For example, "Not"
+    /// is defined in NotOperator.cs and "EqualTo" in EqualConstraint.cs.
+    /// </remarks>
     public partial class ConstraintExpression
     {
         /// <summary>
@@ -74,9 +80,9 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-#if NYI // Exactly, Property, Length, Count, Message, InnerException, With, Attribute, Matches
-        #region Exactly(n)
-		
+        // TODO: Move these to the relevant files once those files are created.
+
+#if NYI // Exactly
         /// <summary>
         /// Returns a ConstraintExpression, which will apply
         /// the following constraint to all members of a collection,
@@ -86,11 +92,9 @@ namespace TCLite.Framework.Constraints
         {
             return this.Append(new ExactCountOperator(expectedCount));
         }
-		
-        #endregion
-		
-        #region Property
+#endif
 
+#if NYI // Property
         /// <summary>
         /// Returns a new PropertyConstraintExpression, which will either
         /// test for the existence of the named property on the object
@@ -100,11 +104,9 @@ namespace TCLite.Framework.Constraints
         {
             return this.Append(new PropOperator(name));
         }
+#endif
 
-        #endregion
-
-        #region Length
-
+#if NYI // Length
         /// <summary>
         /// Returns a new ConstraintExpression, which will apply the following
         /// constraint to the Length property of the object being tested.
@@ -113,11 +115,9 @@ namespace TCLite.Framework.Constraints
         {
             get { return Property("Length"); }
         }
+#endif
 
-        #endregion
-
-        #region Count
-
+#if NYI // Count
         /// <summary>
         /// Returns a new ConstraintExpression, which will apply the following
         /// constraint to the Count property of the object being tested.
@@ -126,11 +126,9 @@ namespace TCLite.Framework.Constraints
         {
             get { return Property("Count"); }
         }
+#endif
 
-        #endregion
-
-        #region Message
-
+#if NYI // Message
         /// <summary>
         /// Returns a new ConstraintExpression, which will apply the following
         /// constraint to the Message property of the object being tested.
@@ -139,11 +137,9 @@ namespace TCLite.Framework.Constraints
         {
             get { return Property("Message"); }
         }
+#endif
 
-        #endregion
-
-        #region InnerException
-
+#if NYI // InnerException
         /// <summary>
         /// Returns a new ConstraintExpression, which will apply the following
         /// constraint to the InnerException property of the object being tested.
@@ -152,11 +148,9 @@ namespace TCLite.Framework.Constraints
         {
             get { return Property("InnerException"); }
         }
+#endif
 
-        #endregion
-
-        #region Attribute
-
+#if NYI // Attribute
         /// <summary>
         /// Returns a new AttributeConstraint checking for the
         /// presence of a particular attribute on an object.
@@ -174,11 +168,9 @@ namespace TCLite.Framework.Constraints
         {
             return Attribute(typeof(T));
         }
+#endif
 
-        #endregion
-
-        #region With
-
+#if NYI // With
         /// <summary>
         /// With is currently a NOP - reserved for future use.
         /// </summary>
@@ -186,11 +178,9 @@ namespace TCLite.Framework.Constraints
         {
             get { return this.Append(new WithOperator()); }
         }
+#endif
 
-        #endregion
-
-        #region Matches
-
+#if NYI // Matches
         /// <summary>
         /// Returns the constraint provided as an argument - used to allow custom
         /// custom constraints to easily participate in the syntax.
@@ -208,13 +198,9 @@ namespace TCLite.Framework.Constraints
         {
             return this.Append(new PredicateConstraint<T>(predicate));
         }
-
-        #endregion
 #endif
 
-#if NYI // Positive, Negative
-#region Positive
- 
+#if NYI // Positive
         /// <summary>
         /// Returns a constraint that tests for a positive value
         /// </summary>
@@ -222,11 +208,9 @@ namespace TCLite.Framework.Constraints
         {
             get { return (GreaterThanConstraint)this.Append(new GreaterThanConstraint(0)); }
         }
- 
-#endregion
- 
-#region Negative
- 
+#endif 
+
+#if NYI // Negative 
         /// <summary>
         /// Returns a constraint that tests for a negative value
         /// </summary>
@@ -234,13 +218,9 @@ namespace TCLite.Framework.Constraints
         {
             get { return (LessThanConstraint)this.Append(new LessThanConstraint(0)); }
         }
- 
-#endregion
 #endif
 
-#if NYI // Unique, BinarySerializable, XmlSerializable
-#region Unique
-
+#if NYI // Unique
         /// <summary>
         /// Returns a constraint that tests whether a collection 
         /// contains all unique items.
@@ -249,11 +229,9 @@ namespace TCLite.Framework.Constraints
         {
             get { return (UniqueItemsConstraint)this.Append(new UniqueItemsConstraint()); }
         }
+#endif
 
-#endregion
-
-#region BinarySerializable
-
+#if NYI //BinarySerializable
         /// <summary>
         /// Returns a constraint that tests whether an object graph is serializable in binary format.
         /// </summary>
@@ -261,11 +239,9 @@ namespace TCLite.Framework.Constraints
         {
             get { return (BinarySerializableConstraint)this.Append(new BinarySerializableConstraint()); }
         }
+#endif
 
-#endregion
-
-#region XmlSerializable
-
+#if NYI // XmlSerializable
         /// <summary>
         /// Returns a constraint that tests whether an object graph is serializable in xml format.
         /// </summary>
@@ -273,13 +249,9 @@ namespace TCLite.Framework.Constraints
         {
             get { return (XmlSerializableConstraint)this.Append(new XmlSerializableConstraint()); }
         }
-
-#endregion
 #endif
 
-#if NYI // AssignableFrom, AssignableTo
-#region AssignableFrom
-
+#if NYI // AssignableFrom
         /// <summary>
         /// Returns a constraint that tests whether the actual value
         /// is assignable from the type supplied as an argument.
@@ -297,11 +269,9 @@ namespace TCLite.Framework.Constraints
         {
             return (AssignableFromConstraint)this.Append(new AssignableFromConstraint(typeof(T)));
         }
+#endif
 
-#endregion
-
-#region AssignableTo
-
+#if NYI // AssignableTo
         /// <summary>
         /// Returns a constraint that tests whether the actual value
         /// is assignable from the type supplied as an argument.
@@ -319,10 +289,7 @@ namespace TCLite.Framework.Constraints
         {
             return (AssignableToConstraint)this.Append(new AssignableToConstraint(typeof(T)));
         }
-
-#endregion
-
-#region EquivalentTo
+#endif
 
 #if NYI // EquivalentTo
         /// <summary>
@@ -336,10 +303,6 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-#endregion
-
-#region SubsetOf
-
 #if NYI // SubsetOf
         /// <summary>
         /// Returns a constraint that tests whether the actual value
@@ -351,10 +314,7 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-#endregion
-
-#region Ordered
-
+#if NYI // Ordered
         /// <summary>
         /// Returns a constraint that tests whether a collection is ordered
         /// </summary>
@@ -362,12 +322,9 @@ namespace TCLite.Framework.Constraints
         {
             get { return (CollectionOrderedConstraint)this.Append(new CollectionOrderedConstraint()); }
         }
+#endif
 
-#endregion
-
-#region Member
-
-
+#if NYI // Member
         /// <summary>
         /// Returns a new CollectionContainsConstraint checking for the
         /// presence of a particular object in the collection.
@@ -385,11 +342,9 @@ namespace TCLite.Framework.Constraints
         {
             return (CollectionContainsConstraint)this.Append(new CollectionContainsConstraint(expected));
         }
+#endif
 
-#endregion
-
-#region Contains
-
+#if NYI // Contains
         /// <summary>
         /// Returns a new ContainsConstraint. This constraint
         /// will, in turn, make use of the appropriate second-level
@@ -402,11 +357,9 @@ namespace TCLite.Framework.Constraints
         {
             return (ContainsConstraint)this.Append(new ContainsConstraint(expected));
         }
+#endif
 
-#endregion
-
-#region StringContaining
-
+#if NYI // StringContaining
         /// <summary>
         /// Returns a constraint that succeeds if the actual
         /// value contains the substring supplied as an argument.
@@ -424,11 +377,9 @@ namespace TCLite.Framework.Constraints
         {
             return (SubstringConstraint)this.Append(new SubstringConstraint(expected));
         }
+#endif
 
-#endregion
-
-#region StartsWith
-
+#if NYI // StartsWith
         /// <summary>
         /// Returns a constraint that succeeds if the actual
         /// value starts with the substring supplied as an argument.
@@ -446,11 +397,9 @@ namespace TCLite.Framework.Constraints
         {
             return (StartsWithConstraint)this.Append(new StartsWithConstraint(expected));
         }
+#endif
 
-#endregion
-
-#region EndsWith
-
+#if NYI // EndsWith
         /// <summary>
         /// Returns a constraint that succeeds if the actual
         /// value ends with the substring supplied as an argument.
@@ -468,11 +417,9 @@ namespace TCLite.Framework.Constraints
         {
             return (EndsWithConstraint)this.Append(new EndsWithConstraint(expected));
         }
+#endif
 
-#endregion
-
-#region Matches
-
+#if NYI // Matches
         /// <summary>
         /// Returns a constraint that succeeds if the actual
         /// value matches the regular expression supplied as an argument.
@@ -490,10 +437,7 @@ namespace TCLite.Framework.Constraints
         {
             return (RegexConstraint)this.Append(new RegexConstraint(pattern));
         }
-
-#endregion
-
-#region SamePath
+#endif
 
 #if NYI // SamePath
         /// <summary>
@@ -506,10 +450,6 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-#endregion
-
-#region SubPath
-
 #if NYI // SubPath
         /// <summary>
         /// Returns a constraint that tests whether the path provided 
@@ -520,10 +460,6 @@ namespace TCLite.Framework.Constraints
             return (SubPathConstraint)this.Append(new SubPathConstraint(expected));
         }
 #endif
-
-#endregion
-
-#region SamePathOrUnder
 
 #if NYI // SamePathOrUnder
         /// <summary>
@@ -536,10 +472,7 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-#endregion
-
-#region InRange
-
+#if NYI // InRange
         /// <summary>
         /// Returns a constraint that tests whether the actual value falls 
         /// within a specified range.
@@ -548,8 +481,6 @@ namespace TCLite.Framework.Constraints
         {
             return (RangeConstraint<T>)this.Append(new RangeConstraint<T>(from, to));
         }
-
-#endregion
 #endif
     }
 }

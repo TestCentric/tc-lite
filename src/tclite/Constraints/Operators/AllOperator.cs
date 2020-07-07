@@ -5,19 +5,6 @@
 
 namespace TCLite.Framework.Constraints
 {
-    public partial class ConstraintExpression
-    {
-        /// <summary>
-        /// Returns a ConstraintExpression, which will apply
-        /// the following constraint to all members of a collection,
-        /// succeeding if all of them succeed.
-        /// </summary>
-        public ConstraintExpression All
-        {
-            get { return this.Append(new AllOperator()); }
-        }
-    }
-
     /// <summary>
     /// Represents a constraint that succeeds if all the 
     /// members of a collection match a base constraint.
@@ -32,6 +19,37 @@ namespace TCLite.Framework.Constraints
         public override IConstraint ApplyPrefix(IConstraint constraint)
         {
             return new AllItemsConstraint(constraint);
+        }
+    }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a ConstraintExpression, which will apply
+        /// the following constraint to all members of a collection,
+        /// succeeding if all of them succeed.
+        /// </summary>
+        public ConstraintExpression All
+        {
+            get { return this.Append(new AllOperator()); }
+        }
+    }
+}
+
+namespace TCLite.Framework
+{
+    using Constraints;
+    
+    public partial class Has
+    {
+        /// <summary>
+        /// Returns a ConstraintExpression, which will apply
+        /// the following constraint to all members of a collection,
+        /// succeeding if all of them succeed.
+        /// </summary>
+        public static ConstraintExpression All
+        {
+            get { return new ConstraintExpression().All; }
         }
     }
 }

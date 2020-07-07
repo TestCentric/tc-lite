@@ -5,19 +5,6 @@
 
 namespace TCLite.Framework.Constraints
 {
-    public partial class ConstraintExpression
-    {
-        /// <summary>
-        /// Returns a ConstraintExpression, which will apply
-        /// the following constraint to all members of a collection,
-        /// succeeding if at least one of them succeeds.
-        /// </summary>
-        public ConstraintExpression Some
-        {
-            get { return this.Append(new SomeOperator()); }
-        }
-    }
-
     /// <summary>
     /// Represents a constraint that succeeds if any of the 
     /// members of a collection match a base constraint.
@@ -33,5 +20,49 @@ namespace TCLite.Framework.Constraints
         {
             return new SomeItemsConstraint(constraint);
         }
+    }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a ConstraintExpression, which will apply
+        /// the following constraint to all members of a collection,
+        /// succeeding if at least one of them succeeds.
+        /// </summary>
+        public ConstraintExpression Some
+        {
+            get { return this.Append(new SomeOperator()); }
+        }
+    }
+}
+
+namespace TCLite.Framework
+{
+    using Constraints;
+
+    public static partial class Contains
+    {
+        /// <summary>
+        /// Returns a ConstraintExpression, which will apply
+        /// the following constraint to all members of a collection,
+        /// succeeding if at least one of them succeeds.
+        /// </summary>
+        public static ConstraintExpression Item => new ConstraintExpression().Some;
+    }
+    public static partial class Has
+    {
+        /// <summary>
+        /// Returns a ConstraintExpression, which will apply
+        /// the following constraint to all members of a collection,
+        /// succeeding if at least one of them succeeds.
+        /// </summary>
+        public static ConstraintExpression Some => new ConstraintExpression().Some;
+
+        /// <summary>
+        /// Returns a ConstraintExpression, which will apply
+        /// the following constraint to all members of a collection,
+        /// succeeding if at least one of them succeeds.
+        /// </summary>
+        public static ConstraintExpression Member => new ConstraintExpression().Some;
     }
 }

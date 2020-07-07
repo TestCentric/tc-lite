@@ -9,35 +9,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TCLite.Framework
-{
-    using Constraints;
-    
-    public partial class Is
-    {
-        /// <summary>
-        /// Returns a constraint that tests two items for equality
-        /// </summary>
-        public static EqualConstraint<T> EqualTo<T>(T expected)
-        {
-            return new EqualConstraint<T>(expected);
-        }
-    }
-}
-
 namespace TCLite.Framework.Constraints
 {
-    public partial class ConstraintExpression
-    {
-        /// <summary>
-        /// Returns a constraint that tests two items for equality
-        /// </summary>
-        public EqualConstraint<T> EqualTo<T>(T expected)
-        {
-            return (EqualConstraint<T>)Append(new EqualConstraint<T>(expected));
-        }
-    }
-
     /// <summary>
     /// EqualConstraint is able to compare an actual value with the
     /// expected value provided in its constructor. Two objects are 
@@ -341,6 +314,34 @@ namespace TCLite.Framework.Constraints
         protected override ConstraintResult ApplyConstraint<T>(T actual)
         {
             return new EqualConstraintResult<TExpected>(this, actual, _comparer.AreEqual(ExpectedValue, actual, ref _tolerance));
+        }
+    }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests two items for equality
+        /// </summary>
+        public EqualConstraint<T> EqualTo<T>(T expected)
+        {
+            return (EqualConstraint<T>)Append(new EqualConstraint<T>(expected));
+        }
+    }
+
+}
+
+namespace TCLite.Framework
+{
+    using Constraints;
+
+    public partial class Is
+    {
+        /// <summary>
+        /// Returns a constraint that tests two items for equality
+        /// </summary>
+        public static EqualConstraint<T> EqualTo<T>(T expected)
+        {
+            return new EqualConstraint<T>(expected);
         }
     }
 }

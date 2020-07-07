@@ -4,7 +4,23 @@
 // ***********************************************************************
 
 using System;
-using System.Globalization;
+
+namespace TCLite.Framework
+{
+    using Constraints;
+    
+    public static partial class Contains
+    {
+        /// <summary>
+        /// Returns a constraint that succeeds if the actual
+        /// value contains the substring supplied as an argument.
+        /// </summary>
+        public static SubstringConstraint Substring(string expected)
+        {
+            return new SubstringConstraint(expected); ;
+        }
+    }
+}
 
 namespace TCLite.Framework.Constraints
 {
