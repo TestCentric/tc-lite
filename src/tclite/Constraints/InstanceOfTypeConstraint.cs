@@ -23,7 +23,7 @@ namespace TCLite.Framework.Constraints
             DisplayName = "instanceof";
         }
 
-        public override string Description => $"Instance of Type {ExpectedType}";
+        public override string Description => $"instance of <{ExpectedType}>";
 
         /// <summary>
         /// Test whether an object is of the specified type or a derived type

@@ -28,7 +28,6 @@ namespace TCLite.Framework
 
         #endregion
 
-#if NYI // All
         #region All
 
         /// <summary>
@@ -42,7 +41,6 @@ namespace TCLite.Framework
         }
 
         #endregion
-#endif
 
         #region Null
 

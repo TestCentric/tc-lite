@@ -96,7 +96,6 @@ namespace TCLite.Framework.Constraints
 
         #endregion
 
-#if NYI // All
         #region All
 
         /// <summary>
@@ -110,7 +109,6 @@ namespace TCLite.Framework.Constraints
         }
 
         #endregion
-#endif
 
         #region Some
 
@@ -126,7 +124,6 @@ namespace TCLite.Framework.Constraints
 
 #endregion
 
-#if NYI // None, Exactly, Property, Length, Count, Message, InnerException, With, Attribute, Matches
 #region None
 
         /// <summary>
@@ -139,9 +136,10 @@ namespace TCLite.Framework.Constraints
             get { return this.Append(new NoneOperator()); }
         }
 
-#endregion
+        #endregion
 
-#region Exactly(n)
+#if NYI // Exactly, Property, Length, Count, Message, InnerException, With, Attribute, Matches
+        #region Exactly(n)
 		
         /// <summary>
         /// Returns a ConstraintExpression, which will apply
@@ -153,9 +151,9 @@ namespace TCLite.Framework.Constraints
             return this.Append(new ExactCountOperator(expectedCount));
         }
 		
-#endregion
+        #endregion
 		
-#region Property
+        #region Property
 
         /// <summary>
         /// Returns a new PropertyConstraintExpression, which will either
@@ -167,9 +165,9 @@ namespace TCLite.Framework.Constraints
             return this.Append(new PropOperator(name));
         }
 
-#endregion
+        #endregion
 
-#region Length
+        #region Length
 
         /// <summary>
         /// Returns a new ConstraintExpression, which will apply the following
@@ -180,9 +178,9 @@ namespace TCLite.Framework.Constraints
             get { return Property("Length"); }
         }
 
-#endregion
+        #endregion
 
-#region Count
+        #region Count
 
         /// <summary>
         /// Returns a new ConstraintExpression, which will apply the following
@@ -193,9 +191,9 @@ namespace TCLite.Framework.Constraints
             get { return Property("Count"); }
         }
 
-#endregion
+        #endregion
 
-#region Message
+        #region Message
 
         /// <summary>
         /// Returns a new ConstraintExpression, which will apply the following
@@ -206,9 +204,9 @@ namespace TCLite.Framework.Constraints
             get { return Property("Message"); }
         }
 
-#endregion
+        #endregion
 
-#region InnerException
+        #region InnerException
 
         /// <summary>
         /// Returns a new ConstraintExpression, which will apply the following
@@ -219,9 +217,9 @@ namespace TCLite.Framework.Constraints
             get { return Property("InnerException"); }
         }
 
-#endregion
+        #endregion
 
-#region Attribute
+        #region Attribute
 
         /// <summary>
         /// Returns a new AttributeConstraint checking for the
@@ -241,9 +239,9 @@ namespace TCLite.Framework.Constraints
             return Attribute(typeof(T));
         }
 
-#endregion
+        #endregion
 
-#region With
+        #region With
 
         /// <summary>
         /// With is currently a NOP - reserved for future use.
@@ -253,9 +251,9 @@ namespace TCLite.Framework.Constraints
             get { return this.Append(new WithOperator()); }
         }
 
-#endregion
+        #endregion
 
-#region Matches
+        #region Matches
 
         /// <summary>
         /// Returns the constraint provided as an argument - used to allow custom
@@ -275,10 +273,10 @@ namespace TCLite.Framework.Constraints
             return this.Append(new PredicateConstraint<T>(predicate));
         }
 
-#endregion
+        #endregion
 #endif
 
-#region Null
+        #region Null
 
         /// <summary>
         /// Returns a constraint that tests for null
