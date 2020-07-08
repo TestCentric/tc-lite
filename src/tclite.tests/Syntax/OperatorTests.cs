@@ -28,12 +28,11 @@ namespace TCLite.Framework.Syntax
         }
     }
     #endregion
-#if NYI // All, Some, None, Exactly, One
+
     #region All
     public class AllTest : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public AllTest()
         {
             ParseTree = "<all <greaterthan 0>>";
             StaticSyntax = Is.All.GreaterThan(0);
@@ -45,8 +44,7 @@ namespace TCLite.Framework.Syntax
     #region Some
     public class SomeTest : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public SomeTest()
         {
             ParseTree = "<some <equal 3>>";
             StaticSyntax = Has.Some.EqualTo(3);
@@ -54,10 +52,10 @@ namespace TCLite.Framework.Syntax
         }
     }
 
+#if NYI // Some + Binary
     public class SomeTest_BeforeBinaryOperators : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public SomeTest_BeforeBinaryOperators()
         {
             ParseTree = "<some <or <and <greaterthan 0> <lessthan 100>> <equal 999>>>";
             StaticSyntax = Has.Some.GreaterThan(0).And.LessThan(100).Or.EqualTo(999);
@@ -67,8 +65,7 @@ namespace TCLite.Framework.Syntax
 
     public class SomeTest_NestedSome : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public SomeTest_NestedSome()
         {
             ParseTree = "<some <some <lessthan 100>>>";
             StaticSyntax = Has.Some.With.Some.LessThan(100);
@@ -79,21 +76,20 @@ namespace TCLite.Framework.Syntax
 
     public class SomeTest_UseOfAndSome : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public SomeTest_UseOfAndSome()
         {
             ParseTree = "<and <some <greaterthan 0>> <some <lessthan 100>>>";
             StaticSyntax = Has.Some.GreaterThan(0).And.Some.LessThan(100);
             BuilderSyntax = Builder().Some.GreaterThan(0).And.Some.LessThan(100);
         }
     }
+#endif
     #endregion
 
     #region None
     public class NoneTest : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public NoneTest()
         {
             ParseTree = "<none <lessthan 0>>";
             StaticSyntax = Has.None.LessThan(0);
@@ -103,9 +99,9 @@ namespace TCLite.Framework.Syntax
     #endregion
 
     #region Exactly
+#if NYI // Exactly
     public class Exactly_WithoutConstraint : SyntaxTest
     {
-        [SetUp]
         public void SetUp()
         {
             ParseTree = "<exactcount>";
@@ -146,10 +142,11 @@ namespace TCLite.Framework.Syntax
             BuilderSyntax = Builder().Exactly(3).Items.LessThan(0).And.Exactly(3).Items.GreaterThan(10);
         }
     }
+#endif
     #endregion
 
     #region One
-
+#if NYI // One
     public class One_WithoutConstraint : SyntaxTest
     {
         [SetUp]
@@ -193,7 +190,7 @@ namespace TCLite.Framework.Syntax
             BuilderSyntax = Builder().One.Items.LessThan(0).And.One.Items.GreaterThan(10);
         }
     }
-
+#endif
     #endregion
 
     #region And
@@ -207,6 +204,7 @@ namespace TCLite.Framework.Syntax
         }
     }
 
+#if NYI // Complex Constraint Expressions
     public class AndTest_ThreeAndsWithNot : SyntaxTest
     {
         public AndTest_ThreeAndsWithNot()
@@ -216,6 +214,7 @@ namespace TCLite.Framework.Syntax
             BuilderSyntax = Builder().Not.Null.And.Not.LessThan(5).And.Not.GreaterThan(10);
         }
     }
+#endif
     #endregion
 
     #region Or
@@ -241,6 +240,7 @@ namespace TCLite.Framework.Syntax
     #endregion
 
     #region Binary Operator Precedence
+#if NYI // Complex Constraint Expressions
     public class AndIsEvaluatedBeforeFollowingOr : SyntaxTest
     {
         public AndIsEvaluatedBeforeFollowingOr()
@@ -260,6 +260,7 @@ namespace TCLite.Framework.Syntax
             BuilderSyntax = Builder().EqualTo(999).Or.GreaterThan(0).And.LessThan(100);
         }
     }
+#endif
     #endregion
 
     public class OperatorPrecedenceTests
@@ -324,5 +325,4 @@ namespace TCLite.Framework.Syntax
         }
 #endif
     }
-#endif
 }

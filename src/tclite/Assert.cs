@@ -102,7 +102,22 @@ namespace TCLite.Framework
         /// </summary>
         /// <param name="message">The message to initialize the <see cref="InconclusiveException"/> with.</param>
         /// <param name="args">Arguments to be used in formatting the message</param>
-        static public void Inconclusive(string message=null, params object[] args)
+        static public void Inconclusive(string message = null, params object[] args)
+        {
+            if (message == null) message = string.Empty;
+            else if (args != null && args.Length > 0)
+                message = string.Format(message, args);
+
+            throw new InconclusiveException(message);
+        }
+
+        /// <summary>
+        /// Throws an <see cref="InconclusiveException"/> with the message and arguments 
+        /// that are passed in.  This causes the test to be reported as inconclusive.
+        /// </summary>
+        /// <param name="message">The message to initialize the <see cref="InconclusiveException"/> with.</param>
+        /// <param name="args">Arguments to be used in formatting the message</param>
+        static public void Warn(string message = null, params object[] args)
         {
             if (message == null) message = string.Empty;
             else if (args != null && args.Length > 0)

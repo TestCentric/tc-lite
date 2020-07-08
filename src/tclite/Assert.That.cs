@@ -108,5 +108,13 @@ namespace TCLite.Framework
             result.WriteMessageTo(writer);
             throw new AssertionException(writer.ToString());
         }
+
+#if NYI // Warning
+        private static void IssueWarning(string message)
+        {
+            var result = TestExecutionContext.CurrentContext.CurrentResult;
+            result.RecordAssertion(AssertionStatus.Warning, message, GetStackTrace());
+        }
+#endif
     }
 }
