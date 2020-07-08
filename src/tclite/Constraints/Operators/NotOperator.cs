@@ -49,13 +49,20 @@ namespace TCLite.Framework.Constraints
             get { return this.Append(new NotOperator()); }
         }
     }
-}
 
-namespace TCLite.Framework
-{
-    using Constraints;
+    public partial class Is_Syntax
+    {
+        /// <summary>
+        /// Returns a ConstraintExpression that negates any
+        /// following constraint.
+        /// </summary>
+        public static ConstraintExpression Not
+        {
+            get { return new ConstraintExpression().Not; }
+        }
+    }
 
-    public partial class Has
+    public partial class Has_Syntax
     {
         /// <summary>
         /// Returns a ConstraintExpression that negates any

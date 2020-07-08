@@ -5,17 +5,6 @@
 
 namespace TCLite.Framework.Constraints
 {
-    public partial class ConstraintExpression
-    {
-        /// <summary>
-        /// Returns a constraint that tests for True
-        /// </summary>
-        public TrueConstraint True
-        {
-            get { return (TrueConstraint)this.Append(new TrueConstraint()); }
-        }
-    }
-
     /// <summary>
     /// TrueConstraint tests that the actual value is true
     /// </summary>
@@ -32,6 +21,28 @@ namespace TCLite.Framework.Constraints
         protected override ConstraintResult ApplyConstraint<T>(T actual)
         {
             return new ConstraintResult(this, actual, true.Equals(actual));
+        }
+    }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests for True
+        /// </summary>
+        public TrueConstraint True
+        {
+            get { return (TrueConstraint)this.Append(new TrueConstraint()); }
+        }
+    }
+
+    public partial class Is_Syntax
+    {
+        /// <summary>
+        /// Returns a constraint that tests for True
+        /// </summary>
+        public static TrueConstraint True
+        {
+            get { return new TrueConstraint(); }
         }
     }
 }

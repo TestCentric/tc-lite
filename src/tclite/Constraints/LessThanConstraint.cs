@@ -7,18 +7,6 @@ using System;
 
 namespace TCLite.Framework.Constraints
 {
-    public partial class ConstraintExpression
-    {
-        /// <summary>
-        /// Returns a constraint that tests whether the
-        /// actual value is less than the suppled argument
-        /// </summary>
-        public LessThanConstraint<T> LessThan<T>(T expected)
-        {
-            return (LessThanConstraint<T>)Append(new LessThanConstraint<T>(expected));
-        }
-    }
-
     /// <summary>
     /// Tests whether a value is less than the value supplied to its constructor
     /// </summary>
@@ -43,6 +31,30 @@ namespace TCLite.Framework.Constraints
                 throw new ArgumentException("Cannot compare using a null reference");
 
             return Comparer.Compare(actual, ExpectedValue) < 0;
+        }
+    }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests whether the
+        /// actual value is less than the suppled argument
+        /// </summary>
+        public LessThanConstraint<T> LessThan<T>(T expected)
+        {
+            return (LessThanConstraint<T>)Append(new LessThanConstraint<T>(expected));
+        }
+    }
+
+    public partial class Is_Syntax
+    {
+        /// <summary>
+        /// Returns a constraint that tests whether the
+        /// actual value is less than the suppled argument
+        /// </summary>
+        public static LessThanConstraint<T> LessThan<T>(T expected)
+        {
+            return new LessThanConstraint<T>(expected);
         }
     }
 }

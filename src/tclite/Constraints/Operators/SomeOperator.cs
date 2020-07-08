@@ -34,13 +34,8 @@ namespace TCLite.Framework.Constraints
             get { return this.Append(new SomeOperator()); }
         }
     }
-}
 
-namespace TCLite.Framework
-{
-    using Constraints;
-
-    public static partial class Contains
+    public partial class Contains_Syntax
     {
         /// <summary>
         /// Returns a ConstraintExpression, which will apply
@@ -49,7 +44,8 @@ namespace TCLite.Framework
         /// </summary>
         public static ConstraintExpression Item => new ConstraintExpression().Some;
     }
-    public static partial class Has
+
+    public partial class Has_Syntax
     {
         /// <summary>
         /// Returns a ConstraintExpression, which will apply

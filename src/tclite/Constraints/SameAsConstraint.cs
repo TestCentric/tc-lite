@@ -5,17 +5,6 @@
 
 namespace TCLite.Framework.Constraints
 {
-    public partial class ConstraintExpression
-    {
-        /// <summary>
-        /// Returns a constraint that tests that two references are the same object
-        /// </summary>
-        public SameAsConstraint SameAs(object expected)
-        {
-            return (SameAsConstraint)Append(new SameAsConstraint(expected));
-        }
-    }
-
     /// <summary>
     /// SameAsConstraint tests whether an object is identical to
     /// the object passed to its constructor
@@ -40,6 +29,28 @@ namespace TCLite.Framework.Constraints
             bool hasSucceeded = ReferenceEquals(ExpectedValue, actual);
 
             return new ConstraintResult(this, actual, hasSucceeded);
+        }
+    }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests that two references are the same object
+        /// </summary>
+        public SameAsConstraint SameAs(object expected)
+        {
+            return (SameAsConstraint)Append(new SameAsConstraint(expected));
+        }
+    }
+
+    public partial class Is_Syntax
+    {
+        /// <summary>
+        /// Returns a constraint that tests that two references are the same object
+        /// </summary>
+        public static SameAsConstraint SameAs(object expected)
+        {
+            return new SameAsConstraint(expected);
         }
     }
 }

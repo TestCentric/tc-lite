@@ -5,17 +5,6 @@
 
 namespace TCLite.Framework.Constraints
 {
-    public partial class ConstraintExpression
-    {
-        /// <summary>
-        /// Returns a constraint that tests for NaN
-        /// </summary>
-        public NaNConstraint NaN
-        {
-            get { return (NaNConstraint)this.Append(new NaNConstraint()); }
-        }
-    }
-
     /// <summary>
     /// NaNConstraint tests that the actual value is a double or float NaN
     /// </summary>
@@ -41,6 +30,28 @@ namespace TCLite.Framework.Constraints
             return new ConstraintResult(this, actual,
                 actual is double && double.IsNaN((double)(object)actual) ||
                 actual is float && float.IsNaN((float)(object)actual));
+        }
+    }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests for NaN
+        /// </summary>
+        public NaNConstraint NaN
+        {
+            get { return (NaNConstraint)this.Append(new NaNConstraint()); }
+        }
+    }
+
+    public partial class Is_Syntax
+    {
+        /// <summary>
+        /// Returns a constraint that tests for NaN
+        /// </summary>
+        public static NaNConstraint NaN
+        {
+            get { return new NaNConstraint(); }
         }
     }
 }

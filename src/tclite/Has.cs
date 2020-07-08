@@ -3,16 +3,18 @@
 // Licensed under the MIT License. See LICENSE.txt in root directory.
 // ***********************************************************************
 
-using System;
-using TCLite.Framework.Constraints;
-
 namespace TCLite.Framework
 {
     /// <summary>
-    /// Helper class with properties and methods that supply
-    /// a number of constraints used in Asserts.
+    /// Helper class exposing properties and methods that form
+    /// part of the Constraint syntax in the primary namespace.
     /// </summary>
-    public partial class Has
+    /// <remarks>
+    /// The actual syntactic elements are defined in the base class,
+    /// Contains_Syntax, a partial class, with individual elements
+    /// distributed across multiple files.
+    /// </remarks>
+    public partial class Has : Constraints.Has_Syntax
     {
         // TODO: Move these to the relevant files once those files are created.
 

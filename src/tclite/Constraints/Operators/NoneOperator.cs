@@ -34,13 +34,8 @@ namespace TCLite.Framework.Constraints
             get { return this.Append(new NoneOperator()); }
         }
     }
-}
 
-namespace TCLite.Framework
-{
-    using Constraints;
-
-    public partial class Has
+    public partial class Has_Syntax
     {
         /// <summary>
         /// Returns a ConstraintExpression, which will apply

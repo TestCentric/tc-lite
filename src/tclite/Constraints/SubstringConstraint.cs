@@ -5,11 +5,9 @@
 
 using System;
 
-namespace TCLite.Framework
+namespace TCLite.Framework.Constraints
 {
-    using Constraints;
-    
-    public static partial class Contains
+    public partial class Contains_Syntax
     {
         /// <summary>
         /// Returns a constraint that succeeds if the actual

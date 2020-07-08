@@ -34,13 +34,21 @@ namespace TCLite.Framework.Constraints
             get { return this.Append(new AllOperator()); }
         }
     }
-}
 
-namespace TCLite.Framework
-{
-    using Constraints;
+    public partial class Is_Syntax
+    {
+        /// <summary>
+        /// Returns a ConstraintExpression, which will apply
+        /// the following constraint to all members of a collection,
+        /// succeeding if all of them succeed.
+        /// </summary>
+        public static ConstraintExpression All
+        {
+            get { return new ConstraintExpression().All; }
+        }
+    }
     
-    public partial class Has
+    public partial class Has_Syntax
     {
         /// <summary>
         /// Returns a ConstraintExpression, which will apply

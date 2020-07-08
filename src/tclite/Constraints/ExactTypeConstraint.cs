@@ -7,27 +7,6 @@ using System;
 
 namespace TCLite.Framework.Constraints
 {
-    public partial class ConstraintExpression
-    {
-        /// <summary>
-        /// Returns a constraint that tests whether the actual
-        /// value is of the exact type supplied as an argument.
-        /// </summary>
-        public ExactTypeConstraint TypeOf(Type expectedType)
-        {
-            return (ExactTypeConstraint)this.Append(new ExactTypeConstraint(expectedType));
-        }
-
-        /// <summary>
-        /// Returns a constraint that tests whether the actual
-        /// value is of the exact type supplied as an argument.
-        /// </summary>
-        public ExactTypeConstraint TypeOf<T>()
-        {
-            return (ExactTypeConstraint)this.Append(new ExactTypeConstraint(typeof(T)));
-        }
-    }
-
     /// <summary>
     /// ExactTypeConstraint is used to test that an object
     /// is of the exact type provided in the constructor
@@ -54,6 +33,48 @@ namespace TCLite.Framework.Constraints
         protected override bool Matches<TActual>(TActual actual)
         {
             return actual != null && actual.GetType() == ExpectedType;
+        }
+    }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests whether the actual
+        /// value is of the exact type supplied as an argument.
+        /// </summary>
+        public ExactTypeConstraint TypeOf(Type expectedType)
+        {
+            return (ExactTypeConstraint)this.Append(new ExactTypeConstraint(expectedType));
+        }
+
+        /// <summary>
+        /// Returns a constraint that tests whether the actual
+        /// value is of the exact type supplied as an argument.
+        /// </summary>
+        public ExactTypeConstraint TypeOf<T>()
+        {
+            return (ExactTypeConstraint)this.Append(new ExactTypeConstraint(typeof(T)));
+        }
+    }
+
+    public partial class Is_Syntax
+    {
+        /// <summary>
+        /// Returns a constraint that tests whether the actual
+        /// value is of the exact type supplied as an argument.
+        /// </summary>
+        public static ExactTypeConstraint TypeOf(Type expectedType)
+        {
+            return new ExactTypeConstraint(expectedType);
+        }
+
+        /// <summary>
+        /// Returns a constraint that tests whether the actual
+        /// value is of the exact type supplied as an argument.
+        /// </summary>
+        public static ExactTypeConstraint TypeOf<T>()
+        {
+            return new ExactTypeConstraint(typeof(T));
         }
     }
 }

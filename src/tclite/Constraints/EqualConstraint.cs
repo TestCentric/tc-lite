@@ -328,13 +328,7 @@ namespace TCLite.Framework.Constraints
         }
     }
 
-}
-
-namespace TCLite.Framework
-{
-    using Constraints;
-
-    public partial class Is
+    public partial class Is_Syntax
     {
         /// <summary>
         /// Returns a constraint that tests two items for equality

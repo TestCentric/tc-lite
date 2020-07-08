@@ -7,27 +7,6 @@ using System;
 
 namespace TCLite.Framework.Constraints
 {
-    public partial class ConstraintExpression
-    {
-        /// <summary>
-        /// Returns a constraint that tests whether the actual value
-        /// is of the type supplied as an argument or a derived type.
-        /// </summary>
-        public InstanceOfTypeConstraint InstanceOf(Type expectedType)
-        {
-            return (InstanceOfTypeConstraint)this.Append(new InstanceOfTypeConstraint(expectedType));
-        }
-
-        /// <summary>
-        /// Returns a constraint that tests whether the actual value
-        /// is of the type supplied as an argument or a derived type.
-        /// </summary>
-        public InstanceOfTypeConstraint InstanceOf<T>()
-        {
-            return (InstanceOfTypeConstraint)this.Append(new InstanceOfTypeConstraint(typeof(T)));
-        }
-    }
-
     /// <summary>
     /// InstanceOfTypeConstraint is used to test that an object
     /// is of the same type provided or derived from it.
@@ -54,6 +33,48 @@ namespace TCLite.Framework.Constraints
         protected override bool Matches<TActual>(TActual actual)
         {
             return actual != null && ExpectedType.IsInstanceOfType(actual);
+        }
+    }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that tests whether the actual value
+        /// is of the type supplied as an argument or a derived type.
+        /// </summary>
+        public InstanceOfTypeConstraint InstanceOf(Type expectedType)
+        {
+            return (InstanceOfTypeConstraint)this.Append(new InstanceOfTypeConstraint(expectedType));
+        }
+
+        /// <summary>
+        /// Returns a constraint that tests whether the actual value
+        /// is of the type supplied as an argument or a derived type.
+        /// </summary>
+        public InstanceOfTypeConstraint InstanceOf<T>()
+        {
+            return (InstanceOfTypeConstraint)this.Append(new InstanceOfTypeConstraint(typeof(T)));
+        }
+    }
+
+    public partial class Is_Syntax
+    {
+        /// <summary>
+        /// Returns a constraint that tests whether the actual value
+        /// is of the type supplied as an argument or a derived type.
+        /// </summary>
+        public static InstanceOfTypeConstraint InstanceOf(Type expectedType)
+        {
+            return new InstanceOfTypeConstraint(expectedType);
+        }
+
+        /// <summary>
+        /// Returns a constraint that tests whether the actual value
+        /// is of the type supplied as an argument or a derived type.
+        /// </summary>
+        public static InstanceOfTypeConstraint InstanceOf<T>()
+        {
+            return new InstanceOfTypeConstraint(typeof(T));
         }
     }
 }
