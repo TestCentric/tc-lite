@@ -10,7 +10,6 @@ namespace TCLite.Framework.Internal
 {
     public class RandomizerTests
     {
-#if NYI // Unique
         [Test]
         public void RandomizersAreUnique()
         {
@@ -45,6 +44,7 @@ namespace TCLite.Framework.Internal
             Assert.That(values, Is.Unique);
         }
 
+#if NYI // InRange
         [Test]
         public void CanGetArrayOfRandomInts()
         {
@@ -69,6 +69,7 @@ namespace TCLite.Framework.Internal
             // Heuristic: Could fail occasionally
             Assert.That(doubles, Is.Unique);
         }
+#endif
 
         [Test]
         public void CanGetArrayOfRandomEnums()
@@ -80,7 +81,6 @@ namespace TCLite.Framework.Internal
             foreach (object e in enums)
                 Assert.That(e, Is.TypeOf(typeof(AttributeTargets)));
         }
-#endif
 
         [Test]
         public void RandomizersWithSameSeedsReturnSameValues()

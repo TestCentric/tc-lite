@@ -29,6 +29,16 @@ namespace TCLite.Framework.Constraints
         /// <param name="arg"></param>
         protected CollectionItemsEqualConstraint(object arg) : base(arg) { }
 
+        /// <summary>
+        /// Get a flag indicating whether the user requested us to ignore case.
+        /// </summary>
+        protected bool IgnoringCase => _comparer.IgnoreCase;
+
+        /// <summary>
+        /// Get a flag indicating whether any external comparers are in use.
+        /// </summary>
+        protected bool UsingExternalComparer => _comparer.ExternalComparers.Count > 0;
+
         #region Modifiers
 
         /// <summary>

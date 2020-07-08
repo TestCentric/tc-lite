@@ -220,17 +220,6 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-#if NYI // Unique
-        /// <summary>
-        /// Returns a constraint that tests whether a collection 
-        /// contains all unique items.
-        /// </summary>
-        public UniqueItemsConstraint Unique
-        {
-            get { return (UniqueItemsConstraint)this.Append(new UniqueItemsConstraint()); }
-        }
-#endif
-
 #if NYI //BinarySerializable
         /// <summary>
         /// Returns a constraint that tests whether an object graph is serializable in binary format.
