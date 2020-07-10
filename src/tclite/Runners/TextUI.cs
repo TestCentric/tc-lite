@@ -150,7 +150,7 @@ namespace TCLite.Runners
             WriteSummaryCount("  Test Count: ", summary.TestCount);
             WriteSummaryCount(", Passed: ", summary.PassCount);
             WriteSummaryCount(", Failed: ", summary.FailedCount, ColorStyle.Failure);
-            //WriteSummaryCount(", Warnings: ", summary.WarningCount, ColorStyle.Warning);
+            WriteSummaryCount(", Warnings: ", summary.WarningCount, ColorStyle.Warning);
             WriteSummaryCount(", Inconclusive: ", summary.InconclusiveCount);
             //WriteSummaryCount(", Skipped: ", summary.TotalSkipCount);
             _writer.WriteLine();
@@ -180,11 +180,11 @@ namespace TCLite.Runners
         /// <summary>
         /// Prints the Error Report
         /// </summary>
-        public void DisplayErrorsAndFailuresReport(ITestResult result)
+        public void DisplayErrorsFailuresAndWarningsReport(ITestResult result)
         {
             int reportCount = 0;
-            WriteSectionHeader("Errors and Failures");
-            ListErrorsAndFailures(result, ref reportCount);
+            WriteSectionHeader("Errors, Failures and Warnings");
+            ListErrorsFailuresAndWarnings(result, ref reportCount);
         }
 
         /// <summary>
@@ -259,15 +259,21 @@ namespace TCLite.Runners
             _writer.WriteLabelLine(label, option, color);
         }
 
-        private void ListErrorsAndFailures(ITestResult result, ref int reportCount)
+        private void ListErrorsFailuresAndWarnings(ITestResult result, ref int reportCount)
         {
-            if (result.ResultState.Status == TestStatus.Failed)
+            bool display =
+                result.ResultState.Status == TestStatus.Failed ||
+                result.ResultState.Status == TestStatus.Warning;
+
+            var status = result.ResultState.Status;
+
+            if (status == TestStatus.Failed || status == TestStatus.Warning)
                 if (!result.HasChildren)
                     WriteSingleResult(result, ++reportCount);
 
             if (result.HasChildren)
                 foreach (ITestResult childResult in result.Children)
-                    ListErrorsAndFailures(childResult, ref reportCount);
+                    ListErrorsFailuresAndWarnings(childResult, ref reportCount);
         }
 
         private void ListNotRunResults(ITestResult result, ref int reportCount)
@@ -315,15 +321,21 @@ namespace TCLite.Runners
 
         private void WriteSingleResult(ITestResult result, int reportCount)
         {
-            _writer.WriteLine($"\n{reportCount}) {result.Name} ({result.FullName})");
+            var status = result.ResultState.Label;
+            if (string.IsNullOrEmpty(status))
+                status = result.ResultState.Status.ToString();
+
+            var color = GetColorForResultStatus(status);
+
+            _writer.WriteLine(color, $"\n{reportCount}) {status} {result.Name} ({result.FullName})");
 
             if (result.Message != null && result.Message != string.Empty)
-                _writer.WriteLine("   {0}", result.Message);
+                _writer.WriteLine(result.Message);
 
             if (!string.IsNullOrEmpty(result.StackTrace))
             {
                 string stackTrace = result.ResultState == ResultState.Failure
-                    ? StackFilter.Filter(result.StackTrace)
+                    ? StackFilter.DefaultFilter.Filter(result.StackTrace)
                     : result.StackTrace;
 
                 _writer.Write(stackTrace);

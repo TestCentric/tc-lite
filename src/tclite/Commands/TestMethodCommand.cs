@@ -47,9 +47,6 @@ namespace TCLite.Framework.Commands
         /// <param name="context">The execution context</param>
         public override TestResult Execute(TestExecutionContext context)
         {
-            if (!testMethod.Method.IsStatic)
-                context.TestObject = Reflect.Construct(testMethod.FixtureType);
-
             try
             {
                 object result = RunTestMethod(context);
@@ -67,8 +64,10 @@ namespace TCLite.Framework.Commands
                 context.CurrentResult.RecordException(ex);
             }
 
-            // TODO: Set assert count here?
-            //context.CurrentResult.AssertCount = context.AssertCount;
+            if (context.CurrentResult.AssertionResults.Count > 0)
+                context.CurrentResult.RecordTestCompletion();
+
+            context.CurrentResult.AssertCount = context.AssertCount;
             return context.CurrentResult;
         }
 

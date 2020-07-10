@@ -16,34 +16,19 @@ namespace TCLite.Framework.Commands
     /// action is needed after the test runs, since the prior
     /// context will be restored automatically.
     /// </summary>
-    class ApplyChangesToContextCommand : DelegatingTestCommand
+    class ApplyToContextCommand : BeforeTestCommand
     {
-        private IApplyToContext[] _changes;
+        private IApplyToContext _change;
 
-        public ApplyChangesToContextCommand(TestCommand innerCommand, IApplyToContext[] changes)
+        public ApplyToContextCommand(TestCommand innerCommand, IApplyToContext change)
             : base(innerCommand)
         {
-            _changes = changes;
+            _change = change;
         }
 
-        public override TestResult Execute(TestExecutionContext context)
+        protected override void BeforeTest(TestExecutionContext context)
         {
-            try
-            {
-                foreach (IApplyToContext change in _changes)
-                    change.ApplyToContext(context);
-
-                context.CurrentResult = innerCommand.Execute(context);
-            }
-            catch (Exception ex)
-            {
-                if (ex is ThreadAbortException)
-                    Thread.ResetAbort();
-
-                context.CurrentResult.RecordException(ex);
-            }
-
-            return context.CurrentResult;
+            _change.ApplyToContext(context);
         }
     }
 }

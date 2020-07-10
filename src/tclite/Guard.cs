@@ -63,5 +63,16 @@ namespace TCLite.Framework
             if (value != null && !(value is T))
                 throw new ArgumentException($"Argument must be of Type {typeof(T).Name}", paramName);
         }
+
+        /// <summary>
+        /// Throws an InvalidOperationException if the specified condition is not met.
+        /// </summary>
+        /// <param name="condition">The condition that must be met</param>
+        /// <param name="message">The exception message to be used</param>
+        public static void OperationValid(bool condition, string message)
+        {
+            if (!condition)
+                throw new InvalidOperationException(message);
+        }
     }
 }

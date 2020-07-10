@@ -5,6 +5,7 @@
 
 using System;
 using System.ComponentModel;
+using TCLite.Framework.Constraints;
 using TCLite.Framework.Internal;
 
 namespace TCLite.Framework
@@ -63,6 +64,12 @@ namespace TCLite.Framework
             else if (args != null && args.Length > 0)
                 message = string.Format(message, args);
 
+#if NYI // Assert.Multiple
+            // If we are in a multiple assert block, this is an error
+            if (TestExecutionContext.CurrentContext.MultipleAssertLevel > 0)
+                throw new Exception("Assert.Pass may not be used in a multiple assertion block.");
+#endif
+
             throw new SuccessException(message);
         }
 
@@ -78,7 +85,22 @@ namespace TCLite.Framework
             else if (args != null && args.Length > 0)
                 message = string.Format(message, args);
 
-            throw new AssertionException(message);
+            ReportFailure(message);
+        }
+
+        /// <summary>
+        /// Throws an <see cref="InconclusiveException"/> with the message and arguments 
+        /// that are passed in.  This causes the test to be reported as inconclusive.
+        /// </summary>
+        /// <param name="message">The message to initialize the <see cref="InconclusiveException"/> with.</param>
+        /// <param name="args">Arguments to be used in formatting the message</param>
+        static public void Warn(string message = null, params object[] args)
+        {
+            if (message == null) message = string.Empty;
+            else if (args != null && args.Length > 0)
+                message = string.Format(message, args);
+
+            IssueWarning(message);
         }
 
         /// <summary>
@@ -92,6 +114,12 @@ namespace TCLite.Framework
             if (message == null) message = string.Empty;
             else if (args != null && args.Length > 0)
                 message = string.Format(message, args);
+
+#if NYI // Assert.Multiple
+            // If we are in a multiple assert block, this is an error
+            if (TestExecutionContext.CurrentContext.MultipleAssertLevel > 0)
+                throw new Exception("Assert.Ignore may not be used in a multiple assertion block.");
+#endif
 
             throw new IgnoreException(message);
         }
@@ -108,27 +136,81 @@ namespace TCLite.Framework
             else if (args != null && args.Length > 0)
                 message = string.Format(message, args);
 
+# if NYI // Assert.Multiple
+            // If we are in a multiple assert block, this is an error
+            if (TestExecutionContext.CurrentContext.MultipleAssertLevel > 0)
+                throw new Exception("Assert.Inconclusive may not be used in a multiple assertion block.");
+#endif
+
             throw new InconclusiveException(message);
         }
 
-        /// <summary>
-        /// Throws an <see cref="InconclusiveException"/> with the message and arguments 
-        /// that are passed in.  This causes the test to be reported as inconclusive.
-        /// </summary>
-        /// <param name="message">The message to initialize the <see cref="InconclusiveException"/> with.</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        static public void Warn(string message = null, params object[] args)
-        {
-            if (message == null) message = string.Empty;
-            else if (args != null && args.Length > 0)
-                message = string.Format(message, args);
+        #region Helper Methods
 
-            throw new InconclusiveException(message);
+        private static void ReportFailure(ConstraintResult result, string message = null, params object[] args)
+        {
+            MessageWriter writer = new TextMessageWriter(message, args);
+            result.WriteMessageTo(writer);
+
+            ReportFailure(writer.ToString());
+        }
+
+        private static void ReportFailure(string message)
+        {
+            // Record the failure in an <assertion> element
+            var result = TestExecutionContext.CurrentContext.CurrentResult;
+            result.RecordAssertion(AssertionStatus.Failed, message, GetStackTrace());
+            result.RecordTestCompletion();
+
+#if NYI // Assert.Multiple
+            // If we are outside any multiple assert block, then throw
+            if (TestExecutionContext.CurrentContext.MultipleAssertLevel == 0)
+                throw new AssertionException(result.Message);
+#else
+            throw new AssertionException(message);
+#endif
+        }
+
+        private static void IssueWarning(string message)
+        {
+            var result = TestExecutionContext.CurrentContext.CurrentResult;
+            result.RecordAssertion(AssertionStatus.Warning, message, GetStackTrace());
+        }
+
+        // System.Environment.StackTrace puts extra entries on top of the stack, at least in some environments
+        private static readonly StackFilter SystemEnvironmentFilter = new StackFilter(@" System\.Environment\.");
+
+        private static string GetStackTrace() =>
+            StackFilter.DefaultFilter.Filter(SystemEnvironmentFilter.Filter(GetEnvironmentStackTraceWithoutThrowing()));
+
+        /// <summary>
+        /// If <see cref="Exception.StackTrace"/> throws, returns "SomeException was thrown by the
+        /// Environment.StackTrace property." See also <see cref="ExceptionExtensions.GetStackTraceWithoutThrowing"/>.
+        /// </summary>
+#if !NET35
+        // https://github.com/dotnet/coreclr/issues/19698 is also currently present in .NET Framework 4.7 and 4.8. A
+        // race condition between threads reading the same PDB file to obtain file and line info for a stack trace
+        // results in AccessViolationException when the stack trace is accessed even indirectly e.g. Exception.ToString.
+        [System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptions]
+#endif
+        private static string GetEnvironmentStackTraceWithoutThrowing()
+        {
+            try
+            {
+                return Environment.StackTrace;
+            }
+            catch (Exception ex)
+            {
+                return ex.GetType().Name + " was thrown by the Environment.StackTrace property.";
+            }
         }
 
         private static void IncrementAssertCount()
         {
             TestExecutionContext.CurrentContext.IncrementAssertCount();
         }
+
+        #endregion
+
     }
 }

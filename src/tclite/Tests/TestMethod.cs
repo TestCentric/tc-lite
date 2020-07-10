@@ -61,7 +61,7 @@ namespace TCLite.Framework.Tests
         /// <summary>
         /// Gets a list of custom decorators for this test.
         /// </summary>
-        public IList<ICommandDecorator> CustomDecorators { get; } = new List<ICommandDecorator>();
+        public IList<ICommandWrapper> CustomDecorators { get; } = new List<ICommandWrapper>();
 
         internal bool HasExpectedResult => TestCaseParameters?.HasExpectedResult ?? false;
 
@@ -123,8 +123,11 @@ namespace TCLite.Framework.Tests
             command = ApplyDecoratorsToCommand(command);
 
             IApplyToContext[] changes = (IApplyToContext[])Method.GetCustomAttributes(typeof(IApplyToContext), true);
-            if (changes.Length > 0)
-                command = new ApplyChangesToContextCommand(command, changes);
+            foreach (var change in changes)
+                command = new ApplyToContextCommand(command, change);
+
+            if (!Method.IsStatic)
+                command = new IsolatedFixtureCommand(command);
 
             return command;
         }
@@ -146,17 +149,17 @@ namespace TCLite.Framework.Tests
 
         private TestCommand ApplyDecoratorsToCommand(TestCommand command)
         {
-            CommandDecoratorList decorators = new CommandDecoratorList();
+            // CommandDecoratorList decorators = new CommandDecoratorList();
 
-            // Add Decorators supplied by attributes and parameter sets
-            foreach (ICommandDecorator decorator in CustomDecorators)
-                decorators.Add(decorator);
+            // // Add Decorators supplied by attributes and parameter sets
+            // foreach (ICommandDecorator decorator in CustomDecorators)
+            //     decorators.Add(decorator);
 
-            decorators.OrderByStage();
+            // decorators.OrderByStage();
 
-            foreach (ICommandDecorator decorator in decorators)
+            foreach (ICommandWrapper decorator in CustomDecorators)
             {
-                command = decorator.Decorate(command);
+                command = decorator.Wrap(command);
             }
 
             return command;

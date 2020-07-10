@@ -101,20 +101,5 @@ namespace TCLite.Framework
         }
 
         #endregion
-
-        private static void ReportFailure(ConstraintResult result, string message = null, params object[] args)
-        {
-            MessageWriter writer = new TextMessageWriter(message, args);
-            result.WriteMessageTo(writer);
-            throw new AssertionException(writer.ToString());
-        }
-
-#if NYI // Warning
-        private static void IssueWarning(string message)
-        {
-            var result = TestExecutionContext.CurrentContext.CurrentResult;
-            result.RecordAssertion(AssertionStatus.Warning, message, GetStackTrace());
-        }
-#endif
     }
 }

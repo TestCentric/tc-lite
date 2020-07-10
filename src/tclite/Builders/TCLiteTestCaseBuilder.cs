@@ -173,7 +173,7 @@ namespace TCLite.Framework.Builders
                 if (parameterSet == null)
                     testMethod.ApplyAttributesToTest(method);
 
-                foreach (ICommandDecorator decorator in method.GetCustomAttributes(typeof(ICommandDecorator), true))
+                foreach (ICommandWrapper decorator in method.GetCustomAttributes(typeof(ICommandWrapper), true))
                     testMethod.CustomDecorators.Add(decorator);
             }
 

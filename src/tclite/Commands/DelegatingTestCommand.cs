@@ -8,21 +8,21 @@ using TCLite.Framework.Api;
 namespace TCLite.Framework.Commands
 {
     /// <summary>
-    /// TODO: Documentation needed for class
+    /// Abstract base for commands that wrap another command,
+    /// which is referred to as the inner command.
     /// </summary>
     public abstract class DelegatingTestCommand : TestCommand
     {
-        /// <summary>TODO: Documentation needed for field</summary>
-        protected TestCommand innerCommand;
+        protected TestCommand _innerCommand;
 
         /// <summary>
-        /// TODO: Documentation needed for constructor
+        /// Construct a DelegatingTestCommand
         /// </summary>
-        /// <param name="innerCommand"></param>
+        /// <param name="innerCommand">The command wrapped by this one</param>
         protected DelegatingTestCommand(TestCommand innerCommand)
             : base(innerCommand.Test)
         {
-            this.innerCommand = innerCommand;
+            _innerCommand = innerCommand;
         }
     }
 }

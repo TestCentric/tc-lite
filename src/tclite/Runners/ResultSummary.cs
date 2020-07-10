@@ -49,6 +49,11 @@ namespace TCLite.Runners
         public int FailedCount { get; private set; }
 
         /// <summary>
+        /// Total cases resulting in a warning
+        /// </summary>
+        public int WarningCount { get; private set; }
+
+        /// <summary>
         /// Gets the error count.
         /// </summary>
         public int ErrorCount { get; private set; }
@@ -115,6 +120,9 @@ namespace TCLite.Runners
                         else
                             ErrorCount++;
                         break;
+                    case TestStatus.Warning:
+                            WarningCount++;
+                            break;
                     case TestStatus.Inconclusive:
                         InconclusiveCount++;
                         break;

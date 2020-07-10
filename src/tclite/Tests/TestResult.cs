@@ -5,6 +5,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Xml;
 using TCLite.Framework.Api;
 using TCLite.Framework.Internal;
@@ -113,6 +115,11 @@ namespace TCLite.Framework.Tests
         /// Gets the collection of child results.
         /// </summary>
         public IList<ITestResult> Children { get; } = new List<ITestResult>();
+
+        /// <summary>
+        /// Gets a list of assertion results associated with the test.
+        /// </summary>
+        public IList<AssertionResult> AssertionResults { get; } = new List<AssertionResult>();
 
         #endregion
 
@@ -294,17 +301,58 @@ namespace TCLite.Framework.Tests
             if (ex is System.Threading.ThreadAbortException)
                 SetResult(ResultState.Cancelled, "Test cancelled by user", ex.StackTrace);
             else if (ex is AssertionException)
-                SetResult(ResultState.Failure, ex.Message, StackFilter.Filter(ex.StackTrace));
+                SetResult(ResultState.Failure, ex.Message, StackFilter.DefaultFilter.Filter(ex.StackTrace));
             else if (ex is IgnoreException)
-                SetResult(ResultState.Ignored, ex.Message, StackFilter.Filter(ex.StackTrace));
+                SetResult(ResultState.Ignored, ex.Message, StackFilter.DefaultFilter.Filter(ex.StackTrace));
             else if (ex is InconclusiveException)
-                SetResult(ResultState.Inconclusive, ex.Message, StackFilter.Filter(ex.StackTrace));
+                SetResult(ResultState.Inconclusive, ex.Message, StackFilter.DefaultFilter.Filter(ex.StackTrace));
             else if (ex is SuccessException)
-                SetResult(ResultState.Success, ex.Message, StackFilter.Filter(ex.StackTrace));
+                SetResult(ResultState.Success, ex.Message, StackFilter.DefaultFilter.Filter(ex.StackTrace));
             else
                 SetResult(ResultState.Error,
                     ExceptionHelper.BuildMessage(ex),
                     ExceptionHelper.BuildStackTrace(ex));
+        }
+
+        /// <summary>
+        /// Update overall test result, including legacy Message, based
+        /// on AssertionResults that have been saved to this point.
+        /// </summary>
+        public void RecordTestCompletion()
+        {
+            switch (AssertionResults.Count)
+            {
+                case 0:
+                    SetResult(ResultState.Success);
+                    break;
+                case 1:
+                    SetResult(
+                        AssertionStatusToResultState(AssertionResults[0].Status),
+                        AssertionResults[0].Message,
+                        AssertionResults[0].StackTrace);
+                    break;
+                default:
+                    SetResult(
+                        AssertionStatusToResultState(WorstAssertionStatus),
+                        CreateLegacyFailureMessage());
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Record an assertion result
+        /// </summary>
+        public void RecordAssertion(AssertionResult assertion)
+        {
+            AssertionResults.Add(assertion);
+        }
+
+        /// <summary>
+        /// Record an assertion result
+        /// </summary>
+        public void RecordAssertion(AssertionStatus status, string message=null, string stackTrace=null)
+        {
+            RecordAssertion(new AssertionResult(status, message, stackTrace));
         }
 
         #endregion
@@ -343,6 +391,52 @@ namespace TCLite.Framework.Tests
             }
 
             return failureNode;
+        }
+
+        private ResultState AssertionStatusToResultState(AssertionStatus status)
+        {
+            switch (status)
+            {
+                case AssertionStatus.Inconclusive:
+                    return ResultState.Inconclusive;
+                default:
+                case AssertionStatus.Passed:
+                    return ResultState.Success;
+                case AssertionStatus.Warning:
+                    return ResultState.Warning;
+                case AssertionStatus.Failed:
+                    return ResultState.Failure;
+                case AssertionStatus.Error:
+                    return ResultState.Error;
+            }
+        }
+
+        /// <summary>
+        /// Gets the worst assertion status (highest enum) in all the assertion results
+        /// </summary>
+        public AssertionStatus WorstAssertionStatus
+        {
+            get { return AssertionResults.Aggregate((ar1, ar2) => ar1.Status > ar2.Status ? ar1 : ar2).Status; }
+        }
+
+        /// <summary>
+        /// Creates a failure message incorporating failures
+        /// from a Multiple Assert block for use by runners
+        /// that don't know about AssertionResults.
+        /// </summary>
+        /// <returns>Message as a string</returns>
+        private string CreateLegacyFailureMessage()
+        {
+            var writer = new StringWriter();
+
+            if (AssertionResults.Count > 1)
+                writer.WriteLine("Multiple failures or warnings in test:");
+
+            int counter = 0;
+            foreach (var assertion in AssertionResults)
+                writer.WriteLine(string.Format("  {0}) {1}", ++counter, assertion.Message));
+
+            return writer.ToString();
         }
 
         //private static bool IsTestCase(ITest test)

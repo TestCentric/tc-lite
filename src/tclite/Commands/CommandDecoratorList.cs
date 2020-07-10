@@ -3,6 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
+#if UNUSED
 using System;
 using TCLite.Framework.Api;
 
@@ -29,3 +30,4 @@ namespace TCLite.Framework.Commands
         }
     }
 }
+#endif

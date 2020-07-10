@@ -23,15 +23,13 @@ namespace TCLite.Framework.Commands
     /// </summary>
     public abstract class TestCommand
     {
-        private Test test;
-
         /// <summary>
         /// Construct a TestCommand for a test.
         /// </summary>
         /// <param name="test">The test to be executed</param>
         public TestCommand(Test test)
         {
-            this.test = test;
+            this.Test = test;
         }
 
         #region ITestCommandMembers
@@ -39,10 +37,7 @@ namespace TCLite.Framework.Commands
         /// <summary>
         /// Gets the test associated with this command.
         /// </summary>
-        public Test Test
-        {
-            get { return test; }
-        }
+        public Test Test { get; }
 
         /// <summary>
         /// Runs the test in a specified context, returning a TestResult.

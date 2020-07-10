@@ -67,19 +67,19 @@ namespace TCLite.Framework.Internal
         [Test]
         public void FilterShortTraceWithAssert()
         {
-            Assert.That(StackFilter.Filter(shortTrace_Assert), Is.EqualTo(shortTrace_Result));
+            Assert.That(StackFilter.DefaultFilter.Filter(shortTrace_Assert), Is.EqualTo(shortTrace_Result));
         }
 
         [Test]
         public void FilterShortTraceWithAssume_Trace1()
         {
-            Assert.That(StackFilter.Filter(shortTrace_Assume), Is.EqualTo(shortTrace_Result));
+            Assert.That(StackFilter.DefaultFilter.Filter(shortTrace_Assume), Is.EqualTo(shortTrace_Result));
         }
 
         [Test]
         public void FilterLongTrace()
         {
-            Assert.That(StackFilter.Filter(longTrace), Is.EqualTo(longTrace_Result));
+            Assert.That(StackFilter.DefaultFilter.Filter(longTrace), Is.EqualTo(longTrace_Result));
         }
     }
 }

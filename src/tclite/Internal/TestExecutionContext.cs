@@ -188,6 +188,10 @@ namespace TCLite.Framework.Internal
 
                 return current; 
             }
+            internal set
+            {
+                current = value;
+            }
         }
 
         #endregion
@@ -292,7 +296,8 @@ namespace TCLite.Framework.Internal
         /// Gets the assert count.
         /// </summary>
         /// <value>The assert count.</value>
-        internal int AssertCount
+        // TODO: public for tests
+        public int AssertCount
         {
             get { return assertCount; }
             set { assertCount = value; }
@@ -474,6 +479,62 @@ namespace TCLite.Framework.Internal
             System.Threading.Interlocked.Increment(ref assertCount);
         }
 
+        private TestExecutionContext CreateIsolatedContext()
+        {
+            var context = new TestExecutionContext(this);
+
+            if (context.CurrentTest != null)
+                context.CurrentResult = context.CurrentTest.MakeTestResult();
+
+#if NYI // Parallelism
+            context.TestWorker = TestWorker;
+#endif
+
+            return context;
+        }
+
         #endregion
-	}
+
+        #region Nested IsolatedContext Class
+
+        /// <summary>
+        /// An IsolatedContext is used when running code
+        /// that may effect the current result in ways that
+        /// should not impact the final result of the test.
+        /// A new TestExecutionContext is created with an
+        /// initially clear result, which is discarded on
+        /// exiting the context.
+        /// </summary>
+        /// <example>
+        ///     using (new TestExecutionContext.IsolatedContext())
+        ///     {
+        ///         // Code that should not impact the result
+        ///     }
+        /// </example>
+        public class IsolatedContext : IDisposable
+        {
+            private readonly TestExecutionContext _originalContext;
+
+            /// <summary>
+            /// Save the original current TestExecutionContext and
+            /// make a new isolated context current.
+            /// </summary>
+            public IsolatedContext()
+            {
+                _originalContext = CurrentContext;
+                CurrentContext = _originalContext.CreateIsolatedContext();
+            }
+
+            /// <summary>
+            /// Restore the original TestExecutionContext.
+            /// </summary>
+            public void Dispose()
+            {
+                //_originalContext.OutWriter.Write(CurrentContext.CurrentResult.Output);
+                CurrentContext = _originalContext;
+            }
+        }
+
+        #endregion
+    }
 }

@@ -5,6 +5,7 @@
 
 using System;
 using TCLite.Framework.Constraints;
+using TCLite.Framework.Internal;
 
 namespace TCLite.Framework
 {
@@ -22,32 +23,16 @@ namespace TCLite.Framework
         {
             Exception caughtException = null;
 
-#if NYI // async
-            if (AsyncInvocationRegion.IsAsyncOperation(code))
+            using (new TestExecutionContext.IsolatedContext())
             {
-                using (AsyncInvocationRegion region = AsyncInvocationRegion.Create(code))
+                try
                 {
                     code();
-
-                    try
-                    {
-                        region.WaitForPendingOperationsToComplete(null);
-                    }
-                    catch (Exception e)
-                    {
-                        caughtException = e;
-                    }
                 }
-            }
-            else
-#endif
-                try
-            {
-                code();
-            }
-            catch (Exception ex)
-            {
-                caughtException = ex;
+                catch (Exception ex)
+                {
+                    caughtException = ex;
+                }
             }
 
             Assert.That(caughtException, expression, message, args);

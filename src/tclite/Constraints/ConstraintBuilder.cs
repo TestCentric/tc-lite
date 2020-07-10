@@ -16,7 +16,7 @@ namespace TCLite.Framework.Constraints
     /// input constraints as well as the results of each
     /// operator applied.
     /// </summary>
-    public class ConstraintBuilder
+    public class ConstraintBuilder : IResolveConstraint
     {
         #region Nested Operator Stack Class
         /// <summary>
@@ -135,19 +135,6 @@ namespace TCLite.Framework.Constraints
             this.constraints = new ConstraintStack(this);
         }
 
-        #region Properties
-
-        /// <summary>
-        /// Gets a value indicating whether the expression under construction
-        /// is currently resolvable, allowing the Resolve() method to be called.
-        /// </summary>
-        public bool IsResolvable
-        {
-            get { return lastPushed is IConstraint || lastPushed is SelfResolvingOperator; }
-        }
-
-        #endregion
-
         #region Public Methods
 
         /// <summary>
@@ -220,6 +207,15 @@ namespace TCLite.Framework.Constraints
         }
 
         /// <summary>
+        /// Gets a value indicating whether the expression under construction
+        /// is currently resolvable, allowing the Resolve() method to be called.
+        /// </summary>
+        public bool IsResolvable
+        {
+            get { return lastPushed is IConstraint || lastPushed is SelfResolvingOperator; }
+        }
+
+        /// <summary>
         /// Resolves this instance, returning a Constraint. If the builder
         /// is not currently in a resolvable state, an exception is thrown.
         /// </summary>
@@ -237,7 +233,7 @@ namespace TCLite.Framework.Constraints
 
             return constraints.Pop();
         }
-        
+
         #endregion
     }
 }

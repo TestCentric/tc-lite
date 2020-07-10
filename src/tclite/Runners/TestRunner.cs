@@ -154,8 +154,8 @@ namespace TCLite.Runners
 
             var summary = new ResultSummary(result);
 
-            if (summary.FailureCount > 0 || summary.ErrorCount > 0)
-                _textUI.DisplayErrorsAndFailuresReport(result);
+            if (summary.FailureCount > 0 || summary.ErrorCount > 0 || summary.WarningCount > 0)
+                _textUI.DisplayErrorsFailuresAndWarningsReport(result);
 
             if (summary.NotRunCount > 0)
                 _textUI.DisplayNotRunReport(result);
