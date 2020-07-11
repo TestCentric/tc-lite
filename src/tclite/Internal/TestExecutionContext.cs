@@ -13,7 +13,6 @@ using System.Threading;
 using TCLite.Framework.Api;
 using TCLite.Framework.Constraints;
 using TCLite.Framework.Tests;
-//using System.Runtime.Remoting.Messaging;
 
 namespace TCLite.Framework.Internal
 {
@@ -39,84 +38,44 @@ namespace TCLite.Framework.Internal
         /// <summary>
         /// Link to a prior saved context
         /// </summary>
-        public TestExecutionContext prior;
-
-        /// <summary>
-        /// The currently executing test
-        /// </summary>
-        private Test currentTest;
-
-        /// <summary>
-        /// The time the test began execution
-        /// </summary>
-        private DateTime startTime;
-
-        /// <summary>
-        /// The active TestResult for the current test
-        /// </summary>
-        private TestResult currentResult;
-		
-		/// <summary>
-		/// The work directory to receive test output
-		/// </summary>
-		private string workDirectory;
-		
-        /// <summary>
-        /// The object on which tests are currently being executed - i.e. the user fixture object
-        /// </summary>
-        private object testObject;
-
-        /// <summary>
-        /// The event listener currently receiving notifications
-        /// </summary>
-        private ITestListener listener = TestListener.NULL;
+        public TestExecutionContext _priorContext;
 
         /// <summary>
         /// The number of assertions for the current test
         /// </summary>
-        private int assertCount;
+        private int _assertCount;
 
-        /// <summary>
-        /// Indicates whether execution should terminate after the first error
-        /// </summary>
-        private bool stopOnError;
-
-        /// <summary>
-        /// Default timeout for test cases
-        /// </summary>
-        private int testCaseTimeout;
-
-        private RandomGenerator randomGenerator;
+        private RandomGenerator _randomGenerator;
 
         /// <summary>
         /// The current culture
         /// </summary>
-        private CultureInfo currentCulture;
+        private CultureInfo _currentCulture;
 
         /// <summary>
         /// The current UI culture
         /// </summary>
-        private CultureInfo currentUICulture;
+        private CultureInfo _currentUICulture;
 
         /// <summary>
         /// Destination for standard output
         /// </summary>
-        private TextWriter outWriter;
+        private TextWriter _outWriter;
 
         /// <summary>
         /// Destination for standard error
         /// </summary>
-        private TextWriter errorWriter;
+        private TextWriter _errorWriter;
 
         /// <summary>
 		/// Indicates whether trace is enabled
 		/// </summary>
-		private bool tracing;
+		private bool _tracing;
 
         /// <summary>
         /// Destination for Trace output
         /// </summary>
-        private TextWriter traceWriter;
+        private TextWriter _traceWriter;
 
         #endregion
 
@@ -127,16 +86,16 @@ namespace TCLite.Framework.Internal
         /// </summary>
         public TestExecutionContext()
 		{
-			this.prior = null;
-            this.testCaseTimeout = 0;
+			this._priorContext = null;
+            this.TestCaseTimeout = 0;
 
-            this.currentCulture = CultureInfo.CurrentCulture;
-            this.currentUICulture = CultureInfo.CurrentUICulture;
+            this._currentCulture = CultureInfo.CurrentCulture;
+            this._currentUICulture = CultureInfo.CurrentUICulture;
 
-			this.outWriter = Console.Out;
-			this.errorWriter = Console.Error;
-            this.traceWriter = null;
-            this.tracing = false;
+			this._outWriter = Console.Out;
+			this._errorWriter = Console.Error;
+            this._traceWriter = null;
+            this._tracing = false;
 
         }
 
@@ -146,23 +105,23 @@ namespace TCLite.Framework.Internal
         /// <param name="other">An existing instance of TestExecutionContext.</param>
 		public TestExecutionContext( TestExecutionContext other )
 		{
-			this.prior = other;
+			this._priorContext = other;
 
-            this.currentTest = other.currentTest;
-            this.currentResult = other.currentResult;
-            this.testObject = other.testObject;
-			this.workDirectory = other.workDirectory;
-            this.listener = other.listener;
-            this.stopOnError = other.stopOnError;
-            this.testCaseTimeout = other.testCaseTimeout;
+            this.CurrentTest = other.CurrentTest;
+            this.CurrentResult = other.CurrentResult;
+            this.TestObject = other.TestObject;
+			this.WorkDirectory = other.WorkDirectory;
+            this.Listener = other.Listener;
+            this.StopOnError = other.StopOnError;
+            this.TestCaseTimeout = other.TestCaseTimeout;
 
-            this.currentCulture = CultureInfo.CurrentCulture;
-            this.currentUICulture = CultureInfo.CurrentUICulture;
+            this._currentCulture = CultureInfo.CurrentCulture;
+            this._currentUICulture = CultureInfo.CurrentUICulture;
 
-			this.outWriter = other.outWriter;
-			this.errorWriter = other.errorWriter;
-            this.traceWriter = other.traceWriter;
-            this.tracing = other.tracing;
+			this._outWriter = other._outWriter;
+			this._errorWriter = other._errorWriter;
+            this._traceWriter = other._traceWriter;
+            this._tracing = other._tracing;
         }
 
         #endregion
@@ -210,66 +169,38 @@ namespace TCLite.Framework.Internal
         /// <summary>
         /// Gets or sets the current test
         /// </summary>
-        public Test CurrentTest
-        {
-            get { return currentTest; }
-            set { currentTest = value; }
-        }
+        public Test CurrentTest { get; set; }
 
         /// <summary>
         /// The time the current test started execution
         /// </summary>
-        public DateTime StartTime
-        {
-            get { return startTime; }
-            set { startTime = value; }
-        }
+        public DateTime StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the current test result
         /// </summary>
-        public TestResult CurrentResult
-        {
-            get { return currentResult; }
-            set { currentResult = value; }
-        }
+        public TestResult CurrentResult { get; set; }
 
         /// <summary>
         /// The current test object - that is the user fixture
         /// object on which tests are being executed.
         /// </summary>
-        public object TestObject
-        {
-            get { return testObject; }
-            set { testObject = value; }
-        }
+        public object TestObject { get; set; }
 		
         /// <summary>
         /// Get or set the working directory
         /// </summary>
-		public string WorkDirectory
-		{
-			get { return workDirectory; }
-			set { workDirectory = value; }
-		}
+		public string WorkDirectory { get; set; }
 
         /// <summary>
         /// Get or set indicator that run should stop on the first error
         /// </summary>
-        public bool StopOnError
-        {
-            get { return stopOnError; }
-            set { stopOnError = value; }
-        }
+        public bool StopOnError { get; set; }
 		
         /// <summary>
         /// The current test event listener
         /// </summary>
-        internal ITestListener Listener
-        {
-            get { return listener; }
-            set { listener = value; }
-        }
+        internal ITestListener Listener { get; set; } = TestListener.NULL;
 
         /// <summary>
         /// Default tolerance value used for floating point equality
@@ -284,11 +215,11 @@ namespace TCLite.Framework.Internal
         {
             get
             {
-                if (randomGenerator == null)
+                if (_randomGenerator == null)
                 {
-                    randomGenerator = new RandomGenerator(currentTest.Seed);
+                    _randomGenerator = new RandomGenerator(CurrentTest.Seed);
                 }
-                return randomGenerator;
+                return _randomGenerator;
             }
         }
 
@@ -299,29 +230,25 @@ namespace TCLite.Framework.Internal
         // TODO: public for tests
         public int AssertCount
         {
-            get { return assertCount; }
-            set { assertCount = value; }
+            get { return _assertCount; }
+            set { _assertCount = value; }
         }
 
         /// <summary>
         /// Gets or sets the test case timeout value
         /// </summary>
-        public int TestCaseTimeout
-        {
-            get { return testCaseTimeout; }
-            set { testCaseTimeout = value; }
-        }
+        public int TestCaseTimeout { get; set; }
 
         /// <summary>
         /// Saves or restores the CurrentCulture
         /// </summary>
         public CultureInfo CurrentCulture
         {
-            get { return currentCulture; }
+            get { return _currentCulture; }
             set
             {
-                currentCulture = value;
-                Thread.CurrentThread.CurrentCulture = currentCulture;
+                _currentCulture = value;
+                Thread.CurrentThread.CurrentCulture = _currentCulture;
             }
         }
 
@@ -330,11 +257,11 @@ namespace TCLite.Framework.Internal
         /// </summary>
         public CultureInfo CurrentUICulture
         {
-            get { return currentUICulture; }
+            get { return _currentUICulture; }
             set
             {
-                currentUICulture = value;
-                Thread.CurrentThread.CurrentUICulture = currentUICulture;
+                _currentUICulture = value;
+                Thread.CurrentThread.CurrentUICulture = _currentUICulture;
             }
         }
 
@@ -343,14 +270,14 @@ namespace TCLite.Framework.Internal
 		/// </summary>
 		internal TextWriter Out
 		{
-			get { return outWriter; }
+			get { return _outWriter; }
 			set 
 			{
-				if ( outWriter != value )
+				if ( _outWriter != value )
 				{
-					outWriter = value; 
+					_outWriter = value; 
 					Console.Out.Flush();
-					Console.SetOut( outWriter );
+					Console.SetOut( _outWriter );
 				}
 			}
 		}
@@ -360,14 +287,14 @@ namespace TCLite.Framework.Internal
 		/// </summary>
 		internal TextWriter Error
 		{
-			get { return errorWriter; }
+			get { return _errorWriter; }
 			set 
 			{
-				if ( errorWriter != value )
+				if ( _errorWriter != value )
 				{
-					errorWriter = value; 
+					_errorWriter = value; 
 					Console.Error.Flush();
-					Console.SetError( errorWriter );
+					Console.SetError( _errorWriter );
 				}
 			}
 		}
@@ -378,17 +305,17 @@ namespace TCLite.Framework.Internal
         /// </summary>
         internal bool Tracing
         {
-            get { return tracing; }
+            get { return _tracing; }
             set
             {
-                if (tracing != value)
+                if (_tracing != value)
                 {
-                    if (traceWriter != null && tracing)
+                    if (_traceWriter != null && _tracing)
                         StopTracing();
 
-                    tracing = value;
+                    _tracing = value;
 
-                    if (traceWriter != null && tracing)
+                    if (_traceWriter != null && _tracing)
                         StartTracing();
                 }
             }
@@ -399,17 +326,17 @@ namespace TCLite.Framework.Internal
         /// </summary>
 		internal TextWriter TraceWriter
 		{
-			get { return traceWriter; }
+			get { return _traceWriter; }
 			set
 			{
-				if ( traceWriter != value )
+				if ( _traceWriter != value )
 				{
-					if ( traceWriter != null  && tracing )
+					if ( _traceWriter != null  && _tracing )
 						StopTracing();
 
-					traceWriter = value;
+					_traceWriter = value;
 
-					if ( traceWriter != null && tracing )
+					if ( _traceWriter != null && _tracing )
 						StartTracing();
 				}
 			}
@@ -417,13 +344,13 @@ namespace TCLite.Framework.Internal
 
 		private void StopTracing()
 		{
-			traceWriter.Close();
+			_traceWriter.Close();
 			System.Diagnostics.Trace.Listeners.Remove( "NUnit" );
 		}
 
 		private void StartTracing()
 		{
-			System.Diagnostics.Trace.Listeners.Add( new TextWriterTraceListener( traceWriter, "NUnit" ) );
+			System.Diagnostics.Trace.Listeners.Add( new TextWriterTraceListener( _traceWriter, "NUnit" ) );
 		}
 
         #endregion
@@ -445,19 +372,19 @@ namespace TCLite.Framework.Internal
         /// </summary>
         public TestExecutionContext Restore()
         {
-            if (prior == null)
+            if (_priorContext == null)
                 throw new InvalidOperationException("TestContext: too many Restores");
 
-            this.TestCaseTimeout = prior.TestCaseTimeout;
+            this.TestCaseTimeout = _priorContext.TestCaseTimeout;
 
-            this.CurrentCulture = prior.CurrentCulture;
-            this.CurrentUICulture = prior.CurrentUICulture;
+            this.CurrentCulture = _priorContext.CurrentCulture;
+            this.CurrentUICulture = _priorContext.CurrentUICulture;
 
-            this.Out = prior.Out;
-            this.Error = prior.Error;
-            this.Tracing = prior.Tracing;
+            this.Out = _priorContext.Out;
+            this.Error = _priorContext.Error;
+            this.Tracing = _priorContext.Tracing;
 
-            return prior;
+            return _priorContext;
         }
 
         /// <summary>
@@ -467,8 +394,8 @@ namespace TCLite.Framework.Internal
         /// </summary>
         public void UpdateContext()
         {
-            this.currentCulture = CultureInfo.CurrentCulture;
-            this.currentUICulture = CultureInfo.CurrentUICulture;
+            this._currentCulture = CultureInfo.CurrentCulture;
+            this._currentUICulture = CultureInfo.CurrentUICulture;
         }
 
         /// <summary>
@@ -476,7 +403,7 @@ namespace TCLite.Framework.Internal
         /// </summary>
         public void IncrementAssertCount()
         {
-            System.Threading.Interlocked.Increment(ref assertCount);
+            System.Threading.Interlocked.Increment(ref _assertCount);
         }
 
         private TestExecutionContext CreateIsolatedContext()
