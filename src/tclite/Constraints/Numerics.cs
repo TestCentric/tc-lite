@@ -44,50 +44,50 @@ namespace TCLite.Framework.Constraints
         }
 
         /// <summary>
-        /// Checks the type of the object, returning true if
-        /// the object is a numeric type.
+        /// Checks the type of the argument, returning true if
+        /// the argument is a numeric type.
         /// </summary>
-        /// <param name="obj">The object to check</param>
-        /// <returns>true if the object is a numeric type</returns>
-        public static bool IsNumericType(object obj)
+        /// <param name="value">The value to check</param>
+        /// <returns>true if the value is a numeric type</returns>
+        public static bool IsNumericType<T>(T value)
         {
-            return IsFloatingPointNumeric(obj) || IsFixedPointNumeric(obj);
+            return IsFloatingPointNumeric(value) || IsFixedPointNumeric(value);
         }
 
         /// <summary>
-        /// Checks the type of the object, returning true if
-        /// the object is a floating point numeric type.
+        /// Checks the type of the argument, returning true if
+        /// it is a floating point numeric type.
         /// </summary>
-        /// <param name="obj">The object to check</param>
-        /// <returns>true if the object is a floating point numeric type</returns>
-        public static bool IsFloatingPointNumeric(object obj)
+        /// <param name="value">The value to check</param>
+        /// <returns>true if the value is a floating point numeric type</returns>
+        private static bool IsFloatingPointNumeric<T>(T value)
         {
-            if (null != obj)
+            if (null != value)
             {
-                if (obj is System.Double) return true;
-                if (obj is System.Single) return true;
+                if (value is System.Double) return true;
+                if (value is System.Single) return true;
             }
             return false;
         }
         /// <summary>
-        /// Checks the type of the object, returning true if
-        /// the object is a fixed point numeric type.
+        /// Checks the type of the argument, returning true if
+        /// it is a fixed point numeric type.
         /// </summary>
-        /// <param name="obj">The object to check</param>
-        /// <returns>true if the object is a fixed point numeric type</returns>
-        public static bool IsFixedPointNumeric(object obj)
+        /// <param name="value">The value to check</param>
+        /// <returns>true if the value is a fixed point numeric type</returns>
+        private static bool IsFixedPointNumeric<T>(T value)
         {
-            if (null != obj)
+            if (null != value)
             {
-                if (obj is System.Byte) return true;
-                if (obj is System.SByte) return true;
-                if (obj is System.Decimal) return true;
-                if (obj is System.Int32) return true;
-                if (obj is System.UInt32) return true;
-                if (obj is System.Int64) return true;
-                if (obj is System.UInt64) return true;
-                if (obj is System.Int16) return true;
-                if (obj is System.UInt16) return true;
+                if (value is System.Byte) return true;
+                if (value is System.SByte) return true;
+                if (value is System.Decimal) return true;
+                if (value is System.Int32) return true;
+                if (value is System.UInt32) return true;
+                if (value is System.Int64) return true;
+                if (value is System.UInt64) return true;
+                if (value is System.Int16) return true;
+                if (value is System.UInt16) return true;
             }
             return false;
         }
@@ -104,7 +104,7 @@ namespace TCLite.Framework.Constraints
         /// <param name="actual">The actual value</param>
         /// <param name="tolerance">A reference to the tolerance in effect</param>
         /// <returns>True if the values are equal</returns>
-        public static bool AreEqual(object expected, object actual, ref Tolerance tolerance)
+        public static bool AreEqual<TExpected,TActual>(TExpected expected, TActual actual, ref Tolerance tolerance)
         {
             if (expected is double || actual is double)
                 return AreEqual(Convert.ToDouble(expected), Convert.ToDouble(actual), ref tolerance);
@@ -366,7 +366,7 @@ namespace TCLite.Framework.Constraints
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
         /// <returns>The relationship of the values to each other</returns>
-        public static int Compare(object expected, object actual)
+        public static int Compare<TExpected,TActual>(TExpected expected, TActual actual)
         {
             if (!IsNumericType(expected) || !IsNumericType(actual))
                 throw new ArgumentException("Both arguments must be numeric");
