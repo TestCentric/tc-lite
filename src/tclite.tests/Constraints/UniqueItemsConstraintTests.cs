@@ -62,7 +62,6 @@ namespace TCLite.Framework.Constraints
             new object[] {new[] {"a", "b", "c", "C"}}
         };
 
-#if NYI
         static readonly IEnumerable<int> RANGE = Enumerable.Range(0, 10000);
 
         static readonly TestCaseData[] PerformanceData =
@@ -85,6 +84,5 @@ namespace TCLite.Framework.Constraints
                     Assert.That(values, Is.Unique);
             }, HelperConstraints.HasMaxTime(100));
         }
-#endif
     }
 }
