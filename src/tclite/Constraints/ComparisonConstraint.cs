@@ -75,12 +75,12 @@ namespace TCLite.Framework.Constraints
         /// <returns>A ConstraintResult</returns>
         protected override ConstraintResult ApplyConstraint<T>(T actual)
         {
-            return new ConstraintResult(this, actual, Matches((IComparable)actual));
+            return new ConstraintResult(this, actual, Matches(actual));
         }
 
         /// <summary>
         /// Protected function overridden by derived class to actually perform the comparison
         /// </summary>
-        protected abstract bool Matches(IComparable actual);
+        protected abstract bool Matches<T>(T actual);
     }
 }

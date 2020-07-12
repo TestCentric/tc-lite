@@ -31,7 +31,6 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, Is.LessThanOrEqualTo(expected));
         }
 
-#if NYI
         [Test]
         public void CanCompareIComparablesOfT()
         {
@@ -39,6 +38,5 @@ namespace TCLite.Framework.Constraints
             ClassWithIComparableOfT actual = new ClassWithIComparableOfT(0);
             Assert.That(actual, Is.LessThanOrEqualTo(expected));
         }
-#endif
     }
 }

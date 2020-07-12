@@ -25,7 +25,7 @@ namespace TCLite.Framework.Constraints
         /// </summary>
         /// <param name="actual">The value to be tested</param>
         /// <returns>True for success, false for failure</returns>
-        protected override bool Matches(IComparable actual)
+        protected override bool Matches<T>(T actual)
         {
             if (ExpectedValue == null || actual == null)
                 throw new ArgumentException("Cannot compare using a null reference");
