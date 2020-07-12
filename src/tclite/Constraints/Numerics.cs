@@ -1,6 +1,6 @@
 // ***********************************************************************
 // Copyright (c) Charlie Poole and TestCentric contributors.
-// Licensed under the MIT License. See LICENSE.txt in root directory.
+// Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
 using System;
@@ -129,6 +129,8 @@ namespace TCLite.Framework.Constraints
 
             return AreEqual(Convert.ToInt32(expected), Convert.ToInt32(actual), tolerance);
         }
+
+        
 
         public static bool AreEqual(double expected, double actual, ref Tolerance tolerance)
         {

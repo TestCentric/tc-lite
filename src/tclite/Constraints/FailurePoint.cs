@@ -14,7 +14,7 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// The location of the failure
         /// </summary>
-        public int Position;
+        public long Position;
 
         /// <summary>
         /// The expected value

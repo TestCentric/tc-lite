@@ -11,6 +11,8 @@ using System.Collections.Generic;
 
 namespace TCLite.Framework.Constraints
 {
+    using Comparers;
+
     /// <summary>
     /// NUnitEqualityComparer encapsulates NUnit's handling of
     /// equality tests between objects.
@@ -19,11 +21,35 @@ namespace TCLite.Framework.Constraints
     {
         private const int BUFFER_SIZE = 4096;
 
+        private IEqualityComparer[] _comparers;
+
         /// <summary>
         /// RecursionDetector used to check for recursion when
         /// evaluating self-referencing enumerables.
         /// </summary>
         private RecursionDetector _recursionDetector;
+
+        public TCLiteEqualityComparer()
+        {
+            var enumerablesComparer = new EnumerablesComparer(this);
+
+            _comparers = new IEqualityComparer[]
+            {
+                new ArraysComparer(this, enumerablesComparer),
+                //new DictionariesComparer(this),
+                new StringsComparer(this),
+                //new StreamsComparer(this),
+                new CharsComparer(this),
+                //new DirectoriesComparer(this),
+                new NumericsComparer(),
+                new DatesAndTimesComparer(this),
+                //new TimeSpanToleranceComparer(),
+                //new TupleComparer(this),
+                //new ValueTupleComparer(this),
+                new EquatablesComparer(this),
+                enumerablesComparer
+            };
+        }
 
         #region Properties
 
@@ -67,7 +93,6 @@ namespace TCLite.Framework.Constraints
 
         public bool AreEqual<TExpected,TActual>(TExpected expected, TActual actual, ref Tolerance tolerance)
         {
-            FailurePoints = new FailurePointList();
             _recursionDetector = new RecursionDetector();
 
             return ObjectsEqual(expected, actual, ref tolerance);
@@ -77,8 +102,10 @@ namespace TCLite.Framework.Constraints
 
         #region Helper Methods
 
-        private bool ObjectsEqual<TExpected,TActual>(TExpected expected, TActual actual, ref Tolerance tolerance)
+        internal bool ObjectsEqual<TExpected,TActual>(TExpected expected, TActual actual, ref Tolerance tolerance)
         {
+            FailurePoints = new FailurePointList();
+
             if (expected == null && actual == null)
                 return true;
 
@@ -92,82 +119,13 @@ namespace TCLite.Framework.Constraints
             if (externalComparer != null)
                 return externalComparer.AreEqual(expected, actual);
 
-            if (Numerics.IsNumericType(expected) && Numerics.IsNumericType(actual))
-                return Numerics.AreEqual(expected, actual, ref tolerance);
-
-            if (expected is Array && actual is Array && !CompareAsCollection)
-                return ArraysEqual(expected as Array, actual as Array, ref tolerance);
-
-#if NYI // Dictionary
-            if (expected is IDictionary && actual is IDictionary)
-                return DictionariesEqual(expected as IDictionary, actual as IDictionary, ref tolerance);
-#endif
-
-            if (expected is string && actual is string)
-                return StringsEqual(expected as string, actual as string);
-
-            if (expected is Stream && actual is Stream)
-                return StreamsEqual(expected as Stream, actual as Stream);
-
-            if (expected is DirectoryInfo && actual is DirectoryInfo)
-                return DirectoriesEqual(expected as DirectoryInfo, actual as DirectoryInfo);
-
-            if (tolerance != null && tolerance.Amount is TimeSpan)
-            {
-                TimeSpan amount = (TimeSpan)tolerance.Amount;
-
-                if (expected is DateTime && actual is DateTime)
-                    return (Convert.ToDateTime(expected) - Convert.ToDateTime(actual)).Duration() <= amount;
-
-                if (expected is TimeSpan && actual is TimeSpan)
-                {
-                    var tsExpected = (TimeSpan)Convert.ChangeType(expected, typeof(TimeSpan));
-                    var tsActual = (TimeSpan)Convert.ChangeType(actual, typeof(TimeSpan));
-                    return (tsExpected - tsActual).Duration() <= amount;
-                }
-            }
-
-            if (expected is IEnumerable && actual is IEnumerable && CompareAsCollection)
-                return EnumerablesEqual((IEnumerable)expected, (IEnumerable)actual, ref tolerance);
-
-            if (expected is IEquatable<TActual>)
-                return (expected as IEquatable<TActual>).Equals(actual);
-            else if (actual is IEquatable<TExpected>)
-                return (actual as IEquatable<TExpected>).Equals(expected);
-
-            if (expected is IEnumerable && actual is IEnumerable)
-                return EnumerablesEqual((IEnumerable)expected, (IEnumerable)actual, ref tolerance);
+            IEqualityComparer comparer = GetEqualityComparer(expected, actual);
+            if (comparer != null)
+                return comparer.AreEqual(expected, actual, ref tolerance);
 
             return expected.Equals(actual);
         }
 
-        private static bool FirstImplementsIEquatableOfSecond(Type first, Type second)
-        {
-            Type[] equatableArguments = GetEquatableGenericArguments(first);
-
-            foreach (var xEquatableArgument in equatableArguments)
-                if (xEquatableArgument.Equals(second))
-                    return true;
-
-            return false;
-        }
-
-        private static Type[] GetEquatableGenericArguments(Type type)
-        {
-            foreach (Type @interface in type.GetInterfaces())
-                if (@interface.IsGenericType && @interface.GetGenericTypeDefinition().Equals(typeof(IEquatable<>)))
-                    return @interface.GetGenericArguments();
-
-            return new Type[0];
-        }
-
-        private static bool InvokeFirstIEquatableEqualsSecond(object first, object second)
-        {
-            MethodInfo equals = typeof(IEquatable<>).MakeGenericType(second.GetType()).GetMethod("Equals");
-
-            return (bool)equals.Invoke(first, new object[] { second });
-        }
-        
         private EqualityAdapter GetExternalComparer(object x, object y)
         {
             foreach (EqualityAdapter adapter in ExternalComparers)
@@ -177,47 +135,34 @@ namespace TCLite.Framework.Constraints
             return null;
         }
 
-        /// <summary>
-        /// Helper method to compare two arrays
-        /// </summary>
-        private bool ArraysEqual(Array expected, Array actual, ref Tolerance tolerance)
+        private IEqualityComparer GetEqualityComparer<TExpected,TActual>(TExpected expected, TActual actual)
         {
-            int rank = expected.Rank;
+            foreach (var comparer in _comparers)
+                if (comparer.CanCompare(expected, actual))
+                    return comparer;
 
-            if (rank != actual.Rank)
-                return false;
-
-            for (int r = 1; r < rank; r++)
-                if (expected.GetLength(r) != actual.GetLength(r))
-                    return false;
-
-            return EnumerablesEqual((IEnumerable)expected, (IEnumerable)actual, ref tolerance);
+            return null;
         }
 
-#if NYI // Dictionary
-        private bool DictionariesEqual(IDictionary expected, IDictionary actual, ref Tolerance tolerance)
-        {
-            if (expected.Count != actual.Count)
-                return false;
+        // private bool DictionariesEqual(IDictionary expected, IDictionary actual, ref Tolerance tolerance)
+        // {
+        //     if (expected.Count != actual.Count)
+        //         return false;
  
-            CollectionTally tally = new CollectionTally(this, expected.Keys);
-            if (!tally.TryRemove(actual.Keys) || tally.Count > 0)
-                return false;
+        //     CollectionTally tally = new CollectionTally(this, expected.Keys);
+        //     if (!tally.TryRemove(actual.Keys) || tally.Count > 0)
+        //         return false;
 
-            foreach (object key in expected.Keys)
-                if (!ObjectsEqual(expected[key], actual[key], ref tolerance))
-                    return false;
+        //     foreach (object key in expected.Keys)
+        //         if (!ObjectsEqual(expected[key], actual[key], ref tolerance))
+        //             return false;
  
-            return true;
-        }
-#endif
+        //     return true;
+        // }
 
-        private bool StringsEqual(string expected, string actual)
+        public bool CheckRecursion(IEnumerable expected, IEnumerable actual)
         {
-            string s1 = IgnoreCase ? expected.ToLower() : expected;
-            string s2 = IgnoreCase ? actual.ToLower() : actual;
-
-            return s1.Equals(s2);
+            return _recursionDetector.CheckRecursion(expected, actual);
         }
 
         private bool EnumerablesEqual(IEnumerable expected, IEnumerable actual, ref Tolerance tolerance)
@@ -254,82 +199,82 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        /// <summary>
-        /// Method to compare two DirectoryInfo objects
-        /// </summary>
-        /// <param name="expected">first directory to compare</param>
-        /// <param name="actual">second directory to compare</param>
-        /// <returns>true if equivalent, false if not</returns>
-        private static bool DirectoriesEqual(DirectoryInfo expected, DirectoryInfo actual)
-        {
-            // Do quick compares first
-            if (expected.Attributes != actual.Attributes ||
-                expected.CreationTime != actual.CreationTime ||
-                expected.LastAccessTime != actual.LastAccessTime)
-            {
-                return false;
-            }
+        // /// <summary>
+        // /// Method to compare two DirectoryInfo objects
+        // /// </summary>
+        // /// <param name="expected">first directory to compare</param>
+        // /// <param name="actual">second directory to compare</param>
+        // /// <returns>true if equivalent, false if not</returns>
+        // private static bool DirectoriesEqual(DirectoryInfo expected, DirectoryInfo actual)
+        // {
+        //     // Do quick compares first
+        //     if (expected.Attributes != actual.Attributes ||
+        //         expected.CreationTime != actual.CreationTime ||
+        //         expected.LastAccessTime != actual.LastAccessTime)
+        //     {
+        //         return false;
+        //     }
 
-            // TODO: This is temporary and will generate false negatives,
-            return expected.FullName.Replace("\\", "/") == actual.FullName.Replace("\\", "/");
-            // TODO: Find a cleaner way to do this
-            //return new SamePathConstraint(expected.FullName).Matches(actual.FullName);
-        }
+        //     // TODO: This is temporary and will generate false negatives,
+        //     return expected.FullName.Replace("\\", "/") == actual.FullName.Replace("\\", "/");
+        //     // TODO: Find a cleaner way to do this
+        //     //return new SamePathConstraint(expected.FullName).Matches(actual.FullName);
+        // }
 
-        private bool StreamsEqual(Stream expected, Stream actual)
-        {
-            if (expected == actual) return true;
+        // private bool StreamsEqual(Stream expected, Stream actual)
+        // {
+        //     if (expected == actual) return true;
 
-            if (!expected.CanRead)
-                throw new ArgumentException("Stream is not readable", "expected");
-            if (!actual.CanRead)
-                throw new ArgumentException("Stream is not readable", "actual");
-            if (!expected.CanSeek)
-                throw new ArgumentException("Stream is not seekable", "expected");
-            if (!actual.CanSeek)
-                throw new ArgumentException("Stream is not seekable", "actual");
+        //     if (!expected.CanRead)
+        //         throw new ArgumentException("Stream is not readable", "expected");
+        //     if (!actual.CanRead)
+        //         throw new ArgumentException("Stream is not readable", "actual");
+        //     if (!expected.CanSeek)
+        //         throw new ArgumentException("Stream is not seekable", "expected");
+        //     if (!actual.CanSeek)
+        //         throw new ArgumentException("Stream is not seekable", "actual");
 
-            if (expected.Length != actual.Length) return false;
+        //     if (expected.Length != actual.Length) return false;
 
-            byte[] bufferExpected = new byte[BUFFER_SIZE];
-            byte[] bufferActual = new byte[BUFFER_SIZE];
+        //     byte[] bufferExpected = new byte[BUFFER_SIZE];
+        //     byte[] bufferActual = new byte[BUFFER_SIZE];
 
-            BinaryReader binaryReaderExpected = new BinaryReader(expected);
-            BinaryReader binaryReaderActual = new BinaryReader(actual);
+        //     BinaryReader binaryReaderExpected = new BinaryReader(expected);
+        //     BinaryReader binaryReaderActual = new BinaryReader(actual);
 
-            long expectedPosition = expected.Position;
-            long actualPosition = actual.Position;
+        //     long expectedPosition = expected.Position;
+        //     long actualPosition = actual.Position;
 
-            try
-            {
-                binaryReaderExpected.BaseStream.Seek(0, SeekOrigin.Begin);
-                binaryReaderActual.BaseStream.Seek(0, SeekOrigin.Begin);
+        //     try
+        //     {
+        //         binaryReaderExpected.BaseStream.Seek(0, SeekOrigin.Begin);
+        //         binaryReaderActual.BaseStream.Seek(0, SeekOrigin.Begin);
 
-                for (long readByte = 0; readByte < expected.Length; readByte += BUFFER_SIZE)
-                {
-                    binaryReaderExpected.Read(bufferExpected, 0, BUFFER_SIZE);
-                    binaryReaderActual.Read(bufferActual, 0, BUFFER_SIZE);
+        //         for (long readByte = 0; readByte < expected.Length; readByte += BUFFER_SIZE)
+        //         {
+        //             binaryReaderExpected.Read(bufferExpected, 0, BUFFER_SIZE);
+        //             binaryReaderActual.Read(bufferActual, 0, BUFFER_SIZE);
 
-                    for (int count = 0; count < BUFFER_SIZE; ++count)
-                    {
-                        if (bufferExpected[count] != bufferActual[count])
-                        {
-                            FailurePoint fp = new FailurePoint();
-                            fp.Position = (int)readByte + count;
-                            FailurePoints.Insert(0, fp);
-                            return false;
-                        }
-                    }
-                }
-            }
-            finally
-            {
-                expected.Position = expectedPosition;
-                actual.Position = actualPosition;
-            }
+        //             for (int count = 0; count < BUFFER_SIZE; ++count)
+        //             {
+        //                 if (bufferExpected[count] != bufferActual[count])
+        //                 {
+        //                     FailurePoint fp = new FailurePoint();
+        //                     fp.Position = (int)readByte + count;
+        //                     FailurePoints.Insert(0, fp);
+        //                     return false;
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     finally
+        //     {
+        //         expected.Position = expectedPosition;
+        //         actual.Position = actualPosition;
+        //     }
 
-            return true;
-        }
+        //     return true;
+        // }
 
         #endregion
 
