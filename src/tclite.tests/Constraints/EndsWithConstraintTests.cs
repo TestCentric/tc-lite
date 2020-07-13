@@ -15,9 +15,9 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedDescription => "String ending with \"hello\"";
         protected override string ExpectedRepresentation => "<endswith \"hello\">";
 
-        protected override string[] SuccessData => new string[] { "hello", "I said hello" };
+        protected static new string[] SuccessData => new string[] { "hello", "I said hello" };
 
-        protected override  TestCaseData[] FailureData => new TestCaseData[] {
+        protected static new  TestCaseData[] FailureData => new TestCaseData[] {
             new TestCaseData( "goodbye", "\"goodbye\"" ), 
             new TestCaseData( "hello there", "\"hello there\"" ),
             new TestCaseData( "say hello to Fred", "\"say hello to Fred\"" ),
@@ -32,9 +32,9 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedDescription => "String ending with \"hello\", ignoring case";
         protected override string ExpectedRepresentation => "<endswith \"hello\">";
 
-        protected override string[] SuccessData => new string[] { "HELLO", "I said Hello" };
+        static string[] SuccessData => new string[] { "HELLO", "I said Hello" };
 
-        protected override TestCaseData[] FailureData => new TestCaseData[]
+        static TestCaseData[] FailureData => new TestCaseData[]
         {
             new TestCaseData( "goodbye", "\"goodbye\"" ), 
             new TestCaseData( "What the hell?", "\"What the hell?\"" ),

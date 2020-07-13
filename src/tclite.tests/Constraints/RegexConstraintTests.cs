@@ -15,9 +15,9 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedDescription => "String matching \"h.ll\"";
         protected override string ExpectedRepresentation => "<regex \"h.ll\">";
 
-        protected override string[] SuccessData => new string[] { "hello", "top of the hill", "hall closet", "say hello to fred", "What the hell?" };
+        static string[] SuccessData => new string[] { "hello", "top of the hill", "hall closet", "say hello to fred", "What the hell?" };
 
-        protected override TestCaseData[] FailureData => new TestCaseData[]
+        static TestCaseData[] FailureData => new TestCaseData[]
         {
             new TestCaseData( "goodbye", "\"goodbye\"" ),
             new TestCaseData( "HELLO", "\"HELLO\"" ),

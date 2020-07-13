@@ -18,11 +18,6 @@ namespace TCLite.Framework.Constraints
         protected abstract string ExpectedDescription { get; }
         protected abstract string ExpectedRepresentation { get; }
 
-        protected abstract TExpected[] SuccessData { get; }
-        protected abstract TestCaseData[] FailureData { get; }
-        // TODO: Make this abstract after all classes define it
-        protected virtual TestCaseData[] InvalidData => new TestCaseData[0];
-
         [Test]
         public void ProvidesProperDescription()
         {
@@ -35,7 +30,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(Constraint.ToString(), Is.EqualTo(ExpectedRepresentation));
         }
 
-        [TestCaseSource(nameof(SuccessData))]
+        [TestCaseSource("SuccessData")]
         public void SucceedsWithGoodValues(TExpected value)
         {
             var result = Constraint.ApplyTo(value);
@@ -47,7 +42,7 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        [TestCaseSource(nameof(FailureData))]
+        [TestCaseSource("FailureData")]
         public void FailsWithBadValues(TExpected badValue, string message)
         {
             string NL = Environment.NewLine;
@@ -62,7 +57,7 @@ namespace TCLite.Framework.Constraints
                 TextMessageWriter.Pfx_Actual + message + NL));
         }
 
-        [TestCaseSource(nameof(InvalidData))]
+        [TestCaseSource("InvalidData")]
         public void InvalidDataThrowsException(object value, Type exType)
         {
             Assert.Throws(exType, () =>

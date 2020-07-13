@@ -72,7 +72,7 @@ namespace TCLite.Framework.Api
 
         #region EqualityTests
 
-        private TestCaseData[] SuccessData = new TestCaseData[]
+        private static TestCaseData[] SuccessData = new TestCaseData[]
         {
             new TestCaseData(new ResultState(TestStatus.Failed), new ResultState(TestStatus.Failed)),
             new TestCaseData(new ResultState(TestStatus.Skipped, "Ignored"), new ResultState(TestStatus.Skipped, "Ignored")),
@@ -85,7 +85,7 @@ namespace TCLite.Framework.Api
             Assert.AreEqual(expected, actual);
         }
 
-        private TestCaseData[] FailureData = new TestCaseData[]
+        private static TestCaseData[] FailureData = new TestCaseData[]
         {
             new TestCaseData(new ResultState(TestStatus.Passed), new ResultState(TestStatus.Failed)),
             new TestCaseData(new ResultState(TestStatus.Failed, "Error"), new ResultState(TestStatus.Failed)),

@@ -14,14 +14,14 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedDescription => "False";
         protected override string ExpectedRepresentation => "<false>";
 
-        protected override bool[] SuccessData => new bool[] { false, 2 + 2 == 5 };
-        protected override TestCaseData[] FailureData => new TestCaseData[]
+        static bool[] SuccessData => new bool[] { false, 2 + 2 == 5 };
+        static TestCaseData[] FailureData => new TestCaseData[]
         {
             new TestCaseData(true, "True"),
             new TestCaseData(2 + 2 == 4, "True")
         };
 
-        protected override TestCaseData[] InvalidData => new TestCaseData[]
+        static TestCaseData[] InvalidData => new TestCaseData[]
         {
             new TestCaseData("hello", typeof(ArgumentException)),
             new TestCaseData(null, typeof(ArgumentNullException))

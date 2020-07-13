@@ -12,9 +12,9 @@ namespace TCLite.Framework.Constraints.Tests
         protected override string ExpectedDescription => "42 or 99";
         protected override string ExpectedRepresentation => "<or <equal 42> <equal 99>>";
 
-        protected override object[] SuccessData => new object[] { 99, 42 };
+        static object[] SuccessData => new object[] { 99, 42 };
 
-        protected override TestCaseData[] FailureData => new TestCaseData[]
+        static TestCaseData[] FailureData => new TestCaseData[]
         {
             new TestCaseData(37, "37")
         };

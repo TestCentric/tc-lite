@@ -13,8 +13,8 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedDescription => "greater than 40 and less than 50";
         protected override string ExpectedRepresentation => "<and <greaterthan 40> <lessthan 50>>";
 
-        protected override object[] SuccessData => new object[] { 42 };
-        protected override TestCaseData[] FailureData => new TestCaseData[]
+        static object[] SuccessData => new object[] { 42 };
+        static TestCaseData[] FailureData => new TestCaseData[]
         {
             new TestCaseData(37, "37"),
             new TestCaseData(53, "53")

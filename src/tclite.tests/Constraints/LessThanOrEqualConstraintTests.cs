@@ -16,9 +16,9 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedDescription => "less than or equal to 5";
         protected override string ExpectedRepresentation => "<lessthanorequal 5>";
 
-        protected override IComparable[] SuccessData => new IComparable[] { 4, 5 };
+        static IComparable[] SuccessData => new IComparable[] { 4, 5 };
 
-        protected override TestCaseData[] FailureData => new TestCaseData[]
+        static TestCaseData[] FailureData => new TestCaseData[]
         {
             new TestCaseData(6, "6")
         };

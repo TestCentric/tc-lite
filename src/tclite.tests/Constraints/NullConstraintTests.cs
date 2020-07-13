@@ -17,8 +17,8 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedDescription => "null";
         protected override string ExpectedRepresentation => "<null>";
 
-        protected override object[] SuccessData => new object[] { null, (string)null };
-        protected override TestCaseData[] FailureData => new TestCaseData[]
+        static object[] SuccessData = new object[] { null, (string)null };
+        static TestCaseData[] FailureData = new TestCaseData[]
         {
             new TestCaseData("hello", "\"hello\""),
             new TestCaseData(42, "42")

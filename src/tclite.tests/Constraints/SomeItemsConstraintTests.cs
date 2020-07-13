@@ -17,12 +17,12 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedDescription => "some item hello";
         protected override string ExpectedRepresentation => "<some <equal \"hello\">>";
 
-        protected override IEnumerable<string>[] SuccessData => new IEnumerable<string>[]
+        static IEnumerable<string>[] SuccessData => new IEnumerable<string>[]
         {
             new string[] { "bonjour", "hello", "goodbye" }
         };
 
-        protected override TestCaseData[] FailureData => new TestCaseData[]
+        static TestCaseData[] FailureData => new TestCaseData[]
         {
             new TestCaseData( new string[] { "goodbye", "so long" }, "< \"goodbye\", \"so long\" >"),
             new TestCaseData( new string[] { "Bonjour", "Hello", "Goodbye" }, "< \"Bonjour\", \"Hello\", \"Goodbye\" >")

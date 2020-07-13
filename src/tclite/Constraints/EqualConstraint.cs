@@ -322,10 +322,14 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// Returns a constraint that tests two items for equality
         /// </summary>
-        public EqualConstraint<T> EqualTo<T>(T expected)
-        {
-            return (EqualConstraint<T>)Append(new EqualConstraint<T>(expected));
-        }
+        public EqualConstraint<T> EqualTo<T>(T expected) =>
+            (EqualConstraint<T>)Append(new EqualConstraint<T>(expected));
+
+        /// <summary>
+        /// Returns a constraint that tests if item is equal to zero
+        /// </summary>
+        public EqualConstraint<int> Zero =>
+            (EqualConstraint<int>)Append(new EqualConstraint<int>(0));
     }
 
     public partial class Is_Syntax
@@ -337,5 +341,10 @@ namespace TCLite.Framework.Constraints
         {
             return new EqualConstraint<T>(expected);
         }
+
+        /// <summary>
+        /// Returns a constraint that tests if item is equal to zero
+        /// </summary>
+        public static EqualConstraint<int> Zero => new EqualConstraint<int>(0);
     }
 }

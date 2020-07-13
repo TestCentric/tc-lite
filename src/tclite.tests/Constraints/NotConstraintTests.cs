@@ -16,9 +16,9 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedRepresentation => "<not <equal 42>>";
         private static readonly string NL = Environment.NewLine;
 
-        protected override object[] SuccessData => new object[] { 99, null, "Hello" };
+        static object[] SuccessData = new object[] { 99, null, "Hello" };
 
-        protected override TestCaseData[] FailureData => new TestCaseData[]
+        static TestCaseData[] FailureData = new TestCaseData[]
         {
             new TestCaseData(42, "42")
         };

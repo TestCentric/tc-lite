@@ -20,16 +20,13 @@ namespace TCLite.Framework
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
     public class TestCaseSourceAttribute : DataAttribute, ITestCaseSource, IImplyFixture
     {
-        private readonly string sourceName;
-        private readonly Type sourceType;
-
         /// <summary>
         /// Construct with the name of the method, property or field that will prvide data
         /// </summary>
         /// <param name="sourceName">The name of the method, property or field that will provide data</param>
         public TestCaseSourceAttribute(string sourceName)
         {
-            this.sourceName = sourceName;
+            SourceName = sourceName;
         }
 
         /// <summary>
@@ -39,8 +36,8 @@ namespace TCLite.Framework
         /// <param name="sourceName">The name of the method, property or field that will provide data</param>
         public TestCaseSourceAttribute(Type sourceType, string sourceName)
         {
-            this.sourceType = sourceType;
-            this.sourceName = sourceName;
+            SourceType = sourceType;
+            SourceName = sourceName;
         }
         
         /// <summary>
@@ -49,35 +46,24 @@ namespace TCLite.Framework
         /// <param name="sourceType">The type that will provide data</param>
         public TestCaseSourceAttribute(Type sourceType)
         {
-            this.sourceType = sourceType;
+            SourceType = sourceType;
         }
 
         /// <summary>
         /// The name of a the method, property or fiend to be used as a source
         /// </summary>
-        public string SourceName
-        {
-            get { return sourceName; }   
-        }
+        public string SourceName { get; }
 
         /// <summary>
         /// A Type to be used as a source
         /// </summary>
-        public Type SourceType
-        {
-            get { return sourceType;  }
-        }
+        public Type SourceType { get; }
 
-        private string category;
         /// <summary>
         /// Gets or sets the category associated with this test.
         /// May be a single category or a comma-separated list.
         /// </summary>
-        public string Category 
-        {
-            get { return category; }
-            set { category = value; }
-        }
+        public string Category { get; set; }
 
         #region ITestCaseSource Members
         /// <summary>
@@ -148,39 +134,52 @@ namespace TCLite.Framework
         {
             IEnumerable source = null;
 
-            Type sourceType = this.sourceType;
-            if (sourceType == null)
-                sourceType = method.ReflectedType;
+            Type sourceType = SourceType ?? method.ReflectedType;
 
-            if (this.sourceName == null)
+            if (SourceName == null)
             {
                 return Reflect.Construct(sourceType) as IEnumerable;
             }
 
-            MemberInfo[] members = sourceType.GetMember(sourceName,
+            MemberInfo[] members = sourceType.GetMember(SourceName,
                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
             if (members.Length >= 1)
             {
                 MemberInfo member = members[0];
-                object sourceobject = Internal.Reflect.Construct(sourceType);
+                bool nonStaticSourceSpecified = false;
                 switch (member.MemberType)
                 {
                     case MemberTypes.Field:
                         FieldInfo field = member as FieldInfo;
-                        source = (IEnumerable)field.GetValue(sourceobject);
-                        break;
+                        return field.IsStatic
+                            ? (IEnumerable)field.GetValue(null)
+                            : SourceMustBeStaticError();
                     case MemberTypes.Property:
                         PropertyInfo property = member as PropertyInfo;
-                        source = (IEnumerable)property.GetValue(sourceobject, null);
-                        break;
+                        return property.GetMethod.IsStatic
+                            ? (IEnumerable)property.GetValue(null, null)
+                            : SourceMustBeStaticError();
                     case MemberTypes.Method:
                         MethodInfo m = member as MethodInfo;
-                        source = (IEnumerable)m.Invoke(sourceobject, null);
-                        break;
+                        return m.IsStatic
+                            ? (IEnumerable)m.Invoke(null, null)
+                            : SourceMustBeStaticError();
                 }
             }
+
             return source;
         }
+
+        private static IEnumerable SourceMustBeStaticError()
+        {
+            var parms = new ParameterSet();
+            parms.RunState = RunState.NotRunnable;
+            parms.Properties.Set(
+                PropertyNames.SkipReason,
+                "The sourceName specified on a TestCaseSourceAttribute must refer to a static field, property or method.");
+            return new ParameterSet[] { parms };
+        }
+
         #endregion
 
     }

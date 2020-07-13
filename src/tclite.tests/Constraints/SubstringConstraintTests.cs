@@ -15,9 +15,9 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedDescription => "String containing \"hello\"";
         protected override string ExpectedRepresentation => "<substring \"hello\">";
 
-        protected override string[] SuccessData => new string[] { "hello", "hello there", "I said hello", "say hello to fred" };
+        static string[] SuccessData => new string[] { "hello", "hello there", "I said hello", "say hello to fred" };
 
-        protected override TestCaseData[] FailureData => new TestCaseData[] {
+        static TestCaseData[] FailureData => new TestCaseData[] {
             new TestCaseData( "goodbye", "\"goodbye\"" ),
             new TestCaseData( "HELLO", "\"HELLO\"" ),
             new TestCaseData( "What the hell?", "\"What the hell?\"" ),
@@ -114,9 +114,9 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedDescription => "String containing \"hello\", ignoring case";
         protected override string ExpectedRepresentation => "<substring \"hello\">";
 
-        protected override string[] SuccessData => new string[] { "Hello", "HellO there", "I said HELLO", "say hello to fred" };
+        static string[] SuccessData => new string[] { "Hello", "HellO there", "I said HELLO", "say hello to fred" };
 
-        protected override TestCaseData[] FailureData => new TestCaseData[] {
+        static TestCaseData[] FailureData => new TestCaseData[] {
             new TestCaseData( "goodbye", "\"goodbye\"" ),
             new TestCaseData( "What the hell?", "\"What the hell?\"" ),
             new TestCaseData( string.Empty, "<string.Empty>" ),

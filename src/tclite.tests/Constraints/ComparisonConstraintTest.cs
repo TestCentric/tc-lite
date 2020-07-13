@@ -16,7 +16,7 @@ namespace TCLite.Framework.Constraints
     {
         private ComparisonConstraint<int> ComparisonConstraint => Constraint as ComparisonConstraint<int>;
 
-        protected override TestCaseData[] InvalidData => new TestCaseData[]
+        static TestCaseData[] InvalidData => new TestCaseData[]
         { 
             new TestCaseData(null, typeof(ArgumentNullException)),
             new TestCaseData("xxx", typeof(ArgumentException))

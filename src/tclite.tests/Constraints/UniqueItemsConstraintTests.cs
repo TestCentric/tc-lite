@@ -17,8 +17,8 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedRepresentation => "<uniqueitems>";
         protected override string ExpectedDescription => "all items unique";
 
-        protected override IEnumerable[] SuccessData => new int[][] { new [] { 1, 3, 17, -2, 34 }, new int[0] };
-        protected override TestCaseData[] FailureData => new TestCaseData[]
+        static IEnumerable[] SuccessData => new int[][] { new [] { 1, 3, 17, -2, 34 }, new int[0] };
+        static TestCaseData[] FailureData => new TestCaseData[]
         {
             new TestCaseData(new int[] { 1, 3, 17, 3, 34 }, "< 1, 3, 17, 3, 34 >" )
         };

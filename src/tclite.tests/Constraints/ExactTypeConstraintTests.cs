@@ -12,9 +12,9 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedDescription => string.Format("<{0}>", typeof(D1));
         protected override string ExpectedRepresentation => string.Format("<typeof {0}>", typeof(D1));
 
-        protected override object[] SuccessData => new object[] { new D1() };
+        static object[] SuccessData => new object[] { new D1() };
 
-        protected override TestCaseData[] FailureData => new TestCaseData[] { 
+        static TestCaseData[] FailureData => new TestCaseData[] { 
             new TestCaseData( new B(), "<" + typeof(B).FullName + ">" ),
             new TestCaseData( new D2(), "<" + typeof(D2).FullName + ">" )
         };

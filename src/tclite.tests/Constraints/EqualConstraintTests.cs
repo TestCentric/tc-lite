@@ -22,9 +22,9 @@ namespace TCLite.Framework.Constraints
 
         internal static object[] SuccessData => new object[] { 4, 4.0f, 4.0d, 4.0000m };
 
-        internal object[] FailureData = new object[] { 
+        internal static object[] FailureData = new object[] { 
             new TestCaseData( 5, "5" ), 
-            new TestCaseData( null, "null" ),
+            //new TestCaseData( null, "null" ),
             new TestCaseData( "Hello", "\"Hello\"" ),
             new TestCaseData( double.NaN, "NaN" ),
             new TestCaseData( double.PositiveInfinity, "Infinity" ) };
@@ -33,6 +33,12 @@ namespace TCLite.Framework.Constraints
         public void ApplyConstraintSucceeds<T>(T actual)
         {
             Assert.That(_constraint.ApplyTo(actual).IsSuccess);
+        }
+
+        [TestCaseSource(nameof(FailureData))]
+        public void ApplyConstraintFails<T>(T actual, string message)
+        {
+            Assert.IsFalse(_constraint.ApplyTo(actual).IsSuccess);
         }
 
         [TestCase(float.NaN)]
