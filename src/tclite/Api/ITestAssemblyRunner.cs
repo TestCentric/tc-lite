@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace TCLite.Framework.Api
@@ -21,7 +21,7 @@ namespace TCLite.Framework.Api
         /// Gets the tree of loaded tests, or null if
         /// no tests have been loaded.
         /// </summary>
-        ITest LoadedTest { get; }
+        Tests.TestSuite LoadedTest { get; }
 
         #endregion
 
@@ -31,19 +31,10 @@ namespace TCLite.Framework.Api
         /// Loads the tests found in an Assembly, returning an 
         /// indication of whether or not the load succeeded.
         /// </summary>
-        /// <param name="assemblyName">File name of the assembly to load</param>
-        /// <param name="settings">Dictionary of settings to use in loading the test</param>
-        /// <returns>True if the load was successful</returns>
-        bool Load(string assemblyName, System.Collections.IDictionary settings);
-
-        /// <summary>
-        /// Loads the tests found in an Assembly, returning an 
-        /// indication of whether or not the load succeeded.
-        /// </summary>
         /// <param name="assembly">The assembly to load</param>
         /// <param name="settings">Dictionary of settings to use in loading the test</param>
         /// <returns>True if the load was successful</returns>
-        bool Load(Assembly assembly, System.Collections.IDictionary settings);
+        bool Load(Assembly assembly, IDictionary<string,object> settings);
 
         ///// <summary>
         ///// Count Test Cases using a filter

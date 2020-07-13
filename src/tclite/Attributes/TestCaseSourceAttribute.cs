@@ -146,7 +146,6 @@ namespace TCLite.Framework
             if (members.Length >= 1)
             {
                 MemberInfo member = members[0];
-                bool nonStaticSourceSpecified = false;
                 switch (member.MemberType)
                 {
                     case MemberTypes.Field:

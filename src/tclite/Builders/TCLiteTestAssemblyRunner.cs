@@ -5,67 +5,34 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using TCLite.Framework.Api;
 using TCLite.Framework.Tests;
+using TCLite.Framework.Internal;
 using TCLite.Framework.WorkItems;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Framework.Builders
 {
     /// <summary>
     /// Default implementation of ITestAssemblyRunner
     /// </summary>
     public class TCLiteTestAssemblyRunner : ITestAssemblyRunner
     {
-        private IDictionary settings;
-        private ITestAssemblyBuilder builder;
-        private TestSuite loadedTest;
-        //private Thread runThread;
+        private IDictionary<string, object> _settings;
 
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TCLiteTestAssemblyRunner"/> class.
-        /// </summary>
-        /// <param name="builder">The builder.</param>
-        public TCLiteTestAssemblyRunner(ITestAssemblyBuilder builder)
-        {
-            this.builder = builder;
-        }
-
-        #endregion
+        TCLiteTestFixtureBuilder _builder = new TCLiteTestFixtureBuilder();
 
         #region Properties
 
         /// <summary>
-        /// TODO: Documentation needed for property
+        /// Root of the tree of loaded tests or null if none have been loaded
         /// </summary>
-        public ITest LoadedTest
-        {
-            get
-            {
-                return this.loadedTest;
-            }
-        }
+        public TestSuite LoadedTest { get; private set; }
 
         #endregion
 
-        #region Methods
-
-        /// <summary>
-        /// Loads the tests found in an Assembly
-        /// </summary>
-        /// <param name="assemblyName">File name of the assembly to load</param>
-        /// <param name="settings">Dictionary of option settings for loading the assembly</param>
-        /// <returns>True if the load was successful</returns>
-        public bool Load(string assemblyName, IDictionary settings)
-        {
-            this.settings = settings;
-            this.loadedTest = this.builder.Build(assemblyName, settings);
-            if (loadedTest == null) return false;
-
-            return true;
-        }
+        #region Public Methods
 
         /// <summary>
         /// Loads the tests found in an Assembly
@@ -73,24 +40,16 @@ namespace TCLite.Framework.Internal
         /// <param name="assembly">The assembly to load</param>
         /// <param name="settings">Dictionary of option settings for loading the assembly</param>
         /// <returns>True if the load was successful</returns>
-        public bool Load(Assembly assembly, IDictionary settings)
+        public bool Load(Assembly assembly, IDictionary<string, object> settings)
         {
-            this.settings = settings;
-            this.loadedTest = this.builder.Build(assembly, settings);
-            if (loadedTest == null) return false;
+            _settings = settings;
 
-            return true;
+            var fixtures = GetFixtures(assembly);
+
+            return fixtures.Count > 0
+                ? (LoadedTest = BuildTestAssembly(assembly, fixtures)) != null
+                : false;
         }
-
-        ///// <summary>
-        ///// Count Test Cases using a filter
-        ///// </summary>
-        ///// <param name="filter">The filter to apply</param>
-        ///// <returns>The number of test cases found</returns>
-        //public int CountTestCases(TestFilter filter)
-        //{
-        //    return this.suite.CountTestCases(filter);
-        //}
 
         /// <summary>
         /// Run selected tests and return a test result. The test is run synchronously,
@@ -103,19 +62,60 @@ namespace TCLite.Framework.Internal
         {
             TestExecutionContext context = new TestExecutionContext();
 
-            if (this.settings.Contains("WorkDirectory"))
-                context.WorkDirectory = (string)this.settings["WorkDirectory"];
+            if (this._settings.ContainsKey("WorkDirectory"))
+                context.WorkDirectory = (string)this._settings["WorkDirectory"];
             else
                 context.WorkDirectory = Environment.CurrentDirectory;
 
             context.Listener = listener;
 
-            WorkItem workItem = new CompositeWorkItem(loadedTest, filter);
+            WorkItem workItem = new CompositeWorkItem(LoadedTest, filter);
             workItem.Execute(context);
 
             while (workItem.State != WorkItemState.Complete)
                 System.Threading.Thread.Sleep(5);
             return workItem.Result;
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private IList GetFixtures(Assembly assembly)
+        {
+            var fixtures = new List<object>();
+
+            foreach (Type testType in assembly.GetTypes())
+            {
+                if (_builder.CanBuildFrom(testType))
+                    fixtures.Add(_builder.BuildFrom(testType));
+            }
+
+            return fixtures;
+        }
+
+        private TestSuite BuildTestAssembly(Assembly assembly, IList fixtures)
+        {
+            string assemblyPath = AssemblyHelper.GetAssemblyPath(assembly);
+
+            TestSuite testAssembly = new TestAssembly(assembly, assemblyPath);
+            testAssembly.Seed = Randomizer.InitialSeed;
+
+            foreach (Test fixture in fixtures)
+                testAssembly.Add(fixture);
+
+            if (fixtures.Count == 0)
+            {
+                testAssembly.RunState = RunState.NotRunnable;
+                testAssembly.Properties.Set(PropertyNames.SkipReason, "Has no TestFixtures");
+            }
+
+            testAssembly.ApplyAttributesToTest(assembly);
+
+            testAssembly.Properties.Set(PropertyNames.ProcessID, System.Diagnostics.Process.GetCurrentProcess().Id);
+            testAssembly.Properties.Set(PropertyNames.AppDomain, AppDomain.CurrentDomain.FriendlyName);
+
+            return testAssembly;
         }
 
         #endregion

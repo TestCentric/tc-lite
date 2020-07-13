@@ -7,12 +7,6 @@ using System;
 
 namespace TCLite.Framework.Constraints.Comparers
 {
-    internal interface IEqualityComparer
-    {
-        bool CanCompare<T1,T2>(T1 x, T2 y);
-        bool AreEqual<T1,T2>(T1 x, T2 y, ref Tolerance tolerance);
-    }
-
     /// <summary>
     /// Comparator for two <see cref="Array"/>s.
     /// </summary>

@@ -15,9 +15,9 @@ namespace TCLite.Framework.Constraints
         protected override string ExpectedDescription => "String ending with \"hello\"";
         protected override string ExpectedRepresentation => "<endswith \"hello\">";
 
-        protected static new string[] SuccessData => new string[] { "hello", "I said hello" };
+        protected static string[] SuccessData => new string[] { "hello", "I said hello" };
 
-        protected static new  TestCaseData[] FailureData => new TestCaseData[] {
+        protected static TestCaseData[] FailureData => new TestCaseData[] {
             new TestCaseData( "goodbye", "\"goodbye\"" ), 
             new TestCaseData( "hello there", "\"hello there\"" ),
             new TestCaseData( "say hello to Fred", "\"say hello to Fred\"" ),
