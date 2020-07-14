@@ -127,7 +127,14 @@ namespace TCLite.Framework.Tests
                 command = new ApplyToContextCommand(command, change);
 
             if (!Method.IsStatic)
-                command = new IsolatedFixtureCommand(command);
+            {
+                // Try to locate the parent fixture. In current implementations, the test method
+                // is either one or two levels below the TestFixture - if this changes,
+                // so should the following code.
+                TestFixture fixture = Parent as TestFixture ?? Parent?.Parent as TestFixture;
+
+                command = new IsolatedFixtureCommand(command, fixture);
+            }
 
             return command;
         }

@@ -124,9 +124,9 @@ namespace TCLite.Framework.WorkItems
                 WorkItem child = (WorkItem)_children.Dequeue();
                 Test test = child.Test;
                 TestResult result = test.MakeTestResult();
-                if (Result.ResultState.Status == TestStatus.Failed)
-                    result.SetResult(ResultState.Failure, "TestFixtureSetUp Failed");
-                else
+                // if (Result.ResultState.Status == TestStatus.Failed)
+                //     result.SetResult(ResultState.Failure, "TestFixtureSetUp Failed");
+                // else
                     result.SetResult(Result.ResultState, Result.Message);
                 Result.AddResult(result);
             }

@@ -4,7 +4,7 @@
 // ***********************************************************************
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Text;
@@ -18,7 +18,7 @@ namespace TCLite.Framework.Builders
 	/// <summary>
 	/// Built-in SuiteBuilder for NUnit TestFixture
 	/// </summary>
-	public class TCLiteTestFixtureBuilder : ISuiteBuilder
+	public class TCLiteTestFixtureBuilder : ITestFixtureBuilder
     {
         #region Static Fields
                 
@@ -50,12 +50,14 @@ namespace TCLite.Framework.Builders
 
         #region ISuiteBuilder Methods
         /// <summary>
-		/// Checks to see if the fixture type has the TestFixtureAttribute
+        /// Examine the type and determine if it is suitable for
+        /// this builder to use to create one or more TestFixtures.
 		/// </summary>
 		/// <param name="type">The fixture type to check</param>
 		/// <returns>True if the fixture can be built, false if not</returns>
 		public bool CanBuildFrom(Type type)
 		{
+            // TODO: Should we allow static Types as fixtures?
             if ( type.IsAbstract && !type.IsSealed )
                 return false;
 
@@ -66,64 +68,32 @@ namespace TCLite.Framework.Builders
             if (type.IsGenericTypeDefinition)
                 return false;
 
-            return Reflect.HasMethodWithAttribute(type, typeof(TCLite.Framework.Internal.IImplyFixture));
+            return Reflect.HasMethodWithAttribute(type, typeof(IImplyFixture));
 		}
 
 		/// <summary>
-		/// Build a TestSuite from type provided.
+		/// Build one or more TestFixtures from the Type provided.
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		public Test BuildFrom(Type type)
+		public IEnumerable<TestFixture> BuildFrom(Type type)
 		{
-#if NYI // Parameterized Fixtures
-            TestFixtureAttribute[] attrs = GetTestFixtureAttributes(type);
-
-            if (type.IsGenericType)
-                return BuildMultipleFixtures(type, attrs);
-
-            switch (attrs.Length)
+            int count = 0;
+            foreach(var attr in GetTestFixtureAttributesWithArguments(type))
             {
-                case 0:
-                    return BuildSingleFixture(type, null);
-                case 1:
-                    object[] args = (object[])attrs[0].Arguments;
-                    return args == null || args.Length == 0
-                        ? BuildSingleFixture(type, attrs[0])
-                        : BuildMultipleFixtures(type, attrs);
-                default:
-                    return BuildMultipleFixtures(type, attrs);
+                yield return BuildSingleFixture(type, attr);
+                count++;
             }
-#endif
-            var attr = (TestFixtureAttribute)type.GetCustomAttribute(typeof(TestFixtureAttribute));
 
-            return BuildSingleFixture(type, attr);
+            if (count == 0)
+                yield return BuildSingleFixture(type, null);
         }
         
 		#endregion
 
 		#region Helper Methods
 
-#if NYI // Parameterized Fixtures
-        private Test BuildMultipleFixtures(Type type, TestFixtureAttribute[] attrs)
-        {
-            TestSuite suite = new ParameterizedFixtureSuite(type);
-
-            if (attrs.Length > 0)
-            {
-                foreach (TestFixtureAttribute attr in attrs)
-                    suite.Add(BuildSingleFixture(type, attr));
-            }
-            else
-            {
-                suite.RunState = RunState.NotRunnable;
-                suite.Properties.Set(PropertyNames.SkipReason, NO_TYPE_ARGS_MSG);
-            }
-
-            return suite;
-        }
-#endif
-        private Test BuildSingleFixture(Type type, TestFixtureAttribute attr)
+        private TestFixture BuildSingleFixture(Type type, TestFixtureAttribute attr)
         {
             object[] arguments = null;
 
@@ -131,6 +101,7 @@ namespace TCLite.Framework.Builders
             {
                 arguments = (object[])attr.Arguments;
 
+#if NYI // Generic Fixtures                
                 if (type.ContainsGenericParameters)
                 {
                     Type[] typeArgs = (Type[])attr.TypeArgs;
@@ -140,6 +111,7 @@ namespace TCLite.Framework.Builders
                         type = TypeHelper.MakeGenericType(type, typeArgs);
                     }
                 }
+#endif                
             }
 
             this.fixture = new TestFixture(type, arguments);
@@ -167,7 +139,7 @@ namespace TCLite.Framework.Builders
 		/// <param name="fixtureType"></param>
 		private void AddTestCases( Type fixtureType )
 		{
-			IList methods = fixtureType.GetMethods( 
+			var methods = fixtureType.GetMethods( 
 				BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static );
 
 			foreach(MethodInfo method in methods)
@@ -236,7 +208,10 @@ namespace TCLite.Framework.Builders
 
                 int index = 0;
                 foreach (object arg in args)
-                    argTypes[index++] = arg.GetType();
+                    if (arg != null)
+                        argTypes[index++] = arg.GetType();
+                    else
+                        return false;
             }
 
             return fixtureType.GetConstructor(argTypes) != null;
@@ -253,57 +228,24 @@ namespace TCLite.Framework.Builders
             return type.IsAbstract && type.IsSealed;
         }
 
-#if NYI // ParameterizedFixtures
         /// <summary>
-        /// Get TestFixtureAttributes following a somewhat obscure
-        /// set of rules to eliminate spurious duplication of fixtures.
-        /// 1. If there are any attributes with args, they are the only
-        ///    ones returned and those without args are ignored.
-        /// 2. No more than one attribute without args is ever returned.
+        /// Get all TestFixtureAttributes attached to a Type, which
+        /// specify arguments or Type arguments. Any attributes without
+        /// args, constructed with the default constructor, are ignored.
         /// </summary>
-        private TestFixtureAttribute[] GetTestFixtureAttributes(Type type)
+        private IEnumerable<TestFixtureAttribute> GetTestFixtureAttributesWithArguments(Type type)
         {
-            TestFixtureAttribute[] attrs = 
-                (TestFixtureAttribute[])type.GetCustomAttributes(typeof(TestFixtureAttribute), true);
-
-            // Just return - no possibility of duplication
-            if (attrs.Length <= 1)
-                return attrs;
-
-            int withArgs = 0;
-            bool[] hasArgs = new bool[attrs.Length];
-
-            // Count and record those attrs with arguments            
-            for (int i = 0; i < attrs.Length; i++)
+            foreach (var attr in type.GetCustomAttributes(typeof(TestFixtureAttribute), true))
             {
-                TestFixtureAttribute attr = attrs[i];
-
-                if (attr.Arguments.Length > 0 || attr.TypeArgs.Length > 0)
-                {
-                    withArgs++;
-                    hasArgs[i] = true;
-                }
+                var fixtureAttr = (TestFixtureAttribute)attr;
+                if (fixtureAttr.Arguments.Length > 0)
+#if NYI // Generic Fixtures                
+                    || fixtureAttr.TypeArgs.Length > 0)
+#endif                    
+                    yield return fixtureAttr;
             }
-
-            // If all attributes have args, just return them
-            if (withArgs == attrs.Length)
-                return attrs;
-
-            // If all attributes are without args, just return the first found
-            if (withArgs == 0)
-                return new TestFixtureAttribute[] { attrs[0] };
-
-            // Some of each type, so extract those with args
-            int count = 0;
-            TestFixtureAttribute[] result = new TestFixtureAttribute[withArgs];
-            for (int i = 0; i < attrs.Length; i++)
-                if (hasArgs[i])
-                    result[count++] = attrs[i];
-
-            return result;
         }
-#endif
 
-		#endregion
+#endregion
 	}
 }

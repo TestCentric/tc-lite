@@ -199,6 +199,13 @@ namespace TCLite.Framework.Builders
                 parameterSet.ApplyToTest(testMethod);
             }
 
+            if (parentSuite.RunState == RunState.NotRunnable || parentSuite.RunState == RunState.Skipped)
+            {
+                testMethod.RunState = parentSuite.RunState;
+                var reasonKey = PropertyNames.SkipReason;
+                testMethod.Properties.Set(reasonKey, parentSuite.Properties.Get(reasonKey));
+            }
+
             return testMethod;
         }
 

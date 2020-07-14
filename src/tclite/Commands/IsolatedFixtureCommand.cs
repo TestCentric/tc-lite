@@ -15,11 +15,19 @@ namespace TCLite.Framework.Commands
     /// </summary>
     public class IsolatedFixtureCommand : BeforeAndAfterTestCommand
     {
-        public IsolatedFixtureCommand(TestCommand innerCommand) : base(innerCommand) { }
+        private Type _fixtureType;
+        private object[] _fixtureArgs;
+
+        public IsolatedFixtureCommand(TestCommand innerCommand, TestFixture containingFixture)
+            : base(innerCommand)
+        {
+            _fixtureType = containingFixture.FixtureType;
+            _fixtureArgs = containingFixture.Arguments;           
+        }
 
         protected override void BeforeTest(TestExecutionContext context)
         {
-            context.TestObject = Reflect.Construct(Test.FixtureType);
+            context.TestObject = Reflect.Construct(_fixtureType, _fixtureArgs);
         }
 
         protected override void AfterTest(TestExecutionContext context)

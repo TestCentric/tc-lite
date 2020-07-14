@@ -18,10 +18,12 @@ namespace TCLite.Framework
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple=true, Inherited=true)]
     public class TestFixtureAttribute : TCLiteAttribute, IApplyToTest
 	{
-        private object[] originalArgs;
         private object[] constructorArgs;
+#if NYI // Generic Fixtures                
+        private object[] originalArgs;
         private Type[] typeArgs;
         private bool argsInitialized;
+#endif
 
         private bool isIgnored;
         private string ignoreReason;
@@ -40,11 +42,14 @@ namespace TCLite.Framework
         /// <param name="arguments"></param>
         public TestFixtureAttribute(params object[] arguments)
         {
+            this.constructorArgs = arguments ?? new object[0];
+#if NYI // Generic Fixtures                
             this.originalArgs = arguments == null
                 ? new object[0]
                 : arguments;
             this.constructorArgs = this.originalArgs;
             this.typeArgs = new Type[0];
+#endif
         }
 
 		/// <summary>
@@ -59,8 +64,10 @@ namespace TCLite.Framework
         {
             get 
             {
+#if NYI // Generic Fixtures                
                 if (!argsInitialized)
                     InitializeArgs();
+#endif
                 return constructorArgs; 
             }
         }
@@ -89,6 +96,7 @@ namespace TCLite.Framework
             }
         }
 
+#if NYI // Generic Fixtures
         /// <summary>
         /// Get or set the type arguments. If not set
         /// explicitly, any leading arguments that are
@@ -108,6 +116,7 @@ namespace TCLite.Framework
                 argsInitialized = true;
             }
         }
+#endif
 
         /// <summary>
         /// Gets and sets the category for this fixture.
@@ -126,7 +135,8 @@ namespace TCLite.Framework
         {
             get { return category == null ? null : category.Split(','); }
         }
- 
+
+#if NYI // Generic Fixtures                
         /// <summary>
         /// Helper method to split the original argument list
         /// into type arguments and constructor arguments.
@@ -156,8 +166,9 @@ namespace TCLite.Framework
                 
             argsInitialized = true;
         }
+#endif
 
-        #region IApplyToTest Members
+#region IApplyToTest Members
 
         /// <summary>
         /// Modifies a test by adding a description, if not already set.
@@ -173,6 +184,6 @@ namespace TCLite.Framework
 					test.Properties.Add(PropertyNames.Category, cat);
         }
 
-        #endregion
+#endregion
     }
 }

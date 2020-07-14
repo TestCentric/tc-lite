@@ -4,7 +4,6 @@
 // ***********************************************************************
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using TCLite.Framework.Api;
@@ -81,20 +80,20 @@ namespace TCLite.Framework.Builders
 
         #region Helper Methods
 
-        private IList GetFixtures(Assembly assembly)
+        private IList<TestFixture> GetFixtures(Assembly assembly)
         {
-            var fixtures = new List<object>();
+            var fixtures = new List<TestFixture>();
 
             foreach (Type testType in assembly.GetTypes())
             {
                 if (_builder.CanBuildFrom(testType))
-                    fixtures.Add(_builder.BuildFrom(testType));
+                    fixtures.AddRange(_builder.BuildFrom(testType));
             }
 
             return fixtures;
         }
 
-        private TestSuite BuildTestAssembly(Assembly assembly, IList fixtures)
+        private TestSuite BuildTestAssembly(Assembly assembly, IList<TestFixture> fixtures)
         {
             string assemblyPath = AssemblyHelper.GetAssemblyPath(assembly);
 
