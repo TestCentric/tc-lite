@@ -65,6 +65,7 @@ namespace TCLite.Framework.WorkItems
                         switch (Result.ResultState.Status)
                         {
                             case TestStatus.Passed:
+                            case TestStatus.Warning:
                                 RunChildren();
                                 return;
                                 // Just return: completion event will take care
@@ -76,7 +77,8 @@ namespace TCLite.Framework.WorkItems
                                 SkipChildren();
                                 break;
                         }
-
+                    else if (Test.TestType == "Theory")
+                        Result.SetResult(ResultState.Failure, "No test cases were provided");
                     break;
 
                 case RunState.Skipped:
@@ -124,10 +126,7 @@ namespace TCLite.Framework.WorkItems
                 WorkItem child = (WorkItem)_children.Dequeue();
                 Test test = child.Test;
                 TestResult result = test.MakeTestResult();
-                // if (Result.ResultState.Status == TestStatus.Failed)
-                //     result.SetResult(ResultState.Failure, "TestFixtureSetUp Failed");
-                // else
-                    result.SetResult(Result.ResultState, Result.Message);
+                result.SetResult(Result.ResultState, Result.Message);
                 Result.AddResult(result);
             }
         }
