@@ -42,13 +42,13 @@ namespace TCLite.Framework
 
         #region Stack filter tests
 #if WIP
-        [Test]
+        [TestCase]
         public static void WarningSynchronous()
         {
             Assert.Warn("(Warning message)");
         }
 
-        [Test]
+        [TestCase]
         public static void WarningInBeginInvoke()
         {
             using (var finished = new ManualResetEvent(false))
@@ -69,7 +69,7 @@ namespace TCLite.Framework
             }
         }
 
-        [Test]
+        [TestCase]
         public static void WarningInThreadStart()
         {
             using (var finished = new ManualResetEvent(false))
@@ -91,7 +91,7 @@ namespace TCLite.Framework
             }
         }
 
-        [Test]
+        [TestCase]
         public static void WarningInThreadPoolQueueUserWorkItem()
         {
             using (var finished = new ManualResetEvent(false))
@@ -114,14 +114,14 @@ namespace TCLite.Framework
         }
 
 #if TASK_PARALLEL_LIBRARY_API
-        [Test]
+        [TestCase]
         public static void WarningInTaskRun()
         {
             if (!Task.Run(() => Assert.Warn("(Warning message)")).Wait(10_000))
                 Assert.Fail("Timeout while waiting for Task.Run to execute.");
         }
 
-        [Test]
+        [TestCase]
         public static async System.Threading.Tasks.Task WarningAfterAwaitTaskDelay()
         {
             await Task.Delay(1);
@@ -135,19 +135,19 @@ namespace TCLite.Framework
 #if WIP
     public abstract class WarningInSetUpOrTearDownFixture
     {
-        [Test]
+        [TestCase]
         public void WarningPassesInTest()
         {
             Warn.Unless(2 + 2, Is.EqualTo(4));
         }
 
-        [Test]
+        [TestCase]
         public void WarningFailsInTest()
         {
             Warn.Unless(2 + 2, Is.EqualTo(5));
         }
 
-        [Test]
+        [TestCase]
         public void ThreeWarningsFailInTest()
         {
             Warn.Unless(2 + 2, Is.EqualTo(5));

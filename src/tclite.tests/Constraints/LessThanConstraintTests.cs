@@ -24,7 +24,7 @@ namespace TCLite.Framework.Constraints.Tests
             new TestCaseData(5, "5")
         };
 
-        [Test]
+        [TestCase]
         public void CanCompareIComparables()
         {
             ClassWithIComparable expected = new ClassWithIComparable(42);
@@ -32,7 +32,7 @@ namespace TCLite.Framework.Constraints.Tests
             Assert.That(actual, Is.LessThan(expected));
         }
 
-        [Test]
+        [TestCase]
         public void CanCompareIComparablesOfT()
         {
             ClassWithIComparableOfT expected = new ClassWithIComparableOfT(42);

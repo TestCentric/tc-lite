@@ -68,7 +68,7 @@ namespace TCLite.Framework.Constraints
         }
 
 #if NYI // Directories
-        [Test]
+        [TestCase]
         public void SameDirectoriesAreEqual()
         {
             using (var testDir = new TestDirectory())
@@ -79,7 +79,7 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        [Test]
+        [TestCase]
         public void DifferentDirectoriesAreNotEqual()
         {
             using (var one = new TestDirectory())
@@ -90,7 +90,7 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-        [Test]
+        [TestCase]
         public void CanCompareArrayContainingSelfToSelf()
         {
             object[] array = new object[1];
@@ -99,7 +99,7 @@ namespace TCLite.Framework.Constraints
             Assert.IsTrue(comparer.AreEqual(array, array, ref tolerance));
         }
 
-        [Test]
+        [TestCase]
         public void IEquatableSuccess()
         {
             IEquatableWithoutEqualsOverridden x = new IEquatableWithoutEqualsOverridden(1);
@@ -108,7 +108,7 @@ namespace TCLite.Framework.Constraints
             Assert.IsTrue(comparer.AreEqual(x, y, ref tolerance));
         }
 
-        [Test]
+        [TestCase]
         public void IEquatableDifferentTypesSuccess_WhenActualImplementsIEquatable()
         {
             int x = 1;
@@ -119,7 +119,7 @@ namespace TCLite.Framework.Constraints
             Assert.IsTrue(comparer.AreEqual(x, y, ref tolerance));
         }
 
-        [Test]
+        [TestCase]
         public void IEquatableDifferentTypesSuccess_WhenExpectedImplementsIEquatable()
         {
             int x = 1;
@@ -130,7 +130,7 @@ namespace TCLite.Framework.Constraints
             Assert.IsTrue(comparer.AreEqual(y, x, ref tolerance));
         }
 
-        [Test]
+        [TestCase]
         public void IEquatableSuccess_WhenExplicitInterfaceImplementation()
         {
             IEquatableWithExplicitImplementation x = new IEquatableWithExplicitImplementation(1);
@@ -139,7 +139,7 @@ namespace TCLite.Framework.Constraints
             Assert.IsTrue(comparer.AreEqual(x, y, ref tolerance));
         }
 
-        [Test]
+        [TestCase]
         public void IEquatableFailure_WhenExplicitInterfaceImplementationWithDifferentValues()
         {
             IEquatableWithExplicitImplementation x = new IEquatableWithExplicitImplementation(1);
@@ -148,7 +148,7 @@ namespace TCLite.Framework.Constraints
             Assert.IsFalse(comparer.AreEqual(x, y, ref tolerance));
         }
 
-        [Test]
+        [TestCase]
         public void ReferenceEqualityHasPrecedenceOverIEquatable()
         {
             NeverEqualIEquatable z = new NeverEqualIEquatable();
@@ -156,7 +156,7 @@ namespace TCLite.Framework.Constraints
             Assert.IsTrue(comparer.AreEqual(z, z, ref tolerance));
         }
 
-        [Test]
+        [TestCase]
         public void IEquatableHasPrecedenceOverDefaultEquals()
         {
             NeverEqualIEquatableWithOverriddenAlwaysTrueEquals x = new NeverEqualIEquatableWithOverriddenAlwaysTrueEquals();
@@ -165,7 +165,7 @@ namespace TCLite.Framework.Constraints
             Assert.IsFalse(comparer.AreEqual(x, y, ref tolerance));
         }
 
-        [Test]
+        [TestCase]
         public void IEquatableHasPrecedenceOverEnumerableEquals()
         {
             var x = new EquatableWithEnumerableObject<int>(new[] { 1, 2, 3, 4, 5 }, 42);
@@ -184,7 +184,7 @@ namespace TCLite.Framework.Constraints
             //Assert.That(x, Is.Not.EqualTo(z));
         }
 
-        [Test]
+        [TestCase]
         public void IEquatableIsIgnoredAndEnumerableEqualsUsedWithAsCollection()
         {
             comparer.CompareAsCollection = true;
@@ -204,7 +204,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(x, Is.EqualTo(z).AsCollection);
         }
 
-        [Test]
+        [TestCase]
         public void InheritingAndOverridingIEquatable()
         {
             var obj1 = new InheritingEquatableObject { SomeProperty = 1, OtherProperty = 2 };
@@ -227,7 +227,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(n.AreEqual(obj4, obj1, ref tolerance), Is.False);
         }
 
-        [Test]
+        [TestCase]
         public void ImplementingIEquatableDirectlyOnTheClass()
         {
             var obj1 = new EquatableObject { SomeProperty = 1 };
@@ -240,7 +240,7 @@ namespace TCLite.Framework.Constraints
         }
 
 #if NYI // IEquatable on base class
-        [Test]
+        [TestCase]
         public void ImplementingIEquatableOnABaseClassOrInterface()
         {
             var obj1 = new InheritedEquatableObject { SomeProperty = 1 };
@@ -253,7 +253,7 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-        [Test]
+        [TestCase]
         public void ImplementingIEquatableOnABaseClassOrInterfaceThroughInterface()
         {
             IEquatableObject obj1 = new InheritedEquatableObject { SomeProperty = 1 };
@@ -265,7 +265,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(n.AreEqual(obj2, obj1, ref tolerance), Is.True);
         }
 
-        [Test]
+        [TestCase]
         public void CanHandleMultipleImplementationsOfIEquatable()
         {
             IEquatableObject obj1 = new InheritedEquatableObject { SomeProperty = 1 };
@@ -282,7 +282,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(n.AreEqual(obj3, obj2, ref tolerance), Is.True);
         }
 
-        [Test]
+        [TestCase]
         public void IEnumeratorIsDisposed()
         {
             var enumeration = new EnumerableWithDisposeChecks<int>(new[] { 0, 1, 2, 3 });
@@ -314,7 +314,7 @@ namespace TCLite.Framework.Constraints
         }
 
 #if NYI // Duplicate items
-        [Test]
+        [TestCase]
         public void SelfContainedDuplicateItemsAreCompared()
         {
             var equalityComparer = new TCLiteEqualityComparer();

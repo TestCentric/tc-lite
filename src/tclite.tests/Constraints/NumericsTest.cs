@@ -25,7 +25,7 @@ namespace TCLite.Framework.Constraints
         }
 
         // Separate test case because you can't use decimal in an attribute (24.1.3)
-        [Test]
+        [TestCase]
         public void CanMatchDecimalWithoutToleranceMode()
         {
             Assert.IsTrue(Numerics.AreEqual(123m, 123m, ref _zeroTolerance));
@@ -48,7 +48,7 @@ namespace TCLite.Framework.Constraints
             Assert.IsTrue(Numerics.AreEqual(10000, value, ref _tenPercent));
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchDecimalWithPercentage()
         {
             Assert.IsTrue(Numerics.AreEqual(10000m, 9500m, ref _tenPercent));
@@ -69,13 +69,13 @@ namespace TCLite.Framework.Constraints
             Assert.Throws<AssertionException>(() => Assert.IsTrue(Numerics.AreEqual(10000, value, ref _tenPercent)));
         }
 
-        [Test]
+        [TestCase]
         public void FailsOnDecimalBelowPercentage()
         {
             Assert.Throws<AssertionException>(() => Assert.IsTrue(Numerics.AreEqual(10000m, 8500m, ref _tenPercent)));
         }
 
-        [Test]
+        [TestCase]
         public void FailsOnDecimalAbovePercentage()
         {
             Assert.Throws<AssertionException>(() => Assert.IsTrue(Numerics.AreEqual(10000m, 11500m, ref _tenPercent)));

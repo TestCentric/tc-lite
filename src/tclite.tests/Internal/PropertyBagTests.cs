@@ -13,7 +13,7 @@ namespace TCLite.Framework.Internal
     {
         private PropertyBag bag = CreatePropertyBag();
 
-        [Test]
+        [TestCase]
         public void IndexGetsListOfValues()
         {
             Assert.That(bag["Answer"].Count, Is.EqualTo(1));
@@ -24,13 +24,13 @@ namespace TCLite.Framework.Internal
             Assert.That(bag["Tag"], Contains.Item.EqualTo("easy"));
         }
 
-        [Test]
+        [TestCase]
         public void IndexGetsEmptyListIfNameIsNotPresent()
         {
             Assert.That(bag["Level"].Count, Is.EqualTo(0));
         }
 
-        [Test]
+        [TestCase]
         public void IndexSetsListOfValues()
         {
             bag["Zip"] = new string[] {"junk", "more junk"};
@@ -39,7 +39,7 @@ namespace TCLite.Framework.Internal
             Assert.That(bag["Zip"], Contains.Item.EqualTo("more junk"));
         }
 
-        [Test]
+        [TestCase]
         public void AllKeysAreListed()
         {
             Assert.That(bag.Keys.Count, Is.EqualTo(2));
@@ -47,7 +47,7 @@ namespace TCLite.Framework.Internal
             Assert.That(bag.Keys, Has.Member.EqualTo("Tag"));
         }
 
-        [Test]
+        [TestCase]
         public void ContainsKey()
         {
             Assert.That(bag.ContainsKey("Answer"));
@@ -55,14 +55,14 @@ namespace TCLite.Framework.Internal
             Assert.IsFalse(bag.ContainsKey("Target"));
         }
 
-        [Test]
+        [TestCase]
         public void GetReturnsSingleValue()
         {
             Assert.That(bag.Get("Answer"), Is.EqualTo(42));
             Assert.That(bag.Get("Tag"), Is.EqualTo("bug"));
         }
 
-        [Test]
+        [TestCase]
         public void SetAddsNewSingleValue()
         {
             bag.Set("Zip", "ZAP");
@@ -71,7 +71,7 @@ namespace TCLite.Framework.Internal
             Assert.That(bag.Get("Zip"), Is.EqualTo("ZAP"));
         }
 
-        [Test]
+        [TestCase]
         public void SetReplacesOldValues()
         {
             bag.Set("Tag", "ZAPPED");
@@ -79,7 +79,7 @@ namespace TCLite.Framework.Internal
             Assert.That(bag.Get("Tag"), Is.EqualTo("ZAPPED"));
         }
 
-        [Test]
+        [TestCase]
         public void XmlIsProducedCorrectly()
         {
             var topNode = bag.ToXml(true);
@@ -111,7 +111,7 @@ namespace TCLite.Framework.Internal
         }
 
         // TODO: Do we need this feature?
-        // [Test]
+        // [TestCase]
         // public void TestNullPropertyValueIsntAdded()
         // {
         //     Assert.Throws<ArgumentNullException>(() => bag.Add("dontAddMe", null));

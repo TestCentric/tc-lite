@@ -28,7 +28,7 @@ namespace TCLite.Framework.Attributes
     //         _expected = expected;
     //     }
 
-    //     [Test]
+    //     [TestCase]
     //     public void TestAddition()
     //     {
     //         if(_one.HasValue && _two.HasValue && _expected.HasValue)
@@ -73,7 +73,7 @@ namespace TCLite.Framework.Attributes
             this.neq = neq.ToString();
         }
 
-        [Test]
+        [TestCase]
         public void TestEquality()
         {
             Assert.AreEqual(eq1, eq2);
@@ -81,7 +81,7 @@ namespace TCLite.Framework.Attributes
                 Assert.AreEqual(eq1.GetHashCode(), eq2.GetHashCode());
         }
 
-        [Test]
+        [TestCase]
         public void TestInequality()
         {
             Assert.AreNotEqual(eq1, neq);
@@ -101,20 +101,20 @@ namespace TCLite.Framework.Attributes
             fixture = TestBuilder.MakeFixture(typeof(NUnit.TestData.ParameterizedTestFixture));
         }
 
-        [Test]
+        [TestCase]
         public void TopLevelSuiteIsNamedCorrectly()
         {
             Assert.That(fixture.Name, Is.EqualTo("ParameterizedTestFixture"));
             Assert.That(fixture.FullName, Is.EqualTo("NUnit.TestData.ParameterizedTestFixture"));
         }
 
-        [Test]
+        [TestCase]
         public void SuiteHasCorrectNumberOfInstances()
         {
             Assert.That(fixture.Tests.Count, Is.EqualTo(2));
         }
 
-        [Test]
+        [TestCase]
         public void FixtureInstancesAreNamedCorrectly()
         {
             var names = new List<string>();
@@ -131,7 +131,7 @@ namespace TCLite.Framework.Attributes
                 "NUnit.TestData.ParameterizedTestFixture(1)", "NUnit.TestData.ParameterizedTestFixture(2)" }));
         }
 
-        [Test]
+        [TestCase]
         public void MethodWithoutParamsIsNamedCorrectly()
         {
             TestSuite instance = (TestSuite)fixture.Tests[0];
@@ -140,7 +140,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(method.FullName, Is.EqualTo(instance.FullName + ".MethodWithoutParams"));
         }
 
-        [Test]
+        [TestCase]
         public void MethodWithParamsIsNamedCorrectly()
         {
             TestSuite instance = (TestSuite)fixture.Tests[0];
@@ -155,21 +155,21 @@ namespace TCLite.Framework.Attributes
 
     public class ParameterizedTestFixtureTests
     {
-        [Test]
+        [TestCase]
         public void CanSpecifyCategory()
         {
             Test fixture = TestBuilder.MakeFixture(typeof(NUnit.TestData.TestFixtureWithSingleCategory));
             Assert.AreEqual("XYZ", fixture.Properties.Get(PropertyNames.Category));
         }
 
-        [Test]
+        [TestCase]
         public void CanSpecifyMultipleCategories()
         {
             Test fixture = TestBuilder.MakeFixture(typeof(NUnit.TestData.TestFixtureWithMultipleCategories));
             Assert.AreEqual(new string[] { "X", "Y", "Z" }, fixture.Properties[PropertyNames.Category]);
         }
 
-        [Test]
+        [TestCase]
         public void NullArgumentForOrdinaryValueTypeParameterDoesNotThrowNullReferenceException()
         {
             Test fixture = TestBuilder.MakeFixture(typeof(NUnit.TestData.TestFixtureWithNullArgumentForOrdinaryValueTypeParameter));
@@ -177,7 +177,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(fixture.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("No suitable constructor was found"));
         }
 
-        [Test]
+        [TestCase]
         public void NullArgumentForGenericParameterDoesNotThrowNullReferenceException()
         {
             Test parameterizedFixture = TestBuilder.MakeFixture(typeof(NUnit.TestData.TestFixtureWithNullArgumentForGenericParameter<>));
@@ -201,7 +201,7 @@ namespace TCLite.Framework.Attributes
             _someType = someType;
         }
 
-        [Test]
+        [TestCase]
         public void MakeSureTypeIsInSystemNamespace()
         {
             Assert.AreEqual("System", _someType.Namespace);

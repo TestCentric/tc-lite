@@ -13,14 +13,14 @@ namespace TCLite.Framework.Constraints
     {
         private readonly string NL = Environment.NewLine;
 
-        [Test]
+        [TestCase]
         public void NoItemsAreNotNull()
         {
             object[] c = new object[] { 1, "hello", 3, Environment.NewLine };
             Assert.That(c, new NoItemConstraint(Is.Null));
         }
 
-        [Test]
+        [TestCase]
         public void NoItemsAreNotNullFails()
         {
             object[] c = new object[] { 1, "hello", null, 3 };
@@ -34,7 +34,7 @@ namespace TCLite.Framework.Constraints
         }
 
 #if NYI // Message
-        [Test]
+        [TestCase]
         public void FailsWhenNotUsedAgainstAnEnumerable()
         {
             var notEnumerable = 42;

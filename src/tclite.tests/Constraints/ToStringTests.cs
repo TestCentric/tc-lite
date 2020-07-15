@@ -9,7 +9,7 @@ namespace TCLite.Framework.Constraints
 {
     public class ToStringTests
     {
-        [Test]
+        [TestCase]
         public void CanDisplaySimpleConstraints_Unresolved()
         {
             Assert.That(Is.EqualTo(5).ToString(), Is.EqualTo("<equal 5>"));
@@ -21,7 +21,7 @@ namespace TCLite.Framework.Constraints
 
         }
 
-        [Test]
+        [TestCase]
         public void CanDisplaySimpleConstraints_Resolved()
         {
             IResolveConstraint constraint = Is.EqualTo(5);
@@ -35,7 +35,7 @@ namespace TCLite.Framework.Constraints
 #endif
         }
 
-        [Test]
+        [TestCase]
         public void DisplayPrefixConstraints_Unresolved()
         {
             Assert.That(Is.Not.EqualTo(5).ToString(), Is.EqualTo("<unresolved <equal 5>>"));
@@ -47,7 +47,7 @@ namespace TCLite.Framework.Constraints
 #endif
         }
 
-        [Test]
+        [TestCase]
         public void CanDisplayPrefixConstraints_Resolved()
         {
             IResolveConstraint constraint = Is.Not.EqualTo(5);
@@ -60,14 +60,14 @@ namespace TCLite.Framework.Constraints
 #endif
         }
 
-        [Test]
+        [TestCase]
         public void DisplayBinaryConstraints_Resolved()
         {
             IResolveConstraint constraint = Is.GreaterThan(0).And.LessThan(100);
             Assert.That(constraint.Resolve().ToString(), Is.EqualTo("<and <greaterthan 0> <lessthan 100>>"));
         }
 
-        [Test]
+        [TestCase]
         public void DisplayBinaryConstraints_UnResolved()
         {
             IResolveConstraint constraint = Is.GreaterThan(0).And.LessThan(100);

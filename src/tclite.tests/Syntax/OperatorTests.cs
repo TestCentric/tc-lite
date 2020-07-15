@@ -297,7 +297,7 @@ namespace TCLite.Framework.Syntax
         }
 
 #if NYI // Property
-        [Test]
+        [TestCase]
         public void WithTests()
         {
             A a = new A();
@@ -315,7 +315,7 @@ namespace TCLite.Framework.Syntax
                                             .And.Property("Y").EqualTo("Y in B"));
         }
 
-        [Test]
+        [TestCase]
         public void SomeTests()
         {
             string[] array = new string[] { "a", "aa", "x", "xy", "xyz" };

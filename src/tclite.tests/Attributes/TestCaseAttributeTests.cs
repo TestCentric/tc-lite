@@ -259,7 +259,7 @@ namespace TCLite.Framework.Attributes
 #endif        
 
 #if NYI // TestBuilder
-        [Test]
+        [TestCase]
         public void CanSpecifyDescription()
         {
             Test test = (Test)TestBuilder.MakeParameterizedMethodSuite(
@@ -267,7 +267,7 @@ namespace TCLite.Framework.Attributes
             Assert.AreEqual("My Description", test.Properties.Get(PropertyNames.Description));
         }
 
-        [Test]
+        [TestCase]
         public void CanSpecifyTestName_FixedText()
         {
             Test test = (Test)TestBuilder.MakeParameterizedMethodSuite(
@@ -276,7 +276,7 @@ namespace TCLite.Framework.Attributes
             Assert.AreEqual("NUnit.TestData.TestCaseAttributeFixture.TestCaseAttributeFixture.XYZ", test.FullName);
         }
 
-        [Test]
+        [TestCase]
         public void CanSpecifyTestName_WithMethodName()
         {
             Test test = (Test)TestBuilder.MakeParameterizedMethodSuite(
@@ -286,7 +286,7 @@ namespace TCLite.Framework.Attributes
             Assert.AreEqual("NUnit.TestData.TestCaseAttributeFixture.TestCaseAttributeFixture." + expectedName, test.FullName);
         }
 
-        [Test]
+        [TestCase]
         public void CanSpecifyCategory()
         {
             Test test = (Test)TestBuilder.MakeParameterizedMethodSuite(
@@ -295,7 +295,7 @@ namespace TCLite.Framework.Attributes
             Assert.AreEqual(new string[] { "XYZ" }, categories);
         }
 
-        [Test]
+        [TestCase]
         public void CanSpecifyMultipleCategories()
         {
             Test test = (Test)TestBuilder.MakeParameterizedMethodSuite(
@@ -304,7 +304,7 @@ namespace TCLite.Framework.Attributes
             Assert.AreEqual(new string[] { "X", "Y", "Z" }, categories);
         }
 
-        [Test]
+        [TestCase]
         public void CanIgnoreIndividualTestCases()
         {
             var methodName = nameof(TestCaseAttributeFixture.MethodWithIgnoredTestCases);
@@ -322,7 +322,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(testCase.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("Don't Run Me!"));
         }
 
-        [Test]
+        [TestCase]
         public void CanIgnoreIndividualTestCasesWithUntilDate()
         {
             var methodName = nameof(TestCaseAttributeFixture.MethodWithIgnoredWithUntilDateTestCases);
@@ -354,7 +354,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(testCase.RunState, Is.EqualTo(RunState.NotRunnable));
         }
 
-        [Test]
+        [TestCase]
         public void CanMarkIndividualTestCasesExplicit()
         {
             var methodName = nameof(TestCaseAttributeFixture.MethodWithExplicitTestCases);
@@ -372,7 +372,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(testCase.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("Connection failing"));
         }
 
-        [Test]
+        [TestCase]
         public void CanIncludePlatform()
         {
             bool isLinux = OSPlatform.CurrentPlatform.IsUnix;
@@ -409,7 +409,7 @@ namespace TCLite.Framework.Attributes
             }
         }
 
-        [Test]
+        [TestCase]
         public void CanExcludePlatform()
         {
             bool isLinux = OSPlatform.CurrentPlatform.IsUnix;
@@ -446,7 +446,7 @@ namespace TCLite.Framework.Attributes
             }
         }
 
-        [Test]
+        [TestCase]
         public void CanIncludeRuntime()
         {
             bool isNetCore;
@@ -485,7 +485,7 @@ namespace TCLite.Framework.Attributes
             }
         }
 
-        [Test]
+        [TestCase]
         public void CanExcludeRuntime()
         {
             bool isNetCore;
@@ -524,7 +524,7 @@ namespace TCLite.Framework.Attributes
             }
         }
 
-        [Test]
+        [TestCase]
         public void TestNameIntrospectsArrayValues()
         {
             TestSuite suite = TestBuilder.MakeParameterizedMethodSuite(

@@ -15,7 +15,7 @@ namespace TCLite.Framework.Constraints
     [TestFixture]
     class CollectionEqualsTests
     {
-        [Test]
+        [TestCase]
         public void CanMatchTwoCollections()
         {
             ICollection expected = new SimpleObjectCollection(1, 2, 3);
@@ -24,7 +24,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchTwoLists()
         {
             IList expected = new List<int> { 1, 2, 3 };
@@ -33,7 +33,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchAnArrayWithACollection()
         {
             ICollection collection = new SimpleObjectCollection(1, 2, 3);
@@ -43,7 +43,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(array, Is.EqualTo(collection));
         }
 
-        [Test]
+        [TestCase]
         public void FailureForEnumerablesWithDifferentSizes()
         {
             IEnumerable<int> expected = new int[] { 1, 2, 3 }.Select(i => i);
@@ -58,7 +58,7 @@ namespace TCLite.Framework.Constraints
 #endif
         }
 
-        [Test]
+        [TestCase]
         public void FailureMatchingArrayAndCollection()
         {
             int[] expected = new int[] { 1, 2, 3 };

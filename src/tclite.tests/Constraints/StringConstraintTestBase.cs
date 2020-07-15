@@ -10,7 +10,7 @@ namespace TCLite.Framework.Constraints
 
     public abstract class StringConstraintTestBase : ConstraintTestBase<string>
     {
-        [Test]
+        [TestCase]
         public void NonStringDataThrowsArgumentException()
         {
             Assert.Throws<ArgumentException>(() => Constraint.ValidateActualValue(123));

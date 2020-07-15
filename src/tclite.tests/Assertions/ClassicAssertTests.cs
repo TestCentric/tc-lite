@@ -14,66 +14,66 @@ namespace TCLite.Framework.Assertions
 	[TestFixture]
 	public class ClassicAssertTests : AssertionTestBase
 	{
-		[Test]
+		[TestCase]
 		public void IsTrue()
 		{
 			Assert.IsTrue(true);
 		}
 
-		[Test] 
+		[TestCase] 
 		public void IsTrueFails()
 		{
             var ex = Assert.Throws<AssertionException>(() => Assert.IsTrue(false));
             Assert.AreEqual(StandardErrorMessage(true, false), ex.Message);
 		}
 
-		[Test]
+		[TestCase]
 		public void IsFalse()
 		{
 			Assert.IsFalse(false);
 		}
 
-		[Test]
+		[TestCase]
 		public void IsFalseFails()
 		{
             var ex = Assert.Throws<AssertionException>(() => Assert.IsFalse(true));
             Assert.AreEqual(StandardErrorMessage(false, true), ex.Message);
 		}
 
-		[Test]
+		[TestCase]
 		public void IsNull()
 		{
 			Assert.IsNull(null);
 		}
 
-		[Test]
+		[TestCase]
 		public void IsNullFails()
 		{
             var ex = Assert.Throws<AssertionException>(() => Assert.IsNull(42));
             Assert.AreEqual(StandardErrorMessage("null", 42) , ex.Message);
 		}
 
-		[Test]
+		[TestCase]
 		public void IsNotNull()
 		{
 			String s1 = "S1";
 			Assert.IsNotNull(s1);
 		}
 
-		[Test]
+		[TestCase]
 		public void IsNotNullFails()
 		{
             var ex = Assert.Throws<AssertionException>(() => Assert.IsNotNull(null));
             Assert.AreEqual(StandardErrorMessage("not null", "null"), ex.Message);
 		}
 
-		[Test]
+		[TestCase]
 		public void IsNaN()
 		{
 			Assert.IsNaN(double.NaN);
 		}
 
-		[Test]
+		[TestCase]
 		public void IsEmpty()
 		{
 			Assert.IsEmpty( "", "Failed on empty String" );
@@ -83,7 +83,7 @@ namespace TCLite.Framework.Assertions
 			Assert.IsEmpty( (IEnumerable)new int[0], "Failed on empty IEnumerable" );
 		}
 
-		[Test]
+		[TestCase]
 		public void IsNotEmpty()
 		{
 			int[] array = new int[] { 1, 2, 3 };

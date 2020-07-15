@@ -14,14 +14,14 @@ namespace TCLite.Framework.Constraints
     {
         private readonly string NL = Environment.NewLine;
 
-        [Test]
+        [TestCase]
         public void AllItemsAreNotNull()
         {
             object[] c = new object[] { 1, "hello", 3, Environment.NewLine };
             Assert.That(c, new AllItemsConstraint(new NotConstraint(new NullConstraint())));
         }
 
-        [Test]
+        [TestCase]
         public void AllItemsAreNotNullFails()
         {
             object[] c = new object[] { 1, "hello", null, 3 };
@@ -35,14 +35,14 @@ namespace TCLite.Framework.Constraints
         }
 
 #if NYI // Range, Using
-        [Test]
+        [TestCase]
         public void AllItemsAreInRange()
         {
             int[] c = new int[] { 12, 27, 19, 32, 45, 99, 26 };
             Assert.That(c, new AllItemsConstraint(new RangeConstraint(10, 100)));
         }
 
-        [Test]
+        [TestCase]
         public void AllItemsAreInRange_UsingIComparer()
         {
             var comparer = new ObjectComparer();
@@ -51,7 +51,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(comparer.WasCalled);
         }
 
-        [Test]
+        [TestCase]
         public void AllItemsAreInRange_UsingGenericComparer()
         {
             var comparer = new GenericComparer<int>();
@@ -60,7 +60,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(comparer.WasCalled);
         }
 
-        [Test]
+        [TestCase]
         public void AllItemsAreInRange_UsingGenericComparison()
         {
             var comparer = new GenericComparison<int>();
@@ -69,7 +69,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(comparer.WasCalled);
         }
 
-        [Test]
+        [TestCase]
         public void AllItemsAreInRangeFailureMessage()
         {
             int[] c = new int[] { 12, 27, 19, 32, 107, 99, 26 };
@@ -81,7 +81,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(ex.Message, Is.EqualTo(expectedMessage));
         }
 
-        [Test]
+        [TestCase]
         public void AllItemsAreInstancesOfType()
         {
             object[] c = new object[] { 'a', 'b', 'c' };
@@ -89,7 +89,7 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-        [Test]
+        [TestCase]
         public void AllItemsAreInstancesOfTypeFailureMessage()
         {
             object[] c = new object[] { 'a', "b", 'c' };
@@ -103,7 +103,7 @@ namespace TCLite.Framework.Constraints
         }
 
 #if NYI // SimpleObjectCollection
-        [Test]
+        [TestCase]
         public void WorksOnICollection()
         {
             var c = new TCLite.TestUtilities.Collections.SimpleObjectCollection(1, 2, 3);
@@ -112,7 +112,7 @@ namespace TCLite.Framework.Constraints
 #endif
 
 #if NYI // Message
-        [Test]
+        [TestCase]
         public void FailsWhenNotUsedAgainstAnEnumerable()
         {
             var notEnumerable = 42;

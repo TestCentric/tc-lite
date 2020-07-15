@@ -18,13 +18,13 @@ namespace TCLite.Framework.Attributes
     {
         #region Tests With Static and Instance Members as Source
 
-        [Test, TestCaseSource(nameof(StaticProperty))]
+        [TestCaseSource(nameof(StaticProperty))]
         public void SourceCanBeStaticProperty(string source)
         {
             Assert.AreEqual("StaticProperty", source);
         }
 
-        [Test, TestCaseSource(nameof(InheritedStaticProperty))]
+        [TestCaseSource(nameof(InheritedStaticProperty))]
         public void TestSourceCanBeInheritedStaticProperty(bool source)
         {
             Assert.AreEqual(true, source);
@@ -36,7 +36,7 @@ namespace TCLite.Framework.Attributes
         }
 
 #if NYI // TestBuilder
-        [Test]
+        [TestCase]
         public void SourceUsingInstancePropertyIsNotRunnable()
         {
             var result = TestBuilder.RunParameterizedMethodSuite(typeof(TestCaseSourceAttributeFixture), nameof(TestCaseSourceAttributeFixture.MethodWithInstancePropertyAsSource));
@@ -44,7 +44,7 @@ namespace TCLite.Framework.Attributes
         }
 #endif        
 
-        [Test, TestCaseSource(nameof(StaticMethod))]
+        [TestCaseSource(nameof(StaticMethod))]
         public void SourceCanBeStaticMethod(string source)
         {
             Assert.AreEqual("StaticMethod", source);
@@ -56,7 +56,7 @@ namespace TCLite.Framework.Attributes
         }
 
 #if NYI // TestBuilder
-        [Test]
+        [TestCase]
         public void SourceUsingInstanceMethodIsNotRunnable()
         {
             var result = TestBuilder.RunParameterizedMethodSuite(typeof(TestCaseSourceAttributeFixture), nameof(TestCaseSourceAttributeFixture.MethodWithInstanceMethodAsSource));
@@ -69,7 +69,7 @@ namespace TCLite.Framework.Attributes
             return new object[] { new object[] { "InstanceMethod" } };
         }
 
-        [Test, TestCaseSource(nameof(StaticField))]
+        [TestCaseSource(nameof(StaticField))]
         public void SourceCanBeStaticField(string source)
         {
             Assert.AreEqual("StaticField", source);
@@ -79,7 +79,7 @@ namespace TCLite.Framework.Attributes
             { new object[] { "StaticField" } };
 
 #if NYI // TestBuilder
-        [Test]
+        [TestCase]
         public void SourceUsingInstanceFieldIsNotRunnable()
         {
             var result = TestBuilder.RunParameterizedMethodSuite(typeof(TestCaseSourceAttributeFixture), nameof(TestCaseSourceAttributeFixture.MethodWithInstanceFieldAsSource));
@@ -91,7 +91,7 @@ namespace TCLite.Framework.Attributes
 
         #region Test With IEnumerable Class as Source
 
-        [Test, TestCaseSource(typeof(DataSourceClass))]
+        [TestCaseSource(typeof(DataSourceClass))]
         public void SourceCanBeInstanceOfIEnumerable(string source)
         {
             Assert.AreEqual("DataSourceClass", source);
@@ -111,7 +111,7 @@ namespace TCLite.Framework.Attributes
 
         #endregion
 
-        [Test, TestCaseSource(nameof(MyData))]
+        [TestCaseSource(nameof(MyData))]
         public void SourceMayReturnArgumentsAsObjectArray(int n, int d, int q)
         {
             Assert.AreEqual(q, n / d);
@@ -123,33 +123,32 @@ namespace TCLite.Framework.Attributes
             Assert.AreEqual(q, n / d);
         }
 
-        [Test, TestCaseSource(nameof(MyIntData))]
+        [TestCaseSource(nameof(MyIntData))]
         public void SourceMayReturnArgumentsAsIntArray(int n, int d, int q)
         {
             Assert.AreEqual(q, n / d);
         }
 
 #if NYI // Source is int array
-        [Test, TestCaseSource(nameof(MyArrayData))]
+        [TestCaseSource(nameof(MyArrayData))]
         public void SourceMayReturnArrayForArray(int[] array)
         {
             Assert.That(true);
         }
 #endif
 
-        [Test, TestCaseSource(nameof(EvenNumbers))]
+        [TestCaseSource(nameof(EvenNumbers))]
         public void SourceMayReturnSinglePrimitiveArgumentAlone(int n)
         {
             Assert.AreEqual(0, n % 2);
         }
 
-        [Test, TestCaseSource(nameof(Params))]
+        [TestCaseSource(nameof(Params))]
         public int SourceMayReturnArgumentsAsParamSet(int n, int d)
         {
             return n / d;
         }
 
-        [Test]
         [TestCaseSource(nameof(MyData))]
         [TestCaseSource(nameof(MoreData), Category = "Extra")]
         [TestCase(12, 2, 6)]
@@ -158,27 +157,27 @@ namespace TCLite.Framework.Attributes
             Assert.AreEqual(q, n / d);
         }
 
-        [Test, TestCaseSource(nameof(FourArgs))]
+        [TestCaseSource(nameof(FourArgs))]
         public void TestWithFourArguments(int n, int d, int q, int r)
         {
             Assert.AreEqual(q, n / d);
             Assert.AreEqual(r, n % d);
         }
 
-        [Test, /*Category("Top"),*/ TestCaseSource(typeof(DivideDataProvider), nameof(DivideDataProvider.HereIsTheData))]
+        [/*Category("Top"),*/ TestCaseSource(typeof(DivideDataProvider), nameof(DivideDataProvider.HereIsTheData))]
         public void SourceMayBeInAnotherClass(int n, int d, int q)
         {
             Assert.AreEqual(q, n / d);
         }
 
 #if NYI // TestCase source with arguments
-        [Test, /*Category("Top"),*/ TestCaseSource(typeof(DivideDataProvider), "HereIsTheDataWithParameters", new object[] { 100, 4, 25 })]
+        [/*Category("Top"),*/ TestCaseSource(typeof(DivideDataProvider), "HereIsTheDataWithParameters", new object[] { 100, 4, 25 })]
         public void SourceInAnotherClassPassingSomeDataToConstructor(int n, int d, int q)
         {
             Assert.AreEqual(q, n / d);
         }
 
-        [Test, /*Category("Top"),*/ TestCaseSource(nameof(StaticMethodDataWithParameters), new object[] { 8000, 8, 1000 })]
+        [/*Category("Top"),*/ TestCaseSource(nameof(StaticMethodDataWithParameters), new object[] { 8000, 8, 1000 })]
         public void SourceCanBeStaticMethodPassingSomeDataToConstructor(int n, int d, int q)
         {
             Assert.AreEqual(q, n / d);
@@ -186,7 +185,7 @@ namespace TCLite.Framework.Attributes
 #endif        
 
 #if NYI // TestBuilder
-        [Test]
+        [TestCase]
         public void SourceInAnotherClassPassingParamsToField()
         {
             var testMethod = (TestMethod)TestBuilder.MakeParameterizedMethodSuite(
@@ -199,7 +198,7 @@ namespace TCLite.Framework.Attributes
                             "it or specify a method.", result.Message);
         }
 
-        [Test]
+        [TestCase]
         public void SourceInAnotherClassPassingParamsToProperty()
         {
             var testMethod = (TestMethod)TestBuilder.MakeParameterizedMethodSuite(
@@ -212,7 +211,7 @@ namespace TCLite.Framework.Attributes
                             "TestCaseSource attribute and either remove it or specify a method.", result.Message);
         }
 
-        [Test]
+        [TestCase]
         public void SourceInAnotherClassPassingSomeDataToConstructorWrongNumberParam()
         {
             var testMethod = (TestMethod)TestBuilder.MakeParameterizedMethodSuite(
@@ -226,14 +225,14 @@ namespace TCLite.Framework.Attributes
         }
 #endif
 
-        [Test, TestCaseSource(typeof(DivideDataProviderWithReturnValue), nameof(DivideDataProviderWithReturnValue.TestCases))]
+        [TestCaseSource(typeof(DivideDataProviderWithReturnValue), nameof(DivideDataProviderWithReturnValue.TestCases))]
         public int SourceMayBeInAnotherClassWithReturn(int n, int d)
         {
             return n / d;
         }
 
 #if NYI // TestBuilder
-        [Test]
+        [TestCase]
         public void IgnoreTakesPrecedenceOverExpectedException()
         {
             var result = TestBuilder.RunParameterizedMethodSuite(
@@ -242,7 +241,7 @@ namespace TCLite.Framework.Attributes
             Assert.AreEqual("Ignore this", result.Message);
         }
 
-        [Test]
+        [TestCase]
         public void CanIgnoreIndividualTestCases()
         {
             TestSuite suite = TestBuilder.MakeParameterizedMethodSuite(
@@ -258,7 +257,7 @@ namespace TCLite.Framework.Attributes
             });
         }
 
-        [Test]
+        [TestCase]
         public void CanIgnoreIndividualTestCasesWithUntilDate()
         {
             TestSuite suite = TestBuilder.MakeParameterizedMethodSuite(
@@ -285,7 +284,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(testCase.Properties.Get(PropertyNames.IgnoreUntilDate), Is.EqualTo(untilDate.ToString("u")));
         }
 
-        [Test]
+        [TestCase]
         public void CanMarkIndividualTestCasesExplicit()
         {
             TestSuite suite = TestBuilder.MakeParameterizedMethodSuite(
@@ -302,7 +301,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(testCase.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("Connection failing"));
         }
 
-        [Test]
+        [TestCase]
         public void HandlesExceptionInTestCaseSource()
         {
             var testMethod = (TestMethod)TestBuilder.MakeParameterizedMethodSuite(
@@ -328,7 +327,7 @@ namespace TCLite.Framework.Attributes
         }
 
 #if NYI // TestBuilder
-        [Test]
+        [TestCase]
         public void TestMethodIsNotRunnableWhenSourceDoesNotExist()
         {
             TestSuite suiteToTest = TestBuilder.MakeParameterizedMethodSuite(typeof(TestCaseSourceAttributeFixture), nameof(TestCaseSourceAttributeFixture.MethodWithNonExistingSource));
@@ -345,7 +344,7 @@ namespace TCLite.Framework.Attributes
                 new string[] { "B" })
         };
 
-        [Test, TestCaseSource(nameof(testCases))]
+        [TestCaseSource(nameof(testCases))]
         public void MethodTakingTwoStringArrays(string[] a, string[] b)
         {
             Assert.That(a, Is.TypeOf(typeof(string[])));
@@ -397,7 +396,7 @@ namespace TCLite.Framework.Attributes
         #endregion
 
 #if NYI // TestBuilder
-        [Test]
+        [TestCase]
         public void TestNameIntrospectsArrayValues()
         {
             TestSuite suite = TestBuilder.MakeParameterizedMethodSuite(

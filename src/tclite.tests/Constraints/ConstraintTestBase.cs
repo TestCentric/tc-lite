@@ -18,13 +18,13 @@ namespace TCLite.Framework.Constraints
         protected abstract string ExpectedDescription { get; }
         protected abstract string ExpectedRepresentation { get; }
 
-        [Test]
+        [TestCase]
         public void ProvidesProperDescription()
         {
             Assert.That(Constraint.Description, Is.EqualTo(ExpectedDescription));
         }
 
-        [Test]
+        [TestCase]
         public void ProvidesProperStringRepresentation()
         {
             Assert.That(Constraint.ToString(), Is.EqualTo(ExpectedRepresentation));

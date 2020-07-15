@@ -15,64 +15,64 @@ namespace TCLite.Framework.Assertions
     [TestFixture]
     public class AssertThatTests : AssertionTestBase
     {
-        [Test]
+        [TestCase]
         public void AssertionPasses_Boolean()
         {
             Assert.That(2 + 2 == 4);
         }
 
-        [Test]
+        [TestCase]
         public void AssertionPasses_BooleanWithMessage()
         {
             Assert.That(2 + 2 == 4, "Not Equal");
         }
 
-        [Test]
+        [TestCase]
         public void AssertionPasses_BooleanWithMessageAndArgs()
         {
             Assert.That(2 + 2 == 4, "Not Equal to {0}", 4);
         }
 
-        [Test]
+        [TestCase]
         public void AssertionPasses_ActualAndConstraint()
         {
             Assert.That(2 + 2, Is.EqualTo(4));
         }
 
-        [Test]
+        [TestCase]
         public void AssertionPasses_ActualAndConstraintWithMessage()
         {
             Assert.That(2 + 2, Is.EqualTo(4), "Should be 4");
         }
 
-        [Test]
+        [TestCase]
         public void AssertionPasses_ActualAndConstraintWithMessageAndArgs()
         {
             Assert.That(2 + 2, Is.EqualTo(4), "Should be {0}", 4);
         }
 
-        [Test]
+        [TestCase]
         public void AssertionPasses_ReferenceAndConstraint()
         {
             bool value = true;
             Assert.That(ref value, Is.True);
         }
 
-        [Test]
+        [TestCase]
         public void AssertionPasses_ReferenceAndConstraintWithMessage()
         {
             bool value = true;
             Assert.That(ref value, Is.True, "Message");
         }
 
-        [Test]
+        [TestCase]
         public void AssertionPasses_ReferenceAndConstraintWithMessageAndArgs()
         {
             bool value = true;
             Assert.That(ref value, Is.True, "Message", 42);
         }
 
-        [Test]
+        [TestCase]
         public void AssertionPasses_DelegateAndConstraint()
         {
             Assert.That(new ActualValueDelegate<int>(ReturnsFour), Is.EqualTo(4));
@@ -83,13 +83,13 @@ namespace TCLite.Framework.Assertions
             return 4;
         }
 
-        [Test]
+        [TestCase]
         public void FailureThrowsAssertionException_Boolean()
         {
             Assert.Throws<AssertionException>(() => Assert.That(2 + 2 == 5));
         }
 
-        [Test]
+        [TestCase]
         public void FailureThrowsAssertionException_BooleanWithMessage()
         {
             var ex = Assert.Throws<AssertionException>(() => Assert.That(2 + 2 == 5, "MESSAGE"));
@@ -99,13 +99,13 @@ namespace TCLite.Framework.Assertions
                 "  But was:  False" + NL));
         }
 
-        [Test]
+        [TestCase]
         public void FailureThrowsAssertionException_ActualAndConstraint()
         {
             var ex = Assert.Throws<AssertionException>(() => Assert.That(2 + 2, Is.EqualTo(5)));
         }
 
-        [Test,]
+        [TestCase]
         public void FailureThrowsAssertionException_ActualAndConstraintWithMessage()
         {
             var ex = Assert.Throws<AssertionException>(() => Assert.That(2 + 2, Is.EqualTo(5), "Error"));
@@ -115,14 +115,14 @@ namespace TCLite.Framework.Assertions
                 "  But was:  4" + NL));
         }
 
-        [Test]
+        [TestCase]
         public void FailureThrowsAssertionException_ReferenceAndConstraint()
         {
             bool value = false;
             Assert.Throws<AssertionException>(() => Assert.That(ref value, Is.True));
         }
 
-        [Test]
+        [TestCase]
         public void FailureThrowsAssertionException_ReferenceAndConstraintWithMessage()
         {
             bool value = false;
@@ -133,13 +133,13 @@ namespace TCLite.Framework.Assertions
                 "  But was:  False" + NL));
         }
 
-        [Test]
+        [TestCase]
         public void FailureThrowsAssertionException_DelegateAndConstraint()
         {
             var ex = Assert.Throws<AssertionException>(() => Assert.That(ReturnsFive, Is.EqualTo(4)));
         }
 
-        [Test]
+        [TestCase]
         public void FailureThrowsAssertionException_DelegateAndConstraintWithMessage()
         {
             var ex = Assert.Throws<AssertionException>(() => Assert.That(ReturnsFive, Is.EqualTo(4), "Error"));
@@ -150,7 +150,7 @@ namespace TCLite.Framework.Assertions
         }
 
 #if NYI // TestBuilder
-        [Test]
+        [TestCase]
         public void AssertionsAreCountedCorrectly()
         {
             TestResult result = TestBuilder.RunTestFixture(typeof(AssertCountFixture));
@@ -173,20 +173,20 @@ namespace TCLite.Framework.Assertions
         }
 
 #if NYI // async
-        [Test]
+        [TestCase]
         public void AssertThatSuccess()
         {
             Assert.That(async () => await One(), Is.EqualTo(1));
         }
 
-        [Test]
+        [TestCase]
         public void AssertThatFailure()
         {
             var exception = Assert.Throws<AssertionException>(() =>
                 Assert.That(async () => await One(), Is.EqualTo(2)));
         }
 
-        [Test]
+        [TestCase]
         public void AssertThatErrorTask()
         {
             var exception = Assert.Throws<InvalidOperationException>(() =>
@@ -195,7 +195,7 @@ namespace TCLite.Framework.Assertions
             Assert.That(exception.StackTrace, Contains.Substring("ThrowExceptionTask"));
         }
 
-        [Test]
+        [TestCase]
         public void AssertThatErrorGenericTask()
         {
             var exception = Assert.Throws<InvalidOperationException>(() =>
@@ -204,7 +204,7 @@ namespace TCLite.Framework.Assertions
             Assert.That(exception.StackTrace, Contains.Substring("ThrowExceptionGenericTask"));
         }
 
-        [Test]
+        [TestCase]
         public void AssertThatErrorVoid()
         {
             var exception = Assert.Throws<InvalidOperationException>(() =>

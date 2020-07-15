@@ -57,7 +57,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(value, Is.EqualTo(value));
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchDates()
         {
             DateTime expected = new DateTime(2007, 4, 1);
@@ -65,7 +65,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchDatesWithinTimeSpan()
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
@@ -74,7 +74,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, Is.EqualTo(expected).Within(tolerance));
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchDatesWithinDays()
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
@@ -82,7 +82,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, Is.EqualTo(expected).Within(5).Days);
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchDatesWithinHours()
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
@@ -90,7 +90,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, Is.EqualTo(expected).Within(5).Hours);
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchDatesWithinMinutes()
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
@@ -98,7 +98,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, Is.EqualTo(expected).Within(5).Minutes);
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchTimeSpanWithinMinutes()
         {
             TimeSpan expected = new TimeSpan(10, 0, 0);
@@ -106,7 +106,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, Is.EqualTo(expected).Within(5).Minutes);
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchDatesWithinSeconds()
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
@@ -114,7 +114,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, Is.EqualTo(expected).Within(300).Seconds);
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchDatesWithinMilliseconds()
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
@@ -122,7 +122,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, Is.EqualTo(expected).Within(300000).Milliseconds);
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchDatesWithinTicks()
         {
             DateTime expected = new DateTime(2007, 4, 1, 13, 0, 0);
@@ -130,13 +130,13 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, Is.EqualTo(expected).Within(TimeSpan.TicksPerMinute * 5).Ticks);
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchStrings()
         {
             Assert.That("hello", Is.EqualTo("hello"));
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchStringsIgnoringCase()
         {
             Assert.That("Hello", Is.EqualTo("HELLO").IgnoreCase);
@@ -145,14 +145,14 @@ namespace TCLite.Framework.Constraints
         #region Dictionary Tests
 
         // TODO: Move these to a separate fixture
-        [Test]
+        [TestCase]
         public void CanMatchHashtables_SameOrder()
         {
             Assert.AreEqual(new Hashtable { { 0, 0 }, { 1, 1 }, { 2, 2 } },
                             new Hashtable { { 0, 0 }, { 1, 1 }, { 2, 2 } });
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchHashtables_Failure()
         {
             Assert.Throws<AssertionException>(() =>
@@ -163,21 +163,21 @@ namespace TCLite.Framework.Constraints
             });
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchHashtables_DifferentOrder()
         {
             Assert.AreEqual(new Hashtable { { 0, 0 }, { 1, 1 }, { 2, 2 } },
                             new Hashtable { { 0, 0 }, { 2, 2 }, { 1, 1 } });
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchDictionaries_SameOrder()
         {
             Assert.AreEqual(new Dictionary<int, int> { { 0, 0 }, { 1, 1 }, { 2, 2 } },
                             new Dictionary<int, int> { { 0, 0 }, { 1, 1 }, { 2, 2 } });
         }
 
-        [Test]
+        [TestCase]
         public void CanMatchDictionaries_Failure()
         {
             Assert.Throws<AssertionException>(() =>
@@ -189,7 +189,7 @@ namespace TCLite.Framework.Constraints
         }
 
 #if NYI // Dictionary
-        [Test]
+        [TestCase]
         public void CanMatchDictionaries_DifferentOrder()
         {
             Assert.AreEqual(new Dictionary<int, int> { { 0, 0 }, { 1, 1 }, { 2, 2 } },
@@ -198,7 +198,7 @@ namespace TCLite.Framework.Constraints
 #endif
 
 #if NYI // Dictionary
-        [Test]
+        [TestCase]
         public void CanMatchHashtableWithDictionary()
         {
             Assert.AreEqual(new Hashtable { { 0, 0 }, { 1, 1 }, { 2, 2 } },
@@ -279,7 +279,7 @@ namespace TCLite.Framework.Constraints
         }
 
         /// <summary>Applies both the Percent and Ulps modifiers to cause an exception</summary>
-        [Test]
+        [TestCase]
         public void ErrorWithPercentAndUlpsToleranceModes()
         {
             Assert.Throws<InvalidOperationException>(() =>
@@ -289,7 +289,7 @@ namespace TCLite.Framework.Constraints
         }
 
         /// <summary>Applies both the Ulps and Percent modifiers to cause an exception</summary>
-        [Test]
+        [TestCase]
         public void ErrorWithUlpsAndPercentToleranceModes()
         {
             Assert.Throws<InvalidOperationException>(() =>
@@ -298,7 +298,7 @@ namespace TCLite.Framework.Constraints
             });
         }
 
-        [Test]
+        [TestCase]
         public void ErrorIfPercentPrecedesWithin()
         {
             Assert.Throws<InvalidOperationException>(() =>
@@ -307,7 +307,7 @@ namespace TCLite.Framework.Constraints
             });
         }
 
-        [Test]
+        [TestCase]
         public void ErrorIfUlpsPrecedesWithin()
         {
             Assert.Throws<InvalidOperationException>(() =>
@@ -316,7 +316,7 @@ namespace TCLite.Framework.Constraints
             });
         }
 
-        [Test]
+        [TestCase]
         public void ErrorIfDaysPrecedesWithin()
         {
             Assert.Throws<InvalidOperationException>(() =>
@@ -325,21 +325,21 @@ namespace TCLite.Framework.Constraints
             });
         }
 
-        [Test]
+        [TestCase]
         public void ErrorIfHoursPrecedesWithin()
         {
             Assert.Throws<InvalidOperationException>(
                 () => Assert.That(DateTime.Now, Is.EqualTo(DateTime.Now).Hours.Within(5)));
         }
 
-        [Test]
+        [TestCase]
         public void ErrorIfMinutesPrecedesWithin()
         {
             Assert.Throws<InvalidOperationException>(
                 () => Assert.That(DateTime.Now, Is.EqualTo(DateTime.Now).Minutes.Within(5)));
         }
 
-        [Test]
+        [TestCase]
         public void ErrorIfSecondsPrecedesWithin()
         {
             Assert.Throws<InvalidOperationException>(() =>
@@ -348,14 +348,14 @@ namespace TCLite.Framework.Constraints
             });
         }
 
-        [Test]
+        [TestCase]
         public void ErrorIfMillisecondsPrecedesWithin()
         {
             Assert.Throws<InvalidOperationException>(
                 () => Assert.That(DateTime.Now, Is.EqualTo(DateTime.Now).Milliseconds.Within(5)));
         }
 
-        [Test]
+        [TestCase]
         public void ErrorIfTicksPrecedesWithin()
         {
             Assert.Throws<InvalidOperationException>(
@@ -372,14 +372,14 @@ namespace TCLite.Framework.Constraints
                 () => Assert.That(y, Is.EqualTo(x).Within(2).Ulps));
         }
 
-        [Test]
+        [TestCase]
         public void ErrorIfUlpsIsUsedOnDecimal()
         {
             Assert.Throws<InvalidOperationException>(
                 () => Assert.That(100m, Is.EqualTo(100m).Within(2).Ulps));
         }
 
-        [Test]
+        [TestCase]
         public void UsesProvidedIComparer()
         {
             SimpleObjectComparer comparer = new SimpleObjectComparer();
@@ -387,7 +387,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
-        [Test]
+        [TestCase]
         public void UsesProvidedEqualityComparer()
         {
             SimpleEqualityComparer comparer = new SimpleEqualityComparer();
@@ -395,7 +395,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
-        [Test]
+        [TestCase]
         public void UsesProvidedEqualityComparerOfT()
         {
             SimpleEqualityComparer<int> comparer = new SimpleEqualityComparer<int>();
@@ -403,7 +403,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
-        [Test]
+        [TestCase]
         public void UsesProvidedComparerOfT()
         {
             SimpleEqualityComparer<int> comparer = new SimpleEqualityComparer<int>();
@@ -411,7 +411,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
-        [Test]
+        [TestCase]
         public void UsesProvidedComparisonOfT()
         {
             MyComparison<int> comparer = new MyComparison<int>();
@@ -430,19 +430,19 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        [Test]
+        [TestCase]
         public void UsesProvidedLambda_IntArgs()
         {
             Assert.That(2 + 2, Is.EqualTo(4).Using<int>((x, y) => x.CompareTo(y)));
         }
 
-        [Test]
+        [TestCase]
         public void UsesProvidedLambda_StringArgs()
         {
             Assert.That("hello", Is.EqualTo("HELLO").Using<string>((x, y) => x.ToLower().CompareTo(y.ToLower())));
         }
 
-        [Test]
+        [TestCase]
         public void UsesProvidedListComparer()
         {
             var list1 = new List<int>() { 2, 3 };
@@ -468,7 +468,7 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        [Test]
+        [TestCase]
         public void UsesProvidedArrayComparer()
         {
             var array1 = new int[] { 2, 3 };

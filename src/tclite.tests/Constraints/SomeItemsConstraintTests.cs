@@ -28,7 +28,7 @@ namespace TCLite.Framework.Constraints
             new TestCaseData( new string[] { "Bonjour", "Hello", "Goodbye" }, "< \"Bonjour\", \"Hello\", \"Goodbye\" >")
         };
 
-        [Test]
+        [TestCase]
         public void EqualConstraintWithIgnoreCaseDoesNotThrow()
         {
             Assert.That(new string[] { "Hello", "Goodbye" }, Has.Some.EqualTo("HELLO").IgnoreCase);

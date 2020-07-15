@@ -23,7 +23,7 @@ namespace TCLite.Framework.Constraints
             new TestCaseData(42, "42")
         };
 
-        [Test]
+        [TestCase]
         public void NotHonorsIgnoreCaseUsingConstructors()
         {
             var ex = Assert.Throws<AssertionException>(() =>
@@ -34,7 +34,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(ex.Message.Contains("ignoring case"), $"Message was {ex.Message}");
         }
 
-        [Test]
+        [TestCase]
         public void NotHonorsIgnoreCaseUsingPrefixNotation()
         {
             var ex = Assert.Throws<AssertionException>(() =>
@@ -45,7 +45,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(ex.Message.Contains("ignoring case"));
         }
 
-        [Test]
+        [TestCase]
         public void NotHonorsTolerance()
         {
             var ex = Assert.Throws<AssertionException>(() =>

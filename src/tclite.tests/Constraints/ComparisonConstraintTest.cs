@@ -22,7 +22,7 @@ namespace TCLite.Framework.Constraints
             new TestCaseData("xxx", typeof(ArgumentException))
         };
 
-        [Test]
+        [TestCase]
         public void UsesProvidedIComparer()
         {
             SimpleObjectComparer comparer = new SimpleObjectComparer();
@@ -30,7 +30,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(comparer.Called, "Comparer was not called");
         }
 
-        [Test]
+        [TestCase]
         public void UsesProvidedComparerOfT()
         {
             MyComparer<int> comparer = new MyComparer<int>();
@@ -49,7 +49,7 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        [Test]
+        [TestCase]
         public void UsesProvidedComparisonOfT()
         {
             MyComparison<int> comparer = new MyComparison<int>();
@@ -68,7 +68,7 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        [Test]
+        [TestCase]
         public void UsesProvidedLambda()
         {
             Comparison<int> comparer = (x, y) => x.CompareTo(y);

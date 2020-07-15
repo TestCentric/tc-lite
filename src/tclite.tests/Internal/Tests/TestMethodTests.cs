@@ -11,14 +11,14 @@ namespace TCLite.Framework.Tests
     {
         private TestMethod _testMethod;
 
-        [Test]
+        [TestCase]
         public void TestType()
         {
             CreateTestMethod();
             Assert.That(_testMethod.TestType, Is.EqualTo("TestMethod"));
         }
 
-        [Test]
+        [TestCase]
         public void MethodName()
         {
             CreateTestMethod();

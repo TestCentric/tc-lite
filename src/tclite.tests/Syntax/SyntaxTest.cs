@@ -19,7 +19,7 @@ namespace TCLite.Framework.Syntax
             return new ConstraintExpression();
         }
 
-        [Test]
+        [TestCase]
         public void SupportedByStaticSyntax()
         {
             Assert.That(
@@ -27,7 +27,7 @@ namespace TCLite.Framework.Syntax
                 Is.EqualTo(ParseTree).NoClip);
         }
 
-        [Test]
+        [TestCase]
         public void SupportedByConstraintBuilder()
         {
             Assert.That(

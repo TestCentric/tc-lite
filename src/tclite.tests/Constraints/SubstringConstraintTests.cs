@@ -60,7 +60,7 @@ namespace TCLite.Framework.Constraints
             Assert.That(actual, constraint);
         }
 
-        [Test]
+        [TestCase]
         public void UseDifferentComparisonTypes_ThrowsException()
         {
             var subStringConstraint = Constraint as SubstringConstraint;
@@ -89,7 +89,7 @@ namespace TCLite.Framework.Constraints
                 Throws.TypeOf<InvalidOperationException>());
         }
 
-        [Test]
+        [TestCase]
         public void UseSameComparisonTypes_DoesNotThrowException()
         {
             var subStringConstraint = Constraint as SubstringConstraint;

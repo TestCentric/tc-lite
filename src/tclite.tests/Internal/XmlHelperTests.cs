@@ -11,7 +11,7 @@ namespace TCLite.Framework.Internal
 {
     public class XmlHelperTests
     {
-        [Test]
+        [TestCase]
         public void SingleElement()
         {
             XmlNode node = XmlHelper.CreateTopLevelElement("myelement");
@@ -21,7 +21,7 @@ namespace TCLite.Framework.Internal
             Assert.That(node.ChildNodes.Count, Is.EqualTo(0));
         }
 
-        [Test]
+        [TestCase]
         public void SingleElementWithAttributes()
         {
             XmlNode node = XmlHelper.CreateTopLevelElement("person");
@@ -37,7 +37,7 @@ namespace TCLite.Framework.Internal
             Assert.That(node.Attributes["quotes"].Value, Is.EqualTo("'c' is a char but \"c\" is a string"));
         }
 
-        [Test]
+        [TestCase]
         public void ElementContainsElementWithInnerText()
         {
             XmlNode top = XmlHelper.CreateTopLevelElement("top");
@@ -47,7 +47,7 @@ namespace TCLite.Framework.Internal
             Assert.That(top.SelectSingleNode("message").InnerText, Is.EqualTo("This is my message"));
         }
 
-        [Test]
+        [TestCase]
         public void ElementContainsElementWithCData()
         {
             XmlNode top = XmlHelper.CreateTopLevelElement("top");
@@ -56,7 +56,7 @@ namespace TCLite.Framework.Internal
             Assert.That(top.SelectSingleNode("message").InnerText, Is.EqualTo("x > 5 && x < 7"));
         }
 
-        [Test]
+        [TestCase]
         public void SafeAttributeAccess()
         {
             XmlNode node = XmlHelper.CreateTopLevelElement("top");
@@ -64,14 +64,14 @@ namespace TCLite.Framework.Internal
             Assert.That(XmlHelper.GetAttribute(node, "junk"), Is.Null);
         }
 
-        [Test]
+        [TestCase]
         public void SafeAttributeAccessWithIntDefaultValue()
         {
             XmlNode node = XmlHelper.CreateTopLevelElement("top");
             Assert.That(XmlHelper.GetAttribute(node, "junk", 42), Is.EqualTo(42));
         }
 
-        [Test]
+        [TestCase]
         public void SafeAttributeAccessWithDoubleDefaultValue()
         {
             XmlNode node = XmlHelper.CreateTopLevelElement("top");

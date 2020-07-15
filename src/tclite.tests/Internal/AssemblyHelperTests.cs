@@ -10,7 +10,7 @@ namespace TCLite.Framework.Internal
 {
     public class AssemblyHelperTests
     {
-        [Test]
+        [TestCase]
         public void GetPathForAssembly()
         {
             string path = AssemblyHelper.GetAssemblyPath(this.GetType().Assembly);
@@ -18,7 +18,7 @@ namespace TCLite.Framework.Internal
             Assert.That(File.Exists(path));
         }
 
-        [Test]
+        [TestCase]
         public void GetPathForType()
         {
            string path = AssemblyHelper.GetAssemblyPath(this.GetType());
