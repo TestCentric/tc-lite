@@ -6,6 +6,7 @@
 using System;
 using System.Collections;
 using System.Reflection;
+using TCLite.Framework.Api;
 
 namespace TCLite.Framework
 {
@@ -14,7 +15,7 @@ namespace TCLite.Framework
     /// an individual parameter of a test.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
-    public class ValuesAttribute : DataAttribute, Api.IParameterDataSource
+    public class ValuesAttribute : TCLiteAttribute, IParameterDataSource
     {
         /// <summary>
         /// The collection of data to be returned. Must

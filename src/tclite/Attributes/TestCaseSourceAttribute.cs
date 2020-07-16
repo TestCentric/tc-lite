@@ -18,7 +18,7 @@ namespace TCLite.Framework
     /// provide test cases for a test method.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
-    public class TestCaseSourceAttribute : DataAttribute, ITestCaseSource, IImplyFixture
+    public class TestCaseSourceAttribute : TCLiteAttribute, ITestCaseSource, IImplyFixture
     {
         /// <summary>
         /// Construct with the name of the method, property or field that will prvide data

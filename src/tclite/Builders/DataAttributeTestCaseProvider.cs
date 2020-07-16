@@ -32,7 +32,7 @@ namespace TCLite.Framework.Builders
         /// <returns>True if any cases are available, otherwise false.</returns>
         public bool HasTestCasesFor(MethodInfo method)
         {
-            return method.IsDefined(typeof(DataAttribute), false);
+            return method.IsDefined(typeof(ITestCaseSource), false);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace TCLite.Framework.Builders
         {
             List<ITestCaseData> testCases = new List<ITestCaseData>();
 
-            foreach (DataAttribute attr in method.GetCustomAttributes(typeof(DataAttribute), false))
+            foreach (ITestCaseSource attr in method.GetCustomAttributes(typeof(ITestCaseSource), false))
             {
                 ITestCaseSource source = attr as ITestCaseSource;
                 if (source != null)
