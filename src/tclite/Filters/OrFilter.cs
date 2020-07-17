@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.Filters

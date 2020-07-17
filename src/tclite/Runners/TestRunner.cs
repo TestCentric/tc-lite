@@ -9,7 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using TCLite.Framework;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Builders;
 using TCLite.Framework.Internal;
 using TCLite.Runners.TestSelection;

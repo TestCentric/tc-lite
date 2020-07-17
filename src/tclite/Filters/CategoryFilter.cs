@@ -5,7 +5,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.Filters

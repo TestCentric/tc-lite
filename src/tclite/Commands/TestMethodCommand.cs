@@ -6,9 +6,8 @@
 using System;
 using System.Reflection;
 using System.Threading;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
-using TCLite.Framework.Tests;
 
 namespace TCLite.Framework.Commands
 {
@@ -112,7 +111,7 @@ namespace TCLite.Framework.Commands
         }
 
 #if NYI // async
-        private object RunAsyncVoidTestMethod(TestExecutionContext context)
+        private object RunAsyncVoidTestMethod(ITestExecutionContext context)
         {
             var previousContext = SynchronizationContext.Current;
             var currentContext = new AsyncSynchronizationContext();

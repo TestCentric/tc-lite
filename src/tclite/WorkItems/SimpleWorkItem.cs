@@ -6,7 +6,7 @@
 using System;
 using System.Threading;
 using TCLite.Framework.Commands;
-using TCLite.Framework.Tests;
+using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.WorkItems
 {

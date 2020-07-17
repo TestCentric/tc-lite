@@ -5,7 +5,7 @@
 
 using System;
 using System.Collections.Generic;
-using TCLite.Framework.Tests;
+using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.Extensibility
 {

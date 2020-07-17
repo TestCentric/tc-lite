@@ -8,9 +8,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Text;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
-using TCLite.Framework.Tests;
 using TCLite.Framework.Extensibility;
 
 namespace TCLite.Framework.Builders

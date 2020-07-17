@@ -5,6 +5,7 @@
 
 using System;
 using TCLite.Framework.Constraints;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
 
 namespace TCLite.Framework
@@ -33,7 +34,7 @@ namespace TCLite.Framework
         /// Apply changes to the TestExecutionContext
         /// </summary>
         /// <param name="context">The TestExecutionContext</param>
-        public void ApplyToContext(TestExecutionContext context)
+        public void ApplyToContext(ITestExecutionContext context)
         {
             context.DefaultFloatingPointTolerance = _tolerance;
         }

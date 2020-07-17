@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace TCLite.Framework
 {
-    using Api;
+    using Interfaces;
     using Commands;
 
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]

@@ -4,8 +4,8 @@
 // ***********************************************************************
 
 using System.Reflection;
-using TCLite.Framework.Api;
-using TCLite.Framework.Tests;
+using TCLite.Framework.Interfaces;
+using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.Extensibility
 {

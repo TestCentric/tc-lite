@@ -6,8 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using TCLite.Framework.Api;
-using TCLite.Framework.Tests;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
 using TCLite.Framework.WorkItems;
 
@@ -22,16 +21,14 @@ namespace TCLite.Framework.Builders
 
         TCLiteTestFixtureBuilder _builder = new TCLiteTestFixtureBuilder();
 
-        #region Properties
+        private TestSuite _loadedTest;
+
+        #region ITestAssemblyRunner Implementation
 
         /// <summary>
         /// Root of the tree of loaded tests or null if none have been loaded
         /// </summary>
-        public TestSuite LoadedTest { get; private set; }
-
-        #endregion
-
-        #region Public Methods
+        ITest ITestAssemblyRunner.LoadedTest => _loadedTest;
 
         /// <summary>
         /// Loads the tests found in an Assembly
@@ -39,14 +36,14 @@ namespace TCLite.Framework.Builders
         /// <param name="assembly">The assembly to load</param>
         /// <param name="settings">Dictionary of option settings for loading the assembly</param>
         /// <returns>True if the load was successful</returns>
-        public bool Load(Assembly assembly, IDictionary<string, object> settings)
+        bool ITestAssemblyRunner.Load(Assembly assembly, IDictionary<string, object> settings)
         {
             _settings = settings;
 
             var fixtures = GetFixtures(assembly);
 
             return fixtures.Count > 0
-                ? (LoadedTest = BuildTestAssembly(assembly, fixtures)) != null
+                ? (_loadedTest = BuildTestAssembly(assembly, fixtures)) != null
                 : false;
         }
 
@@ -57,7 +54,7 @@ namespace TCLite.Framework.Builders
         /// <param name="listener">Interface to receive EventListener notifications.</param>
         /// <param name="filter">A test filter used to select tests to be run</param>
         /// <returns></returns>
-        public ITestResult Run(ITestListener listener, ITestFilter filter)
+        ITestResult ITestAssemblyRunner.Run(ITestListener listener, ITestFilter filter)
         {
             TestExecutionContext context = new TestExecutionContext();
 
@@ -68,7 +65,7 @@ namespace TCLite.Framework.Builders
 
             context.Listener = listener;
 
-            WorkItem workItem = new CompositeWorkItem(LoadedTest, filter);
+            WorkItem workItem = new CompositeWorkItem(_loadedTest, filter);
             workItem.Execute(context);
 
             while (workItem.State != WorkItemState.Complete)

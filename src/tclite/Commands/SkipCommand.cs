@@ -4,9 +4,8 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
-using TCLite.Framework.Tests;
 
 namespace TCLite.Framework.Commands
 {

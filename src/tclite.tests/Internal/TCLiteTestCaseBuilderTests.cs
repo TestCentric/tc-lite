@@ -1,6 +1,6 @@
 ﻿#if NYI // Async
 using System.Reflection;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Builders;
 using TCLite.TestData;
 using TCLite.TestUtilities;

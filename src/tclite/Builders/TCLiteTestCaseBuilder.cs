@@ -6,10 +6,9 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Commands;
 using TCLite.Framework.Internal;
-using TCLite.Framework.Tests;
 using TCLite.Framework.Extensibility;
 
 namespace TCLite.Framework.Builders

@@ -4,7 +4,7 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 
 namespace TCLite.Framework.Internal
 {

@@ -6,7 +6,7 @@
 using System;
 using System.Collections;
 using System.Reflection;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 
 namespace TCLite.Framework
 {

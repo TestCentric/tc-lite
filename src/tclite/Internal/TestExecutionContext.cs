@@ -4,15 +4,12 @@
 // ***********************************************************************
 
 using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.IO;
 using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Constraints;
-using TCLite.Framework.Tests;
 
 namespace TCLite.Framework.Internal
 {
@@ -28,7 +25,7 @@ namespace TCLite.Framework.Internal
 	/// Static methods for each setting forward to the internal 
 	/// object on the top of the stack.
 	/// </summary>
-	public class TestExecutionContext
+	public class TestExecutionContext : ITestExecutionContext
 #if NETFRAMEWORK
         : ILogicalThreadAffinative
 #endif
@@ -164,6 +161,25 @@ namespace TCLite.Framework.Internal
 
         #endregion
 
+        #region ITestExecutionContext Explicit Implementation
+
+        // /// <summary>
+        // /// Gets or sets the current test
+        // /// </summary>
+        // ITest ITestExecutionContext.CurrentTest => this.CurrentTest;
+
+        // /// <summary>
+        // /// The time the current test started execution
+        // /// </summary>
+        // DateTime ITestExecutionContext.StartTime => this.StartTime;
+
+        // /// <summary>
+        // /// Gets or sets the current test result
+        // /// </summary>
+        // ITestResult ITestExecutionContext.CurrentResult => this.CurrentResult;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -269,7 +285,7 @@ namespace TCLite.Framework.Internal
 		/// Controls where Console.Out is directed
 		/// </summary>
 		internal TextWriter Out
-		{
+        {
 			get { return _outWriter; }
 			set 
 			{

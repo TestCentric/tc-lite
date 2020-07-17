@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 
 namespace TCLite.Framework.Internal
 {

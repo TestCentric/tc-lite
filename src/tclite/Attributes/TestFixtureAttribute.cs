@@ -5,8 +5,8 @@
 
 using System;
 using System.Collections;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
-using TCLite.Framework.Tests;
 
 namespace TCLite.Framework
 {
@@ -174,7 +174,7 @@ namespace TCLite.Framework
         /// Modifies a test by adding a description, if not already set.
         /// </summary>
         /// <param name="test">The test to modify</param>
-        public void ApplyToTest(Test test)
+        public void ApplyToTest(ITest test)
         {
             if (!test.Properties.ContainsKey(PropertyNames.Description) && Description != null)
                 test.Properties.Set(PropertyNames.Description, Description);

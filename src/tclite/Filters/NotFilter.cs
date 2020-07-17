@@ -4,7 +4,7 @@
 // ***********************************************************************
 
 using System.Xml;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.Filters

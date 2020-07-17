@@ -6,7 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Specialized;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
 
 // TODO: Remove conditional code

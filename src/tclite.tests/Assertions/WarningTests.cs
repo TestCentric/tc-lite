@@ -5,7 +5,7 @@
 
 using System;
 using System.Linq;
-using TCLite.Framework.Api;
+using TCLite.Framework.Interfaces;
 using TCLite.Framework.Constraints;
 using TCLite.Framework.Internal;
 using TCLite.TestUtilities;

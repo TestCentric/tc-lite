@@ -5,7 +5,7 @@
 
 using System.Reflection;
 
-namespace TCLite.Framework.Tests
+namespace TCLite.Framework.Internal
 {
     public class TestMethodTests
     {
