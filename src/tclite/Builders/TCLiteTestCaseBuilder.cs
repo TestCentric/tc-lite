@@ -69,10 +69,6 @@ namespace TCLite.Framework.Builders
         /// <returns>A Test representing one or more method invocations</returns>
         public IEnumerable<Test> BuildFrom(MethodInfo method, ITest parentSuite)
         {
-            // return _testCaseProvider.HasTestCasesFor(method)
-            //     ? BuildParameterizedMethodSuite(method, parentSuite)
-            //     : BuildSingleTestMethod(method, parentSuite, null);
-
             List<TestMethod> testCases = new List<TestMethod>();
             var name = method.Name;
             foreach (ITestCaseSource source in method.GetCustomAttributes(typeof(ITestCaseSource), false))

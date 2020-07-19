@@ -59,6 +59,14 @@ _TC-Lite_ uses attributes to identify tests, control various aspects of how they
 
 * `[TestFixtureSource]` is only used on parameterized or generic fixtures and provides a level of indirection analogous to what `[TestCaseSource]` does for methods.
 
+* `[Category]` allows grouping tests under arbitrary tags, which may be used to select the test to be run.
+
+* `[Property]` goes beyond categories, allowing name / value pairs to be applied to tests and used to select them.
+
+* `[Author]` provides the author of the test as a test property.
+
+* `[Description]` provides a readable description of the test as a property.
+
 ### Assertions
 
 As with _NUnitLite_ and _NUnit_, a limited number of "classic" (non-constraint-based) Asserts continue to be supported:
@@ -117,14 +125,6 @@ The _NUnit_ Fluent Assertion syntax has being re-implemented based on Generic me
 * `[Combinatorial]`, `[Pairwise]` and (possibly) `[Sequential]` are used on parameterized test methods, when the data for the arguments are provided individually rather than as test cases. They provide alternate "recipes" for combining the individual arguments. For the moment, I envision these as working like _NUnit's_ attributes of the same names, although that could change.
 
 * Various attributes may be applied to method parameters for generating individual arguments. The following is a possible selection, subject to change: `[Values]`. `[ValuesSource]`, `[Range]`, `[Random]`.
-
-* `[Category]` allows grouping tests under arbitrary tags, which may be used to select the test to be run.
-
-* `[Property]` goes beyond categories, allowing name / value pairs to be applied to tests and used to select them.
-
-* `[Author]` stores the author of the test as a test property.
-
-* `[Description]` provides a readable description of the test as a property.
 
 * `[Include]` allows the developer to indicate when a test will be included, based on environmental factors like the OS platform or the current Culture. A corresponding `[Exclude]` attribute is available when specifying rules for exclusion is more convenient.
 

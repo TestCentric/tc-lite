@@ -21,6 +21,32 @@ namespace TCLite.Framework.Attributes
             _testDummy.RunState = RunState.Runnable;
         }
 
+        #region AuthorAttribute
+
+        [TestCase]
+        public void AuthorAttributeSetsAuthor()
+        {
+            new AuthorAttribute("Charlie").ApplyToTest(_testDummy);
+            Assert.That(_testDummy.Properties.Get(PropertyNames.Author), Is.EqualTo("Charlie"));
+        }
+
+        [TestCase]
+        public void AuthorAttributeSetsAuthorAndEmail()
+        {
+            new AuthorAttribute("Charlie", "charlie@someplace.com").ApplyToTest(_testDummy);
+            Assert.That(_testDummy.Properties.Get(PropertyNames.Author), Is.EqualTo("Charlie <charlie@someplace.com>"));
+        }
+
+        [TestCase]
+        public void AuthorAttributeSetsAuthorOnNonRunnableTest()
+        {
+            _testDummy.RunState = RunState.NotRunnable;
+            new AuthorAttribute("Charlie").ApplyToTest(_testDummy);
+            Assert.That(_testDummy.Properties.Get(PropertyNames.Author), Is.EqualTo("Charlie"));
+        }
+
+        #endregion
+
         #region CategoryAttribute
 
         [TestCase('!')]
@@ -61,26 +87,26 @@ namespace TCLite.Framework.Attributes
 
         #endregion
 
-#if NYI
         #region DescriptionAttribute
 
-        [Test]
+        [TestCase]
         public void DescriptionAttributeSetsDescription()
         {
-            new DescriptionAttribute("Cool test!").ApplyToTest(test);
-            Assert.That(test.Properties.Get(PropertyNames.Description), Is.EqualTo("Cool test!"));
+            new DescriptionAttribute("Cool test!").ApplyToTest(_testDummy);
+            Assert.That(_testDummy.Properties.Get(PropertyNames.Description), Is.EqualTo("Cool test!"));
         }
 
-        [Test]
+        [TestCase]
         public void DescriptionAttributeSetsDescriptionOnNonRunnableTest()
         {
-            test.RunState = RunState.NotRunnable;
-            new DescriptionAttribute("Cool test!").ApplyToTest(test);
-            Assert.That(test.Properties.Get(PropertyNames.Description), Is.EqualTo("Cool test!"));
+            _testDummy.RunState = RunState.NotRunnable;
+            new DescriptionAttribute("Cool test!").ApplyToTest(_testDummy);
+            Assert.That(_testDummy.Properties.Get(PropertyNames.Description), Is.EqualTo("Cool test!"));
         }
 
         #endregion
 
+#if NYI
         #region IgnoreAttribute
 
         [Test]
