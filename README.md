@@ -59,6 +59,10 @@ _TC-Lite_ uses attributes to identify tests, control various aspects of how they
 
 * `[TestFixtureSource]` is only used on parameterized or generic fixtures and provides a level of indirection analogous to what `[TestCaseSource]` does for methods.
 
+* `[Ignore]` indicates that a test should be ignored and causes a warning to be issued.
+
+* `[Explicit]` indicates that a test should only be run if directly selected and not by default in a general run.
+
 * `[Category]` allows grouping tests under arbitrary tags, which may be used to select the test to be run.
 
 * `[Property]` goes beyond categories, allowing name / value pairs to be applied to tests and used to select them.
@@ -129,10 +133,6 @@ The _NUnit_ Fluent Assertion syntax has being re-implemented based on Generic me
 * Various attributes may be applied to method parameters for generating individual arguments. The following is a possible selection, subject to change: `[Values]`. `[ValuesSource]`, `[Range]`, `[Random]`.
 
 * `[Include]` allows the developer to indicate when a test will be included, based on environmental factors like the OS platform or the current Culture. A corresponding `[Exclude]` attribute is available when specifying rules for exclusion is more convenient.
-
-* `[Explicit]` indicates that a test should only be run if directly selected and not by default in a general run.
-
-* `[Ignore]` indicates that a test should be ignored and causes a warning to be issued.
 
 ## Coming Later
 

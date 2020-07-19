@@ -106,34 +106,35 @@ namespace TCLite.Framework.Attributes
 
         #endregion
 
-#if NYI
         #region IgnoreAttribute
 
-        [Test]
+        [TestCase]
         public void IgnoreAttributeIgnoresTest()
         {
-            new IgnoreAttribute("BECAUSE").ApplyToTest(test);
-            Assert.That(test.RunState, Is.EqualTo(RunState.Ignored));
+            new IgnoreAttribute("BECAUSE").ApplyToTest(_testDummy);
+            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.Ignored));
         }
 
-        [Test]
+        [TestCase]
         public void IgnoreAttributeSetsIgnoreReason()
         {
-            new IgnoreAttribute("BECAUSE").ApplyToTest(test);
-            Assert.That(test.RunState, Is.EqualTo(RunState.Ignored));
-            Assert.That(test.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("BECAUSE"));
+            new IgnoreAttribute("BECAUSE").ApplyToTest(_testDummy);
+            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.Ignored));
+            Assert.That(_testDummy.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("BECAUSE"));
         }
 
-        [Test]
+        [TestCase]
         public void IgnoreAttributeDoesNotAffectNonRunnableTest()
         {
-            test.MakeInvalid("UNCHANGED");
-            new IgnoreAttribute("BECAUSE").ApplyToTest(test);
-            Assert.That(test.RunState, Is.EqualTo(RunState.NotRunnable));
-            Assert.That(test.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("UNCHANGED"));
+            _testDummy.RunState = RunState.NotRunnable;
+            _testDummy.Properties.Set(PropertyNames.SkipReason, "UNCHANGED");
+            new IgnoreAttribute("BECAUSE").ApplyToTest(_testDummy);
+            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.NotRunnable));
+            Assert.That(_testDummy.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("UNCHANGED"));
         }
 
-        [Test]
+#if NYI // Until
+        [TestCase]
         public void IgnoreAttributeIgnoresTestUntilDateSpecified()
         {
             var ignoreAttribute = new IgnoreAttribute("BECAUSE");
@@ -142,7 +143,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(test.RunState, Is.EqualTo(RunState.Ignored));
         }
 
-        [Test]
+        [TestCase]
         public void IgnoreAttributeIgnoresTestUntilDateTimeSpecified()
         {
             var ignoreAttribute = new IgnoreAttribute("BECAUSE");
@@ -151,7 +152,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(test.RunState, Is.EqualTo(RunState.Ignored));
         }
 
-        [Test]
+        [TestCase]
         public void IgnoreAttributeMarksTestAsRunnableAfterUntilDatePasses()
         {
             var ignoreAttribute = new IgnoreAttribute("BECAUSE");
@@ -171,14 +172,14 @@ namespace TCLite.Framework.Attributes
             Assert.That(test.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("Ignoring until 4242-01-01 00:00:00Z. BECAUSE"));
         }
 
-        [Test]
+        [TestCase]
         public void IgnoreAttributeWithInvalidDateThrowsException()
         {
             var ignoreAttribute = new IgnoreAttribute("BECAUSE");
             Assert.Throws<FormatException>(() => ignoreAttribute.Until = "Thursday the twenty fifth of December");
         }
 
-        [Test]
+        [TestCase]
         public void IgnoreAttributeWithUntilAddsIgnoreUntilDateProperty()
         {
             var ignoreAttribute = new IgnoreAttribute("BECAUSE");
@@ -187,7 +188,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(test.Properties.Get(PropertyNames.IgnoreUntilDate), Is.EqualTo("4242-01-01 00:00:00Z"));
         }
 
-        [Test]
+        [TestCase]
         public void IgnoreAttributeWithUntilAddsIgnoreUntilDatePropertyPastUntilDate()
         {
             var ignoreAttribute = new IgnoreAttribute("BECAUSE");
@@ -195,53 +196,56 @@ namespace TCLite.Framework.Attributes
             ignoreAttribute.ApplyToTest(test);
             Assert.That(test.Properties.Get(PropertyNames.IgnoreUntilDate), Is.EqualTo("1242-01-01 00:00:00Z"));
         }
+#endif
 
-        [Test]
+        [TestCase]
         public void IgnoreAttributeWithExplicitIgnoresTest()
         {
-            new IgnoreAttribute("BECAUSE").ApplyToTest(test);
-            new ExplicitAttribute().ApplyToTest(test);
-            Assert.That(test.RunState, Is.EqualTo(RunState.Ignored));
+            new IgnoreAttribute("BECAUSE").ApplyToTest(_testDummy);
+            new ExplicitAttribute().ApplyToTest(_testDummy);
+            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.Ignored));
         }
 
         #endregion
 
         #region ExplicitAttribute
 
-        [Test]
+        [TestCase]
         public void ExplicitAttributeMakesTestExplicit()
         {
-            new ExplicitAttribute().ApplyToTest(test);
-            Assert.That(test.RunState, Is.EqualTo(RunState.Explicit));
+            new ExplicitAttribute().ApplyToTest(_testDummy);
+            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.Explicit));
         }
 
-        [Test]
+        [TestCase]
         public void ExplicitAttributeSetsIgnoreReason()
         {
-            new ExplicitAttribute("BECAUSE").ApplyToTest(test);
-            Assert.That(test.RunState, Is.EqualTo(RunState.Explicit));
-            Assert.That(test.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("BECAUSE"));
+            new ExplicitAttribute("BECAUSE").ApplyToTest(_testDummy);
+            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.Explicit));
+            Assert.That(_testDummy.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("BECAUSE"));
         }
 
-        [Test]
+        [TestCase]
         public void ExplicitAttributeDoesNotAffectNonRunnableTest()
         {
-            test.MakeInvalid("UNCHANGED");
-            new ExplicitAttribute("BECAUSE").ApplyToTest(test);
-            Assert.That(test.RunState, Is.EqualTo(RunState.NotRunnable));
-            Assert.That(test.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("UNCHANGED"));
+            _testDummy.RunState = RunState.NotRunnable;
+            _testDummy.Properties.Set(PropertyNames.SkipReason, "UNCHANGED");
+            new ExplicitAttribute("BECAUSE").ApplyToTest(_testDummy);
+            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.NotRunnable));
+            Assert.That(_testDummy.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("UNCHANGED"));
         }
 
-        [Test]
+        [TestCase]
         public void ExplicitAttributeWithIgnoreIgnoresTest()
         {
-            new ExplicitAttribute().ApplyToTest(test);
-            new IgnoreAttribute("BECAUSE").ApplyToTest(test);
-            Assert.That(test.RunState, Is.EqualTo(RunState.Ignored));
+            new ExplicitAttribute().ApplyToTest(_testDummy);
+            new IgnoreAttribute("BECAUSE").ApplyToTest(_testDummy);
+            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.Ignored));
         }
 
         #endregion
 
+#if NYI
         #region CombinatorialAttribute
 
         [Test]
