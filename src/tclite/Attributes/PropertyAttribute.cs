@@ -15,8 +15,6 @@ namespace TCLite.Framework
     [AttributeUsage(AttributeTargets.Class|AttributeTargets.Method|AttributeTargets.Assembly, AllowMultiple=true, Inherited=true)]
     public class PropertyAttribute : TCLiteAttribute, IApplyToTest
     {
-        private readonly PropertyBag properties = new PropertyBag();
-
         /// <summary>
         /// Construct a PropertyAttribute with a name and string value
         /// </summary>
@@ -24,7 +22,7 @@ namespace TCLite.Framework
         /// <param name="propertyValue">The property value</param>
         public PropertyAttribute(string propertyName, string propertyValue)
         {
-            this.properties.Add(propertyName, propertyValue);
+            Property = new Property(propertyName, propertyValue);
         }
 
         /// <summary>
@@ -34,7 +32,7 @@ namespace TCLite.Framework
         /// <param name="propertyValue">The property value</param>
         public PropertyAttribute(string propertyName, int propertyValue)
         {
-            this.properties.Add(propertyName, propertyValue);
+            Property = new Property(propertyName, propertyValue);
         }
 
         /// <summary>
@@ -44,7 +42,7 @@ namespace TCLite.Framework
         /// <param name="propertyValue">The property value</param>
         public PropertyAttribute(string propertyName, double propertyValue)
         {
-            this.properties.Add(propertyName, propertyValue);
+            Property = new Property(propertyName, propertyValue);
         }
 
         /// <summary>
@@ -66,16 +64,11 @@ namespace TCLite.Framework
             string propertyName = this.GetType().Name;
             if ( propertyName.EndsWith( "Attribute" ) )
                 propertyName = propertyName.Substring( 0, propertyName.Length - 9 );
-            this.properties.Add(propertyName, propertyValue);
+
+            Property = new Property(propertyName, propertyValue);
         }
 
-        /// <summary>
-        /// Gets the property dictionary for this attribute
-        /// </summary>
-        public IPropertyBag Properties
-        {
-            get { return properties; }
-        }
+        public Property Property { get; }
 
         #region IApplyToTest Members
 
@@ -85,11 +78,27 @@ namespace TCLite.Framework
         /// <param name="test">The test to modify</param>
         public virtual void ApplyToTest(ITest test)
         {
-            foreach (string key in Properties.Keys)
-                foreach(object value in Properties[key])
-                    test.Properties.Add(key, value);
+            test.Properties.Add(Property.Name, Property.Value);
         }
 
         #endregion
     }
+
+    #region Property Class
+
+    // TODO: Temporary class until PropertyBag is rewritten
+
+    public class Property
+    {
+        public Property(string name, object value)
+        {
+            Name = name;
+            Value = value;
+        }
+
+        public string Name { get; }
+        public object Value { get; }
+    }
+
+    #endregion
 }
