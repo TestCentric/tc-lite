@@ -63,9 +63,11 @@ _TC-Lite_ uses attributes to identify tests, control various aspects of how they
 
 * `[Property]` goes beyond categories, allowing name / value pairs to be applied to tests and used to select them.
 
-* `[Author]` provides the author of the test as a test property.
+* `[Author]` provides the author or authors of the test as a test property.
 
 * `[Description]` provides a readable description of the test as a property.
+
+* `[DefaultFloatingPointTolerance]` sets the default tolerance for floating point equality assertions. If not used the default is zero tolerance.
 
 ### Assertions
 
@@ -131,8 +133,6 @@ The _NUnit_ Fluent Assertion syntax has being re-implemented based on Generic me
 * `[Explicit]` indicates that a test should only be run if directly selected and not by default in a general run.
 
 * `[Ignore]` indicates that a test should be ignored and causes a warning to be issued.
-
-* `[DefaultFloatingPointTolerance]` sets the default tolerance for floating point equality assertions. If not used the default is zero tolerance.
 
 ## Coming Later
 
