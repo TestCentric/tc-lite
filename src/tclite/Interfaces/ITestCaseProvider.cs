@@ -4,9 +4,8 @@
 // ***********************************************************************
 
 using System.Reflection;
-using TCLite.Framework.Interfaces;
 
-namespace TCLite.Framework.Extensibility
+namespace TCLite.Framework.Interfaces
 {
     /// <summary>
     /// The ITestCaseProvider interface is used by extensions

@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
-using TCLite.Framework.Extensibility;
 
 namespace TCLite.Framework.Builders
 {
@@ -27,7 +26,7 @@ namespace TCLite.Framework.Builders
 		/// </summary>
 		private TestFixture _fixture;
 
-        private Extensibility.ITestCaseBuilder _testCaseBuilder;
+        private ITestCaseBuilder _testCaseBuilder;
 
         public TCLiteTestFixtureBuilder()
         {

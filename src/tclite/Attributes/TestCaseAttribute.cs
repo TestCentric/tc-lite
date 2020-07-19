@@ -30,43 +30,28 @@ namespace TCLite.Framework
             Arguments = arguments ?? new object[] { null };
         }
 
-        /// <summary>
-        /// Construct a TestCaseAttribute with a single argument
-        /// </summary>
-        /// <param name="arg"></param>
-        public TestCaseAttribute(object arg)
-        {
-			RunState = RunState.Runnable;			
-            Arguments = new object[] { arg };
-        }
+        #region ICaseTestData Members
 
         /// <summary>
-        /// Construct a TestCaseAttribute with a two arguments
+        /// Gets or sets the name of the test.
         /// </summary>
-        /// <param name="arg1"></param>
-        /// <param name="arg2"></param>
-        public TestCaseAttribute(object arg1, object arg2)
-        {
-			RunState = RunState.Runnable;			
-            Arguments = new object[] { arg1, arg2 };
-        }
+        /// <value>The name of the test.</value>
+        public string TestName { get; set; }
 
         /// <summary>
-        /// Construct a TestCaseAttribute with a three arguments
+        /// Gets the RunState of this test case.
         /// </summary>
-        /// <param name="arg1"></param>
-        /// <param name="arg2"></param>
-        /// <param name="arg3"></param>
-        public TestCaseAttribute(object arg1, object arg2, object arg3)
-        {
-			RunState = RunState.Runnable;			
-            Arguments = new object[] { arg1, arg2, arg3 };
-        }
+        public RunState RunState { get; private set; }
 
         /// <summary>
         /// Gets the list of arguments to a test case
         /// </summary>
         public object[] Arguments { get; }
+
+        /// <summary>
+        /// Gets the properties of  the test case
+        /// </summary>
+        public IPropertyBag Properties { get; } = new PropertyBag();
 
         /// <summary>
         /// Gets or sets the expected result.
@@ -87,6 +72,8 @@ namespace TCLite.Framework
         /// Returns true if the expected result has been set
         /// </summary>
         public bool HasExpectedResult { get; private set; }
+        
+        #endregion
 
         /// <summary>
         /// Gets or sets the description.
@@ -94,19 +81,12 @@ namespace TCLite.Framework
         /// <value>The description.</value>
         public string Description
         {
-            get { return this.Properties.Get(PropertyNames.Description) as string; }
-            set { this.Properties.Set(PropertyNames.Description, value); }
-        }
-
-        private string testName;
-        /// <summary>
-        /// Gets or sets the name of the test.
-        /// </summary>
-        /// <value>The name of the test.</value>
-        public string TestName 
-        {
-            get { return testName; }
-            set { testName = value; }
+            get { return Properties.Get(PropertyNames.Description) as string; }
+            set
+            {
+                Guard.ArgumentNotNull(value, nameof(value));
+                Properties.Set(PropertyNames.Description, value);
+            }
         }
 
         /// <summary>
@@ -130,11 +110,6 @@ namespace TCLite.Framework
 			set { RunState = value ? RunState.Explicit : RunState.Runnable; }
 		}
 
-		/// <summary>
-		/// Gets the RunState of this test case.
-		/// </summary>
-		public RunState RunState { get; private set; }
-		
 		/// <summary>
 		/// Gets or sets the reason for not running the test.
 		/// </summary>
@@ -182,11 +157,6 @@ namespace TCLite.Framework
             get { return Properties[PropertyNames.Category] as IList; }
         }
  
-        /// <summary>
-        /// NYI
-        /// </summary>
-        public IPropertyBag Properties { get; } = new PropertyBag();
-
         #region ITestCaseSource Members
 
         /// <summary>

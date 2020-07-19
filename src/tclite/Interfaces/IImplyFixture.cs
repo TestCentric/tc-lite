@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Framework.Interfaces
 {
     /// <summary>
     /// IImplyFixture is an empty marker interface used by attributes like

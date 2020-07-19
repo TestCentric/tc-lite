@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using TCLite.Framework.Internal;
 
-namespace TCLite.Framework.Extensibility
+namespace TCLite.Framework.Interfaces
 {
 	/// <summary>
 	/// The ITestFixtureBuilder interface is exposed by a class that knows how to

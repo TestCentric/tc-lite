@@ -9,7 +9,6 @@ using System.Reflection;
 using TCLite.Framework.Interfaces;
 using TCLite.Framework.Commands;
 using TCLite.Framework.Internal;
-using TCLite.Framework.Extensibility;
 
 namespace TCLite.Framework.Builders
 {
