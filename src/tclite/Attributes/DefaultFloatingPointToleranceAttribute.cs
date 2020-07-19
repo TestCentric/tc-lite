@@ -6,7 +6,6 @@
 using System;
 using TCLite.Framework.Constraints;
 using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
 
 namespace TCLite.Framework
 {

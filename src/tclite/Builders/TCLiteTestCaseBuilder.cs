@@ -29,8 +29,6 @@ namespace TCLite.Framework.Builders
 	{
         private Randomizer _randomizer;
 
-        private ITestCaseProvider _testCaseProvider = new TestCaseProviders();
-
         /// <summary>
         /// Default no argument constructor for NUnitTestCaseBuilder
         /// </summary>

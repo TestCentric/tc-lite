@@ -19,7 +19,7 @@ namespace TCLite.Framework.Builders
     {
         private IDictionary<string, object> _settings;
 
-        TCLiteTestFixtureBuilder _builder = new TCLiteTestFixtureBuilder();
+        TCLiteTestFixtureBuilder _fixtureBuilder = new TCLiteTestFixtureBuilder();
 
         private TestSuite _loadedTest;
 
@@ -83,8 +83,8 @@ namespace TCLite.Framework.Builders
 
             foreach (Type testType in assembly.GetTypes())
             {
-                if (_builder.CanBuildFrom(testType))
-                    fixtures.AddRange(_builder.BuildFrom(testType));
+                if (_fixtureBuilder.CanBuildFrom(testType))
+                    fixtures.AddRange(_fixtureBuilder.BuildFrom(testType));
             }
 
             return fixtures;

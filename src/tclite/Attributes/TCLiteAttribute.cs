@@ -7,7 +7,6 @@ using System;
 
 namespace TCLite.Framework
 {
-    // TODO: Do we really need a common base class?
     /// <summary>
     /// The abstract base class for all custom attributes defined by TCLite.
     /// </summary>

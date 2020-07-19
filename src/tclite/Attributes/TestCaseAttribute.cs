@@ -12,8 +12,9 @@ using TCLite.Framework.Internal;
 namespace TCLite.Framework
 {
     /// <summary>
-    /// TestCaseAttribute is used to mark parameterized test cases
-    /// and provide them with their arguments.
+    /// TestCaseAttribute is used to mark both parameterized and
+    /// non-parameterized test cases. In the case of parameterized
+    /// tests, it provides the arguments to be used.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited=false)]
     public class TestCaseAttribute : TCLiteAttribute, ITestCaseData, ITestCaseSource, IImplyFixture

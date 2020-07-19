@@ -5,7 +5,6 @@
 
 using System;
 using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
 
 namespace TCLite.Framework
 {

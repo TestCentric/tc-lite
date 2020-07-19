@@ -4,7 +4,6 @@
 // ***********************************************************************
 
 using System;
-using System.Globalization;
 using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
 
