@@ -19,35 +19,23 @@ namespace TCLite.Framework.Builders
 	/// </summary>
 	public class TCLiteTestFixtureBuilder : ITestFixtureBuilder
     {
-        #region Static Fields
-                
         static readonly string NO_TYPE_ARGS_MSG = 
             "Fixture type contains generic parameters. You must either provide " +
             "Type arguments or specify constructor arguments that allow NUnit " +
             "to deduce the Type arguments.";
 
-        #endregion
-
-        #region Instance Fields
         /// <summary>
-		/// The NUnitTestFixture being constructed;
+		/// The TestFixture being constructed;
 		/// </summary>
-		private TestFixture fixture;
+		private TestFixture _fixture;
 
-        private Extensibility.ITestCaseBuilder2 testBuilder;
-
-		#endregion
-
-        #region Constructor
+        private Extensibility.ITestCaseBuilder _testCaseBuilder;
 
         public TCLiteTestFixtureBuilder()
         {
-            testBuilder = new TCLiteTestCaseBuilder();
+            _testCaseBuilder = new TCLiteTestCaseBuilder();
         }
 
-        #endregion
-
-        #region ISuiteBuilder Methods
         /// <summary>
         /// Examine the type and determine if it is suitable for
         /// this builder to use to create one or more TestFixtures.
@@ -88,8 +76,6 @@ namespace TCLite.Framework.Builders
                 yield return BuildSingleFixture(type, null);
         }
         
-		#endregion
-
 		#region Helper Methods
 
         private TestFixture BuildSingleFixture(Type type, TestFixtureAttribute attr)
@@ -113,23 +99,23 @@ namespace TCLite.Framework.Builders
 #endif                
             }
 
-            this.fixture = new TestFixture(type, arguments);
-            CheckTestFixtureIsValid(fixture);
+            this._fixture = new TestFixture(type, arguments);
+            CheckTestFixtureIsValid(_fixture);
 
-            fixture.ApplyAttributesToTest(type);
+            _fixture.ApplyAttributesToTest(type);
 
-            if (fixture.RunState == RunState.Runnable && attr != null)
+            if (_fixture.RunState == RunState.Runnable && attr != null)
             {
                 if (attr.Ignore)
                 {
-                    fixture.RunState = RunState.Ignored;
-                    fixture.Properties.Set(PropertyNames.SkipReason, attr.IgnoreReason);
+                    _fixture.RunState = RunState.Ignored;
+                    _fixture.Properties.Set(PropertyNames.SkipReason, attr.IgnoreReason);
                 }
             }
 
             AddTestCases(type);
 
-            return this.fixture;
+            return this._fixture;
         }
 
         /// <summary>
@@ -142,37 +128,9 @@ namespace TCLite.Framework.Builders
 				BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static );
 
 			foreach(MethodInfo method in methods)
-			{
-				Test test = BuildTestCase(method, this.fixture);
-
-				if(test != null)
-				{
-					this.fixture.Add( test );
-				}
-			}
-		}
-
-		/// <summary>
-		/// Method to create a test case from a MethodInfo and add
-		/// it to the fixture being built. It first checks to see if
-		/// any global TestCaseBuilder addin wants to build the
-		/// test case. If not, it uses the internal builder
-		/// collection maintained by this fixture builder. After
-		/// building the test case, it applies any decorators
-		/// that have been installed.
-		/// 
-		/// The default implementation has no test case builders.
-		/// Derived classes should add builders to the collection
-		/// in their constructor.
-		/// </summary>
-		/// <param name="method">The MethodInfo for which a test is to be created</param>
-        /// <param name="suite">The test suite being built.</param>
-		/// <returns>A newly constructed Test</returns>
-		private Test BuildTestCase( MethodInfo method, TestSuite suite )
-		{
-            return testBuilder.CanBuildFrom(method, suite)
-                ? testBuilder.BuildFrom(method, suite)
-                : null;
+                if (_testCaseBuilder.CanBuildFrom(method))
+                    foreach (var test in _testCaseBuilder.BuildFrom(method, _fixture))
+				        _fixture.Add(test);
 		}
 
         private void CheckTestFixtureIsValid(TestFixture fixture)

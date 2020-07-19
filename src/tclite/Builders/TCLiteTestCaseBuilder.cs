@@ -4,8 +4,8 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
-using System.Threading.Tasks;
 using TCLite.Framework.Interfaces;
 using TCLite.Framework.Commands;
 using TCLite.Framework.Internal;
@@ -25,7 +25,7 @@ namespace TCLite.Framework.Builders
     /// takes a different branch depending on whether any parameters are
     /// provided, but all four cases are dealt with in lower-level methods
     /// </summary>
-    public class TCLiteTestCaseBuilder : ITestCaseBuilder2
+    public class TCLiteTestCaseBuilder : ITestCaseBuilder
 	{
         private Randomizer _randomizer;
 
@@ -39,7 +39,6 @@ namespace TCLite.Framework.Builders
             _randomizer = Randomizer.CreateRandomizer();
         }
 
-        #region ITestCaseBuilder Methods
         /// <summary>
         /// Determines if the method can be used to build an NUnit test
         /// test method of some kind. The method must normally be marked
@@ -66,92 +65,48 @@ namespace TCLite.Framework.Builders
         /// or a group of tests contained in a ParameterizedMethodSuite.
         /// </summary>
         /// <param name="method">The MethodInfo for which a test is to be built</param>
-        /// <returns>A Test representing one or more method invocations</returns>
-        public Test BuildFrom(MethodInfo method)
-		{
-            return BuildFrom(method, null);
-        }
-
-        #endregion
-
-        #region ITestCaseBuilder2 Members
-
-        /// <summary>
-        /// Determines if the method can be used to build an NUnit test
-        /// test method of some kind. The method must normally be marked
-        /// with an identifying attribute for this to be true.
-        /// 
-        /// Note that this method does not check that the signature
-        /// of the method for validity. If we did that here, any
-        /// test methods with invalid signatures would be passed
-        /// over in silence in the test run. Since we want such
-        /// methods to be reported, the check for validity is made
-        /// in BuildFrom rather than here.
-        /// </summary>
-        /// <param name="method">A MethodInfo for the method being used as a test method</param>
-        /// <param name="parentSuite">The test suite being built, to which the new test would be added</param>
-        /// <returns>True if the builder can create a test case from this method</returns>
-        public bool CanBuildFrom(MethodInfo method, ITest parentSuite)
-        {
-            return CanBuildFrom(method);
-        }
-
-        /// <summary>
-        /// Build a Test from the provided MethodInfo. Depending on
-        /// whether the method takes arguments and on the availability
-        /// of test case data, this method may return a single test
-        /// or a group of tests contained in a ParameterizedMethodSuite.
-        /// </summary>
-        /// <param name="method">The MethodInfo for which a test is to be built</param>
         /// <param name="parentSuite">The test fixture being populated, or null</param>
         /// <returns>A Test representing one or more method invocations</returns>
-        public Test BuildFrom(MethodInfo method, ITest parentSuite)
+        public IEnumerable<Test> BuildFrom(MethodInfo method, ITest parentSuite)
         {
-            return _testCaseProvider.HasTestCasesFor(method)
-                ? BuildParameterizedMethodSuite(method, parentSuite)
-                : BuildSingleTestMethod(method, parentSuite, null);
-        }
+            // return _testCaseProvider.HasTestCasesFor(method)
+            //     ? BuildParameterizedMethodSuite(method, parentSuite)
+            //     : BuildSingleTestMethod(method, parentSuite, null);
 
-        #endregion
+            List<TestMethod> testCases = new List<TestMethod>();
+            var name = method.Name;
+            foreach (ITestCaseSource source in method.GetCustomAttributes(typeof(ITestCaseSource), false))
+                foreach (ITestCaseData testCase in source.GetTestCasesFor(method))
+                {
+                    var parameterSet = testCase as ParameterSet;
+                    if (parameterSet == null)
+                        parameterSet = new ParameterSet(testCase);
 
-        #region Implementation
+                    testCases.Add(BuildTestMethod(method, parentSuite, parameterSet));
+                }
 
-        /// <summary>
-        /// Builds a ParameterizedMethodSuite containing individual
-        /// test cases for each set of parameters provided for
-        /// this method.
-        /// </summary>
-        /// <param name="method">The MethodInfo for which a test is to be built</param>
-        /// <param name="parentSuite">The test suite for which the method is being built</param>
-        /// <returns>A ParameterizedMethodSuite populated with test cases</returns>
-        public Test BuildParameterizedMethodSuite(MethodInfo method, ITest parentSuite)
-        {
+            if (method.GetParameters().Length == 0)
+                return testCases;
+
             ParameterizedMethodSuite methodSuite = new ParameterizedMethodSuite(method);
             methodSuite.ApplyAttributesToTest(method);
 
-            foreach (ITestCaseData testcase in _testCaseProvider.GetTestCasesFor(method))
-            {
-                ParameterSet parameterSet = testcase as ParameterSet;
-                if (parameterSet == null)
-                    parameterSet = new ParameterSet(testcase);
+            foreach (TestMethod testCase in testCases)
+                methodSuite.Add(testCase);
 
-                TestMethod test = BuildSingleTestMethod(method, parentSuite, parameterSet);
-
-                methodSuite.Add(test);
-            }
-
-            return methodSuite;
+            return new [] { methodSuite };
         }
 
+        #region Helper Methods
+
         /// <summary>
-        /// Builds a single NUnitTestMethod, either as a child of the fixture 
-        /// or as one of a set of test cases under a ParameterizedTestMethodSuite.
+        /// Builds a single TestMethod
         /// </summary>
         /// <param name="method">The MethodInfo from which to construct the TestMethod</param>
         /// <param name="parentSuite">The suite or fixture to which the new test will be added</param>
         /// <param name="parameterSet">The ParameterSet to be used, or null</param>
         /// <returns></returns>
-        private TestMethod BuildSingleTestMethod(MethodInfo method, ITest parentSuite, ParameterSet parameterSet)
+        private TestMethod BuildTestMethod(MethodInfo method, ITest parentSuite, ParameterSet parameterSet)
         {
             TestMethod testMethod = new TestMethod(method, parentSuite);
 
@@ -169,20 +124,20 @@ namespace TCLite.Framework.Builders
 
             if (CheckTestMethodSignature(testMethod, parameterSet))
             {
-                if (parameterSet == null)
-                    testMethod.ApplyAttributesToTest(method);
+                testMethod.ApplyAttributesToTest(method.ReflectedType);
+                testMethod.ApplyAttributesToTest(method);
 
                 foreach (ICommandWrapper decorator in method.GetCustomAttributes(typeof(ICommandWrapper), true))
                     testMethod.CustomDecorators.Add(decorator);
             }
 
+            // NOTE: In the case of a generic method, testMethod.Method
+            // may be changed in the call to CheckTestMethodSignature.
+            // This is just -in case some future change tries to use it.
+            method = testMethod.Method;
+
             if (parameterSet != null)
             {
-                // NOTE: After the call to CheckTestMethodSignature, the Method
-                // property of testMethod may no longer be the same as the
-                // original MethodInfo, so we reassign it here.
-                method = testMethod.Method;
-
                 if (parameterSet.TestName != null)
                 {
                     testMethod.Name = parameterSet.TestName;
@@ -207,10 +162,6 @@ namespace TCLite.Framework.Builders
 
             return testMethod;
         }
-
-		#endregion
-
-        #region Helper Methods
 
         /// <summary>
         /// Helper method that checks the signature of a TestMethod and
@@ -311,8 +262,9 @@ namespace TCLite.Framework.Builders
                 parameters = testMethod.Method.GetParameters();
            }
 
-           if (arglist != null && parameters != null)
-               TypeHelper.ConvertArgumentList(arglist, parameters);
+        // TODO: Wait to see if we really need this. If not, remove both the call and the method.
+        //    if (arglist != null && parameters != null)
+        //        TypeHelper.ConvertArgumentList(arglist, parameters);
 
             return true;
         }

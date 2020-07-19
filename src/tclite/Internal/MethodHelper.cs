@@ -36,7 +36,7 @@ namespace TCLite.Framework.Internal
                 sb.Append(">");
             }
 
-            if (arglist != null)
+            if (arglist != null && arglist.Length > 0)
             {
                 sb.Append("(");
 

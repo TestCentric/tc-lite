@@ -4,6 +4,7 @@
 // ***********************************************************************
 
 using System;
+using System.Threading;
 using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.Commands
@@ -26,7 +27,17 @@ namespace TCLite.Framework.Commands
 
         protected override void BeforeTest(TestExecutionContext context)
         {
-            context.TestObject = Reflect.Construct(_fixtureType, _fixtureArgs);
+            try
+            {
+                context.TestObject = Reflect.Construct(_fixtureType, _fixtureArgs);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ThreadAbortException)
+                    Thread.ResetAbort();
+
+                context.CurrentResult.RecordException(ex);
+            }
         }
 
         protected override void AfterTest(TestExecutionContext context)
