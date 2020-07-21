@@ -4,6 +4,7 @@
 // ***********************************************************************
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using TCLite.Framework.Interfaces;
@@ -52,7 +53,8 @@ namespace TCLite.Framework.Builders
         /// <returns>True if the builder can create a test case from this method</returns>
         public bool CanBuildFrom(MethodInfo method)
         {
-            return method.IsDefined(typeof(IImplyFixture), false);
+            return method.IsDefined(typeof(IImplyFixture), false)
+                || method.GetParameters().Any(p => p.IsDefined(typeof(IParameterDataSource), false));
         }
 
         /// <summary>
@@ -68,7 +70,21 @@ namespace TCLite.Framework.Builders
         {
             List<TestMethod> testCases = new List<TestMethod>();
             var name = method.Name; // For Debugging
-            foreach (ITestCaseSource source in method.GetCustomAttributes(typeof(ITestCaseSource), false))
+
+            List<ITestCaseSource> sources = new List<ITestCaseSource>(
+                (ITestCaseSource[])method.GetCustomAttributes(typeof(ITestCaseSource), false));
+
+            // See if we need to add a CombinatorialAttribute for parameterized data
+            var parameters = method.GetParameters();
+            bool hasParamData = parameters.Any(param => param.IsDefined(typeof(IParameterDataSource), false));
+            if (hasParamData)
+            {
+                bool hasStrategy = sources.Any(source => source is CombiningStrategyAttribute);
+                if (!hasStrategy)
+                    sources.Add(new CombinatorialAttribute());
+            }
+
+            foreach (ITestCaseSource source in sources)
                 foreach (ITestCaseData testCase in source.GetTestCasesFor(method))
                 {
                     var parameterSet = testCase as ParameterSet;
