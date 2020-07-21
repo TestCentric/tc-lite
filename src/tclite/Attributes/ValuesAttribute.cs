@@ -26,37 +26,7 @@ namespace TCLite.Framework
         /// if necessary
         /// </summary>
         // TODO: This causes a lot of boxing so we should eliminate it
-        protected object[] data;
-
-        // /// <summary>
-        // /// Construct with one argument
-        // /// </summary>
-        // /// <param name="arg1"></param>
-        // public ValuesAttribute(object arg1)
-        // {
-        //     data = new object[] { arg1 };
-        // }
-
-        // /// <summary>
-        // /// Construct with two arguments
-        // /// </summary>
-        // /// <param name="arg1"></param>
-        // /// <param name="arg2"></param>
-        // public ValuesAttribute(object arg1, object arg2)
-        // {
-        //     data = new object[] { arg1, arg2 };
-        // }
-
-        // /// <summary>
-        // /// Construct with three arguments
-        // /// </summary>
-        // /// <param name="arg1"></param>
-        // /// <param name="arg2"></param>
-        // /// <param name="arg3"></param>
-        // public ValuesAttribute(object arg1, object arg2, object arg3)
-        // {
-        //     data = new object[] { arg1, arg2, arg3 };
-        // }
+        protected object[] _dataValues;
 
         /// <summary>
         /// Construct with an array of arguments
@@ -64,7 +34,7 @@ namespace TCLite.Framework
         /// <param name="args"></param>
         public ValuesAttribute(params object[] args)
         {
-            data = args ?? new object[] { null };
+            _dataValues = args ?? new object[] { null };
         }
 
         /// <summary>
@@ -72,55 +42,7 @@ namespace TCLite.Framework
         /// </summary>
         public IEnumerable GetData(ParameterInfo parameter)
         {
-            return ConvertData(data, parameter.ParameterType);
-            // Type targetType = parameter.ParameterType;
-
-            // for (int i = 0; i < data.Length; i++)
-            // {
-            //     object arg = data[i];
-
-            //     if (arg == null) 
-            //         continue;
-
-            //     if (arg.GetType().FullName == "TCLite.Framework.SpecialValue" &&
-            //         arg.ToString() == "Null")
-            //     {
-            //         data[i] = null;
-            //         continue;
-            //     }
-
-            //     if (targetType.IsAssignableFrom(arg.GetType()))
-            //         continue;
-
-            //     if (arg is DBNull)
-            //     {
-            //         data[i] = null;
-            //         continue;
-            //     }
-
-            //     bool convert = false;
-
-            //     if (targetType == typeof(short) || targetType == typeof(byte) || targetType == typeof(sbyte))
-            //         convert = arg is int;
-            //     else
-            //         if (targetType == typeof(decimal))
-            //             convert = arg is double || arg is string || arg is int;
-            //         else
-            //             if (targetType == typeof(DateTime))
-            //                 convert = arg is string;
-
-            //     if (convert)
-            //     {
-            //         data[i] = Convert.ChangeType(arg, targetType, System.Globalization.CultureInfo.InvariantCulture);
-            //         continue;
-            //     }
-
-            //     var converter = TypeDescriptor.GetConverter(targetType);
-            //     if (converter.CanConvertFrom(arg.GetType()))
-            //         data[i] = converter.ConvertFrom(null, CultureInfo.InvariantCulture, arg);
-            // }
-
-            // return data;
+            return ConvertData(_dataValues, parameter.ParameterType);
         }
     }
 }
