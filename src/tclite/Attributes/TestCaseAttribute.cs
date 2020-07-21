@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using TCLite.Framework.Interfaces;
 using TCLite.Framework.Internal;
@@ -99,7 +100,7 @@ namespace TCLite.Framework
 		}
 		
 		/// <summary>
-		/// Gets or sets a value indicating whether this <see cref="TCLite.Framework.TestCaseAttribute"/> is explicit.
+		/// Gets or sets a value indicating whether this <see cref="TestCaseAttribute"/> is explicit.
 		/// </summary>
 		/// <value>
 		/// <c>true</c> if explicit; otherwise, <c>false</c>.
@@ -166,7 +167,7 @@ namespace TCLite.Framework
         /// </summary>
         /// <param name="method">The method for which data is being provided</param>
         /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<ITestCaseData> GetTestCasesFor(System.Reflection.MethodInfo method)
+        public IEnumerable<ITestCaseData> GetTestCasesFor(MethodInfo method)
         {
             ParameterSet parms;
 

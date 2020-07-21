@@ -31,6 +31,9 @@ namespace TCLite.Framework.Constraints.Comparers
         {
             Guard.OperationValid(CanCompare(x,y), "Invalid call");
 
+            if (x is DateTimeOffset && y is DateTimeOffset)
+                return AreEqual(ToDateTimeOffset(x), ToDateTimeOffset(y), tolerance);
+
             if (x is DateTime && y is DateTime)
                 return AreEqual(ToDateTime(x), ToDateTime(y), tolerance);
 
@@ -38,6 +41,13 @@ namespace TCLite.Framework.Constraints.Comparers
                 return AreEqual(ToTimeSpan(x), ToTimeSpan(y), tolerance);
 
             throw new InvalidOperationException("Invalid call");
+        }
+
+        private bool AreEqual(DateTimeOffset x, DateTimeOffset y, Tolerance tolerance)
+        {
+            return tolerance.Amount is TimeSpan
+                ? (x - y).Duration() <= (TimeSpan)tolerance.Amount
+                : x.Equals(y);
         }
 
         private bool AreEqual(DateTime x, DateTime y, Tolerance tolerance)
@@ -52,6 +62,11 @@ namespace TCLite.Framework.Constraints.Comparers
             return tolerance.Amount is TimeSpan
                 ? (x - y).Duration() <= (TimeSpan)tolerance.Amount
                 : x.Equals(y);
+        }
+
+        private DateTimeOffset ToDateTimeOffset<T>(T x)
+        {
+            return (DateTimeOffset)Convert.ChangeType(x, typeof(DateTimeOffset));
         }
 
         private DateTime ToDateTime<T>(T x)

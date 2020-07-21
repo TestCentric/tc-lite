@@ -59,9 +59,9 @@ _TC-Lite_ uses attributes to identify tests, control various aspects of how they
 
 * `[TestFixtureSource]` is only used on parameterized or generic fixtures and provides a level of indirection analogous to what `[TestCaseSource]` does for methods.
 
-* `[Ignore]` indicates that a test should be ignored and causes a warning to be issued.
+* `[Ignore]` indicates that a test should be ignored and causes a warning to be issued. Note that we don't support the `Until` named property as _NUnit_ does. It's not useful for microtests because they should not be ignored for any length of time. Ignored tests are always treated as a warning.
 
-* `[Explicit]` indicates that a test should only be run if directly selected and not by default in a general run.
+* `[Explicit]` indicates that a test should only be run if directly selected and not by default in a general run. Explicit tests are simply skipped and do not affect the overall run result.
 
 * `[Category]` allows grouping tests under arbitrary tags, which may be used to select the test to be run.
 
@@ -75,46 +75,57 @@ _TC-Lite_ uses attributes to identify tests, control various aspects of how they
 
 ### Assertions
 
-As with _NUnitLite_ and _NUnit_, a limited number of "classic" (non-constraint-based) Asserts continue to be supported:
+As with _NUnitLite_ and _NUnit_, the main `Assert` verb is `Assert.That`, which may be used to test a boolean value directly or to apply a `Constraint`. In addition, a limited number of "classic" (non-constraint-based) Asserts continue to be supported:
 
-* Assert.Pass
-* Assert.Fail
-* Assert.Warn
-* Assert.Ignore
-* Assert.Inconclusive
-* Assert.IsTrue
-* Assert.IsFalse
-* Assert.IsNull
-* Assert.IsNotNull
+* Assert.Pass, Assert.Fail, Assert.Warn, Assert.Ignore, Assert.Inconclusive
+* Assert.IsTrue,  Assert.IsFalse
+* Assert.IsNull, Assert.IsNotNull
 * Assert.IsNaN
-* Assert.IsEmpty
-* Assert.IsNotEmpty
+* Assert.IsEmpty, Assert.IsNotEmpty
+* Assert.Throws, Assert.DoesNotThrow, Assert.Catch
 
-The _NUnit_ Fluent Assertion syntax has being re-implemented based on Generic methods to avoid boxing and provide greater type safety. Improvements are ongoing work is ongoing in this area. `Assert.That` is supported with boolean values as well as a range of constraints. The following constraint syntax is currently supported, with the ongoing addition of new constraints:
+### Constraints
+The _NUnit_ Constraint syntax has been re-implemented based on Generic methods to avoid boxing and provide greater type safety. Improvements are ongoing work is ongoing in this area. The following table lists constraints, which are currently supported. New constraints are added on an ongoing basis.
 
-* Is.True
-* Is.False
-* Is.Null
-* Is.NaN
-* Is.Empty
-* Is.EqualTo
-* Is.SameAs
-* Is.TypeOf
-* Is.InstanceOf
-* Is.GreaterThan
-* Is.GreaterThanOrEqual
-* Is.AtLeast
-* Is.LessThan
-* Is.LessThanOrEqual
-* Is.AtMost
-* Is.Zero
-* Is.Unique
-* Is.Not
-* Is.All
-* Has.None
-* Has.No
-* Has.All
-* Has.Some
+The "Expression Syntax" column shows how the constraint is created while parsing a constraint expression. For constraints that may begin an expression, the "Initial Syntax" column shows the syntax used to initialize the expression. Note that some constraints have been developed and tested but do not yet have syntax elements defined.
+
+| Constraint                     | Expression Syntax    | Initial Syntax
+| ------------------------------ | -------------------- | --------------
+| `AllItemsConstraint`           | `All`                | `Is.All`, `Has.All`
+| `AndConstraint`                | `And`
+| `EmptyCollectionConstraint`    | `Empty`              | `Is.Empty`
+| `EmptyConstraint`              | `Empty`              | `Is.Empty`
+| `EmptyStringConstraint`        | `Empty`              | `Is.Empty`
+| `EndsWithConstraint`
+| `EqualConstraint`              | `EqualTo`            | `Is.EqualTo`
+|                                | `Zero`               | `Is.Zero`
+| `ExactTypeConstraint`          | `TypeOf`             | `Is.TypeOf`
+| `ExceptionTypeConstraint`      |                      |
+| `FalseConstraint`              | `False`              | `Is.False`
+| `GreaterThanConstraint`        | `GreaterThan`        | `Is.GreaterThan`
+| `GreaterThanOrEqualConstraint` | `GreaterThanOrEqual` | `Is.GreaterThanOrEqual`
+|                                | `AtLeast`            | `Is.AtLeast`
+| `InstanceOfTypeConstraint`     | `InstanceOf`         | `Is.InstanceOf`
+| `LessThanConstraint`           | `LessThan`           | `Is.LessThan`
+| `LessThanOrEqualConstraint`    | `LessThanOrEqual`    | `Is.LessThanOrEqual`
+|                                | `AtMost`             | `Is.AtMost`
+| `NaNConstraint`                | `NaN`                | `Is.NaN`
+| `NoItemConstraint`             | `None`               | `Has.None`, `Has.No`
+| `NotConstraint`                | `Not`                | `Is.Not`
+| `NullConstraint`               | `Null`               | `Is.Null`
+| `OrConstraint`                 | `Or`
+| `PropertyConstraint`
+| `PropertyExistsConstraint`
+| `RegexConstraint`
+| `SameAsConstraint`             | `SameAs`             | `Is.SameAs`
+| `SomeItemsConstraint`          | `Some`               | `Has.Some`, `Contains.Item`
+| `StartsWithConstraint`
+| `SubstringConstraint`          | `Substring`          | `Contains.Substring`
+| `ThrowsConstraint`             |                      | `Throws.TypeOf`
+| `ThrowsExceptionConstraint`    |                      | `Throws.Exception`
+| `ThrowsNothingConstraint`      |                      | `Throws.Nothing`
+| `TrueConstraint`               | `True`               | `Is.True`
+| `UniqueItemsConstraint`        | `Unique`             | `Is.Unique`
 
 ### Test Results
 
@@ -123,6 +134,35 @@ The _NUnit_ Fluent Assertion syntax has being re-implemented based on Generic me
 * Optionally, results may be saved in NUnitV2 format.
 
 ### Command-line Options
+
+When running the test assembly, various options may be specified. Where the feature has not yet been implemented, the option is labeled (NYI).
+
+| Option | Comments |
+| ------ | -------- |
+| __Test Selection:__
+| --where=TSL | TSL expression indicating which tests will be run. If omitted, all tests are run. |
+| __How Tests are Run:__
+| --params, -p=VALUE     | (NYI) Define test parameters.
+| --timeout=MILLISECONDS | (NYI) Set default test case timeout in MILLISECONDS.
+| --seed=SEED            | (NYI) Set the random SEED used to generate test data. Used for debugging earlier runs.
+| --workers=NUMBER       | (NYI) Specify the NUMBER of worker threads to be used in running tests. If not specified, defaults to 2 or the number of processors, whichever is greater.
+| --stoponerror          | (NYI) Stop run immediately upon any test failure or error.
+| --wait                 | Wait for input before closing console window.
+| __Test Output:__
+| --work=PATH            | PATH of the directory to use for output files. If not specified, defaults to the current directory.
+| --out=PATH             | (NYI) File PATH to contain text output from the tests.
+| --err=PATH             | (NYI) File PATH to contain error output from the tests.
+| --explore[=PATH]       | Explore tests rather than running them. The optional PATH is used for the XML report describing the tests. It defaults to 'tests.xml'.
+| --result=PATH          | Save test result XML in file at PATH. If not specified, default is TestResult.xml.
+| --format=FORMAT        | Specify the FORMAT to be used in saving the test result. May be `nunit3` or `nunit2'.
+| --noresult             | Don't save any test results.
+| --labels=VALUE         | Specify whether to write test case labels to the output. Values: Off, On, Before, After.
+| --teamcity             | (NYI) Turns on use of TeamCity service messages.
+| --trace=LEVEL          | (NYI) Set internal trace LEVEL. Values: Off, Error, Warning, Info, Verbose (Debug)
+| --noheader, --noh      | Don't display program header at start of run.
+| --nocolor, --noc       | Displays console output without color.
+| --help, -h             | Display this message and exit.
+| --version, -V          | Display the header and exit.
 
 ## Coming Soon
 
