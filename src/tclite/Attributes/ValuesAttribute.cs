@@ -28,35 +28,35 @@ namespace TCLite.Framework
         // TODO: This causes a lot of boxing so we should eliminate it
         protected object[] data;
 
-        /// <summary>
-        /// Construct with one argument
-        /// </summary>
-        /// <param name="arg1"></param>
-        public ValuesAttribute(object arg1)
-        {
-            data = new object[] { arg1 };
-        }
+        // /// <summary>
+        // /// Construct with one argument
+        // /// </summary>
+        // /// <param name="arg1"></param>
+        // public ValuesAttribute(object arg1)
+        // {
+        //     data = new object[] { arg1 };
+        // }
 
-        /// <summary>
-        /// Construct with two arguments
-        /// </summary>
-        /// <param name="arg1"></param>
-        /// <param name="arg2"></param>
-        public ValuesAttribute(object arg1, object arg2)
-        {
-            data = new object[] { arg1, arg2 };
-        }
+        // /// <summary>
+        // /// Construct with two arguments
+        // /// </summary>
+        // /// <param name="arg1"></param>
+        // /// <param name="arg2"></param>
+        // public ValuesAttribute(object arg1, object arg2)
+        // {
+        //     data = new object[] { arg1, arg2 };
+        // }
 
-        /// <summary>
-        /// Construct with three arguments
-        /// </summary>
-        /// <param name="arg1"></param>
-        /// <param name="arg2"></param>
-        /// <param name="arg3"></param>
-        public ValuesAttribute(object arg1, object arg2, object arg3)
-        {
-            data = new object[] { arg1, arg2, arg3 };
-        }
+        // /// <summary>
+        // /// Construct with three arguments
+        // /// </summary>
+        // /// <param name="arg1"></param>
+        // /// <param name="arg2"></param>
+        // /// <param name="arg3"></param>
+        // public ValuesAttribute(object arg1, object arg2, object arg3)
+        // {
+        //     data = new object[] { arg1, arg2, arg3 };
+        // }
 
         /// <summary>
         /// Construct with an array of arguments
@@ -64,7 +64,7 @@ namespace TCLite.Framework
         /// <param name="args"></param>
         public ValuesAttribute(params object[] args)
         {
-            data = args;
+            data = args ?? new object[] { null };
         }
 
         /// <summary>

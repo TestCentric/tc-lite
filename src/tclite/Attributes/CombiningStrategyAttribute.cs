@@ -60,6 +60,7 @@ namespace TCLite.Framework
             var dataProvider = new ParameterDataProvider(method);
             ParameterInfo[] parameters = method.GetParameters();
 
+            var name = method.Name; // For Debugging
             if (parameters.Length > 0)
             {
                 IEnumerable[] sources = new IEnumerable[parameters.Length];

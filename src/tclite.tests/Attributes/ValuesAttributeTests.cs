@@ -64,7 +64,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(x, Is.Not.EqualTo(default(long)));
         }
 
-        //[Combinatorial]
+        [Combinatorial]
         public void CanConvertIntsToNullableLong([Values(5, int.MaxValue)]long? x)
         {
             Assert.That(x.HasValue, Is.True);
@@ -75,7 +75,7 @@ namespace TCLite.Framework.Attributes
         {
         }
 
-        //[Combinatorial]
+        [Combinatorial]
         public void CanConvertSmallIntsToNullableShort([Values(5)]short? x)
         {
             Assert.That(x.HasValue, Is.True);
@@ -86,7 +86,7 @@ namespace TCLite.Framework.Attributes
         {
         }
 
-        //[Combinatorial]
+        [Combinatorial]
         public void CanConvertSmallIntsToNullableByte([Values(5)]byte? x)
         {
             Assert.That(x.HasValue, Is.True);
@@ -97,7 +97,7 @@ namespace TCLite.Framework.Attributes
         {
         }
 
-        //[Combinatorial]
+        [Combinatorial]
         public void CanConvertSmallIntsToNullableSByte([Values(5)]sbyte? x)
         {
             Assert.That(x.HasValue, Is.True);
@@ -109,7 +109,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(x, Is.Not.EqualTo(default(decimal)));
         }
 
-        //[Combinatorial]
+        [Combinatorial]
         public void CanConvertValuesToNullableDecimal([Values(12, 12.5, "12.5")]decimal? x)
         {
             Assert.That(x.HasValue, Is.True);
@@ -121,7 +121,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(x, Is.Not.EqualTo(default(DateTimeOffset)));
         }
 
-        //[Combinatorial]
+        [Combinatorial]
         public void CanConvertStringToNullableDateTimeOffset([Values("2018-10-09 15:15:00+02:30")]DateTimeOffset? x)
         {
             Assert.That(x.HasValue, Is.True);
@@ -133,7 +133,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(x, Is.Not.EqualTo(default(TimeSpan)));
         }
 
-        //[Combinatorial]
+        [Combinatorial]
         public void CanConvertStringToNullableTimeSpan([Values("4:44:15")]TimeSpan? x)
         {
             Assert.That(x.HasValue, Is.True);
@@ -145,7 +145,7 @@ namespace TCLite.Framework.Attributes
             Assert.That(x, Is.Not.EqualTo(default(DateTime)));
         }
 
-        //[Combinatorial]
+        [Combinatorial]
         public void CanConvertStringToNullableDateTime([Values("2018-10-10")]DateTime? x)
         {
             Assert.That(x.HasValue, Is.True);
@@ -153,59 +153,49 @@ namespace TCLite.Framework.Attributes
 
         #endregion
 
-        #region Helper Methods
-
-        // private void CheckValues(string methodName, params object[] expected)
-        // {
-        //     MethodInfo method = GetType().GetTypeInfo().GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
-        //     ParameterInfo param = method.GetParameters()[0];
-
-        //     var attr = param.GetCustomAttributes<ValuesAttribute>(false).Single();
-
-        //     Assert.That(attr.GetData(new ParameterWrapper(new MethodWrapper(GetType(), method), param)), Is.EqualTo(expected));
-        // }
-        #endregion
-#if NYI
-        [TestCase]
+        [Combinatorial]
         public void SupportsNullableDecimal([Values(null)] decimal? x)
         {
             Assert.That(x.HasValue, Is.False);
         }
 
-        [TestCase]
+        [Combinatorial]
         public void SupportsNullableDateTime([Values(null)] DateTime? dt)
         {
             Assert.That(dt.HasValue, Is.False);
         }
 
-        [TestCase]
+        [Combinatorial]
         public void SupportsNullableTimeSpan([Values(null)] TimeSpan? dt)
         {
             Assert.That(dt.HasValue, Is.False);
         }
 
-        [TestCase]
+        [Combinatorial]
         public void NullableSimpleFormalParametersWithArgument([Values(1)] int? a)
         {
             Assert.AreEqual(1, a);
         }
 
-        [TestCase]
+        [Combinatorial]
         public void NullableSimpleFormalParametersWithNullArgument([Values(null)] int? a)
         {
             Assert.IsNull(a);
         }
 
-
-        [TestCase]
+        [Combinatorial]
         public void MethodWithArrayArguments([Values(
             (object)new object[] { 1, "text", null },
             (object)new object[0],
             (object)new object[] { 1, new int[] { 2, 3 }, 4 },
             (object)new object[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })] object o)
         {
+            string testName = TestExecutionContext.CurrentContext.CurrentTest.Name;
+            // TODO: We really want the contents to be reflected in the name
+            string expectedName = @"MethodWithArrayArguments(System.Object[])";
+                
+            Assert.That(testName, Is.EqualTo(expectedName));
         }
-#endif
 
         // [TestCase]
         // public void TestNameIntrospectsArrayValues()

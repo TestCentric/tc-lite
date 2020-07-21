@@ -88,7 +88,7 @@ namespace TCLite.Framework.Internal
             if (value == null || value is System.DBNull)
             {
                 convertedValue = null;
-                return !(value is ValueType);
+                return !targetType.IsValueType || IsNullable(targetType);
             }
 
             // flag indicating we can convert using System.Convert
@@ -128,6 +128,13 @@ namespace TCLite.Framework.Internal
 
             convertedValue = null;
             return false;
+        }
+
+        private static bool IsNullable(Type type)
+        {
+            return type.IsGenericType
+                && !type.IsGenericTypeDefinition
+                && ReferenceEquals(type.GetGenericTypeDefinition(), typeof(Nullable<>));
         }
     }
 }

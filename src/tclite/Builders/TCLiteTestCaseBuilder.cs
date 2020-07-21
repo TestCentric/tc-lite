@@ -67,7 +67,7 @@ namespace TCLite.Framework.Builders
         public IEnumerable<Test> BuildFrom(MethodInfo method, ITest parentSuite)
         {
             List<TestMethod> testCases = new List<TestMethod>();
-            var name = method.Name;
+            var name = method.Name; // For Debugging
             foreach (ITestCaseSource source in method.GetCustomAttributes(typeof(ITestCaseSource), false))
                 foreach (ITestCaseData testCase in source.GetTestCasesFor(method))
                 {
