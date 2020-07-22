@@ -18,7 +18,7 @@ namespace TCLite.Framework
     /// tests, it provides the arguments to be used.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited=false)]
-    public class TestCaseAttribute : TCLiteAttribute, ITestCaseData, ITestCaseSource, IImplyFixture
+    public class TestCaseAttribute : DataParamAttribute, ITestCaseData, ITestCaseSource, IImplyFixture
     {
         /// <summary>
         /// Construct a TestCaseAttribute with a list of arguments.
@@ -255,33 +255,11 @@ namespace TCLite.Framework
             for (int i = 0; i < arglist.Length; i++)
             {
                 object arg = arglist[i];
+                object convertedArg;
                 Type targetType = parameters[i].ParameterType;
 
-                if (arg == null)
-                    continue;
-
-                if (targetType.IsAssignableFrom(arg.GetType()))
-                    continue;
-
-                if (arg is DBNull)
-                {
-                    arglist[i] = null;
-                    continue;
-                }
-
-                bool convert = false;
-
-                if (targetType == typeof(short) || targetType == typeof(byte) || targetType == typeof(sbyte))
-                    convert = arg is int;
-                else
-                if (targetType == typeof(decimal))
-                    convert = arg is double || arg is string || arg is int;
-                else
-                    if (targetType == typeof(DateTime) || targetType == typeof(TimeSpan))
-                        convert = arg is string;
-
-                if (convert)
-                    arglist[i] = Convert.ChangeType(arg, targetType, System.Globalization.CultureInfo.InvariantCulture);
+                if(TryConvert(arg, targetType, out convertedArg))
+                    arglist[i] = convertedArg;
             }
         }
         #endregion
