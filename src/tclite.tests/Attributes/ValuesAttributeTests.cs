@@ -43,7 +43,7 @@ namespace TCLite.Framework.Attributes
             var data = new ParameterDataProvider(method).GetDataFor(parameter);
             var expected = new[] { 1, 2, 3 };
 
-            Assert.That(data , Is.EqualTo(expected));
+            Assert.That(data, Is.EqualTo(expected));
         }
 
         public void MethodWithValues([Values(1, 2, 3)] int x)
