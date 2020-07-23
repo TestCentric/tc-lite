@@ -7,7 +7,9 @@ Information($"Running target {target} in configuration {configuration}");
 var PROJECT_DIR = Context.Environment.WorkingDirectory.FullPath + "/";
 var BIN_DIR = PROJECT_DIR + "bin/" + configuration + "/";
 
-var SUPPORTED_TEST_PLATFORMS = new [] { "netcoreapp3.1", "net5.0" };
+var BIN_DIR_3_1 = BIN_DIR + "netcoreapp3.1/";
+var BIN_DIR_5_0 = BIN_DIR + "net5.0";
+    
 var TEST_ASSEMBLY = "tclite.tests.dll";
 var TEST_EXECUTABLE = "tclite.tests.exe";
 
@@ -20,6 +22,7 @@ Task("Clean")
 
 // Run dotnet restore to restore all package references.
 Task("Restore")
+    .IsDependentOn("Clean")
     .Does(() =>
     {
         DotNetCoreRestore();
@@ -27,6 +30,7 @@ Task("Restore")
 
 // Build using the build configuration specified as an argument.
  Task("Build")
+    .IsDependentOn("Restore")
     .Does(() =>
     {
         DotNetCoreBuild(".",
@@ -37,30 +41,38 @@ Task("Restore")
             });
     });
 
-Task("Test")
+Task("TestNetCoreApp31")
+    .IsDependentOn("Build")
     .Does(() =>
     {
-        foreach (var platform in SUPPORTED_TEST_PLATFORMS)
-            StartProcess(System.IO.Path.Combine(BIN_DIR + platform, TEST_EXECUTABLE));
+        StartProcess(System.IO.Path.Combine(BIN_DIR_3_1, TEST_EXECUTABLE));
     });
 
-// A meta-task that runs all the steps to Build and Test the app
-Task("BuildAndTest")
-    .IsDependentOn("Clean")
-    .IsDependentOn("Restore")
+Task("TestNet50")
+    .IsDependentOn("Build")
+    .Does(() =>
+    {
+        StartProcess(System.IO.Path.Combine(BIN_DIR_5_0, TEST_EXECUTABLE));
+    });
+
+Task("Test")
+    .IsDependentOn("TestNetCoreApp31")
+    .IsDependentOn("TestNet50");
+
+Task("AppVeyor")
     .IsDependentOn("Build")
     .IsDependentOn("Test");
 
-Task("AppVeyor")
-    .IsDependentOn("BuildAndTest");
-
 Task("Travis")
-    .IsDependentOn("BuildAndTest");
+    .IsDependentOn("Build")
+    .IsDependentOn("TestNetCoreApp31");
 
-// The default task to run if none is explicitly specified. In this case, we want
-// to run everything starting from Clean, all the way up to Publish.
+Task("All")
+    .IsDependentOn("Build")
+    .IsDependentOn("Test");
+
 Task("Default")
-    .IsDependentOn("BuildAndTest");
+    .IsDependentOn("Test");
 
 // Executes the task specified in the target argument.
 RunTarget(target);
