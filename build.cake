@@ -45,14 +45,14 @@ Task("TestNetCoreApp31")
     .IsDependentOn("Build")
     .Does(() =>
     {
-        StartProcess(System.IO.Path.Combine(BIN_DIR_3_1, TEST_EXECUTABLE));
+        StartProcess("dotnet", System.IO.Path.Combine(BIN_DIR_3_1, TEST_ASSEMBLY));
     });
 
 Task("TestNet50")
     .IsDependentOn("Build")
     .Does(() =>
     {
-        StartProcess(System.IO.Path.Combine(BIN_DIR_5_0, TEST_EXECUTABLE));
+        StartProcess("dotnet", System.IO.Path.Combine(BIN_DIR_5_0, TEST_ASSEMBLY));
     });
 
 Task("Test")
