@@ -65,7 +65,7 @@ Task("AppVeyor")
 
 Task("Travis")
     .IsDependentOn("Build")
-    .IsDependentOn("TestNetCoreApp31");
+    .IsDependentOn("Test");
 
 Task("All")
     .IsDependentOn("Build")
