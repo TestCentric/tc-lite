@@ -15,26 +15,6 @@ namespace TCLite.Framework
     /// </summary>
     public partial class Is : Constraints.Is_Syntax
     {
-#if NYI // Positive
-        /// <summary>
-        /// Returns a constraint that tests for a positive value
-        /// </summary>
-        public static GreaterThanConstraint Positive
-        {
-            get { return new GreaterThanConstraint(0); }
-        }
-#endif 
-
-#if NYI // Negative
-        /// <summary>
-        /// Returns a constraint that tests for a negative value
-        /// </summary>
-        public static LessThanConstraint Negative
-        {
-            get { return new LessThanConstraint(0); }
-        }
-#endif
-
 #if NYI // Empty
         /// <summary>
         /// Returns a constraint that tests for empty

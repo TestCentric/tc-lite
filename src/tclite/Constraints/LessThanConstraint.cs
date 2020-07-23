@@ -44,6 +44,14 @@ namespace TCLite.Framework.Constraints
         {
             return (LessThanConstraint<T>)Append(new LessThanConstraint<T>(expected));
         }
+
+        /// <summary>
+        /// Returns a constraint that tests for a negative value
+        /// </summary>
+        public LessThanConstraint<int> Negative
+        {
+            get { return (LessThanConstraint<int>)this.Append(new LessThanConstraint<int>(0)); }
+        }
     }
 
     public partial class Is_Syntax
@@ -55,6 +63,14 @@ namespace TCLite.Framework.Constraints
         public static LessThanConstraint<T> LessThan<T>(T expected)
         {
             return new LessThanConstraint<T>(expected);
+        }
+
+        /// <summary>
+        /// Returns a constraint that tests for a negative value
+        /// </summary>
+        public static LessThanConstraint<int> Negative
+        {
+            get { return new LessThanConstraint<int>(0); }
         }
     }
 }

@@ -200,26 +200,6 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-#if NYI // Positive
-        /// <summary>
-        /// Returns a constraint that tests for a positive value
-        /// </summary>
-        public GreaterThanConstraint Positive
-        {
-            get { return (GreaterThanConstraint)this.Append(new GreaterThanConstraint(0)); }
-        }
-#endif 
-
-#if NYI // Negative 
-        /// <summary>
-        /// Returns a constraint that tests for a negative value
-        /// </summary>
-        public LessThanConstraint Negative
-        {
-            get { return (LessThanConstraint)this.Append(new LessThanConstraint(0)); }
-        }
-#endif
-
 #if NYI //BinarySerializable
         /// <summary>
         /// Returns a constraint that tests whether an object graph is serializable in binary format.

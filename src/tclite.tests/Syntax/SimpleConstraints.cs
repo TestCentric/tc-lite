@@ -37,7 +37,6 @@ namespace TCLite.Framework.Syntax
         }
     }
 
-#if NYI // Positive
     public class PositiveTest : SyntaxTest
     {
         public PositiveTest()
@@ -60,7 +59,7 @@ namespace TCLite.Framework.Syntax
 
     public class ZeroTest : SyntaxTest
     {
-        public void SetUp()
+        public ZeroTest()
         {
             ParseTree = "<equal 0>";
             StaticSyntax = Is.Zero;
@@ -77,5 +76,4 @@ namespace TCLite.Framework.Syntax
             BuilderSyntax = Builder().NaN;
         }
     }
-#endif
 }

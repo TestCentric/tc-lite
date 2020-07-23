@@ -44,6 +44,14 @@ namespace TCLite.Framework.Constraints
         {
             return (GreaterThanConstraint<T>)Append(new GreaterThanConstraint<T>(expected));
         }
+
+        /// <summary>
+        /// Returns a constraint that tests for a positive value
+        /// </summary>
+        public GreaterThanConstraint<int> Positive
+        {
+            get { return (GreaterThanConstraint<int>)this.Append(new GreaterThanConstraint<int>(0)); }
+        }
     }
 
     public partial class Is_Syntax
@@ -55,6 +63,14 @@ namespace TCLite.Framework.Constraints
         public static GreaterThanConstraint<T> GreaterThan<T>(T expected)
         {
             return new GreaterThanConstraint<T>(expected);
+        }
+
+        /// <summary>
+        /// Returns a constraint that tests for a positive value
+        /// </summary>
+        public static GreaterThanConstraint<int> Positive
+        {
+            get { return new GreaterThanConstraint<int>(0); }
         }
     }
 }

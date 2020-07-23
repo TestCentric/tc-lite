@@ -111,10 +111,12 @@ The "Expression Syntax" column shows how the constraint is created while parsing
 | `ExceptionTypeConstraint`      |                      |
 | `FalseConstraint`              | `False`              | `Is.False`
 | `GreaterThanConstraint`        | `GreaterThan`        | `Is.GreaterThan`
+|                                | `Positive`           | `Is.Positive`
 | `GreaterThanOrEqualConstraint` | `GreaterThanOrEqual` | `Is.GreaterThanOrEqual`
 |                                | `AtLeast`            | `Is.AtLeast`
 | `InstanceOfTypeConstraint`     | `InstanceOf`         | `Is.InstanceOf`
 | `LessThanConstraint`           | `LessThan`           | `Is.LessThan`
+|                                | `Negative`           | `Is.Negative`
 | `LessThanOrEqualConstraint`    | `LessThanOrEqual`    | `Is.LessThanOrEqual`
 |                                | `AtMost`             | `Is.AtMost`
 | `NaNConstraint`                | `NaN`                | `Is.NaN`
