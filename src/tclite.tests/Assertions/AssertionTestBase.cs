@@ -11,7 +11,7 @@ namespace TCLite.Framework.Assertions
     {
         protected static readonly string NL = Environment.NewLine;
     
-		private const string FAILURE_MESSAGE_FMT = "  Expected: {0}\n  But was:  {1}\n";
+		private static readonly string FAILURE_MESSAGE_FMT = "  Expected: {0}" + NL + "  But was:  {1}" + NL;
 
         protected string StandardErrorMessage(object expected, object actual)
         {
