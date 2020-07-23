@@ -15,7 +15,7 @@ namespace TCLite.Framework
     /// The test will not be run simply because an enclosing suite is run.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class|AttributeTargets.Method|AttributeTargets.Assembly, AllowMultiple=false, Inherited=false)]
-    public class ExplicitAttribute : TCLiteAttribute, IApplyToTest
+    public sealed class ExplicitAttribute : TCLiteAttribute, IApplyToTest
     {
         private readonly string _reason;
 

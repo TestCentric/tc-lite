@@ -13,7 +13,7 @@ namespace TCLite.Framework
     /// Since this is the default, the attribute is optional.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public class CombinatorialAttribute : CombiningStrategyAttribute
+    public sealed class CombinatorialAttribute : CombiningStrategyAttribute
     {
         /// <summary>
         /// Default constructor

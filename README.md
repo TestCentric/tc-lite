@@ -55,7 +55,15 @@ _TC-Lite_ uses attributes to identify tests, control various aspects of how they
 
 * `[TestCaseSource]` is used only on parameterized test methods and provides a level of indirection. It is similar in concept to _NUnit's_ attribute of the same name but is expected to differ in specific details as implementation proceeds. Specifically, it may require use of a separate class from the fixture class itself as the data source, since the source lifetime may be longer than that of the fixture.
 
-* The `[TestFixture]` is required for generic or parameterized fixtures, for which it provides the constructor and/or Type arguments. It is optional for non-generic, non-parameterized fixtures, which are recognized simply by the fact that they contain tests.
+* `[Combinatorial]` is used on parameterized test methods, when the data for the arguments is provided individually rather than as test cases. The attribute generates test cases using every possible combination of the individual argument values. The `CombinatorialAttribute` is actually optional. If __any__ of the parameters for the test method is decorated with an attribute for generating values, then `[Combinatorial]` is assumed.
+
+* For use with `[Combinatorial]` (explicit or implied), the following attributes may be applied to method parameters for generating individual arguments.
+
+  * `[Values]` allows explicitly including argument values.
+  * `[Range]` allows specifying a numeric range of values.
+  * `[Random]` allows for generating random values.
+
+* The `[TestFixture]` attribute is required for generic or parameterized fixtures, for which it provides the constructor and/or Type arguments. It is optional for non-generic, non-parameterized fixtures, which are recognized simply by the fact that they contain tests.
 
 * `[TestFixtureSource]` is only used on parameterized or generic fixtures and provides a level of indirection analogous to what `[TestCaseSource]` does for methods.
 
@@ -168,25 +176,35 @@ When running the test assembly, various options may be specified. Where the feat
 
 ### Attributes
 
-* `[Combinatorial]`, `[Pairwise]` and (possibly) `[Sequential]` are used on parameterized test methods, when the data for the arguments are provided individually rather than as test cases. They provide alternate "recipes" for combining the individual arguments. For the moment, I envision these as working like _NUnit's_ attributes of the same names, although that could change.
-
-* Various attributes may be applied to method parameters for generating individual arguments. The following is a possible selection, subject to change: `[Values]`. `[ValuesSource]`, `[Range]`, `[Random]`.
+* Something like _NUnit_'s `[ValuesSource]` to allow specifying values for individual arguments indirectly.
 
 * `[Include]` allows the developer to indicate when a test will be included, based on environmental factors like the OS platform or the current Culture. A corresponding `[Exclude]` attribute is available when specifying rules for exclusion is more convenient.
 
-## Coming Later
+## Coming Later (Project Backlog)
 
-### Attributes
+### Theories
+
+Continuation and extension of NUnit's _Theories_.
 
 * `[Theory]` is reserved for use in implementing a new take on "theory tests" as originally implemented in _NUnit_. Note that this is __not__ equivalent to the `TheoryAttribute` implemented in _xUnit_, which is no more than a parameterized test, whereas the original academic work on "theories" gave the responsibility of deciding which inputs are appropriate to the test itself. _TC-Lite's_ `[Theory]` will do that but may differ in details from the _NUnit_ implementation, which became somewhat frozen in its development in order to preserve backward compatibility. It's possible that `[Theory]` will not make the cut for the first release of _TC-Lite_.
 
 * `[Datapoint]` and `[DatapointSource]` _or some equivalent_ will be developed along with theories. More research is needed to identify alternative approaches to either filtering or generating data for theories.
 
-* `[LevelOfParallelism]`, `[Parallelizable]` and `[NonParallelizable]` are used to specify how tests may be run in parallel. The attribute names are taken from _NUnit_ but the precise implementation is expected to be somewhat simpler due to the greater independence of tests in _TC-Lite_.
+### Parallel Test Execution
 
-* `[SingleThreaded]` indicates that all the tests in a fixture must run on the same thread. Although it's different from parallel execution, it's not needed until we actually have multiple parallel threads.
+Attributes for indicating how tests are permitted to run in parallel. The implementation will be a simpler one than that in _NUnit_ since we are using separate fixtures for each test case and are not constrained by backward compatibility.
 
-## Possible Future Additions
+The following is a starting set of features:
+
+* Attributes should indicate what __may__ or __may not__ run in Parallel. It's up to the __TC-Lite__ framework to decide whether to actually use parallel execution in a given environment.
+
+* An assembly-level attribute should allow specifying the maximum number of tests allowed to execute at one time.
+
+* A pair of class- and method-level attributes should allow specifying whether a given test may or may not be run in parallel with other tests.
+
+* (Possibly) an assembly level attribute to set the default level of parallelism. This requires some thought since it can requires __every__ test to be written in a way that allows it to run in parallel. However, it is a great convenience to be able to specify the most common setting once and then override it at the class or method level.
+
+## Possible Future Additions (Ideas)
 
 ### Platforms
 
@@ -197,6 +215,8 @@ When running the test assembly, various options may be specified. Where the feat
 * Detect tests in assemblies referenced by the main test assembly
 
 ### Attributes
+
+* Additional attributes to supplement `[Combinatorial]` and provide other ways of generating cases from sets of argument valeus. `[Pairwise]` and `[Sequential]` could be considered, although they may not be appropriate for a framework that focuses on microtests.
 
 * `[Before]` and `[After]` as a notational convenience if there seems to be a demand for them. They would not provide any new functionality beyond what is provided through construction and disposal.
 

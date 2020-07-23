@@ -35,18 +35,6 @@ namespace TCLite.Framework
             _strategy = strategy;
         }
 
-        // /// <summary>
-        // /// Construct a CombiningStrategyAttribute incorporating an object
-        // /// that implements ICombiningStrategy and an IParameterDataProvider.
-        // /// This constructor is provided for CLS compliance.
-        // /// </summary>
-        // /// <param name="strategy">Combining strategy to be used in combining data</param>
-        // /// <param name="provider">An IParameterDataProvider to supply data</param>
-        // protected CombiningStrategyAttribute(object strategy, object provider)
-        //     : this((ICombiningStrategy)strategy, (IParameterDataProvider)provider)
-        // {
-        // }
-
         #region ITestCaseSource Members
 
         /// <summary>

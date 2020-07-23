@@ -14,7 +14,7 @@ namespace TCLite.Framework
     /// within the test assembly, fixture or method.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class DefaultFloatingPointToleranceAttribute : TCLiteAttribute, IApplyToContext
+    public sealed class DefaultFloatingPointToleranceAttribute : TCLiteAttribute, IApplyToContext
     {
         private readonly Tolerance _tolerance;
 

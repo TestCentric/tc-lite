@@ -12,7 +12,7 @@ namespace TCLite.Framework
     /// Provides the author of a test or test fixture. 
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true, Inherited=false)]
-    public class AuthorAttribute : PropertyAttribute
+    public sealed class AuthorAttribute : PropertyAttribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthorAttribute"/> class.
