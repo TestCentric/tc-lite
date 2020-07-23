@@ -48,7 +48,7 @@ namespace TCLite.Framework.Interfaces
         /// <summary>
         /// Gets the RandomGenerator specific to this Test
         /// </summary>
-        RandomGenerator RandomGenerator { get; }
+        Randomizer RandomGenerator { get; }
 
         /// <summary>
         /// Gets the assert count.

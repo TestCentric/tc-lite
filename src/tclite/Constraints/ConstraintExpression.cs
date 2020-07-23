@@ -460,16 +460,5 @@ namespace TCLite.Framework.Constraints
             return (SamePathOrUnderConstraint)this.Append(new SamePathOrUnderConstraint(expected));
         }
 #endif
-
-#if NYI // InRange
-        /// <summary>
-        /// Returns a constraint that tests whether the actual value falls 
-        /// within a specified range.
-        /// </summary>
-        public RangeConstraint<T> InRange<T>(T from, T to) where T : IComparable<T>
-        {
-            return (RangeConstraint<T>)this.Append(new RangeConstraint<T>(from, to));
-        }
-#endif
     }
 }

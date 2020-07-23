@@ -49,13 +49,11 @@ namespace TCLite.Framework
         /// <summary>
         /// Constructs a range of <see cref="uint"/> values using the default step of 1.
         /// </summary>
-        [CLSCompliant(false)]
         public RangeAttribute(uint from, uint to) : this(from, to, 1u) { }
 
         /// <summary>
         /// Constructs a range of <see cref="uint"/> values with the specified step size.
         /// </summary>
-        [CLSCompliant(false)]
         public RangeAttribute(uint from, uint to, uint step)
         {
             Guard.ArgumentValid(step > 0, "Step must be greater than zero", nameof(step));
@@ -95,13 +93,11 @@ namespace TCLite.Framework
         /// <summary>
         /// Constructs a range of <see cref="ulong"/> values using the default step of 1.
         /// </summary>
-        [CLSCompliant(false)]
         public RangeAttribute(ulong from, ulong to) : this(from, to, 1ul) { }
 
         /// <summary>
         /// Constructs a range of <see cref="ulong"/> values with the specified step size.
         /// </summary>
-        [CLSCompliant(false)]
         public RangeAttribute(ulong from, ulong to, ulong step)
         {
             Guard.ArgumentValid(step > 0, "Step must be greater than zero", nameof(step));

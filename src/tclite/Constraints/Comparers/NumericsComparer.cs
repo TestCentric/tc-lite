@@ -19,9 +19,6 @@ namespace TCLite.Framework.Constraints.Comparers
         {
             Guard.OperationValid(CanCompare(x,y), "Invalid call");
 
-            // if (!Numerics.IsNumericType(x) || !Numerics.IsNumericType(y))
-            //     return null;
-
             return Numerics.AreEqual(x, y, ref tolerance);
         }
     }
