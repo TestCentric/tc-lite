@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
     <OutputPath>..\..\bin\$(Configuration)\</OutputPath>
     <Copyright>Copyright (c) Charlie Poole and TestCentric Contributors</Copyright>
   </PropertyGroup>

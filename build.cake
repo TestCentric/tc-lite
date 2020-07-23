@@ -7,8 +7,9 @@ Information($"Running target {target} in configuration {configuration}");
 var PROJECT_DIR = Context.Environment.WorkingDirectory.FullPath + "/";
 var BIN_DIR = PROJECT_DIR + "bin/" + configuration + "/";
 
-var SUPPORTED_TEST_PLATFORMS = new [] { "netcoreapp3.1" };
+var SUPPORTED_TEST_PLATFORMS = new [] { "netcoreapp3.1", "net5.0" };
 var TEST_ASSEMBLY = "tclite.tests.dll";
+var TEST_EXECUTABLE = "tclite.tests.exe";
 
 // Deletes the contents of the Artifacts folder if it contains anything from a previous build.
 Task("Clean")
@@ -40,7 +41,7 @@ Task("Test")
     .Does(() =>
     {
         foreach (var platform in SUPPORTED_TEST_PLATFORMS)
-            StartProcess("dotnet", System.IO.Path.Combine(BIN_DIR + platform, TEST_ASSEMBLY));
+            StartProcess(System.IO.Path.Combine(BIN_DIR + platform, TEST_EXECUTABLE));
     });
 
 // A meta-task that runs all the steps to Build and Test the app
