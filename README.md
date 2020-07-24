@@ -101,6 +101,7 @@ The "Expression Syntax" column shows how the constraint is created while parsing
 | ------------------------------ | -------------------- | --------------
 | `AllItemsConstraint`           | `All`                | `Is.All`, `Has.All`
 | `AndConstraint`                | `And`
+| `CollectionEquivalentConstraint` | `EquivalentTo`     | `Is.EquivalentTo`
 | `EmptyCollectionConstraint`    | `Empty`              | `Is.Empty`
 | `EmptyConstraint`              | `Empty`              | `Is.Empty`
 | `EmptyStringConstraint`        | `Empty`              | `Is.Empty`

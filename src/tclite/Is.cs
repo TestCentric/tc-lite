@@ -85,18 +85,6 @@ namespace TCLite.Framework
         }
 #endif
 
-#if NYI // EquivalentTo
-        /// <summary>
-        /// Returns a constraint that tests whether the actual value
-        /// is a collection containing the same elements as the 
-        /// collection supplied as an argument.
-        /// </summary>
-        public static CollectionEquivalentConstraint EquivalentTo(IEnumerable expected)
-        {
-            return new CollectionEquivalentConstraint(expected);
-        }
-#endif
-
 #if NYI // SubsetOf
         /// <summary>
         /// Returns a constraint that tests whether the actual value
