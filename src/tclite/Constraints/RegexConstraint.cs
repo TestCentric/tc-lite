@@ -11,27 +11,36 @@ namespace TCLite.Framework.Constraints
     /// RegexConstraint can test whether a string matches
     /// the pattern provided.
     /// </summary>
-    public class RegexConstraint : StringConstraint
+    public class RegexConstraint : Constraint
     {
+        private Regex _regex;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RegexConstraint"/> class.
         /// </summary>
         /// <param name="pattern">The pattern.</param>
-        public RegexConstraint(string pattern) : base(pattern) { }
+        public RegexConstraint(string pattern, RegexOptions options = RegexOptions.None) : base(pattern)
+        { 
+            _regex = new Regex(pattern, options);
+        }
 
-        public override string Description => "String matching " + base.Description;
-
-        /// <summary>
-        /// Test whether the constraint is satisfied by a given value
-        /// </summary>
-        /// <param name="actual">The value to be tested</param>
-        /// <returns>True for success, false for failure</returns>
-        protected override bool Matches(string actual)
+        public RegexConstraint(Regex regex) : base(regex.ToString())
         {
-            return actual != null && Regex.IsMatch(
-                    actual,
-                    ExpectedValue,
-                    _caseInsensitive ? RegexOptions.IgnoreCase : RegexOptions.None);
+            _regex = regex;
+        }
+
+        public override string Description => $"String matching pattern \"{_regex.ToString()}\"";
+
+        public override void ValidateActualValue(object actual)
+        {
+            Guard.ArgumentNotNull(actual, nameof(actual));
+            Guard.ArgumentOfType<string>(actual, nameof(actual));
+        }
+
+        protected override ConstraintResult ApplyConstraint<TActual>(TActual actual)
+        {
+            return new ConstraintResult(this, actual, 
+                actual != null && actual is string && _regex.Match(actual.ToString()).Success);
         }
     }
 }
