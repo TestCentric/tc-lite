@@ -6,6 +6,8 @@
 using System;
 using System.Text;
 using System.Collections;
+using System.Globalization;
+using TCLite.Framework.Internal;
 
 namespace TCLite.Framework.Constraints
 {
@@ -15,9 +17,184 @@ namespace TCLite.Framework.Constraints
     public class MsgUtils
     {
         /// <summary>
+        /// Default amount of items used by <see cref="FormatCollection"/> method.
+        /// </summary>
+        internal const int DefaultMaxItems = 10;
+
+        /// <summary>
         /// Static string used when strings are clipped
         /// </summary>
         private const string ELLIPSIS = "...";
+
+        /// <summary>
+        /// Formatting strings used for expected and actual values
+        /// </summary>
+        private static readonly string Fmt_Null = "null";
+
+        private static readonly string Fmt_EmptyString = "<string.Empty>";
+        private static readonly string Fmt_EmptyCollection = "<empty>";
+        private static readonly string Fmt_String = "\"{0}\"";
+        private static readonly string Fmt_Char = "'{0}'";
+        private static readonly string Fmt_DateTime = "yyyy-MM-dd HH:mm:ss.FFFFFFF";
+        private static readonly string Fmt_DateTimeOffset = "yyyy-MM-dd HH:mm:ss.FFFFFFFzzz";
+        private static readonly string Fmt_ValueType = "{0}";
+        private static readonly string Fmt_Default = "<{0}>";
+        private static readonly string Fmt_ExceptionThrown = "<! {0} !>";
+
+        /// <summary>
+        /// Formats text to represent a generalized value.
+        /// </summary>
+        /// <param name="val">The value</param>
+        /// <returns>The formatted text</returns>
+        public static string FormatValue(object val)
+        {
+            if (val == null)
+                return Fmt_Null;
+
+            if (val.GetType().IsArray)
+                return FormatArray((Array)val);
+
+            if (val is string)
+            {
+                var s = (string)val;
+                return s == string.Empty
+                    ? Fmt_EmptyString
+                    : string.Format(Fmt_String, val);
+            }
+
+            if (val is IEnumerable)
+                return FormatCollection((IEnumerable)val, 0, 10);
+
+            if (val is char)
+                return string.Format(Fmt_Char, val);
+
+            if (val is double)
+                return FormatDouble((double)val);
+
+            if (val is float)
+                return FormatFloat((float)val);
+
+            if (val is decimal)
+                return ((decimal)val).ToString("G29", CultureInfo.InvariantCulture) + "m";
+
+            if (val is DateTime)
+                return ((DateTime)val).ToString(Fmt_DateTime, CultureInfo.InvariantCulture);
+
+            if (val.GetType().IsValueType)
+                return string.Format(Fmt_ValueType, val);
+            
+            return string.Format(Fmt_Default, val);
+
+        }
+
+        /// <summary>
+        /// Formats text for a collection value,
+        /// starting at a particular point, to a max length
+        /// </summary>
+        /// <param name="collection">The collection containing elements to write.</param>
+        /// <param name="start">The starting point of the elements to write</param>
+        /// <param name="max">The maximum number of elements to write</param>
+        public static string FormatCollection(IEnumerable collection, long start = 0, int max = DefaultMaxItems)
+        {
+            int count = 0;
+            int index = 0;
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("< ");
+
+            if (start > 0)
+                sb.Append("...");
+
+            foreach (object obj in collection)
+            {
+                if (index++ >= start)
+                {
+                    if (++count > max)
+                        break;
+                    if (count > 1)
+                        sb.Append(", ");
+                    sb.Append(FormatValue(obj));
+                }
+            }
+
+            if (count == 0)
+                return Fmt_EmptyCollection;
+
+            if (count > max)
+                sb.Append("...");
+
+            sb.Append(" >");
+
+            return sb.ToString();
+        }
+
+        private static string FormatArray(Array array)
+        {
+            if (array.Length == 0)
+                return Fmt_EmptyCollection;
+
+            int rank = array.Rank;
+            int[] products = new int[rank];
+
+            for (int product = 1, r = rank; --r >= 0;)
+                products[r] = product *= array.GetLength(r);
+
+            int count = 0;
+            var sb = new StringBuilder();
+            foreach (object obj in array)
+            {
+                if (count > 0)
+                    sb.Append(", ");
+
+                bool startSegment = false;
+                for (int r = 0; r < rank; r++)
+                {
+                    startSegment = startSegment || count % products[r] == 0;
+                    if (startSegment) sb.Append("< ");
+                }
+
+                sb.Append(FormatValue(obj));
+
+                ++count;
+
+                bool nextSegment = false;
+                for (int r = 0; r < rank; r++)
+                {
+                    nextSegment = nextSegment || count % products[r] == 0;
+                    if (nextSegment) sb.Append(" >");
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        private static string FormatDouble(double d)
+        {
+            if (double.IsNaN(d) || double.IsInfinity(d))
+                return d.ToString(CultureInfo.InvariantCulture);
+            else
+            {
+                string s = d.ToString("G17", CultureInfo.InvariantCulture);
+
+                return s.IndexOf('.') > 0
+                    ? s + "d"
+                    : s + ".0d";
+            }
+        }
+
+        private static string FormatFloat(float f)
+        {
+            if (float.IsNaN(f) || float.IsInfinity(f))
+                return f.ToString(CultureInfo.InvariantCulture);
+            else
+            {
+                string s = f.ToString("G9", CultureInfo.InvariantCulture);
+
+                return s.IndexOf('.') > 0
+                    ? s + "f"
+                    : s + ".0f";
+            }
+        }
 
         /// <summary>
         /// Returns the representation of a type as used in NUnitLite.

@@ -43,7 +43,6 @@ namespace TCLite.Framework.Constraints
                 //new DirectoriesComparer(this),
                 new NumericsComparer(),
                 new DatesAndTimesComparer(this),
-                //new TimeSpanToleranceComparer(),
                 //new TupleComparer(this),
                 //new ValueTupleComparer(this),
                 new EquatablesComparer(this),
