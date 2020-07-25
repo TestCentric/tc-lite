@@ -4,6 +4,7 @@
 // ***********************************************************************
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using TCLite.Framework.Constraints;
 using TCLite.Framework.Internal;
@@ -166,6 +167,53 @@ namespace TCLite.Framework.Assertions
             Assert.That(result.AssertCount, Is.EqualTo(totalCount), "Fixture count is not correct");
         }
 #endif
+
+        [TestCase]
+        public void AreEqualPassesWithSameStream()
+        {
+            Stream exampleStream = new MemoryStream(new byte[] { 1, 2, 3 });
+            Assert.That(exampleStream, Is.EqualTo(exampleStream));
+        }
+
+        [TestCase]
+        public void AreEqualPassesWithEqualStreams()
+        {
+            Stream stream1 = new MemoryStream(new byte[] { 1, 2, 3, 4, 5 });
+            Stream stream2 = new MemoryStream(new byte[] { 1, 2, 3, 4, 5 });
+            Assert.That(stream1, Is.EqualTo(stream2));
+        }
+
+        [TestCase]
+        public void NonReadableStreamGivesException()
+        {
+            Stream exampleStream = new MemoryStream(new byte[] { 1, 2, 3 });
+            Assert.Throws<InvalidOperationException>(() =>
+                Assert.That(exampleStream, Is.EqualTo(new NonReadableStream())));
+        }
+
+        [TestCase]
+        public void NonSeekableStreamGivesException()
+        {
+            Stream exampleStream = new MemoryStream(new byte[] { 1, 2, 3 });
+            Assert.Throws<InvalidOperationException>(() =>
+                Assert.That(exampleStream, Is.EqualTo(new NonSeekableStream())));
+        }
+
+        private class NonReadableStream : MemoryStream
+        {
+            public override bool CanRead
+            {
+                get { return false; }
+            }
+        }
+
+        private class NonSeekableStream : MemoryStream
+        {
+            public override bool CanSeek
+            {
+                get { return false; }
+            }
+        }
 
         private int ReturnsFive()
         {

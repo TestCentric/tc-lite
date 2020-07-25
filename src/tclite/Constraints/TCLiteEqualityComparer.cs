@@ -40,7 +40,7 @@ namespace TCLite.Framework.Constraints
                 new DictionaryEntriesComparer(this),
                 new KeyValuePairsComparer(this),
                 new StringsComparer(this),
-                //new StreamsComparer(this),
+                new StreamsComparer(this),
                 new CharsComparer(this),
                 //new DirectoriesComparer(this),
                 new NumericsComparer(),
