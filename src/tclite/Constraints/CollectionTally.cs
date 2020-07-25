@@ -29,7 +29,7 @@ namespace TCLite.Framework.Constraints
             }
         }
 
-        private readonly TCLiteEqualityComparer comparer;
+        private readonly TCLiteEqualityComparer _comparer;
 
         /// <summary>The result of the comparison between the two collections.</summary>
         public CollectionTallyResult Result
@@ -51,7 +51,7 @@ namespace TCLite.Framework.Constraints
         /// <param name="c">The expected collection to compare against.</param>
         public CollectionTally(TCLiteEqualityComparer comparer, IEnumerable c)
         {
-            this.comparer = comparer;
+            _comparer = comparer;
 
             foreach (object o in c)
                 _missingItems.Add(o);
@@ -60,7 +60,7 @@ namespace TCLite.Framework.Constraints
         private bool ItemsEqual(object expected, object actual)
         {
             Tolerance tolerance = Tolerance.Default;
-            return comparer.AreEqual(expected, actual, ref tolerance);
+            return _comparer.AreEqual(expected, actual, ref tolerance);
         }
 
         /// <summary>Try to remove an object from the tally.</summary>

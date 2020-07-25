@@ -8,7 +8,7 @@ namespace TCLite.Framework.Constraints.Comparers
     /// <summary>
     /// Comparator for two <see cref="Numerics"/>s.
     /// </summary>
-    internal sealed class NumericsComparer : IEqualityComparer
+    internal sealed class NumericsComparer : ITCLiteEqualityComparer
     {
         public bool CanCompare<T1, T2>(T1 x, T2 y)
         {

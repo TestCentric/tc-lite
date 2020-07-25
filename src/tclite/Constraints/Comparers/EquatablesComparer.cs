@@ -12,7 +12,7 @@ namespace TCLite.Framework.Constraints.Comparers
     /// <summary>
     /// Comparator for two types related by <see cref="IEquatable{T}"/>.
     /// </summary>
-    internal sealed class EquatablesComparer : IEqualityComparer
+    internal sealed class EquatablesComparer : ITCLiteEqualityComparer
     {
         private readonly TCLiteEqualityComparer _equalityComparer;
 

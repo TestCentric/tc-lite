@@ -3,7 +3,6 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-#if NYI
 using System.Collections;
 
 namespace TCLite.Framework.Constraints.Comparers
@@ -11,7 +10,7 @@ namespace TCLite.Framework.Constraints.Comparers
     /// <summary>
     /// Comparator for two <see cref="IDictionary"/>s.
     /// </summary>
-    internal sealed class DictionariesComparer : IChainComparer
+    internal sealed class DictionariesComparer : ITCLiteEqualityComparer
     {
         private readonly TCLiteEqualityComparer _equalityComparer;
 
@@ -20,11 +19,13 @@ namespace TCLite.Framework.Constraints.Comparers
             _equalityComparer = equalityComparer;
         }
 
-        public bool? Equal(object x, object y, ref Tolerance tolerance)
+        public bool CanCompare<T1,T2>(T1 x, T2 y)
         {
-            if (!(x is IDictionary) || !(y is IDictionary))
-                return null;
+            return x is IDictionary && y is IDictionary;
+        }
 
+        public bool AreEqual<T1,T2>(T1 x, T2 y, ref Tolerance tolerance)
+        {
             IDictionary xDictionary = (IDictionary)x;
             IDictionary yDictionary = (IDictionary)y;
 
@@ -37,11 +38,10 @@ namespace TCLite.Framework.Constraints.Comparers
                 return false;
 
             foreach (object key in xDictionary.Keys)
-                if (!_equalityComparer.AreEqual(xDictionary[key], yDictionary[key], ref tolerance, state.PushComparison(x, y)))
+                if (!_equalityComparer.AreEqual(xDictionary[key], yDictionary[key], ref tolerance))
                     return false;
 
             return true;
         }
     }
 }
-#endif

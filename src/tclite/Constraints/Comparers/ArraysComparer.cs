@@ -10,7 +10,7 @@ namespace TCLite.Framework.Constraints.Comparers
     /// <summary>
     /// Comparator for two <see cref="Array"/>s.
     /// </summary>
-    internal sealed class ArraysComparer : IEqualityComparer
+    internal sealed class ArraysComparer : ITCLiteEqualityComparer
     {
         private readonly TCLiteEqualityComparer _equalityComparer;
         private readonly EnumerablesComparer _enumerablesComparer;

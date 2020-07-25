@@ -10,7 +10,7 @@ namespace TCLite.Framework.Constraints.Comparers
     /// <summary>
     /// Comparator for two <see cref="String"/>s.
     /// </summary>
-    internal sealed class StringsComparer : IEqualityComparer
+    internal sealed class StringsComparer : ITCLiteEqualityComparer
     {
         private readonly TCLiteEqualityComparer _equalityComparer;
 

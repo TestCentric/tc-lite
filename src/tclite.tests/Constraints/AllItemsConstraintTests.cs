@@ -5,7 +5,7 @@
 
 using System;
 using TCLite.Framework.Internal;
-//using TCLite.TestUtilities.Comparers;
+using TCLite.TestUtilities.Comparers;
 
 namespace TCLite.Framework.Constraints
 {
@@ -34,12 +34,11 @@ namespace TCLite.Framework.Constraints
             Assert.That(ex.Message, Is.EqualTo(expectedMessage));
         }
 
-#if NYI // Range, Using
         [TestCase]
         public void AllItemsAreInRange()
         {
             int[] c = new int[] { 12, 27, 19, 32, 45, 99, 26 };
-            Assert.That(c, new AllItemsConstraint(new RangeConstraint(10, 100)));
+            Assert.That(c, new AllItemsConstraint(new RangeConstraint<int>(10, 100)));
         }
 
         [TestCase]
@@ -47,7 +46,7 @@ namespace TCLite.Framework.Constraints
         {
             var comparer = new ObjectComparer();
             int[] c = new int[] { 12, 27, 19, 32, 45, 99, 26 };
-            Assert.That(c, new AllItemsConstraint(new RangeConstraint(10, 100).Using(comparer)));
+            Assert.That(c, Is.All.InRange(10, 100).Using(comparer));
             Assert.That(comparer.WasCalled);
         }
 
@@ -56,7 +55,7 @@ namespace TCLite.Framework.Constraints
         {
             var comparer = new GenericComparer<int>();
             int[] c = new int[] { 12, 27, 19, 32, 45, 99, 26 };
-            Assert.That(c, new AllItemsConstraint(new RangeConstraint(10, 100).Using(comparer)));
+            Assert.That(c, Is.All.InRange(10, 100).Using(comparer));
             Assert.That(comparer.WasCalled);
         }
 
@@ -65,10 +64,11 @@ namespace TCLite.Framework.Constraints
         {
             var comparer = new GenericComparison<int>();
             int[] c = new int[] { 12, 27, 19, 32, 45, 99, 26 };
-            Assert.That(c, new AllItemsConstraint(new RangeConstraint(10, 100).Using(comparer.Delegate)));
+            Assert.That(c, new AllItemsConstraint(new RangeConstraint<int>(10, 100).Using(comparer.Delegate)));
             Assert.That(comparer.WasCalled);
         }
 
+#if NYI // Extra Line
         [TestCase]
         public void AllItemsAreInRangeFailureMessage()
         {
@@ -77,17 +77,17 @@ namespace TCLite.Framework.Constraints
                 TextMessageWriter.Pfx_Expected + "all items in range (10,100)" + NL +
                 TextMessageWriter.Pfx_Actual + "< 12, 27, 19, 32, 107, 99, 26 >" + NL +
                 "  First non-matching item at index [4]:  107" + NL;
-            var ex = Assert.Throws<AssertionException>(() => Assert.That(c, new AllItemsConstraint(new RangeConstraint(10, 100))));
+            var ex = Assert.Throws<AssertionException>(() => Assert.That(c, new AllItemsConstraint(new RangeConstraint<int>(10, 100))));
             Assert.That(ex.Message, Is.EqualTo(expectedMessage));
         }
+#endif
 
         [TestCase]
         public void AllItemsAreInstancesOfType()
         {
             object[] c = new object[] { 'a', 'b', 'c' };
-            Assert.That(c, new AllItemsConstraint(new InstanceOfTypeConstraint(typeof(char))));
+            Assert.That(c, Is.All.InstanceOf<char>());
         }
-#endif
 
         [TestCase]
         public void AllItemsAreInstancesOfTypeFailureMessage()
@@ -98,27 +98,26 @@ namespace TCLite.Framework.Constraints
                 TextMessageWriter.Pfx_Actual + "< 'a', \"b\", 'c' >" + NL;
                 //+ "  First non-matching item at index [1]:  \"b\"" + NL;
             var ex = Assert.Throws<AssertionException>(() =>
-                Assert.That(c, new AllItemsConstraint(new InstanceOfTypeConstraint(typeof(char)))));
+                Assert.That(c, Is.All.InstanceOf<char>()));
             Assert.That(ex.Message, Is.EqualTo(expectedMessage));
         }
 
-#if NYI // SimpleObjectCollection
         [TestCase]
         public void WorksOnICollection()
         {
             var c = new TCLite.TestUtilities.Collections.SimpleObjectCollection(1, 2, 3);
             Assert.That(c, Is.All.Not.Null);
         }
-#endif
 
-#if NYI // Message
         [TestCase]
         public void FailsWhenNotUsedAgainstAnEnumerable()
         {
             var notEnumerable = 42;
-            TestDelegate act = () => Assert.That(notEnumerable, new AllItemsConstraint(new RangeConstraint(10, 100)));
-            Assert.That(act, Throws.ArgumentException.With.Message.Contains("IEnumerable"));
-        }
+            TestDelegate act = () => Assert.That(notEnumerable, Is.All.InRange(10, 100));
+            Assert.That(act, Throws.ArgumentException);
+#if NYI // Message
+                .With.Message.Contains("IEnumerable"));
 #endif
+        }
     }
 }

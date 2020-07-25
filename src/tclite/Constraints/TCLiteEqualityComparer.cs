@@ -21,7 +21,7 @@ namespace TCLite.Framework.Constraints
     {
         private const int BUFFER_SIZE = 4096;
 
-        private IEqualityComparer[] _comparers;
+        private ITCLiteEqualityComparer[] _comparers;
 
         /// <summary>
         /// RecursionDetector used to check for recursion when
@@ -33,18 +33,20 @@ namespace TCLite.Framework.Constraints
         {
             var enumerablesComparer = new EnumerablesComparer(this);
 
-            _comparers = new IEqualityComparer[]
+            _comparers = new ITCLiteEqualityComparer[]
             {
                 new ArraysComparer(this, enumerablesComparer),
-                //new DictionariesComparer(this),
+                new DictionariesComparer(this),
+                new DictionaryEntriesComparer(this),
+                new KeyValuePairsComparer(this),
                 new StringsComparer(this),
                 //new StreamsComparer(this),
                 new CharsComparer(this),
                 //new DirectoriesComparer(this),
                 new NumericsComparer(),
                 new DatesAndTimesComparer(this),
-                //new TupleComparer(this),
-                //new ValueTupleComparer(this),
+                new TupleComparer(this),
+                new ValueTupleComparer(this),
                 new EquatablesComparer(this),
                 enumerablesComparer
             };
@@ -118,7 +120,7 @@ namespace TCLite.Framework.Constraints
             if (externalComparer != null)
                 return externalComparer.AreEqual(expected, actual);
 
-            IEqualityComparer comparer = GetEqualityComparer(expected, actual);
+            ITCLiteEqualityComparer comparer = GetEqualityComparer(expected, actual);
             if (comparer != null)
                 return comparer.AreEqual(expected, actual, ref tolerance);
 
@@ -134,7 +136,7 @@ namespace TCLite.Framework.Constraints
             return null;
         }
 
-        private IEqualityComparer GetEqualityComparer<TExpected,TActual>(TExpected expected, TActual actual)
+        private ITCLiteEqualityComparer GetEqualityComparer<TExpected,TActual>(TExpected expected, TActual actual)
         {
             foreach (var comparer in _comparers)
                 if (comparer.CanCompare(expected, actual))

@@ -11,7 +11,7 @@ namespace TCLite.Framework.Constraints.Comparers
     /// Comparator for two <see cref="DateTime"/>s, 
     /// <see cref="TimeSpans"/>s or <see cref="DateTimeOffset"/>s.
     /// </summary>
-    internal sealed class DatesAndTimesComparer : IEqualityComparer
+    internal sealed class DatesAndTimesComparer : ITCLiteEqualityComparer
     {
         private readonly TCLiteEqualityComparer _equalityComparer;
 

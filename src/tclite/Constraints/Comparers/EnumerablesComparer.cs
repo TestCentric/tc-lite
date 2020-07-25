@@ -11,7 +11,7 @@ namespace TCLite.Framework.Constraints.Comparers
     /// <summary>
     /// Comparator for two <see cref="IEnumerable"/>s.
     /// </summary>
-    internal sealed class EnumerablesComparer : IEqualityComparer
+    internal sealed class EnumerablesComparer : ITCLiteEqualityComparer
     {
         private readonly TCLiteEqualityComparer _equalityComparer;
 
