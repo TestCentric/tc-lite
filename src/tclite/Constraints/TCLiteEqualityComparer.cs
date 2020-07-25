@@ -42,7 +42,6 @@ namespace TCLite.Framework.Constraints
                 new StringsComparer(this),
                 new StreamsComparer(this),
                 new CharsComparer(this),
-                //new DirectoriesComparer(this),
                 new NumericsComparer(),
                 new DatesAndTimesComparer(this),
                 new TupleComparer(this),

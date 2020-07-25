@@ -82,18 +82,6 @@ namespace TCLite.Framework.Constraints
 
         // TODO: Move these to the relevant files once those files are created.
 
-#if NYI // Exactly
-        /// <summary>
-        /// Returns a ConstraintExpression, which will apply
-        /// the following constraint to all members of a collection,
-        /// succeeding only if a specified number of them succeed.
-        /// </summary>
-        public ConstraintExpression Exactly(int expectedCount)
-        {
-            return this.Append(new ExactCountOperator(expectedCount));
-        }
-#endif
-
 #if NYI // Property
         /// <summary>
         /// Returns a new PropertyConstraintExpression, which will either

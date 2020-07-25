@@ -99,10 +99,10 @@ namespace TCLite.Framework.Syntax
     #endregion
 
     #region Exactly
-#if NYI // Exactly
+
     public class Exactly_WithoutConstraint : SyntaxTest
     {
-        public void SetUp()
+        public Exactly_WithoutConstraint()
         {
             ParseTree = "<exactcount>";
             StaticSyntax = Has.Exactly(3).Items;
@@ -112,8 +112,7 @@ namespace TCLite.Framework.Syntax
 
     public class Exactly_WithConstraint : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public Exactly_WithConstraint()
         {
             ParseTree = "<exactcount <lessthan 0>>";
             StaticSyntax = Has.Exactly(3).Items.LessThan(0);
@@ -123,34 +122,31 @@ namespace TCLite.Framework.Syntax
 
     public class Exactly_WithConstraint_BeforeBinaryOperators : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public Exactly_WithConstraint_BeforeBinaryOperators()
         {
             ParseTree = "<exactcount <or <lessthan 0> <and <greaterthan 10> <lessthan 20>>>>";
-            StaticSyntax = Has.Exactly(3).Items.LessThan(0).Or.GreaterThan(10).And.LessThan(20);
-            BuilderSyntax = Builder().Exactly(3).Items.LessThan(0).Or.GreaterThan(10).And.LessThan(20);
+            StaticSyntax = Has.Exactly(3).LessThan(0).Or.GreaterThan(10).And.LessThan(20);
+            BuilderSyntax = Builder().Exactly(3).LessThan(0).Or.GreaterThan(10).And.LessThan(20);
         }
     }
 
     public class Exactly_WithConstraint_BeforeAndAfterBinaryOperators : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public Exactly_WithConstraint_BeforeAndAfterBinaryOperators()
         {
-            ParseTree = "<and <exactcount <lessthan 0>> <exactcount <greaterthan 10>>>";
-            StaticSyntax = Has.Exactly(3).Items.LessThan(0).And.Exactly(3).Items.GreaterThan(10);
-            BuilderSyntax = Builder().Exactly(3).Items.LessThan(0).And.Exactly(3).Items.GreaterThan(10);
+            ParseTree = "<exactcount <and <lessthan 0> <greaterthan 10>>>";
+            StaticSyntax = Has.Exactly(3).LessThan(0).And.GreaterThan(10);
+            BuilderSyntax = Builder().Exactly(3).LessThan(0).And.GreaterThan(10);
         }
     }
-#endif
+
     #endregion
 
     #region One
-#if NYI // One
+
     public class One_WithoutConstraint : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public One_WithoutConstraint()
         {
             ParseTree = "<exactcount>";
             StaticSyntax = Has.One.Items;
@@ -160,8 +156,7 @@ namespace TCLite.Framework.Syntax
 
     public class One_WithConstraint : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public One_WithConstraint()
         {
             ParseTree = "<exactcount <lessthan 0>>";
             StaticSyntax = Has.One.Items.LessThan(0);
@@ -171,8 +166,7 @@ namespace TCLite.Framework.Syntax
 
     public class One_WithConstraint_BeforeBinaryOperators : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public One_WithConstraint_BeforeBinaryOperators()
         {
             ParseTree = "<exactcount <or <lessthan 0> <and <greaterthan 10> <lessthan 20>>>>";
             StaticSyntax = Has.One.Items.LessThan(0).Or.GreaterThan(10).And.LessThan(20);
@@ -182,15 +176,14 @@ namespace TCLite.Framework.Syntax
 
     public class One_WithConstraint_BeforeAndAfterBinaryOperators : SyntaxTest
     {
-        [SetUp]
-        public void SetUp()
+        public One_WithConstraint_BeforeAndAfterBinaryOperators()
         {
-            ParseTree = "<and <exactcount <lessthan 0>> <exactcount <greaterthan 10>>>";
-            StaticSyntax = Has.One.Items.LessThan(0).And.One.Items.GreaterThan(10);
-            BuilderSyntax = Builder().One.Items.LessThan(0).And.One.Items.GreaterThan(10);
+            ParseTree = "<exactcount <and <lessthan 0> <greaterthan 10>>>";
+            StaticSyntax = Has.One.LessThan(0).And.GreaterThan(10);
+            BuilderSyntax = Builder().One.LessThan(0).And.GreaterThan(10);
         }
     }
-#endif
+
     #endregion
 
     #region And

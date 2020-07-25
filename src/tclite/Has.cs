@@ -18,21 +18,7 @@ namespace TCLite.Framework
     {
         // TODO: Move these to the relevant files once those files are created.
 
-#if NYI // Exactly, Property, Length, Count, Message, InnerException, Attribute
-        #region Exactly(n)
- 
-        /// <summary>
-        /// Returns a ConstraintExpression, which will apply
-        /// the following constraint to all members of a collection,
-        /// succeeding only if a specified number of them succeed.
-        /// </summary>
-        public static ConstraintExpression Exactly(int expectedCount)
-        {
-            return new ConstraintExpression().Exactly(expectedCount);
-        }
- 
-        #endregion
-
+#if NYI // Property, Length, Count, Message, InnerException, Attribute
         #region Property
 
         /// <summary>
