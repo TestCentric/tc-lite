@@ -21,7 +21,6 @@ namespace TCLite.Framework.Constraints
 
         public override void ValidateActualValue(object actual)
         {
-            Guard.ArgumentNotNull(actual, nameof(actual));
             Guard.ArgumentOfType<string>(actual, nameof(actual));
         }
 

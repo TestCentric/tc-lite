@@ -48,23 +48,5 @@ namespace TCLite.Framework.Internal
                 return "ParameterizedMethod";
             }
         }
-#if NYI // OneTimeTearDown
-        /// <summary>
-        /// Gets the command to be executed after all the child
-        /// tests are run. Overridden in ParameterizedMethodSuite
-        /// to set the result to failure if all the child tests
-        /// were inconclusive.
-        /// </summary>
-        /// <returns></returns>
-        public override TestCommand GetOneTimeTearDownCommand()
-        {
-            TestCommand command = base.GetOneTimeTearDownCommand();
-
-            if (_isTheory) 
-                command = new TheoryResultCommand(command);
-
-            return command;
-        }
-#endif
     }
 }

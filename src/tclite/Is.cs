@@ -15,16 +15,6 @@ namespace TCLite.Framework
     /// </summary>
     public partial class Is : Constraints.Is_Syntax
     {
-#if NYI // Empty
-        /// <summary>
-        /// Returns a constraint that tests for empty
-        /// </summary>
-        public static EmptyConstraint Empty
-        {
-            get { return new EmptyConstraint(); }
-        }
-#endif
-
 #if NYI // BinarySerializable
         /// <summary>
         /// Returns a constraint that tests whether an object graph is serializable in binary format.
