@@ -48,4 +48,101 @@ namespace TCLite.Framework.Constraints
                 stack.Push(new PropertyConstraint(name, stack.Pop()));
         }
     }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a new PropertyConstraintExpression, which will either
+        /// test for the existence of the named property on the object
+        /// being tested or apply any following constraint to that property.
+        /// </summary>
+        public ResolvableConstraintExpression Property(string name)
+        {
+            return Append(new PropOperator(name));
+        }
+
+        /// <summary>
+        /// Returns a new ConstraintExpression, which will apply the following
+        /// constraint to the Length property of the object being tested.
+        /// </summary>
+        public ResolvableConstraintExpression Length
+        {
+            get { return Property("Length"); }
+        }
+
+        /// <summary>
+        /// Returns a new ConstraintExpression, which will apply the following
+        /// constraint to the Count property of the object being tested.
+        /// </summary>
+        public ResolvableConstraintExpression Count
+        {
+            get { return Property("Count"); }
+        }
+
+        /// <summary>
+        /// Returns a new ConstraintExpression, which will apply the following
+        /// constraint to the Message property of the object being tested.
+        /// </summary>
+        public ResolvableConstraintExpression Message
+        {
+            get { return Property("Message"); }
+        }
+
+        /// <summary>
+        /// Returns a new ConstraintExpression, which will apply the following
+        /// constraint to the InnerException property of the object being tested.
+        /// </summary>
+        public ResolvableConstraintExpression InnerException
+        {
+            get { return Property("InnerException"); }
+        }
+    }
+
+    public partial class Has_Syntax
+    {
+        /// <summary>
+        /// Returns a new PropertyConstraintExpression, which will either
+        /// test for the existence of the named property on the object
+        /// being tested or apply any following constraint to that property.
+        /// </summary>
+        public static ResolvableConstraintExpression Property(string name)
+        {
+            return new ConstraintExpression().Property(name);
+        }
+
+        /// <summary>
+        /// Returns a new ConstraintExpression, which will apply the following
+        /// constraint to the Length property of the object being tested.
+        /// </summary>
+        public static ResolvableConstraintExpression Length
+        {
+            get { return Property("Length"); }
+        }
+        /// <summary>
+        /// Returns a new ConstraintExpression, which will apply the following
+        /// constraint to the Count property of the object being tested.
+        /// </summary>
+        public static ResolvableConstraintExpression Count
+        {
+            get { return Property("Count"); }
+        }
+
+        /// <summary>
+        /// Returns a new ConstraintExpression, which will apply the following
+        /// constraint to the Message property of the object being tested.
+        /// </summary>
+        public static ResolvableConstraintExpression Message
+        {
+            get { return Property("Message"); }
+        }
+
+        /// <summary>
+        /// Returns a new ConstraintExpression, which will apply the following
+        /// constraint to the InnerException property of the object being tested.
+        /// </summary>
+        public static ResolvableConstraintExpression InnerException
+        {
+            get { return Property("InnerException"); }
+        }
+    }
 }

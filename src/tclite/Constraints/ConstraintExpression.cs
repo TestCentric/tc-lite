@@ -82,62 +82,6 @@ namespace TCLite.Framework.Constraints
 
         // TODO: Move these to the relevant files once those files are created.
 
-#if NYI // Property
-        /// <summary>
-        /// Returns a new PropertyConstraintExpression, which will either
-        /// test for the existence of the named property on the object
-        /// being tested or apply any following constraint to that property.
-        /// </summary>
-        public ResolvableConstraintExpression Property(string name)
-        {
-            return this.Append(new PropOperator(name));
-        }
-#endif
-
-#if NYI // Length
-        /// <summary>
-        /// Returns a new ConstraintExpression, which will apply the following
-        /// constraint to the Length property of the object being tested.
-        /// </summary>
-        public ResolvableConstraintExpression Length
-        {
-            get { return Property("Length"); }
-        }
-#endif
-
-#if NYI // Count
-        /// <summary>
-        /// Returns a new ConstraintExpression, which will apply the following
-        /// constraint to the Count property of the object being tested.
-        /// </summary>
-        public ResolvableConstraintExpression Count
-        {
-            get { return Property("Count"); }
-        }
-#endif
-
-#if NYI // Message
-        /// <summary>
-        /// Returns a new ConstraintExpression, which will apply the following
-        /// constraint to the Message property of the object being tested.
-        /// </summary>
-        public ResolvableConstraintExpression Message
-        {
-            get { return Property("Message"); }
-        }
-#endif
-
-#if NYI // InnerException
-        /// <summary>
-        /// Returns a new ConstraintExpression, which will apply the following
-        /// constraint to the InnerException property of the object being tested.
-        /// </summary>
-        public ResolvableConstraintExpression InnerException
-        {
-            get { return Property("InnerException"); }
-        }
-#endif
-
 #if NYI // Attribute
         /// <summary>
         /// Returns a new AttributeConstraint checking for the
