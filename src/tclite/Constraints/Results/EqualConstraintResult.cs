@@ -20,29 +20,25 @@ namespace TCLite.Framework.Constraints
         private readonly Tolerance tolerance;
         private readonly bool caseInsensitive;
         private readonly bool clipStrings;
-        // NYI? private readonly IList<NUnitEqualityComparer.FailurePoint> failurePoints;
+        private readonly IList<FailurePoint> failurePoints;
 
         #region Message Strings
         private static readonly string StringsDiffer_1 =
             "String lengths are both {0}. Strings differ at index {1}.";
         private static readonly string StringsDiffer_2 =
             "Expected string length {0} but was {1}. Strings differ at index {2}.";
-#if NYI // Streams
         private static readonly string StreamsDiffer_1 =
             "Stream lengths are both {0}. Streams differ at offset {1}.";
         private static readonly string StreamsDiffer_2 =
             "Expected Stream length {0} but was {1}.";// Streams differ at offset {2}.";
-#endif
         private static readonly string CollectionType_1 =
             "Expected and actual are both {0}";
         private static readonly string CollectionType_2 =
             "Expected is {0}, actual is {1}";
-#if NYI // ValuesDiffer
         private static readonly string ValuesDiffer_1 =
             "Values differ at index {0}";
         private static readonly string ValuesDiffer_2 =
             "Values differ at expected index {0}, actual index {1}";
-#endif
         #endregion
 
         /// <summary>
@@ -55,6 +51,7 @@ namespace TCLite.Framework.Constraints
             this.tolerance = constraint.Tolerance;
             this.caseInsensitive = constraint.CaseInsensitive;
             this.clipStrings = constraint.ClipStrings;
+            failurePoints = new List<FailurePoint>();
         }
 
         /// <summary>
@@ -75,10 +72,8 @@ namespace TCLite.Framework.Constraints
                 DisplayCollectionDifferences(writer, (ICollection)expected, (ICollection)actual, depth);
             else if (expected is IEnumerable && actual is IEnumerable)
                 DisplayEnumerableDifferences(writer, (IEnumerable)expected, (IEnumerable)actual, depth);
-#if NYI // Streams
             else if (expected is Stream && actual is Stream)
                 DisplayStreamDifferences(writer, (Stream)expected, (Stream)actual, depth);
-#endif
             else if (tolerance != null)
                 writer.DisplayDifferences(expected, actual, tolerance);
             else
@@ -100,7 +95,6 @@ namespace TCLite.Framework.Constraints
         #endregion
 
         #region DisplayStreamDifferences
-#if NYI // Streams
         private void DisplayStreamDifferences(MessageWriter writer, Stream expected, Stream actual, int depth)
         {
             if (expected.Length == actual.Length)
@@ -111,7 +105,6 @@ namespace TCLite.Framework.Constraints
             else
                 writer.WriteMessageLine(StreamsDiffer_2, expected.Length, actual.Length);
         }
-#endif
         #endregion
 
         #region DisplayCollectionDifferences
@@ -126,10 +119,9 @@ namespace TCLite.Framework.Constraints
         {
             DisplayTypesAndSizes(writer, expected, actual, depth);
 
-#if NYI // FailurePoints
             if (failurePoints.Count > depth)
             {
-                NUnitEqualityComparer.FailurePoint failurePoint = failurePoints[depth];
+                FailurePoint failurePoint = failurePoints[depth];
 
                 DisplayFailurePoint(writer, expected, actual, failurePoint, depth);
 
@@ -141,16 +133,13 @@ namespace TCLite.Framework.Constraints
                         ++depth);
                 else if (failurePoint.ActualHasData)
                 {
-                    writer.Write("  Extra:    ");
-                    writer.WriteCollectionElements(actual.Skip(failurePoint.Position), 0, 3);
+                    writer.Write($"  Extra:    < {MsgUtils.FormatValue(failurePoint.ActualValue)}, ... >");
                 }
                 else
                 {
-                    writer.Write("  Missing:  ");
-                    writer.WriteCollectionElements(expected.Skip(failurePoint.Position), 0, 3);
+                    writer.Write($"  Missing:  < {MsgUtils.FormatValue(failurePoint.ExpectedValue)}, ... >");
                 }
             }
-#endif
         }
 
         /// <summary>
@@ -178,7 +167,6 @@ namespace TCLite.Framework.Constraints
                 writer.WriteMessageLine(indent, CollectionType_2, sExpected, sActual);
         }
 
-#if NYI // FailurePoints
         /// <summary>
         /// Displays a single line showing the point in the expected and actual
         /// arrays at which the comparison failed. If the arrays have different
@@ -189,7 +177,7 @@ namespace TCLite.Framework.Constraints
         /// <param name="actual">The actual array</param>
         /// <param name="failurePoint">Index of the failure point in the underlying collections</param>
         /// <param name="indent">The indentation level for the message line</param>
-        private void DisplayFailurePoint(MessageWriter writer, IEnumerable expected, IEnumerable actual, NUnitEqualityComparer.FailurePoint failurePoint, int indent)
+        private void DisplayFailurePoint(MessageWriter writer, IEnumerable expected, IEnumerable actual, FailurePoint failurePoint, int indent)
         {
             Array expectedArray = expected as Array;
             Array actualArray = actual as Array;
@@ -204,19 +192,18 @@ namespace TCLite.Framework.Constraints
                     if (expectedArray.GetLength(r) != actualArray.GetLength(r))
                         useOneIndex = false;
 
-            int[] expectedIndices = MsgUtils.GetArrayIndicesFromCollectionIndex(expected, failurePoint.Position);
+            int[] expectedIndices = MsgUtils.GetArrayIndicesFromCollectionIndex(expected, (int)failurePoint.Position);
             if (useOneIndex)
             {
                 writer.WriteMessageLine(indent, ValuesDiffer_1, MsgUtils.GetArrayIndicesAsString(expectedIndices));
             }
             else
             {
-                int[] actualIndices = MsgUtils.GetArrayIndicesFromCollectionIndex(actual, failurePoint.Position);
+                int[] actualIndices = MsgUtils.GetArrayIndicesFromCollectionIndex(actual, (int)failurePoint.Position);
                 writer.WriteMessageLine(indent, ValuesDiffer_2,
                     MsgUtils.GetArrayIndicesAsString(expectedIndices), MsgUtils.GetArrayIndicesAsString(actualIndices));
             }
         }
-#endif
 
         #endregion
 
@@ -233,10 +220,9 @@ namespace TCLite.Framework.Constraints
         {
             DisplayTypesAndSizes(writer, expected, actual, depth);
 
-#if NYI // FailurePoints
             if (failurePoints.Count > depth)
             {
-                NUnitEqualityComparer.FailurePoint failurePoint = failurePoints[depth];
+                FailurePoint failurePoint = failurePoints[depth];
 
                 DisplayFailurePoint(writer, expected, actual, failurePoint, depth);
 
@@ -255,7 +241,6 @@ namespace TCLite.Framework.Constraints
                     writer.Write($"  Missing:  < {MsgUtils.FormatValue(failurePoint.ExpectedValue)}, ... >");
                 }
             }
-#endif
         }
 
         #endregion

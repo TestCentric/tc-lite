@@ -14,7 +14,7 @@ namespace TCLite.Framework.Constraints
     class SomeItemsConstraintTests : ConstraintTestBase<IEnumerable<string>>
     {
         protected override Constraint Constraint => new SomeItemsConstraint(new EqualConstraint<string>("hello"));
-        protected override string ExpectedDescription => "some item hello";
+        protected override string ExpectedDescription => "some item equal to \"hello\"";
         protected override string ExpectedRepresentation => "<some <equal \"hello\">>";
 
         static IEnumerable<string>[] SuccessData => new IEnumerable<string>[]

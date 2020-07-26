@@ -34,11 +34,11 @@ namespace TCLite.Framework.Constraints
         {
             get
             {
-                var sb = new StringBuilder(ExpectedValue?.ToString() ?? "null");
+                var sb = new StringBuilder(MsgUtils.FormatValue(ExpectedValue));
 
                 if (_tolerance != null && !_tolerance.IsDefault)
                 {
-                    sb.Append($" +/- {_tolerance.Amount}");
+                    sb.Append($" +/- {MsgUtils.FormatValue(_tolerance.Amount)}");
                     if (_tolerance.Mode != ToleranceMode.Linear)
                         sb.Append($" {_tolerance.Mode}");
                 }

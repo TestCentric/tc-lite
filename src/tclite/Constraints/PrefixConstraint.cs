@@ -47,7 +47,7 @@ namespace TCLite.Framework.Constraints
         internal static string FormatDescription(string descriptionPrefix, IConstraint baseConstraint)
         {
             return string.Format(
-                baseConstraint.GetType().Name.StartsWith("EqualTo")
+                baseConstraint.GetType().Name.StartsWith("EqualConstraint")
                     ? "{0} equal to {1}" 
                     : "{0} {1}",
                 descriptionPrefix,
