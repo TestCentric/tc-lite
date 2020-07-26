@@ -24,16 +24,6 @@ namespace TCLite.Framework
         public static SomeItemsConstraint Contain(object expected) =>
             new SomeItemsConstraint(new EqualConstraint(expected));
 
-        /// <summary>
-        /// Returns a new <see cref="ContainsConstraint"/>. This constraint
-        /// will, in turn, make use of the appropriate second-level
-        /// constraint, depending on the type of the actual argument.
-        /// This overload is only used if the item sought is a string,
-        /// since any other type implies that we are looking for a
-        /// collection member.
-        /// </summary>
-        public static ContainsConstraint Contain(string expected) =>
-            new ContainsConstraint(expected);
 
         #endregion
 

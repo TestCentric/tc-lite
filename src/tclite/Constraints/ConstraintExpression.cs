@@ -269,41 +269,6 @@ namespace TCLite.Framework.Constraints
         }
 #endif
 
-#if NYI // Member
-        /// <summary>
-        /// Returns a new CollectionContainsConstraint checking for the
-        /// presence of a particular object in the collection.
-        /// </summary>
-        public CollectionContainsConstraint Member(object expected)
-        {
-            return (CollectionContainsConstraint)this.Append(new CollectionContainsConstraint(expected));
-        }
-
-        /// <summary>
-        /// Returns a new CollectionContainsConstraint checking for the
-        /// presence of a particular object in the collection.
-        /// </summary>
-        public CollectionContainsConstraint Contains(object expected)
-        {
-            return (CollectionContainsConstraint)this.Append(new CollectionContainsConstraint(expected));
-        }
-#endif
-
-#if NYI // Contains
-        /// <summary>
-        /// Returns a new ContainsConstraint. This constraint
-        /// will, in turn, make use of the appropriate second-level
-        /// constraint, depending on the type of the actual argument. 
-        /// This overload is only used if the item sought is a string,
-        /// since any other type implies that we are looking for a 
-        /// collection member.
-        /// </summary>
-        public ContainsConstraint Contains(string expected)
-        {
-            return (ContainsConstraint)this.Append(new ContainsConstraint(expected));
-        }
-#endif
-
 #if NYI // SamePath
         /// <summary>
         /// Returns a constraint that tests whether the path provided 
