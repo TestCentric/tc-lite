@@ -96,44 +96,6 @@ namespace TCLite.Framework
         }
 #endif
 
-#if NYI // String Constraints
-        /// <summary>
-        /// Returns a constraint that succeeds if the actual
-        /// value contains the substring supplied as an argument.
-        /// </summary>
-        public static SubstringConstraint StringContaining(string expected)
-        {
-            return new SubstringConstraint(expected);
-        }
-
-        /// <summary>
-        /// Returns a constraint that succeeds if the actual
-        /// value starts with the substring supplied as an argument.
-        /// </summary>
-        public static StartsWithConstraint StringStarting(string expected)
-        {
-            return new StartsWithConstraint(expected);
-        }
-
-        /// <summary>
-        /// Returns a constraint that succeeds if the actual
-        /// value ends with the substring supplied as an argument.
-        /// </summary>
-        public static EndsWithConstraint StringEnding(string expected)
-        {
-            return new EndsWithConstraint(expected);
-        }
-
-        /// <summary>
-        /// Returns a constraint that succeeds if the actual
-        /// value matches the regular expression supplied as an argument.
-        /// </summary>
-        public static RegexConstraint StringMatching(string pattern)
-        {
-            return new RegexConstraint(pattern);
-        }
-#endif
-
 #if NYI // SamePath
 
         /// <summary>

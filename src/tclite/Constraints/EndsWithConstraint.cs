@@ -34,4 +34,28 @@ namespace TCLite.Framework.Constraints
                 return actual != null && actual.EndsWith(ExpectedValue);
         }
     }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that succeeds if the actual
+        /// value ends with the substring supplied as an argument.
+        /// </summary>
+        public EndsWithConstraint EndsWith(string expected)
+        {
+            return (EndsWithConstraint)this.Append(new EndsWithConstraint(expected));
+        }
+    }
+
+    public partial class Does_Syntax
+    {
+        /// <summary>
+        /// Returns a constraint that succeeds if the actual
+        /// value ends with the substring supplied as an argument.
+        /// </summary>
+        public static EndsWithConstraint EndWith(string expected)
+        {
+            return new EndsWithConstraint(expected);
+        }
+    }
 }

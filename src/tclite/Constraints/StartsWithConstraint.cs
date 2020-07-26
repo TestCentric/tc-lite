@@ -34,4 +34,28 @@ namespace TCLite.Framework.Constraints
                 return actual != null && actual.StartsWith(ExpectedValue);
         }
     }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that succeeds if the actual
+        /// value starts with the substring supplied as an argument.
+        /// </summary>
+        public StartsWithConstraint StartsWith(string expected)
+        {
+            return (StartsWithConstraint)this.Append(new StartsWithConstraint(expected));
+        }
+    }
+
+    public partial class Does_Syntax
+    {
+        /// <summary>
+        /// Returns a constraint that succeeds if the actual
+        /// value starts with the substring supplied as an argument.
+        /// </summary>
+        public static StartsWithConstraint StartWith(string expected)
+        {
+            return new StartsWithConstraint(expected);
+        }
+    }
 }

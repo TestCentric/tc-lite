@@ -43,4 +43,46 @@ namespace TCLite.Framework.Constraints
                 actual != null && actual is string && _regex.Match(actual.ToString()).Success);
         }
     }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that succeeds if the actual
+        /// value matches the regular expression supplied as an argument.
+        /// </summary>
+        public RegexConstraint Matches(string pattern, RegexOptions options=RegexOptions.None)
+        {
+            return (RegexConstraint)this.Append(new RegexConstraint(pattern, options));
+        }
+
+        /// <summary>
+        /// Returns a constraint that succeeds if the actual
+        /// value matches the regular expression supplied as an argument.
+        /// </summary>
+        public RegexConstraint Matches(Regex regex)
+        {
+            return (RegexConstraint)this.Append(new RegexConstraint(regex));
+        }
+    }
+
+    public partial class Does_Syntax
+    {
+        /// <summary>
+        /// Returns a constraint that succeeds if the actual
+        /// value matches the regular expression supplied as an argument.
+        /// </summary>
+        public static RegexConstraint Match(string pattern, RegexOptions options=RegexOptions.None)
+        {
+            return new RegexConstraint(pattern);
+        }
+
+        /// <summary>
+        /// Returns a constraint that succeeds if the actual
+        /// value matches the regular expression supplied as an argument.
+        /// </summary>
+        public static RegexConstraint Match(Regex regex)
+        {
+            return new RegexConstraint(regex);
+        }
+    }
 }

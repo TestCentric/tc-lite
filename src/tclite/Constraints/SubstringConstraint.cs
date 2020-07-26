@@ -7,21 +7,6 @@ using System;
 
 namespace TCLite.Framework.Constraints
 {
-    public partial class Contains_Syntax
-    {
-        /// <summary>
-        /// Returns a constraint that succeeds if the actual
-        /// value contains the substring supplied as an argument.
-        /// </summary>
-        public static SubstringConstraint Substring(string expected)
-        {
-            return new SubstringConstraint(expected); ;
-        }
-    }
-}
-
-namespace TCLite.Framework.Constraints
-{
     /// <summary>
     /// SubstringConstraint can test whether a string contains
     /// the expected substring.
@@ -76,5 +61,46 @@ namespace TCLite.Framework.Constraints
 
             return this;
         }
+    }
+
+    public partial class ConstraintExpression
+    {
+        /// <summary>
+        /// Returns a constraint that succeeds if the actual
+        /// value contains the substring supplied as an argument.
+        /// </summary>
+        public SubstringConstraint ContainsSubstring(string expected)
+        {
+            return (SubstringConstraint)this.Append(new SubstringConstraint(expected));
+        }
+    }
+
+    public partial class Has_Syntax
+    {
+        /// <summary>
+        /// Returns a constraint that succeeds if the actual
+        /// value contains the substring supplied as an argument.
+        /// </summary>
+        public static SubstringConstraint Substring(string expected)
+        {
+            return new SubstringConstraint(expected);
+        }
+    }
+
+    public partial class Contains_Syntax
+    {
+        /// <summary>
+        /// Returns a constraint that succeeds if the actual
+        /// value contains the substring supplied as an argument.
+        /// </summary>
+        public static SubstringConstraint Substring(string expected)
+        {
+            return new SubstringConstraint(expected);
+        }
+    }
+
+    public partial class Does_Syntax
+    {
+
     }
 }

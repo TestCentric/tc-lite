@@ -73,4 +73,16 @@ namespace TCLite.Framework.Constraints
             get { return new ConstraintExpression().Not; }
         }
     }
+
+    public partial class Does_Syntax
+    {
+        /// <summary>
+        /// Returns a ConstraintExpression that negates any
+        /// following constraint.
+        /// </summary>
+        public static ConstraintExpression Not
+        {
+            get { return new ConstraintExpression().Not; }
+        }
+    }
 }
