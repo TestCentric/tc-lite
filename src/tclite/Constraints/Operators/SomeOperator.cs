@@ -33,6 +33,16 @@ namespace TCLite.Framework.Constraints
         {
             get { return this.Append(new SomeOperator()); }
         }
+
+        /// <summary>
+        /// Returns a ConstraintExpression, which will apply
+        /// the following constraint to all members of a collection,
+        /// succeeding if at least one of them succeeds.
+        /// </summary>
+        public SomeItemsConstraint Contains<T>(T item)
+        {
+            return (SomeItemsConstraint)Append(new SomeItemsConstraint(new EqualConstraint<T>(item)));
+        }
     }
 
     public partial class Contains_Syntax

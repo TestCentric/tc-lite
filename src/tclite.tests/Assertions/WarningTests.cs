@@ -600,29 +600,6 @@ namespace TCLite.Framework.Assertions
 #endif
         #endregion
 
-#if NYI // Warnings in SetUp or TearDown
-        [TestCase(typeof(WarningInSetUpPasses), nameof(WarningInSetUpPasses.WarningPassesInTest), 2, 0)]
-        [TestCase(typeof(WarningInSetUpPasses), nameof(WarningInSetUpPasses.WarningFailsInTest), 2, 1)]
-        [TestCase(typeof(WarningInSetUpPasses), nameof(WarningInSetUpPasses.ThreeWarningsFailInTest), 4, 3)]
-        [TestCase(typeof(WarningInSetUpFails), nameof(WarningInSetUpFails.WarningPassesInTest), 2, 1)]
-        [TestCase(typeof(WarningInSetUpFails), nameof(WarningInSetUpFails.WarningFailsInTest), 2, 2)]
-        [TestCase(typeof(WarningInSetUpFails), nameof(WarningInSetUpFails.ThreeWarningsFailInTest), 4, 4)]
-        [TestCase(typeof(WarningInTearDownPasses), nameof(WarningInTearDownPasses.WarningPassesInTest), 2, 0)]
-        [TestCase(typeof(WarningInTearDownPasses), nameof(WarningInTearDownPasses.WarningFailsInTest), 2, 1)]
-        [TestCase(typeof(WarningInTearDownPasses), nameof(WarningInTearDownPasses.ThreeWarningsFailInTest), 4, 3)]
-        [TestCase(typeof(WarningInTearDownFails), nameof(WarningInTearDownFails.WarningPassesInTest), 2, 1)]
-        [TestCase(typeof(WarningInTearDownFails), nameof(WarningInTearDownFails.WarningFailsInTest), 2, 2)]
-        [TestCase(typeof(WarningInTearDownFails), nameof(WarningInTearDownFails.ThreeWarningsFailInTest), 4, 4)]
-        public void WarningUsedInSetUpOrTearDown(Type fixtureType, string methodName, int expectedAsserts, int expectedWarnings)
-        {
-            var result = TestBuilder.RunTestCase(fixtureType, methodName);
-
-            Assert.That(result.ResultState, Is.EqualTo(expectedWarnings == 0 ? ResultState.Success : ResultState.Warning));
-            Assert.That(result.AssertCount, Is.EqualTo(expectedAsserts), "Incorrect AssertCount");
-            Assert.That(result.AssertionResults.Count, Is.EqualTo(expectedWarnings), $"There should be {expectedWarnings} AssertionResults");
-        }
-#endif
-
         [TestCase]
         public void PassingAssertion_DoesNotCallExceptionStringFunc()
         {

@@ -54,4 +54,9 @@ namespace TCLite.Framework.Constraints
             return new ConstraintResult(this, actual, ConstraintStatus.Failure);
         }
     }
+
+    public partial class ConstraintExpression
+    {
+        
+    }
 }

@@ -190,8 +190,12 @@ namespace TCLite.Framework.Constraints
                 return expected.Equals(actual);
             }
 
-            if (tolerance.IsDefault && GlobalSettings.DefaultFloatingPointTolerance > 0.0d)
-                tolerance = new Tolerance(GlobalSettings.DefaultFloatingPointTolerance);
+            if (tolerance.IsDefault)
+            {
+                var defaultTolerance = Internal.TestExecutionContext.CurrentContext.DefaultFloatingPointTolerance;
+                if (defaultTolerance != null)
+                    tolerance = defaultTolerance;
+            }
 
             switch (tolerance.Mode)
             {
