@@ -15,11 +15,27 @@ namespace TCLite.Framework
         /// <param name="actual">The actual value</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        public static void AreEqual<T>(T expected, T actual, string message=null, params object[] args)
+        public static void AreEqual<T>(T expected, T actual, string message = null, params object[] args)
         {
             Assert.That(actual, Is.EqualTo(expected), message, args);
         }
 
+        /// <summary>
+        /// Verifies that two instances of a type are equal. If they are not, then an 
+        /// <see cref="AssertionException"/> is thrown.
+        /// </summary>
+        /// <remarks>
+        /// This overload is used when the compiler can't determine the proper types
+        /// for the generic overload.
+        /// </remarks>
+        /// <param name="expected">The expected value</param>
+        /// <param name="actual">The actual value</param>
+        /// <param name="message">The message to display in case of failure</param>
+        /// <param name="args">Array of objects to be used in formatting the message</param>
+        public static void AreEqual(object expected, object actual, string message = null, params object[] args)
+        {
+            Assert.That(actual, Is.EqualTo(expected), message, args);
+        }
 
         /// <summary>
         /// Verifies that two doubles are equal considering a delta. If the

@@ -18,6 +18,7 @@ namespace TCLite.Framework.Constraints
         {
             typeof(Double),
             typeof(Single),
+            typeof(Decimal),
             typeof(Int32),
             typeof(UInt32),
             typeof(Int64),
@@ -88,6 +89,7 @@ namespace TCLite.Framework.Constraints
                 if (value is System.UInt64) return true;
                 if (value is System.Int16) return true;
                 if (value is System.UInt16) return true;
+                if (value is System.Char) return true;
             }
             return false;
         }

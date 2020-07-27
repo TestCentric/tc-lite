@@ -109,6 +109,7 @@ namespace TCLite.Framework.Internal
             this.TestObject = other.TestObject;
 			this.WorkDirectory = other.WorkDirectory;
             this.Listener = other.Listener;
+            this.DefaultFloatingPointTolerance = other.DefaultFloatingPointTolerance;
             this.StopOnError = other.StopOnError;
             this.TestCaseTimeout = other.TestCaseTimeout;
 
