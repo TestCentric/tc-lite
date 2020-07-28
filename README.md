@@ -62,6 +62,7 @@ _TC-Lite_ uses attributes to identify tests, control various aspects of how they
   * `[Values]` allows explicitly including argument values.
   * `[Range]` allows specifying a numeric range of values.
   * `[Random]` allows for generating random values.
+  * `[ValueSource]` works like `[Values]`, but with a level of indirection similar to `[TestCaseSource]`.
 
 * The `[TestFixture]` attribute is required for generic or parameterized fixtures, for which it provides the constructor and/or Type arguments. It is optional for non-generic, non-parameterized fixtures, which are recognized simply by the fact that they contain tests.
 
