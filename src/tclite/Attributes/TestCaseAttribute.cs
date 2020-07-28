@@ -169,7 +169,7 @@ namespace TCLite.Framework
         /// <returns></returns>
         public IEnumerable<ITestCaseData> GetTestCasesFor(MethodInfo method)
         {
-            ParameterSet parms;
+            TestCaseParameters parms;
 
             try
             {
@@ -177,7 +177,7 @@ namespace TCLite.Framework
                 int argsNeeded = parameters.Length;
                 int argsProvided = Arguments.Length;
 
-                parms = new ParameterSet(this);
+                parms = new TestCaseParameters(this);
 
                 // Special handling for params arguments
                 if (argsNeeded > 0 && argsProvided >= argsNeeded - 1)
@@ -234,7 +234,7 @@ namespace TCLite.Framework
             }
             catch (Exception ex)
             {
-                parms = new ParameterSet(ex);
+                parms = new TestCaseParameters(ex);
             }
             
             return new ITestCaseData[] { parms };

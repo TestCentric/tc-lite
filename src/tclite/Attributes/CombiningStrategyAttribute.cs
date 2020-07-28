@@ -63,7 +63,7 @@ namespace TCLite.Framework
                 }
                 catch (Exception ex)
                 {
-                    var parms = new ParameterSet(ex);
+                    var parms = new TestCaseParameters(ex);
                     data.Add(parms);
                 }
             }

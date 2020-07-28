@@ -87,9 +87,9 @@ namespace TCLite.Framework.Builders
             foreach (ITestCaseSource source in sources)
                 foreach (ITestCaseData testCase in source.GetTestCasesFor(method))
                 {
-                    var parameterSet = testCase as ParameterSet;
+                    var parameterSet = testCase as TestCaseParameters;
                     if (parameterSet == null)
-                        parameterSet = new ParameterSet(testCase);
+                        parameterSet = new TestCaseParameters(testCase);
 
                     testCases.Add(BuildTestMethod(method, parentSuite, parameterSet));
                 }
@@ -115,7 +115,7 @@ namespace TCLite.Framework.Builders
         /// <param name="parentSuite">The suite or fixture to which the new test will be added</param>
         /// <param name="parameterSet">The ParameterSet to be used, or null</param>
         /// <returns></returns>
-        private TestMethod BuildTestMethod(MethodInfo method, ITest parentSuite, ParameterSet parameterSet)
+        private TestMethod BuildTestMethod(MethodInfo method, ITest parentSuite, TestCaseParameters parameterSet)
         {
             TestMethod testMethod = new TestMethod(method, parentSuite);
 
@@ -188,7 +188,7 @@ namespace TCLite.Framework.Builders
         /// is found to be non-runnable, it will be modified.</param>
         /// <param name="parameterSet">Parameters to be used for this test, or null</param>
         /// <returns>True if the method signature is valid, false if not</returns>
-        private static bool CheckTestMethodSignature(TestMethod testMethod, ParameterSet parameterSet)
+        private static bool CheckTestMethodSignature(TestMethod testMethod, TestCaseParameters parameterSet)
 		{
             if (testMethod.Method.IsAbstract)
             {

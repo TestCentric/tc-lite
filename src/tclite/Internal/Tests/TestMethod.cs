@@ -55,7 +55,7 @@ namespace TCLite.Framework.Internal
         /// <summary>
         /// The ParameterSet used to create this test method
         /// </summary>
-        internal ParameterSet TestCaseParameters { get; set; }
+        internal TestCaseParameters TestCaseParameters { get; set; }
 
         /// <summary>
         /// Gets a list of custom decorators for this test.

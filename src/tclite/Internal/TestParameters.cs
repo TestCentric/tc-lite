@@ -9,36 +9,42 @@ using TCLite.Framework.Interfaces;
 namespace TCLite.Framework.Internal
 {
     /// <summary>
-    /// ParameterSet encapsulates method arguments and
+    /// TestCaseParameters encapsulates method arguments and
     /// other selected parameters needed for constructing
     /// a parameterized test case.
     /// </summary>
-    public class ParameterSet : ITestCaseData, IApplyToTest
+    public class TestParameters : ITestData, IApplyToTest
     {
-        private object[] _arguments;
-        private object _expectedResult;
-
         /// <summary>
         /// Construct an empty parameter set, which
         /// defaults to being Runnable.
         /// </summary>
-        public ParameterSet()
+        public TestParameters() : this(new object[0]) { }
+
+        /// <summary>
+        /// Construct a parameter set with a list of arguments
+        /// </summary>
+        /// <param name="args"></param>
+        public TestParameters(object[] args)
         {
+            OriginalArguments = args;
+
+            // Copy args in case they are changed
+            var numargs = OriginalArguments.Length;
+            Arguments = new object[numargs];
+            if (numargs > 0)
+                Array.Copy(OriginalArguments, Arguments, numargs);
         }
 
         /// <summary>
-        /// Construct a ParameterSet from an object implementing ITestCaseData
+        /// Construct from an object implementing ITestCaseData
         /// </summary>
-        /// <param name="data"></param>
-        public ParameterSet(ITestCaseData data)
+        public TestParameters(ITestData data)
+            : this(data.Arguments)
         {
-            this.TestName = data.TestName;
-            this.RunState = data.RunState;
-            this.Arguments = data.Arguments;
-            
-			if (data.HasExpectedResult)
-                this.ExpectedResult = data.ExpectedResult;
-			
+            TestName = data.TestName;
+            RunState = data.RunState;
+
             foreach (string key in data.Properties.Keys)
                 this.Properties[key] = data.Properties[key];
         }
@@ -47,7 +53,7 @@ namespace TCLite.Framework.Internal
         /// Construct a non-runnable ParameterSet, specifying
         /// the provider exception that made it invalid.
         /// </summary>
-        public ParameterSet(Exception exception)
+        public TestParameters(Exception exception)
         {
             this.RunState = RunState.NotRunnable;
             this.Properties.Set(PropertyNames.SkipReason, ExceptionHelper.BuildMessage(exception));
@@ -63,42 +69,13 @@ namespace TCLite.Framework.Internal
         /// The arguments to be used in running the test,
         /// which must match the method signature.
         /// </summary>
-        public object[] Arguments
-        {
-            get { return _arguments; }
-            set 
-            { 
-                _arguments = value;
-
-                if (OriginalArguments == null)
-                    OriginalArguments = value;
-            }
-        }
+        public object[] Arguments { get; internal set; }
 
         /// <summary>
         /// The original arguments provided by the user,
         /// used for display purposes.
         /// </summary>
         public object[] OriginalArguments { get; private set; }
-
-        /// <summary>
-        /// The expected result of the test, which
-        /// must match the method return type.
-        /// </summary>
-        public object ExpectedResult
-        {
-            get { return _expectedResult; }
-            set
-            {
-                _expectedResult = value;
-                HasExpectedResult = true;
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether an expected result was specified.
-        /// </summary>
-        public bool HasExpectedResult { get; private set; }
 
         /// <summary>
         /// A name to be used for this test case in lieu

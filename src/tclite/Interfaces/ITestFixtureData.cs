@@ -4,25 +4,19 @@
 // ***********************************************************************
 
 using System;
-using System.Collections;
 
 namespace TCLite.Framework.Interfaces
 {
     /// <summary>
     /// The ITestCaseData interface is implemented by a class
-    /// that is able to return complete testcases for use by
-    /// a parameterized test method.
+    /// that is able to return the data required to create an
+    /// instance of a parameterized test fixture.
     /// </summary>
-    public interface ITestCaseData : ITestData
+    public interface ITestFixtureData : ITestData
     {
         /// <summary>
-        /// Gets the expected result of the test case
+        /// Get the TypeArgs if separately set
         /// </summary>
-        object ExpectedResult { get; }
-
-        /// <summary>
-        /// Returns true if an expected result has been set
-        /// </summary>
-        bool HasExpectedResult { get; }
+        Type[] TypeArgs { get;  }
     }
 }

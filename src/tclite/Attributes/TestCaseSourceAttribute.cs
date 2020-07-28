@@ -82,11 +82,11 @@ namespace TCLite.Framework
 
                 foreach (object item in source)
                 {
-                    ParameterSet parms = new ParameterSet();
+                    TestCaseParameters parms = new TestCaseParameters();
                     ITestCaseData testCaseData = item as ITestCaseData;
 					
 					if (testCaseData != null)
-						parms = new ParameterSet(testCaseData);
+						parms = new TestCaseParameters(testCaseData);
                     else if (item is object[])
                     {
                         object[] array = item as object[];
@@ -170,12 +170,12 @@ namespace TCLite.Framework
 
         private static IEnumerable SourceMustBeStaticError()
         {
-            var parms = new ParameterSet();
+            var parms = new TestCaseParameters();
             parms.RunState = RunState.NotRunnable;
             parms.Properties.Set(
                 PropertyNames.SkipReason,
                 "The sourceName specified on a TestCaseSourceAttribute must refer to a static field, property or method.");
-            return new ParameterSet[] { parms };
+            return new TestCaseParameters[] { parms };
         }
 
         #endregion
