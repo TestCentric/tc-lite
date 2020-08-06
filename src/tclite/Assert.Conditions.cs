@@ -62,18 +62,6 @@ namespace TCLite.Framework
         }
 
         /// <summary>
-        /// Verifies that the double that is passed in is an <c>NaN</c> value. Returns without throwing an
-        /// exception when inside a multiple assert block.
-        /// </summary>
-        /// <param name="aDouble">The value that is to be tested</param>
-        /// <param name="message">The message to display in case of failure</param>
-        /// <param name="args">Array of objects to be used in formatting the message</param>
-        public static void IsNaN(double aDouble, string message=null, params object[] args)
-        {
-            Assert.That(aDouble, Is.NaN, message, args);
-        }
-
-        /// <summary>
         /// Assert that a string is empty. Returns without throwing an exception when inside a multiple assert block.
         /// </summary>
         /// <param name="aString">The string to be tested</param>

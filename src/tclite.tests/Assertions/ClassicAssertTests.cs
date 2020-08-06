@@ -68,12 +68,6 @@ namespace TCLite.Framework.Assertions
 		}
 
 		[TestCase]
-		public void IsNaN()
-		{
-			Assert.IsNaN(double.NaN);
-		}
-
-		[TestCase]
 		public void IsEmpty()
 		{
 			Assert.IsEmpty( "", "Failed on empty String" );

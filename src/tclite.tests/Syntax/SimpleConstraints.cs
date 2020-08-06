@@ -66,14 +66,4 @@ namespace TCLite.Framework.Syntax
             BuilderSyntax = Builder().Zero;
         }
     }
-
-    public class NaNTest : SyntaxTest
-    {
-        public NaNTest()
-        {
-            ParseTree = "<nan>";
-            StaticSyntax = Is.NaN;
-            BuilderSyntax = Builder().NaN;
-        }
-    }
 }

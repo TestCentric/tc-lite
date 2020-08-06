@@ -94,6 +94,7 @@ As with _NUnitLite_ and _NUnit_, the main `Assert` verb is `Assert.That`, which 
 * Assert.Throws, Assert.DoesNotThrow, Assert.Catch
 
 ### Constraints
+
 The _NUnit_ Constraint syntax has been re-implemented based on Generic methods to avoid boxing and provide greater type safety. Improvements are ongoing work is ongoing in this area. The following table lists constraints, which are currently supported. New constraints are added on an ongoing basis.
 
 The "Expression Syntax" column shows how the constraint is created while parsing a constraint expression. For constraints that may begin an expression, the "Initial Syntax" column shows the syntax used to initialize the expression. Note that some constraints have been developed and tested but do not yet have syntax elements defined.
