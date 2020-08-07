@@ -22,11 +22,6 @@ namespace TCLite.Framework.Interfaces
 		Runnable,
 
         /// <summary>
-        /// The test can only be run explicitly.
-        /// </summary>
-		Explicit,
-
-        /// <summary>
         /// The test has been skipped. This value may
         /// appear on a Test when certain attributes
         /// are used to skip the test.

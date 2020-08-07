@@ -54,7 +54,6 @@ namespace TCLite.Framework.WorkItems
             {
                 default:
                 case RunState.Runnable:
-                case RunState.Explicit:
                     // Assume success, since the result will be inconclusive
                     // if there is no setup method to run or if the
                     // context initialization fails.

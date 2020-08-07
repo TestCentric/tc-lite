@@ -107,73 +107,28 @@ namespace TCLite.Framework.Attributes
             Assert.That(_testDummy.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("UNCHANGED"));
         }
 
-        [TestCase]
-        public void IgnoreAttributeWithExplicitIgnoresTest()
-        {
-            new IgnoreAttribute("BECAUSE").ApplyToTest(_testDummy);
-            new ExplicitAttribute().ApplyToTest(_testDummy);
-            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.Ignored));
-        }
-
         #endregion
 
-        #region ExplicitAttribute
+        #region CombinatorialAttribute
 
         [TestCase]
-        public void ExplicitAttributeMakesTestExplicit()
+        public void CombinatorialAttributeSetsJoinType()
         {
-            new ExplicitAttribute().ApplyToTest(_testDummy);
-            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.Explicit));
+            new CombinatorialAttribute().ApplyToTest(_testDummy);
+            Assert.That(_testDummy.Properties.Get(PropertyNames.JoinType), Is.EqualTo("Combinatorial"));
         }
 
         [TestCase]
-        public void ExplicitAttributeSetsIgnoreReason()
-        {
-            new ExplicitAttribute("BECAUSE").ApplyToTest(_testDummy);
-            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.Explicit));
-            Assert.That(_testDummy.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("BECAUSE"));
-        }
-
-        [TestCase]
-        public void ExplicitAttributeDoesNotAffectNonRunnableTest()
+        public void CombinatorialAttributeSetsJoinTypeOnNonRunnableTest()
         {
             _testDummy.RunState = RunState.NotRunnable;
-            _testDummy.Properties.Set(PropertyNames.SkipReason, "UNCHANGED");
-            new ExplicitAttribute("BECAUSE").ApplyToTest(_testDummy);
-            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.NotRunnable));
-            Assert.That(_testDummy.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("UNCHANGED"));
-        }
-
-        [TestCase]
-        public void ExplicitAttributeWithIgnoreIgnoresTest()
-        {
-            new ExplicitAttribute().ApplyToTest(_testDummy);
-            new IgnoreAttribute("BECAUSE").ApplyToTest(_testDummy);
-            Assert.That(_testDummy.RunState, Is.EqualTo(RunState.Ignored));
+            new CombinatorialAttribute().ApplyToTest(_testDummy);
+            Assert.That(_testDummy.Properties.Get(PropertyNames.JoinType), Is.EqualTo("Combinatorial"));
         }
 
         #endregion
 
 #if NYI
-        #region CombinatorialAttribute
-
-        [Test]
-        public void CombinatorialAttributeSetsJoinType()
-        {
-            new CombinatorialAttribute().ApplyToTest(test);
-            Assert.That(test.Properties.Get(PropertyNames.JoinType), Is.EqualTo("Combinatorial"));
-        }
-
-        [Test]
-        public void CombinatorialAttributeSetsJoinTypeOnNonRunnableTest()
-        {
-            test.RunState = RunState.NotRunnable;
-            new CombinatorialAttribute().ApplyToTest(test);
-            Assert.That(test.Properties.Get(PropertyNames.JoinType), Is.EqualTo("Combinatorial"));
-        }
-
-        #endregion
-
         #region CultureAttribute
 
         [Test]

@@ -100,18 +100,6 @@ namespace TCLite.Framework
 		}
 		
 		/// <summary>
-		/// Gets or sets a value indicating whether this <see cref="TestCaseAttribute"/> is explicit.
-		/// </summary>
-		/// <value>
-		/// <c>true</c> if explicit; otherwise, <c>false</c>.
-		/// </value>
-		public bool Explicit 
-		{ 
-			get { return RunState == RunState.Explicit; }
-			set { RunState = value ? RunState.Explicit : RunState.Runnable; }
-		}
-
-		/// <summary>
 		/// Gets or sets the reason for not running the test.
 		/// </summary>
 		/// <value>The reason.</value>

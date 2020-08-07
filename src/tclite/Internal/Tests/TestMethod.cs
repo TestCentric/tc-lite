@@ -114,7 +114,7 @@ namespace TCLite.Framework.Internal
         /// <returns></returns>
         public virtual TestCommand MakeTestCommand()
         {
-            if (RunState != RunState.Runnable && RunState != RunState.Explicit)
+            if (RunState != RunState.Runnable)
                 return new SkipCommand(this);
 
             TestCommand command = new TestMethodCommand(this);

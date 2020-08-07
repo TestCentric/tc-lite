@@ -155,24 +155,6 @@ namespace TCLite.Framework
             return this;
         }
 		
-		/// <summary>
-		/// Marks the test case as explicit.
-		/// </summary>
-		public TestCaseData Explicit()	{
-			this.RunState = RunState.Explicit;
-			return this;
-		}
-
-		/// <summary>
-		/// Marks the test case as explicit, specifying the reason.
-		/// </summary>
-		public TestCaseData Explicit(string reason)
-		{
-			this.RunState = RunState.Explicit;
-            this.Properties.Set(PropertyNames.SkipReason, reason);
-			return this;
-		}
-
         /// <summary>
         /// Ignores this TestCase, specifying the reason.
         /// </summary>
