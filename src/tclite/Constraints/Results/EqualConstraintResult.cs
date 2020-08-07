@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// The EqualConstraintResult class is tailored for formatting

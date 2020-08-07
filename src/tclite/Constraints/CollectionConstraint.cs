@@ -6,7 +6,7 @@
 using System;
 using System.Collections;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// CollectionConstraint is the abstract base class for

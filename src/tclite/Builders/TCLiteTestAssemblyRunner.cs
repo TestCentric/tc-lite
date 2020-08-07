@@ -6,11 +6,11 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
-using TCLite.Framework.WorkItems;
+using TCLite.Interfaces;
+using TCLite.Internal;
+using TCLite.WorkItems;
 
-namespace TCLite.Framework.Builders
+namespace TCLite.Builders
 {
     /// <summary>
     /// Default implementation of ITestAssemblyRunner

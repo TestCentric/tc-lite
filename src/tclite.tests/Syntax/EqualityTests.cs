@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TCLite.Framework.Syntax
+namespace TCLite.Syntax
 {
     public class EqualToTest : SyntaxTest
     {

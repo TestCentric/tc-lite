@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// ExactTypeConstraint is used to test that an object

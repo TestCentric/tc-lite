@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
-using TCLite.Framework.Interfaces;
+using TCLite.Interfaces;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// A PropertyBag represents a collection of name value pairs

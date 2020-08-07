@@ -6,11 +6,11 @@
 using System;
 using System.Collections;
 using System.Collections.Specialized;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
 // TODO: Remove conditional code
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// The TestCaseData class represents a set of arguments

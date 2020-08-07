@@ -6,7 +6,7 @@
 using System;
 using System.IO;
 
-namespace TCLite.Framework.Constraints.Comparers
+namespace TCLite.Constraints.Comparers
 {
     /// <summary>
     /// Comparator for two <see cref="Stream"/>s.

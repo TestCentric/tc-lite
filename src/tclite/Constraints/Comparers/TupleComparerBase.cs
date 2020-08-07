@@ -6,7 +6,7 @@
 using System;
 using System.Reflection;
 
-namespace TCLite.Framework.Constraints.Comparers
+namespace TCLite.Constraints.Comparers
 {
     /// <summary>
     /// Base class for comparators for tuples (both regular Tuples and ValueTuples).

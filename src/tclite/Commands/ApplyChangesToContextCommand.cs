@@ -3,10 +3,10 @@
 // Licensed under the MIT License. See LICENSE.txt in root directory.
 // ***********************************************************************
 
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Commands
+namespace TCLite.Commands
 {
     /// <summary>
     /// ContextSettingsCommand applies specified changes to the

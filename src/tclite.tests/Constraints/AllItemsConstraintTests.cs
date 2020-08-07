@@ -4,10 +4,10 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 using TCLite.TestUtilities.Comparers;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     [TestFixture]
     public class AllItemsConstraintTests

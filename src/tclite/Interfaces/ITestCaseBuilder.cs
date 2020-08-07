@@ -5,9 +5,9 @@
 
 using System.Collections.Generic;
 using System.Reflection;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
 	/// <summary>
 	/// The ITestCaseBuilder interface is exposed by a class that knows how to

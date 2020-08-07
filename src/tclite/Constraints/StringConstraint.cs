@@ -3,9 +3,9 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// StringConstraint is the abstract base for constraints

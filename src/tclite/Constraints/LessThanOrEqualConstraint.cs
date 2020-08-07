@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// Tests whether a value is less than or equal to the value supplied to its constructor

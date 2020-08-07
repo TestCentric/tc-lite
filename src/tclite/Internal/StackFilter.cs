@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// StackFilter class is used to remove internal TCLite
@@ -16,7 +16,7 @@ namespace TCLite.Framework.Internal
     /// </summary>
     public class StackFilter
     {
-        private const string DEFAULT_TOP_OF_STACK_PATTERN = @" TCLite\.Framework\.(Assert|Assume|Warn)\.";
+        private const string DEFAULT_TOP_OF_STACK_PATTERN = @" TCLite\.(Assert|Assume|Warn)\.";
         private const string DEFAULT_BOTTOM_OF_STACK_PATTERN = @" System\.(Reflection|RuntimeMethodHandle|Threading\.ExecutionContext)\.";
 
         /// <summary>

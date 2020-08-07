@@ -26,7 +26,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
 	/// <summary>
 	/// Helper methods for inspecting a type by reflection. 

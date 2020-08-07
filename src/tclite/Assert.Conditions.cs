@@ -5,7 +5,7 @@
 
 using System.Collections;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     using Constraints;
 

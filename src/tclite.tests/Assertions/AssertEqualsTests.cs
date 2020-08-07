@@ -7,7 +7,7 @@ using System;
 using System.Globalization;
 using TCLite.TestUtilities;
 
-namespace TCLite.Framework.Assertions
+namespace TCLite.Assertions
 {
 	[TestFixture]
     public class AssertEqualsTests

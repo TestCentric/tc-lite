@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// The Numerics class contains common operations on numeric values.

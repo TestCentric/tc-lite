@@ -5,9 +5,9 @@
 
 using System;
 using System.Collections;
-using TCLite.Framework.Constraints;
+using TCLite.Constraints;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Helper class with properties and methods that supply

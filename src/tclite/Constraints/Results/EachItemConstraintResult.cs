@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// Provides a <see cref="ConstraintResult"/> for the constraints 

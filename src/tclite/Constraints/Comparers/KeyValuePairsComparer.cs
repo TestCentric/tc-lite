@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace TCLite.Framework.Constraints.Comparers
+namespace TCLite.Constraints.Comparers
 {
     /// <summary>
     /// Comparator for two <see cref="KeyValuePair{TKey, TValue}"/>s.

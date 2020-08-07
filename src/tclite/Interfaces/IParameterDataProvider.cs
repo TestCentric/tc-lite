@@ -6,7 +6,7 @@
 using System.Collections;
 using System.Reflection;
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
     /// <summary>
     /// Provides data for a single test parameter.

@@ -6,8 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TCLite.Framework;
-using TCLite.Framework.Constraints;
+using TCLite.Constraints;
 
 namespace TCLite.TestUtilities
 {

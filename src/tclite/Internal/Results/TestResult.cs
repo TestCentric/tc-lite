@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using TCLite.Framework.Interfaces;
+using TCLite.Interfaces;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// The TestResult class represents the result of a test.

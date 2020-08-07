@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE.txt in root directory.
 // ***********************************************************************
 
-namespace TCLite.Framework.Constraints.Tests
+namespace TCLite.Constraints.Tests
 {
     [TestFixture]
     public class OrConstraintTests : ConstraintTestBase<object>

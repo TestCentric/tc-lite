@@ -5,7 +5,7 @@
 
 using System.Collections;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// Delegate used to delay evaluation of the actual value

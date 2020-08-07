@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE.txt in root directory.
 // ***********************************************************************
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Helper class exposing properties and methods that form

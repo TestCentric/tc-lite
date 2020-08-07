@@ -4,7 +4,7 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Interfaces;
+using TCLite.Interfaces;
 
 namespace TCLite.Runners
 {

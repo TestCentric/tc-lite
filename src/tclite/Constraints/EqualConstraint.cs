@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// EqualConstraint is able to compare an actual value with the

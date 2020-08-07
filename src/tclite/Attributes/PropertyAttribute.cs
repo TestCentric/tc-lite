@@ -4,9 +4,9 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Interfaces;
+using TCLite.Interfaces;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Attaches information to a test assembly, fixture or method as a name/value pair.

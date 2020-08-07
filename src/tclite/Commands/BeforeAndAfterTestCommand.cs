@@ -3,9 +3,9 @@
 // Licensed under the MIT License. See LICENSE.txt in root directory.
 // ***********************************************************************
 
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Commands
+namespace TCLite.Commands
 {
     /// <summary>
     /// TestActionCommand handles a single ITestAction applied

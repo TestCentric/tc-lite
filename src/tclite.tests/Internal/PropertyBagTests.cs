@@ -6,7 +6,7 @@
 using System;
 using System.Xml;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     [TestFixture]
     public class PropertyBagTests

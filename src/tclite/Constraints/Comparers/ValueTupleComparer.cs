@@ -5,9 +5,9 @@
 
 using System;
 using System.Reflection;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints.Comparers
+namespace TCLite.Constraints.Comparers
 {
     /// <summary>
     /// Comparator for two <c>ValueTuple</c>s.

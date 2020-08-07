@@ -5,10 +5,10 @@
 
 using System.Collections;
 using System.Xml;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Filters
+namespace TCLite.Filters
 {
     /// <summary>
     /// PropertyFilter is able to select or exclude tests

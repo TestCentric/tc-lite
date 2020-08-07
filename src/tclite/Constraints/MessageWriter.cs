@@ -6,7 +6,7 @@
 using System.IO;
 using System.Collections;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// MessageWriter is the abstract base for classes that write

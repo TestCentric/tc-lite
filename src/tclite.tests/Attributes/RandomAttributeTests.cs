@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TCLite.Framework.Attributes
+namespace TCLite.Attributes
 {
     [TestFixture]
     public class RandomAttributeTests

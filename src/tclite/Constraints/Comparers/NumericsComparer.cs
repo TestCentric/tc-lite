@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-namespace TCLite.Framework.Constraints.Comparers
+namespace TCLite.Constraints.Comparers
 {
     /// <summary>
     /// Comparator for two <see cref="Numerics"/>s.

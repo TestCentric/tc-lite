@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
     /// <summary>
     /// Immutable class that stores a property entry as a Name/Value pair.

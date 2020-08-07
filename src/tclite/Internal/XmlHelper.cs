@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Text;
 using System.Xml;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// XmlHelper provides static methods for basic XML operations.

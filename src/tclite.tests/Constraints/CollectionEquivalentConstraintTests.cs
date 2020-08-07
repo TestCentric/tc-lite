@@ -6,10 +6,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 using TCLite.TestUtilities.Collections;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     public class CollectionEquivalentConstraintTests
     {

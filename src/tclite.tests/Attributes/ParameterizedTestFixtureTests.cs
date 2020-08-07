@@ -7,11 +7,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TCLite.Framework.Internal;
-using TCLite.Framework.Builders;
+using TCLite.Internal;
+using TCLite.Builders;
 using TCLite.TestUtilities;
 
-namespace TCLite.Framework.Attributes
+namespace TCLite.Attributes
 {
     // [TestFixture(45, 45, 90)]
     // [TestFixture(null, null, null)]

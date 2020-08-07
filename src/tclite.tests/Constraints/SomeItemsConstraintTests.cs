@@ -6,9 +6,9 @@
 using System;
 using System.Collections.Generic;
 
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     [TestFixture]
     class SomeItemsConstraintTests : ConstraintTestBase<IEnumerable<string>>

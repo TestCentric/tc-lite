@@ -4,10 +4,10 @@
 // ***********************************************************************
 
 using System.Xml;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Filters
+namespace TCLite.Filters
 {
 	/// <summary>
 	/// NotFilter negates the operation of another filter

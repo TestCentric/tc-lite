@@ -6,10 +6,10 @@
 using System;
 using System.Reflection;
 using System.Threading;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Commands
+namespace TCLite.Commands
 {
     /// <summary>
     /// TestMethodCommand is the lowest level concrete command
@@ -51,7 +51,7 @@ namespace TCLite.Framework.Commands
                 object result = RunTestMethod(context);
 
                 if (testMethod.HasExpectedResult)
-                    TCLite.Framework.Assert.AreEqual(testMethod.ExpectedResult, result);
+                    Assert.AreEqual(testMethod.ExpectedResult, result);
 
                 context.CurrentResult.SetResult(ResultState.Success);
             }

@@ -8,10 +8,10 @@ using System.IO;
 using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Constraints;
+using TCLite.Interfaces;
+using TCLite.Constraints;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
 	/// <summary>
 	/// Helper class used to save and restore certain static or

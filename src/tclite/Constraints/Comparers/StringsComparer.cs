@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Constraints.Comparers
+namespace TCLite.Constraints.Comparers
 {
     /// <summary>
     /// Comparator for two <see cref="String"/>s.

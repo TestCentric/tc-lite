@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
 
     public abstract class StringConstraintTestBase : ConstraintTestBase<string>

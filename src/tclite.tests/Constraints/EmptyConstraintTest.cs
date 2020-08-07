@@ -6,10 +6,10 @@
 using System;
 using System.Collections;
 using System.IO;
-using TCLite.Framework.Assertions;
+using TCLite.Assertions;
 using TCLite.TestUtilities;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     [TestFixture]
     public class EmptyConstraintTest : ConstraintTestBase<object>

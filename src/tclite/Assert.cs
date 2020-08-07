@@ -5,10 +5,10 @@
 
 using System;
 using System.ComponentModel;
-using TCLite.Framework.Constraints;
-using TCLite.Framework.Internal;
+using TCLite.Constraints;
+using TCLite.Internal;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Delegate used by tests that execute code and

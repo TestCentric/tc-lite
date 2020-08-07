@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
 	/// <summary>
 	/// TestFixture is a surrogate for a user test fixture class,

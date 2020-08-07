@@ -5,9 +5,9 @@
 
 using System.Text.RegularExpressions;
 using System.Xml;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Filters
+namespace TCLite.Filters
 {
     /// <summary>
     /// ValueMatchFilter selects tests based on some value, which

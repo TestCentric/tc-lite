@@ -6,7 +6,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary><see cref="CollectionTally"/> counts (tallies) the number of occurrences 
     /// of each object in one or more enumerations.</summary>

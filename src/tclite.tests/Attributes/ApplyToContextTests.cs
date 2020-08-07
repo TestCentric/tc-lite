@@ -4,11 +4,11 @@
 // ***********************************************************************
 
 using System.Globalization;
-using TCLite.Framework.Constraints;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Constraints;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Attributes
+namespace TCLite.Attributes
 {
     public class ApplyToContextTests
     {

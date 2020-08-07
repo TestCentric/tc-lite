@@ -7,9 +7,9 @@ using System;
 using System.Text;
 using System.Collections;
 using System.Globalization;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// Static methods used in creating messages

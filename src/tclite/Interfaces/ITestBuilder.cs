@@ -5,9 +5,9 @@
 
 using System.Collections.Generic;
 using System.Reflection;
-using TCLite.Framework.Internal; // TODO: We shouldn't reference this in the interface
+using TCLite.Internal; // TODO: We shouldn't reference this in the interface
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
     /// <summary>
     /// The ITestBuilder interface is exposed by a class that knows how to

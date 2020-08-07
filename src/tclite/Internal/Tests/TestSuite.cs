@@ -6,10 +6,10 @@
 using System;
 using System.Reflection;
 using System.Xml;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.WorkItems;
+using TCLite.Interfaces;
+using TCLite.WorkItems;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// TestSuite represents a composite test, which contains other tests.

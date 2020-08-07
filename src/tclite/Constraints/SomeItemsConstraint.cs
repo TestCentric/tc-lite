@@ -6,9 +6,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// SomeItemsConstraint applies another constraint to each

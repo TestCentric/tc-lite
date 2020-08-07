@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Commands
+namespace TCLite.Commands
 {
     /// <summary>
     /// ICommandWrapper is implemented by attributes and other

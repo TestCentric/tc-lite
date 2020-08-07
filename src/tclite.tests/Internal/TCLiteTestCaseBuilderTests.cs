@@ -1,11 +1,11 @@
 ﻿#if NYI // Async
 using System.Reflection;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Builders;
+using TCLite.Interfaces;
+using TCLite.Builders;
 using TCLite.TestData;
 using TCLite.TestUtilities;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
 	[TestFixture]
 	public class NUnitTestCaseBuilderTests

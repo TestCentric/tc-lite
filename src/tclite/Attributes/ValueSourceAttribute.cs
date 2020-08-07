@@ -6,10 +6,10 @@
 using System;
 using System.Collections;
 using System.Reflection;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Indicates the source used to provide data for one parameter of a test method.

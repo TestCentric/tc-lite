@@ -6,10 +6,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 using TCLite.TestUtilities;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     [TestFixture]
     public class EqualConstraintTests

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TCLite.TestUtilities;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     [TestFixture]
     public class UniqueItemsTests : ConstraintTestBase<IEnumerable>

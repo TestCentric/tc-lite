@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// The abstract base class for all custom attributes defined by TCLite.

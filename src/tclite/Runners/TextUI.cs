@@ -7,8 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
 namespace TCLite.Runners
 {

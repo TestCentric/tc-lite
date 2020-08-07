@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     [TestFixture]
     public class TypeHelperTests

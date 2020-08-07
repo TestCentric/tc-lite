@@ -6,7 +6,7 @@
 using System;
 using System.Threading;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// The ThreadUtility class encapsulates several static methods

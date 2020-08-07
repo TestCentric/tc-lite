@@ -2,7 +2,7 @@
 // Copyright (c) Charlie Poole and TestCentric contributors.// Licensed under the MIT License. See LICENSE.txt in root directory.
 // ***********************************************************************
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     class AndConstraintResult : ConstraintResult
     {

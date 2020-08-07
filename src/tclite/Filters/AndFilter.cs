@@ -3,10 +3,10 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Filters
+namespace TCLite.Filters
 {
 	/// <summary>
 	/// Combines multiple filters so that a test must pass all 

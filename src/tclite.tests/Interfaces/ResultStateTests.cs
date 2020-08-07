@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
     [TestFixture]
     public class ResultStateTests

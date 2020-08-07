@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
 	/// <summary>
 	/// Interface to be implemented by filters applied to tests.

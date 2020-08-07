@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
     /// <summary>
     /// A PropertyBag represents a collection of name/value pairs

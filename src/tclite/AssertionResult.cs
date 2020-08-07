@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// The AssertionResult class represents the result of a single assertion.

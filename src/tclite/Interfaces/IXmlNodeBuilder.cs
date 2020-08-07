@@ -6,13 +6,13 @@
 using System;
 using System.Xml;
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
     /// <summary>
     /// An object implementing IXmlNodeBuilder is able to build 
     /// an XmlResult representation of itself and any children.
     /// Note that the interface refers to the implementation
-    /// of XmlNode in the TCLite.Framework.Api namespace.
+    /// of XmlNode in the TCLite.Api namespace.
     /// </summary>
     public interface IXmlNodeBuilder
     {

@@ -6,7 +6,7 @@
 using System;
 using System.Collections;
 
-namespace TCLite.Framework.Constraints.Comparers
+namespace TCLite.Constraints.Comparers
 {
     /// <summary>
     /// Comparator for two <see cref="DictionaryEntry"/>s.

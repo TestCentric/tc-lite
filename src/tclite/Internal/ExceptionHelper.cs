@@ -7,7 +7,7 @@ using System;
 using System.Globalization;
 using System.Text;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// ExceptionHelper provides static methods for working with exceptions

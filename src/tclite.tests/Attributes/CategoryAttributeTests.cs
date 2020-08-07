@@ -5,9 +5,9 @@
 
 using System;
 using System.Collections;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Attributes
+namespace TCLite.Attributes
 {
     /// <summary>
     /// Summary description for CategoryAttributeTests.

@@ -5,10 +5,10 @@
 
 using System;
 using System.Xml;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Filters;
+using TCLite.Interfaces;
+using TCLite.Filters;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
 	/// <summary>
 	/// Interface to be implemented by filters applied to tests.

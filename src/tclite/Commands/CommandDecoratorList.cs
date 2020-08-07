@@ -5,9 +5,9 @@
 
 #if UNUSED
 using System;
-using TCLite.Framework.Interfaces;
+using TCLite.Interfaces;
 
-namespace TCLite.Framework.Commands
+namespace TCLite.Commands
 {
     /// <summary>
     /// CommandDecoratorList maintains a list of ICommandDecorators

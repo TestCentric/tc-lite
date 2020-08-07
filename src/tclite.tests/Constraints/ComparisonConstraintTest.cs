@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TCLite.TestUtilities;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     #region ComparisonConstraintTest
 

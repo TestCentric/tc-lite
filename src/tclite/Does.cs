@@ -3,9 +3,9 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using TCLite.Framework.Constraints;
+using TCLite.Constraints;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Helper class with properties and methods that supply

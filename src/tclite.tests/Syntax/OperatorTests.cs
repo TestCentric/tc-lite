@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Syntax
+namespace TCLite.Syntax
 {
     #region Not
     public class NotTest : SyntaxTest

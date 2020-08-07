@@ -6,7 +6,7 @@
 using System;
 using System.Collections;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// ConstraintExpression represents a compound constraint in the 

@@ -6,7 +6,7 @@
 using System;
 using System.Reflection;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     public sealed class ThrowsConstraintResult : ConstraintResult
     {

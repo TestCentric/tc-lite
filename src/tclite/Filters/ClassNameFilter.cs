@@ -3,9 +3,9 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using TCLite.Framework.Interfaces;
+using TCLite.Interfaces;
 
-namespace TCLite.Framework.Filters
+namespace TCLite.Filters
 {
     /// <summary>
     /// ClassName filter selects tests based on the class FullName

@@ -6,7 +6,7 @@
 using System;
 using System.Reflection;
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
     /// <summary>
     /// ITestCaseSource interface is implemented by Types that know how to 

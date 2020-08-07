@@ -6,7 +6,7 @@
 using System;
 using System.Collections;
 
-namespace TCLite.Framework.Syntax
+namespace TCLite.Syntax
 {
     public class PropertyExistsTest : SyntaxTest
     {

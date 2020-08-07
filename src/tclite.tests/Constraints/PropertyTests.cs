@@ -5,9 +5,9 @@
 
 using System;
 using System.Collections.Generic;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
 #if NYI
     public static class PropertyConstraintTests

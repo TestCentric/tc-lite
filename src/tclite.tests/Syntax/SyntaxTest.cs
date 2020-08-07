@@ -4,9 +4,9 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Constraints;
+using TCLite.Constraints;
 
-namespace TCLite.Framework.Syntax
+namespace TCLite.Syntax
 {
     public abstract class SyntaxTest
     {

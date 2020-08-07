@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
     /// <summary>
     /// The ITestAssemblyRunner interface is implemented by classes

@@ -5,10 +5,10 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Builders
+namespace TCLite.Builders
 {
     /// <summary>
     /// CombinatorialStrategy creates test cases by using all possible

@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     public class XmlHelperTests
     {

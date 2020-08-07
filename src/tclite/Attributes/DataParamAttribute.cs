@@ -8,7 +8,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// <para>

@@ -5,9 +5,9 @@
 
 using System;
 using System.Reflection;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// PropertyExistsConstraint tests that a named property

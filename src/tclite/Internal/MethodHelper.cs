@@ -7,7 +7,7 @@ using System;
 using System.Reflection;
 using System.Text;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// MethodHelper provides static methods for working with methods.

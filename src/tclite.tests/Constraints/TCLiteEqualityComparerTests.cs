@@ -11,7 +11,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using TCLite.TestUtilities;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     [TestFixture]
     public class EqualityComparerTests

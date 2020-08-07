@@ -6,9 +6,9 @@
 using System;
 using System.Collections;
 using System.Globalization;
-using TCLite.Framework.Constraints;
+using TCLite.Constraints;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
 	/// <summary>
 	/// TextMessageWriter writes constraint descriptions and messages

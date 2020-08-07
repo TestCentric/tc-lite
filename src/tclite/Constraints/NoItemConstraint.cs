@@ -4,9 +4,9 @@
 // ***********************************************************************
 
 using System.Collections;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// NoItemConstraint applies another constraint to each

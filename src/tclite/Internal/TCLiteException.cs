@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-namespace TCLite.Framework.Internal 
+namespace TCLite.Internal 
 {
 	using System;
 	using System.Runtime.Serialization;

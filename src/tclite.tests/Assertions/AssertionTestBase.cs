@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Assertions
+namespace TCLite.Assertions
 {
     public class AssertionTestBase
     {

@@ -5,10 +5,10 @@
 
 using System;
 using System.ComponentModel;
-using TCLite.Framework.Constraints;
-using TCLite.Framework.Internal;
+using TCLite.Constraints;
+using TCLite.Internal;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Provides static methods to express conditions

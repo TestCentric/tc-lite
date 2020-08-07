@@ -7,7 +7,7 @@ using System;
 using System.Reflection;
 using TCLite.TestUtilities;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     public class RandomizerTests
     {

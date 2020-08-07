@@ -6,12 +6,12 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using TCLite.Framework.Constraints;
-using TCLite.Framework.Internal;
+using TCLite.Constraints;
+using TCLite.Internal;
 // using TCLite.TestData;
 // using TCLite.TestUtilities;
 
-namespace TCLite.Framework.Assertions
+namespace TCLite.Assertions
 {
     [TestFixture]
     public class AssertThatTests : AssertionTestBase

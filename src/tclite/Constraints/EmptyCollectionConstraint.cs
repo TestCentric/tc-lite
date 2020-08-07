@@ -5,7 +5,7 @@
 
 using System.Collections;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// EmptyCollectionConstraint tests whether a collection is empty. 

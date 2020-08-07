@@ -7,10 +7,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// TestCaseAttribute is used to mark both parameterized and

@@ -6,9 +6,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using TCLite.Framework.Interfaces;
+using TCLite.Interfaces;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// The ParameterDataProvider class implements IParameterDataProvider

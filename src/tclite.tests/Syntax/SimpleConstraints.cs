@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Syntax
+namespace TCLite.Syntax
 {
     public class NullTest : SyntaxTest
     {

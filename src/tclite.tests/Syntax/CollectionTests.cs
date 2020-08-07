@@ -7,7 +7,7 @@ using System;
 using System.Collections;
 using TCLite.TestUtilities.Comparers;
 
-namespace TCLite.Framework.Syntax
+namespace TCLite.Syntax
 {
     public class UniqueTest : SyntaxTest
     {

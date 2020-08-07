@@ -5,9 +5,9 @@
 
 using System;
 using System.Threading;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Commands
+namespace TCLite.Commands
 {
     /// <summary>
     /// IsolatedFixtureCommand creates the test fixture used to run

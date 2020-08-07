@@ -6,11 +6,11 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Xml;
-using TCLite.Framework.Commands;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.WorkItems;
+using TCLite.Commands;
+using TCLite.Interfaces;
+using TCLite.WorkItems;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// The TestMethod class represents a Test implemented as a method.

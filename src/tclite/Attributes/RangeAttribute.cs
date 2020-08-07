@@ -6,11 +6,11 @@
 using System;
 using System.Collections;
 using System.Reflection;
-using TCLite.Framework.Constraints;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Constraints;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Supplies a range of values to an individual parameter of a parameterized test.

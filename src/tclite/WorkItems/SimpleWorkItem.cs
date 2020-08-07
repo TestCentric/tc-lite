@@ -5,10 +5,10 @@
 
 using System;
 using System.Threading;
-using TCLite.Framework.Commands;
-using TCLite.Framework.Internal;
+using TCLite.Commands;
+using TCLite.Internal;
 
-namespace TCLite.Framework.WorkItems
+namespace TCLite.WorkItems
 {
     /// <summary>
     /// A SimpleWorkItem represents a single test case and is

@@ -5,9 +5,9 @@
 
 using System;
 using System.Collections;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// CollectionEquivalentConstraint is used to determine whether two

@@ -5,7 +5,7 @@
 
 using System;
 using System.Threading;
-using TCLite.Framework.Constraints;
+using TCLite.Constraints;
 
 #if TASK_PARALLEL_LIBRARY_API
 using System.Threading.Tasks;
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Task = System.Threading.Tasks.TaskEx;
 #endif
 
-namespace TCLite.Framework
+namespace TCLite
 {
     public class WarningFixture
     {

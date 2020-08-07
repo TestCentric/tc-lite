@@ -5,7 +5,7 @@
 
 using System.Text.RegularExpressions;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// RegexConstraint can test whether a string matches

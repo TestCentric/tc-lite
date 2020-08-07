@@ -4,9 +4,9 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Interfaces;
+using TCLite.Interfaces;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// TestCaseParameters encapsulates method arguments and

@@ -6,10 +6,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Builders
+namespace TCLite.Builders
 {
 	/// <summary>
 	/// Built-in SuiteBuilder for NUnit TestFixture

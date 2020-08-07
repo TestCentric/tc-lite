@@ -9,8 +9,8 @@ using System.Globalization;
 using System.Reflection;
 using System.Xml;
 using System.IO;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
 namespace TCLite.Runners
 {

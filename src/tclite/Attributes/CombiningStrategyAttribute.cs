@@ -7,11 +7,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using TCLite.Framework.Builders;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Builders;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Marks a test as using a particular CombiningStrategy to join any supplied parameter data.

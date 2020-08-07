@@ -7,9 +7,8 @@ using System;
 using System.Collections;
 using System.Threading;
 using System.Globalization;
-using TCLite.Framework;
 
-namespace TCLite.Framework.Assertions
+namespace TCLite.Assertions
 {
 	[TestFixture]
 	public class ClassicAssertTests : AssertionTestBase

@@ -4,9 +4,9 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Commands
+namespace TCLite.Commands
 {
     /// <summary>
     /// AfterCommand is a DelegatingTestCommand that performs some

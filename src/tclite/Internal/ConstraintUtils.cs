@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// Provides methods to support consistent checking in constraints.

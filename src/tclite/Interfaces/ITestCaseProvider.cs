@@ -5,7 +5,7 @@
 
 using System.Reflection;
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
     /// <summary>
     /// The ITestCaseProvider interface is used by extensions

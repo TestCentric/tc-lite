@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Class used to guard against unexpected argument values

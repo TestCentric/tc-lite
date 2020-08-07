@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     public class ExceptionTypeConstraintResult : ConstraintResult
     {

@@ -5,9 +5,9 @@
 
 using System;
 using System.Linq;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Constraints;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Constraints;
+using TCLite.Internal;
 using TCLite.TestUtilities;
 
 #if TASK_PARALLEL_LIBRARY_API
@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 using Task = System.Threading.Tasks.TaskEx;
 #endif
 
-namespace TCLite.Framework.Assertions
+namespace TCLite.Assertions
 {
     [TestFixture]
     public class WarningTests

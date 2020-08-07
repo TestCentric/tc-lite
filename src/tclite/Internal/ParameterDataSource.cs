@@ -5,9 +5,9 @@
 
 using System.Collections;
 using System.Reflection;
-using TCLite.Framework.Interfaces;
+using TCLite.Interfaces;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// ParameterDataSource wraps a single ParameterInfo and

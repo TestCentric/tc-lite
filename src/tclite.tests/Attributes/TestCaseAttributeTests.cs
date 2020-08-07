@@ -7,7 +7,7 @@ using System;
 using System.Collections;
 using System.Globalization;
 using System.Linq;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
 #if TASK_PARALLEL_LIBRARY_API
 using System.Threading.Tasks;
@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using Task = System.Threading.Tasks.TaskEx;
 #endif
 
-namespace TCLite.Framework.Attributes
+namespace TCLite.Attributes
 {
     [TestFixture]
     public class TestCaseAttributeTests

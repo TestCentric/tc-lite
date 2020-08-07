@@ -6,7 +6,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
 
     /// <summary>Helper routines for working with floating point numbers</summary>

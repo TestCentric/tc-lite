@@ -6,7 +6,7 @@
 using System;
 using System.Reflection;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// ThrowsConstraint is used to test the exception thrown by 

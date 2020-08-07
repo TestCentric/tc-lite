@@ -7,7 +7,7 @@ using System;
 using System.Collections;
 using System.Reflection;
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
     /// <summary>
     /// The IParameterDataSource interface is implemented by types

@@ -7,7 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     public static class ComparisonAdapterTests
     {

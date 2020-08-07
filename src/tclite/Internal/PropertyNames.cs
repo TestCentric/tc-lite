@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// The PropertyNames class provides constants for the

@@ -6,7 +6,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     public class AssemblyHelperTests
     {

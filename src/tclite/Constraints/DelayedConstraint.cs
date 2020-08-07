@@ -7,7 +7,7 @@
 using System;
 using System.Threading;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     ///<summary>
     /// Applies a delay to the match so that a match can be evaluated in the future.

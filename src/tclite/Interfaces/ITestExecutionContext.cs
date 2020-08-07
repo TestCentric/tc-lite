@@ -5,10 +5,10 @@
 
 using System;
 using System.Globalization;
-using TCLite.Framework.Constraints;
-using TCLite.Framework.Internal;
+using TCLite.Constraints;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
     public interface ITestExecutionContext
     {

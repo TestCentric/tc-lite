@@ -5,9 +5,9 @@
 
 using System;
 using System.Reflection;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Attributes
+namespace TCLite.Attributes
 {
     [TestFixture]
     public class ValuesAttributeTests

@@ -4,9 +4,9 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// Base class for constraint tests

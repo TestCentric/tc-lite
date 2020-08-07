@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// Contain the result of matching a <see cref="ExactCountConstraint"/> against an actual value.

@@ -6,7 +6,7 @@
 using System;
 using System.IO;
 using System.Text;
-using TCLite.Framework.Interfaces;
+using TCLite.Interfaces;
 
 namespace TCLite.Runners
 {

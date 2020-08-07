@@ -7,10 +7,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 using TCLite.TestUtilities.Collections;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     [TestFixture]
     class CollectionEqualsTests

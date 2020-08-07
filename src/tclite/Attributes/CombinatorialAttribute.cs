@@ -4,9 +4,9 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Builders;
+using TCLite.Builders;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Marks a test to use a combinatorial join of any argument data provided. 

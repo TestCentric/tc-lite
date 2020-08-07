@@ -6,9 +6,9 @@
 using System;
 using System.Collections;
 using System.Collections.ObjectModel;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// ExactCountConstraint applies another constraint to each

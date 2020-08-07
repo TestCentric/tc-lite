@@ -7,11 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 using TCLite.TestUtilities;
 
-namespace TCLite.Framework.Attributes
+namespace TCLite.Attributes
 {
     public class RangeAttributeTests
     {

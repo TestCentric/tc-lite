@@ -4,10 +4,10 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Marks an assembly, test fixture or test method as being ignored. Ignored tests result in a warning message when the tests are run.

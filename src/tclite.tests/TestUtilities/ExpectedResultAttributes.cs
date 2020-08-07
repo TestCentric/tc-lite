@@ -6,7 +6,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     using Interfaces;
     using Commands;

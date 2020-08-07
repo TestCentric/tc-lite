@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// ConstraintBuilder maintains the stacks that are used in

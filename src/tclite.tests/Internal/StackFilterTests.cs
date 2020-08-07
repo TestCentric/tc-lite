@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     [TestFixture]
     public class StackFilterTests
@@ -17,15 +17,15 @@ namespace TCLite.Framework.Internal
         // TODO: Replace with realistic stack examples
         
         private static readonly string shortTrace_Assert =
-    @"   at TCLite.Framework.Assert.Fail(String message) in D:\Dev\NUnitLite\NUnitLite\Framework\Assert.cs:line 56" + NL +
-    @"   at TCLite.Framework.Assert.That(String label, Object actual, Matcher expectation, String message) in D:\Dev\NUnitLite\NUnitLite\Framework\Assert.cs:line 50" + NL +
-    @"   at TCLite.Framework.Assert.That(Object actual, Matcher expectation) in D:\Dev\NUnitLite\NUnitLite\Framework\Assert.cs:line 19" + NL +
+    @"   at TCLite.Assert.Fail(String message) in D:\Dev\NUnitLite\NUnitLite\Framework\Assert.cs:line 56" + NL +
+    @"   at TCLite.Assert.That(String label, Object actual, Matcher expectation, String message) in D:\Dev\NUnitLite\NUnitLite\Framework\Assert.cs:line 50" + NL +
+    @"   at TCLite.Assert.That(Object actual, Matcher expectation) in D:\Dev\NUnitLite\NUnitLite\Framework\Assert.cs:line 19" + NL +
     @"   at TCLite.Tests.GreaterThanMatcherTest.MatchesGoodValue() in D:\Dev\NUnitLite\NUnitLiteTests\GreaterThanMatcherTest.cs:line 12" + NL;
 
         private static readonly string shortTrace_Assume =
-    @"   at TCLite.Framework.Assert.Fail(String message) in D:\Dev\NUnitLite\NUnitLite\Framework\Assert.cs:line 56" + NL +
-    @"   at TCLite.Framework.Assume.That(String label, Object actual, Matcher expectation, String message) in D:\Dev\NUnitLite\NUnitLite\Framework\Assert.cs:line 50" + NL +
-    @"   at TCLite.Framework.Assume.That(Object actual, Matcher expectation) in D:\Dev\NUnitLite\NUnitLite\Framework\Assert.cs:line 19" + NL +
+    @"   at TCLite.Assert.Fail(String message) in D:\Dev\NUnitLite\NUnitLite\Framework\Assert.cs:line 56" + NL +
+    @"   at TCLite.Assume.That(String label, Object actual, Matcher expectation, String message) in D:\Dev\NUnitLite\NUnitLite\Framework\Assert.cs:line 50" + NL +
+    @"   at TCLite.Assume.That(Object actual, Matcher expectation) in D:\Dev\NUnitLite\NUnitLite\Framework\Assert.cs:line 19" + NL +
     @"   at TCLite.Tests.GreaterThanMatcherTest.MatchesGoodValue() in D:\Dev\NUnitLite\NUnitLiteTests\GreaterThanMatcherTest.cs:line 12" + NL;
 
         private static readonly string shortTrace_Result =
@@ -36,19 +36,19 @@ namespace TCLite.Framework.Internal
         // only includes the methods called from the point of invocation.
         // However, in the compact framework, such long traces may arise.
         private static readonly string longTrace =
-    @"   at TCLite.Framework.Assert.Fail(String message, Object[] args)" + NL +
+    @"   at TCLite.Assert.Fail(String message, Object[] args)" + NL +
     @"   at MyNamespace.MyAppsTests.AssertFailTest()" + NL +
     @"   at System.Reflection.RuntimeMethodInfo.InternalInvoke(RuntimeMethodInfo rtmi, Object obj, BindingFlags invokeAttr, Binder binder, Object parameters, CultureInfo culture, Boolean isBinderDefault, Assembly caller, Boolean verifyAccess, StackCrawlMark& stackMark)" + NL +
     @"   at System.Reflection.RuntimeMethodInfo.InternalInvoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture, Boolean verifyAccess, StackCrawlMark& stackMark)" + NL +
     @"   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)" + NL +
     @"   at System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)" + NL +
     @"   at NUnitLite.ProxyTestCase.InvokeMethod(MethodInfo method, Object[] args)" + NL +
-    @"   at TCLite.Framework.TestCase.RunTest()" + NL +
-    @"   at TCLite.Framework.TestCase.RunBare()" + NL +
-    @"   at TCLite.Framework.TestCase.Run(TestResult result, TestListener listener)" + NL +
-    @"   at TCLite.Framework.TestCase.Run(TestListener listener)" + NL +
-    @"   at TCLite.Framework.TestSuite.Run(TestListener listener)" + NL +
-    @"   at TCLite.Framework.TestSuite.Run(TestListener listener)" + NL +
+    @"   at TCLite.TestCase.RunTest()" + NL +
+    @"   at TCLite.TestCase.RunBare()" + NL +
+    @"   at TCLite.TestCase.Run(TestResult result, TestListener listener)" + NL +
+    @"   at TCLite.TestCase.Run(TestListener listener)" + NL +
+    @"   at TCLite.TestSuite.Run(TestListener listener)" + NL +
+    @"   at TCLite.TestSuite.Run(TestListener listener)" + NL +
     @"   at NUnitLite.Runner.TestRunner.Run(ITest test)" + NL +
     @"   at NUnitLite.Runner.ConsoleUI.Run(ITest test)" + NL +
     @"   at NUnitLite.Runner.TestRunner.Run(Assembly assembly)" + NL +

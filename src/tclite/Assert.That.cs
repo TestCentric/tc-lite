@@ -3,10 +3,10 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using TCLite.Framework.Constraints;
-using TCLite.Framework.Internal;
+using TCLite.Constraints;
+using TCLite.Internal;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     public abstract partial class Assert
     {

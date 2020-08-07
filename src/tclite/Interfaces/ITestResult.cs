@@ -5,7 +5,7 @@
 
 using System;
 
-namespace TCLite.Framework.Interfaces
+namespace TCLite.Interfaces
 {
     /// <summary>
     /// The ITestResult interface represents the result of a test.

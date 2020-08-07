@@ -4,9 +4,9 @@
 // ***********************************************************************
 
 using System.Reflection;
-using TCLite.Framework.Commands;
+using TCLite.Commands;
 
-namespace TCLite.Framework.Internal
+namespace TCLite.Internal
 {
     /// <summary>
     /// ParameterizedMethodSuite holds a collection of individual

@@ -7,11 +7,11 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Commands;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Commands;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Builders
+namespace TCLite.Builders
 {
     /// <summary>
     /// Class to build ether a parameterized or a normal NUnitTestMethod.

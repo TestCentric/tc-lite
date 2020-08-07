@@ -5,9 +5,9 @@
 
 using System;
 using System.Globalization;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     [TestFixture]
     public class TrueConstraintTests : ConstraintTestBase<bool>

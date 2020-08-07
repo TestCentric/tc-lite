@@ -7,7 +7,7 @@ using System;
 using System.Collections;
 using System.Reflection;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     /// <summary>
     /// NUnitComparer encapsulates NUnit's default behavior

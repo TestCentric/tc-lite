@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE.txt in root directory.
 // ***********************************************************************
 
-namespace TCLite.Framework
+namespace TCLite
 {
     public abstract partial class Assert
     {

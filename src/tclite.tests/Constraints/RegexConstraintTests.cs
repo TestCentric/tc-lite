@@ -5,9 +5,9 @@
 
 using System;
 using System.Text.RegularExpressions;
-using TCLite.Framework.Internal;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Constraints
+namespace TCLite.Constraints
 {
     [TestFixture(false)]
     [TestFixture(true)]

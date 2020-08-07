@@ -4,10 +4,10 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework.Attributes
+namespace TCLite.Attributes
 {
     [Description("Fixture Description")]
     public class DescriptionTests

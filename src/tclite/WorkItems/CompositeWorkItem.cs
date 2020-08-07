@@ -5,10 +5,10 @@
 
 using System;
 using System.Threading;
-using TCLite.Framework.Interfaces;
-using TCLite.Framework.Internal;
+using TCLite.Interfaces;
+using TCLite.Internal;
 
-namespace TCLite.Framework.WorkItems
+namespace TCLite.WorkItems
 {
     /// <summary>
     /// A CompositeWorkItem represents a test suite and

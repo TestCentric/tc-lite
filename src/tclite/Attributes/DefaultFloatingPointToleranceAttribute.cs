@@ -4,10 +4,10 @@
 // ***********************************************************************
 
 using System;
-using TCLite.Framework.Constraints;
-using TCLite.Framework.Interfaces;
+using TCLite.Constraints;
+using TCLite.Interfaces;
 
-namespace TCLite.Framework
+namespace TCLite
 {
     /// <summary>
     /// Sets the tolerance used by default when checking the equality of floating point values
