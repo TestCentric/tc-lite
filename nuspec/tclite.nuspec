@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>TCLite</id>
+    <version>0.0.0</version>
+    <title>TCLite Test Framework</title>
+    <summary>A simple .NET framework for writing and running microtests.</summary>
+    <description>A simple .NET framework for writing and running microtests. It features self-executing test assembiles, isolation of tests, fluent assertions and close easy conversion from NUnit.</description>
+    <authors>Charlie Poole</authors>
+    <owners>Charlie Poole</owners>
+    <projectUrl>https://test-centric.org</projectUrl>
+    <license type="expression">MIT</license>
+    <icon>testcentric_128x128.png</icon>
+    <iconUrl>https://github.com/testcentric/tc-lite/blob/master/testcentric_128x128</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes>https://github.com/testcentric/tc-lite/blob/master/README.md</releaseNotes>
+    <copyright>Copyright (c) 2020 Charlie Poole</copyright>
+    <language>en-US</language>
+    <tags>test-centric testcentric tc-lite tclite nunit microtest test testing tdd runner</tags>
+    <repository type="git" url="https://github.com/TestCentric/tc-lite"/>
+  </metadata>
+</package>
