@@ -92,7 +92,8 @@ namespace TCLite.Framework
         /// <param name="actual">The actual object</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        public static void AreSame(object expected, object actual, string message=null, params object[] args)
+        public static void AreSame<T>(
+            T expected, T actual, string message=null, params object[] args) where T : class
         {
             Assert.That(actual, Is.SameAs(expected), message, args);
         }
@@ -105,7 +106,8 @@ namespace TCLite.Framework
         /// <param name="actual">The actual object</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        public static void AreNotSame(object expected, object actual, string message=null, params object[] args)
+        public static void AreNotSame<T>(
+            T expected, T actual, string message=null, params object[] args) where T : class
         {
             Assert.That(actual, Is.Not.SameAs(expected), message, args);
         }

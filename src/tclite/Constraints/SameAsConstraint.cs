@@ -9,13 +9,13 @@ namespace TCLite.Framework.Constraints
     /// SameAsConstraint tests whether an object is identical to
     /// the object passed to its constructor
     /// </summary>
-    public class SameAsConstraint : ExpectedValueConstraint<object>
+    public class SameAsConstraint<TExpected> : ExpectedValueConstraint<TExpected> where TExpected : class
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:SameAsConstraint"/> class.
         /// </summary>
         /// <param name="expected">The expected object.</param>
-        public SameAsConstraint(object expected) : base(expected) { }
+        public SameAsConstraint(TExpected expected) : base(expected) { }
 
         public override string Description => $"Same as {ExpectedValue}";
 
@@ -37,9 +37,9 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// Returns a constraint that tests that two references are the same object
         /// </summary>
-        public SameAsConstraint SameAs(object expected)
+        public SameAsConstraint<T> SameAs<T>(T expected) where T : class
         {
-            return (SameAsConstraint)Append(new SameAsConstraint(expected));
+            return (SameAsConstraint<T>)Append(new SameAsConstraint<T>(expected));
         }
     }
 
@@ -48,9 +48,9 @@ namespace TCLite.Framework.Constraints
         /// <summary>
         /// Returns a constraint that tests that two references are the same object
         /// </summary>
-        public static SameAsConstraint SameAs(object expected)
+        public static SameAsConstraint<T> SameAs<T>(T expected) where T : class
         {
-            return new SameAsConstraint(expected);
+            return new SameAsConstraint<T>(expected);
         }
     }
 }
