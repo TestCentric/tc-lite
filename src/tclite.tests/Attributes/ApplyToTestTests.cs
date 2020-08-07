@@ -21,32 +21,6 @@ namespace TCLite.Framework.Attributes
             _testDummy.RunState = RunState.Runnable;
         }
 
-        #region AuthorAttribute
-
-        [TestCase]
-        public void AuthorAttributeSetsAuthor()
-        {
-            new AuthorAttribute("Charlie").ApplyToTest(_testDummy);
-            Assert.That(_testDummy.Properties.Get(PropertyNames.Author), Is.EqualTo("Charlie"));
-        }
-
-        [TestCase]
-        public void AuthorAttributeSetsAuthorAndEmail()
-        {
-            new AuthorAttribute("Charlie", "charlie@someplace.com").ApplyToTest(_testDummy);
-            Assert.That(_testDummy.Properties.Get(PropertyNames.Author), Is.EqualTo("Charlie <charlie@someplace.com>"));
-        }
-
-        [TestCase]
-        public void AuthorAttributeSetsAuthorOnNonRunnableTest()
-        {
-            _testDummy.RunState = RunState.NotRunnable;
-            new AuthorAttribute("Charlie").ApplyToTest(_testDummy);
-            Assert.That(_testDummy.Properties.Get(PropertyNames.Author), Is.EqualTo("Charlie"));
-        }
-
-        #endregion
-
         #region CategoryAttribute
 
         [TestCase('!')]
