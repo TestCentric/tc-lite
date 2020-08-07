@@ -14,8 +14,7 @@ build_script:
 test: off
 
 artifacts:
-- path: package\*.zip
-- path: package\*.nupkg
+- path: output\*.nupkg
 
 environment:
   MYGET_API_KEY:
