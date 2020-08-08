@@ -11,7 +11,7 @@ var BIN_DIR = PROJECT_DIR + "bin/" + configuration + "/";
 var OUTPUT_DIR = PROJECT_DIR + "output/";
 
 var NUGET_ID = "TCLite";
-var VERSION = "0.1.0";
+var VERSION = "0.1.1";
 
 // Deletes the contents of the Artifacts folder if it contains anything from a previous build.
 Task("Clean")
@@ -73,7 +73,7 @@ Task("Package")
                 Files = new [] {
                     new NuSpecContent { Source = PROJECT_DIR + "LICENSE" },
                     new NuSpecContent { Source = PROJECT_DIR + "testcentric_128x128.png"},
-                    new NuSpecContent { Source = BIN_DIR + "netstandard2.0/tclite.dll", Target = "tools/netstandard2.0" },
+                    new NuSpecContent { Source = BIN_DIR + "netstandard2.0/tclite.dll", Target = "lib/netstandard2.0" },
                 }
             });
     });
