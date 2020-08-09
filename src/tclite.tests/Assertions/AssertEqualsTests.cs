@@ -449,7 +449,7 @@ namespace TCLite.Assertions
             Assert.That(ex.Message, Does.Contain( "+/- 0.001"));
         }
 
-        [TestCase, DefaultFloatingPointTolerance(0.005)]
+        [TestCase, DefaultTolerance(0.005)]
         public void DoubleNotEqualMessageDisplaysDefaultTolerance()
         {
             double d1 = 0.15;
@@ -459,7 +459,7 @@ namespace TCLite.Assertions
             Assert.That(ex.Message, Does.Contain("+/- 0.005"));
         }
 
-        [TestCase, DefaultFloatingPointTolerance(0.005)]
+        [TestCase, DefaultTolerance(0.005)]
         public void DoubleNotEqualWithNanDoesNotDisplayDefaultTolerance()
         {
             double d1 = double.NaN;

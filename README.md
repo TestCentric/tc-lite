@@ -80,7 +80,7 @@ _TC-Lite_ uses attributes to identify tests, control various aspects of how they
 
 * `[Description]` provides a readable description of the test as a property.
 
-* `[DefaultFloatingPointTolerance]` sets the default tolerance for floating point equality assertions. If not used the default is zero tolerance.
+* `[DefaultTolerance]` sets the default tolerance for floating point equality assertions. If not used the default is zero tolerance.
 
 ### Assertions
 

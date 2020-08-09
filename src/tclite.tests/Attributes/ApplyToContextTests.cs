@@ -15,11 +15,11 @@ namespace TCLite.Attributes
         private TestExecutionContext _context = new TestExecutionContext();
 
         [TestCase]
-        public void DefaultFloatingPointToleranceAttribute()
+        public void DefaultToleranceAttribute()
         {
-            var attr = new DefaultFloatingPointToleranceAttribute(0.5);
+            var attr = new DefaultToleranceAttribute(0.5);
             attr.ApplyToContext(_context);
-            var tolerance = _context.DefaultFloatingPointTolerance;
+            var tolerance = _context.DefaultTolerance;
             Assert.That(tolerance.Mode, Is.EqualTo(ToleranceMode.Linear));
             Assert.That(tolerance.Amount, Is.EqualTo(0.5));
         }

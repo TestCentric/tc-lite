@@ -14,7 +14,7 @@ namespace TCLite
     /// within the test assembly, fixture or method.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public sealed class DefaultFloatingPointToleranceAttribute : TCLiteAttribute, IApplyToContext
+    public sealed class DefaultToleranceAttribute : TCLiteAttribute, IApplyToContext
     {
         private readonly Tolerance _tolerance;
 
@@ -22,7 +22,7 @@ namespace TCLite
         /// Construct specifying an amount
         /// </summary>
         /// <param name="amount"></param>
-        public DefaultFloatingPointToleranceAttribute(double amount)
+        public DefaultToleranceAttribute(double amount)
         {
             _tolerance = new Tolerance(amount);
         }
@@ -35,7 +35,7 @@ namespace TCLite
         /// <param name="context">The TestExecutionContext</param>
         public void ApplyToContext(ITestExecutionContext context)
         {
-            context.DefaultFloatingPointTolerance = _tolerance;
+            context.DefaultTolerance = _tolerance;
         }
 
         #endregion

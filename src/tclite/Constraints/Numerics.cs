@@ -150,7 +150,7 @@ namespace TCLite.Constraints
 
             if (tolerance.IsDefault)
             {
-                var defaultTolerance = Internal.TestExecutionContext.CurrentContext.DefaultFloatingPointTolerance;
+                var defaultTolerance = Internal.TestExecutionContext.CurrentContext.DefaultTolerance;
                 if (defaultTolerance != null)
                     tolerance = defaultTolerance;
             }
@@ -194,7 +194,7 @@ namespace TCLite.Constraints
 
             if (tolerance.IsDefault)
             {
-                var defaultTolerance = Internal.TestExecutionContext.CurrentContext.DefaultFloatingPointTolerance;
+                var defaultTolerance = Internal.TestExecutionContext.CurrentContext.DefaultTolerance;
                 if (defaultTolerance != null)
                     tolerance = defaultTolerance;
             }

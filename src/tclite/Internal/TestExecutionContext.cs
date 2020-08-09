@@ -109,7 +109,7 @@ namespace TCLite.Internal
             this.TestObject = other.TestObject;
 			this.WorkDirectory = other.WorkDirectory;
             this.Listener = other.Listener;
-            this.DefaultFloatingPointTolerance = other.DefaultFloatingPointTolerance;
+            this.DefaultTolerance = other.DefaultTolerance;
             this.StopOnError = other.StopOnError;
             this.TestCaseTimeout = other.TestCaseTimeout;
 
@@ -223,7 +223,7 @@ namespace TCLite.Internal
         /// Default tolerance value used for floating point equality
         /// when no other tolerance is specified.
         /// </summary>
-        public Tolerance DefaultFloatingPointTolerance { get; set; }
+        public Tolerance DefaultTolerance { get; set; }
 
         /// <summary>
         /// Gets the RandomGenerator specific to this Test

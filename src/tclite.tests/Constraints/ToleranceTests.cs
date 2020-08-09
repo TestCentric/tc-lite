@@ -10,19 +10,19 @@ namespace TCLite.Constraints
     [TestFixture]
     public class ToleranceTests
     {
-        [TestCase, DefaultFloatingPointTolerance(0.1)]
+        [TestCase, DefaultTolerance(0.1)]
         public void DefaultTolerance_Success()
         {
             Assert.That(2.05d, Is.EqualTo(2.0d));
         }
 
-        [TestCase, DefaultFloatingPointTolerance(0.01)]
+        [TestCase, DefaultTolerance(0.01)]
         public void DefaultTolerance_Failure()
         {
             Assert.That(2.05d, Is.Not.EqualTo(2.0d));
         }
 
-        [TestCase, DefaultFloatingPointTolerance(0.5)]
+        [TestCase, DefaultTolerance(0.5)]
         public void TestToleranceDefault()
         {
             var defaultTolerance = Tolerance.Default;
@@ -32,7 +32,7 @@ namespace TCLite.Constraints
             Assert.IsTrue(comparer.AreEqual(2.0d, 2.1d, ref defaultTolerance ));
         }
 
-        [TestCase, DefaultFloatingPointTolerance(0.5)]
+        [TestCase, DefaultTolerance(0.5)]
         public void TestToleranceExact()
         {
             var noneTolerance = Tolerance.Exact;

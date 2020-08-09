@@ -43,7 +43,7 @@ namespace TCLite.Interfaces
         /// </summary>
         bool StopOnError { get; }
 
-        Tolerance DefaultFloatingPointTolerance { get; set; }
+        Tolerance DefaultTolerance { get; set; }
 
         /// <summary>
         /// Gets the RandomGenerator specific to this Test

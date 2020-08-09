@@ -55,9 +55,6 @@ Task("TestNet50")
         StartProcess("dotnet", BIN_DIR + "net5.0/tclite.tests.dll");
     });
 
-// Additional package metadata
-var GITHUB_SITE = "https://github.com/testcentric/tc-lite";
-
 Task("Package")
     .IsDependentOn("Build")
     .Does(() =>
