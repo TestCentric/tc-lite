@@ -480,9 +480,9 @@ namespace TCLite.Attributes
                 get
                 {
                     return new object[] {
-                        new TestCaseData(12, 3).Returns(4).SetName("TC1"),
-                        new TestCaseData(12, 2).Returns(6).SetName("TC2"),
-                        new TestCaseData(12, 4).Returns(3).SetName("TC3")
+                        new TestCaseData(12, 3).Returns(4),
+                        new TestCaseData(12, 2).Returns(6),
+                        new TestCaseData(12, 4).Returns(3)
                     };
                 }
             }

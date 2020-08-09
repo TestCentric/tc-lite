@@ -77,16 +77,6 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Sets the name of the test case
-        /// </summary>
-        /// <returns>The modified TestCaseData instance</returns>
-        public TestCaseData SetName(string name)
-        {
-            this.TestName = name;
-            return this;
-        }
-
-        /// <summary>
         /// Sets the description for the test case
         /// being constructed.
         /// </summary>

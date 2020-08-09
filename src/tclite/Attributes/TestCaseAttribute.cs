@@ -31,13 +31,13 @@ namespace TCLite
             Arguments = arguments ?? new object[] { null };
         }
 
-        #region ICaseTestData Members
+        #region ITestCaseData Members
 
         /// <summary>
-        /// Gets or sets the name of the test.
+        /// Gets the name of the test.
         /// </summary>
         /// <value>The name of the test.</value>
-        public string TestName { get; set; }
+        public string TestName { get; }
 
         /// <summary>
         /// Gets the RunState of this test case.
