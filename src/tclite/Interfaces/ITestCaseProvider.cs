@@ -3,6 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace TCLite.Interfaces
@@ -23,10 +24,10 @@ namespace TCLite.Interfaces
 
         /// <summary>
         /// Return an IEnumerable providing test cases for use in
-        /// running a paramterized test.
+        /// running a parameterized test.
         /// </summary>
         /// <param name="method"></param>
         /// <returns></returns>
-        System.Collections.Generic.IEnumerable<ITestCaseData> GetTestCasesFor(MethodInfo method);
+        IEnumerable<ITestCaseData> GetTestCasesFor(MethodInfo method);
     }
 }

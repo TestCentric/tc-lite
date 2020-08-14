@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See LICENSE in root directory.
 // ***********************************************************************
 
-using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace TCLite.Interfaces
@@ -23,6 +23,6 @@ namespace TCLite.Interfaces
         /// </summary>
         /// <param name="method">The method for which data is needed.</param>
         /// <returns></returns>
-        System.Collections.Generic.IEnumerable<ITestCaseData> GetTestCasesFor(MethodInfo method);
+        IEnumerable<ITestCaseData> GetTestCasesFor(MethodInfo method);
     }
 }

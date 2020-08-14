@@ -70,6 +70,13 @@ namespace TCLite
     }
 
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+    public class ExpectNotRunnableAttribute : ExpectedResultAttribute, ICommandWrapper
+    {
+        public ExpectNotRunnableAttribute(params string[] messageFragments)
+            : base(ResultState.NotRunnable, messageFragments) { }
+    }
+
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     public class ExpectWarningAttribute : ExpectedResultAttribute, ICommandWrapper
     {
         public ExpectWarningAttribute(params string[] messageFragments)

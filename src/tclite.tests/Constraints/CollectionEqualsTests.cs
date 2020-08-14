@@ -6,7 +6,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Linq;
+using TCLite.Interfaces;
 using TCLite.Internal;
 using TCLite.TestUtilities.Collections;
 
@@ -74,21 +76,24 @@ namespace TCLite.Constraints
 #endif
         }
 
-        [TestCaseSource(nameof(IgnoreCaseData))]
+        [TestCaseFactory(typeof(IgnoreCaseData))]
         public void HonorsIgnoreCase(IEnumerable expected, IEnumerable actual)
         {
             Assert.That(expected, Is.EqualTo(actual).IgnoreCase);
         }
 
-        private static readonly object[] IgnoreCaseData =
+        private class IgnoreCaseData : ITestCaseSource
         {
-            new object[] {new SimpleObjectCollection("x", "y", "z"),new SimpleObjectCollection("x", "Y", "Z")},
-            new object[] {new[] {'A', 'B', 'C'}, new object[] {'a', 'b', 'c'}},
-            new object[] {new[] {"a", "b", "c"}, new object[] {"A", "B", "C"}},
-            new object[] {new Dictionary<int, string> {{ 1, "a" }}, new Dictionary<int, string> {{ 1, "A" }}},
-            new object[] {new Dictionary<int, char> {{ 1, 'A' }}, new Dictionary<int, char> {{ 1, 'a' }}},
-            new object[] {new List<char> {'A', 'B', 'C'}, new List<char> {'a', 'b', 'c'}},
-            new object[] {new List<string> {"a", "b", "c"}, new List<string> {"A", "B", "C"}},
-        };
+            public IEnumerable<ITestCaseData> GetTestCasesFor(MethodInfo method)
+            {
+                yield return new TestCaseData(new SimpleObjectCollection("x", "y", "z"),new SimpleObjectCollection("x", "Y", "Z"));
+                yield return new TestCaseData(new[] {'A', 'B', 'C'}, new object[] {'a', 'b', 'c'});
+                yield return new TestCaseData(new[] {"a", "b", "c"}, new object[] {"A", "B", "C"});
+                yield return new TestCaseData(new Dictionary<int, string> {{ 1, "a" }}, new Dictionary<int, string> {{ 1, "A" }});
+                yield return new TestCaseData(new Dictionary<int, char> {{ 1, 'A' }}, new Dictionary<int, char> {{ 1, 'a' }});
+                yield return new TestCaseData(new List<char> {'A', 'B', 'C'}, new List<char> {'a', 'b', 'c'});
+                yield return new TestCaseData(new List<string> {"a", "b", "c"}, new List<string> {"A", "B", "C"});
+            }
+        }
     }
 }

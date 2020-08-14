@@ -49,14 +49,15 @@ namespace TCLite.Constraints
             Assert.IsFalse(constraint.TryFastAlgorithm(actual).Value);
         }
 
-        [TestCaseSource( nameof(IgnoreCaseData) )]
+        [TestCaseFactory( typeof(IgnoreCaseData) )]
         public void HonorsIgnoreCase( IEnumerable actual )
         {
             Assert.That( actual, Is.Not.Unique.IgnoreCase, $"{actual} should not be unique ignoring case");
         }
 
-        private static readonly object[] IgnoreCaseData =
+        private class IgnoreCaseData : ITestCaseFactory
         {
+            
             //new object[] {new SimpleObjectCollection("x", "y", "z", "Z")},
             new object[] {new[] {'A', 'B', 'C', 'c'}},
             new object[] {new[] {"a", "b", "c", "C"}}
