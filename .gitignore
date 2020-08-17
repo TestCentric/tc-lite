@@ -123,3 +123,9 @@ output
 # Tools pulled from nuget
 tools
 !tools/packages.config
+
+# Website
+output/
+config.wyam.dll
+config.wyam.hash
+config.wyam.packages.xml

@@ -1,0 +1,12 @@
+Title: Assertions
+Description: Shows the syntax of assertions, which are used to verify proper behavior of the software under test.
+Order: 2
+---
+
+<p>Assertions are central to unit testing in <b>TC-Lite</b>.</p>
+
+<p>Assertions are written as calls to static methods of the <code>Assert</code> class. If an assertion fails, the method call does not return, an error is reported and any code following the failing Assert is not executed. For that reason, it's usually best to try for one assertion per test.</p>
+
+<p>Assert calls may be grouped into two <b>Assertion Models</b>.</p>
+
+@Html.Partial("_ChildPages")

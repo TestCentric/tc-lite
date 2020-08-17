@@ -1,0 +1,56 @@
+Title: Attributes
+Description: Describes how TC-Lite uses attributes to identify tests and control their execution.
+Order: 3
+---
+
+<p><b>TC-Lite</b> uses attributes to identify tests, control various aspects of how they are run, choose which tests should be run and to provide general information about each test. The following attributes are currently supported in the code.</p>
+
+@Html.Partial("_ChildPages")
+
+@*
+
+* `[TestCaseSource]` is used only on parameterized test methods and provides a level of indirection. It is similar in concept to _NUnit's_ attribute of the same name but is expected to differ in specific details as implementation proceeds. Specifically, it may require use of a separate class from the fixture class itself as the data source, since the source lifetime may be longer than that of the fixture.
+
+* `[Combinatorial]` is used on parameterized test methods, when the data for the arguments is provided individually rather than as test cases. The attribute generates test cases using every possible combination of the individual argument values. The `CombinatorialAttribute` is actually optional. If __any__ of the parameters for the test method is decorated with an attribute for generating values, then `[Combinatorial]` is assumed.
+
+* For use with `[Combinatorial]` (explicit or implied), the following attributes may be applied to method parameters for generating individual arguments.
+
+  * `[Values]` allows explicitly including argument values.
+  * `[Range]` allows specifying a numeric range of values.
+  * `[Random]` allows for generating random values.
+  * `[ValueSource]` works like `[Values]`, but with a level of indirection similar to `[TestCaseSource]`.
+
+* The `[TestFixture]` attribute is required for generic or parameterized fixtures, for which it provides the constructor and/or Type arguments. It is optional for non-generic, non-parameterized fixtures, which are recognized simply by the fact that they contain tests.
+
+* `[TestFixtureSource]` is only used on parameterized or generic fixtures and provides a level of indirection analogous to what `[TestCaseSource]` does for methods.
+
+* `[Ignore]` indicates that a test should be ignored and causes a warning to be issued. Note that we don't support the `Until` named property as _NUnit_ does. It's not useful for microtests because they should not be ignored for any length of time. Ignored tests are always treated as a warning.
+
+* `[Category]` allows grouping tests under arbitrary tags, which may be used to select the test to be run.
+
+* `[Property]` goes beyond categories, allowing name / value pairs to be applied to tests and used to select them.
+
+* `[Description]` provides a readable description of the test as a property.
+
+* `[DefaultFloatingPointTolerance]` sets the default tolerance for floating point equality assertions. If not used the default is zero tolerance.
+
+### Future Possibilities
+
+* Something like _NUnit_'s `[ValuesSource]` to allow specifying values for individual arguments indirectly.
+
+* `[Include]` allows the developer to indicate when a test will be included, based on environmental factors like the OS platform or the current Culture. A corresponding `[Exclude]` attribute is available when specifying rules for exclusion is more convenient.
+
+* Additional attributes to supplement `[Combinatorial]` and provide other ways of generating cases from sets of argument valeus. `[Pairwise]` and `[Sequential]` could be considered, although they may not be appropriate for a framework that focuses on microtests.
+
+* `[Before]` and `[After]` as a notational convenience if there seems to be a demand for them. They would not provide any new functionality beyond what is provided through construction and disposal.
+
+* `[MaxTime]` indicates the maximum time a test should take and causes either a failure or a warning if the time is exceeded.
+
+* `[Repeat]` causes a test to be repeated some number of times with each execution reported separately.
+
+* `[Retry]` causes a test to be repeated up to a maximum number of times in case of an error, failure or warning.
+
+* `[Timeout]` specifies the maximum time a test case may run before being cancelled.
+
+* `[DefaultTimeout]` is used on fixtures or assemblies to indicate the default timeout for individual tests.
+*@
