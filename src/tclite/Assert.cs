@@ -18,7 +18,7 @@ namespace TCLite
 
     /// <summary>
     /// The Assert class contains a collection of static methods that
-    /// implement the most common assertions used in TCLite.
+    /// implement the assertions used in TC-Lite.
     /// </summary>
     /// <remarks>
     /// We don't actually want any instances of this object, but some people
@@ -28,11 +28,10 @@ namespace TCLite
     public abstract partial class Assert
     {
         /// <summary>
-        /// The Equals method throws an AssertionException. This is done 
-        /// to make sure there is no mistake by calling this function.
+        /// The Equals method is overridden to throw a <see cref="System.InvalidOperationException"/>.
+        /// This is done to make sure there is no mistake by calling it when
+        /// <see cref="Assert.AreEqual(object, object)"/> is actually intended.
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static new bool Equals(object a, object b)
         {
@@ -40,21 +39,20 @@ namespace TCLite
         }
 
         /// <summary>
-        /// override the default ReferenceEquals to throw an AssertionException. This 
-        /// implementation makes sure there is no mistake in calling this function 
-        /// as part of Assert. 
+        /// The ReferenceEquals method is overridden to throw a <see cref="InvalidOperationException"/>.
+        /// This ensures that there there is no mistake in calling this function rather than
+        /// <see cref="Assert.AreSame(object, object)"/>.
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        public static new void ReferenceEquals(object a, object b)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static new bool ReferenceEquals(object a, object b)
         {
             throw new InvalidOperationException("Assert.ReferenceEquals should not be used for Assertions");
         }
 
         /// <summary>
-        /// Throws a <see cref="SuccessException"/> with the message and arguments 
-        /// that are passed in. This allows a test to be cut short, with a result
-        /// of success returned to TCLite.
+        /// Throws a <see cref="TCLite.SuccessException"/> with the message
+        /// and arguments provided, ending the running test immediately
+        /// and reporting it as successful.
         /// </summary>
         /// <param name="message">The message to initialize the <see cref="AssertionException"/> with.</param>
         /// <param name="args">Arguments to be used in formatting the message</param>
@@ -74,11 +72,18 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Throws an <see cref="AssertionException"/> with the message and arguments 
-        /// that are passed in. This is used by the other Assert functions. 
+        /// Throws a <see cref="TCLite.AssertionException"/> with the message
+        /// and arguments provided, ending the running test immediately
+        /// and reporting it as a Failure.
         /// </summary>
-        /// <param name="message">The message to initialize the <see cref="AssertionException"/> with.</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
+        /// <remarks>
+        /// The <c>Assert.Fail</c> method allows you to immediately end the test, recording 
+        /// it as failed. Use of <c>Assert.Fail</c> allows you to generate failure messages
+        /// for tests that are not encapsulated by the other Assert methods. 
+        /// It is also useful in developing your own project-specific assertions.
+        /// </remarks>
+        /// <param name="message">The failure message</param>
+        /// <param name="args">Arguments used format the message</param>
         static public void Fail(string message=null, params object[] args)
         {
             if (message == null) message = string.Empty;
@@ -89,11 +94,12 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Throws an <see cref="InconclusiveException"/> with the message and arguments 
-        /// that are passed in.  This causes the test to be reported as inconclusive.
+        /// Records a warning message and continues running the test.
+        /// If the test eventually completes without failing, it will
+        /// be reported with a Warning result.
         /// </summary>
-        /// <param name="message">The message to initialize the <see cref="InconclusiveException"/> with.</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
+        /// <param name="message">The warning message</param>
+        /// <param name="args">Arguments used to format the message</param>
         static public void Warn(string message = null, params object[] args)
         {
             if (message == null) message = string.Empty;
@@ -104,11 +110,12 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Throws an <see cref="IgnoreException"/> with the message and arguments 
-        /// that are passed in.  This causes the test to be reported as ignored.
+        /// Throws a <see cref="TCLite.IgnoreException"/> with the message
+        /// and arguments provided, ending the running test immediately
+        /// and reporting it as Ignored.
         /// </summary>
-        /// <param name="message">The message to initialize the <see cref="AssertionException"/> with.</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
+        /// <param name="message">A message indicating why the test is being ignored</param>
+        /// <param name="args">Arguments used to format the message</param>
         static public void Ignore(string message=null, params object[] args)
         {
             if (message == null) message = string.Empty;
@@ -125,11 +132,12 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Throws an <see cref="InconclusiveException"/> with the message and arguments 
-        /// that are passed in.  This causes the test to be reported as inconclusive.
+        /// Throws a <see cref="TCLite.InconclusiveException"/> with the message
+        /// and arguments provided, ending the running test immediately. The test
+        /// is reported as Inconclusive unless Warnings were previously recorded.
         /// </summary>
-        /// <param name="message">The message to initialize the <see cref="InconclusiveException"/> with.</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
+        /// <param name="message">A message indicating why the test was inconclusive.</param>
+        /// <param name="args">Arguments used to format the message.</param>
         static public void Inconclusive(string message = null, params object[] args)
         {
             if (message == null) message = string.Empty;

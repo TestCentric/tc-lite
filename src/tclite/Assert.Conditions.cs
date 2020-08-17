@@ -12,8 +12,9 @@ namespace TCLite
     public abstract partial class Assert
     {
         /// <summary>
-        /// Asserts that a condition is true. If the condition is false the method throws
-        /// an <see cref="AssertionException"/>.
+        /// Asserts that a condition is true. If the condition is false
+        /// the method throws a <see cref="TCLite.AssertionException"/>,
+        /// ending the running test and reporting it as a Failure.
         /// </summary>
         /// <param name="condition">The evaluated condition</param>
         /// <param name="message">The message to display in case of failure</param>
@@ -24,8 +25,9 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Asserts that a condition is false. If the condition is true the method throws
-        /// an <see cref="AssertionException"/>
+        /// Asserts that a condition is false. If the condition is true
+        /// the method throws a <see cref="TCLite.AssertionException"/>,
+        /// ending the running test and reporting it as a Failure.
         /// </summary> 
         /// <param name="condition">The evaluated condition</param>
         /// <param name="message">The message to display in case of failure</param>
@@ -36,9 +38,9 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Verifies that the object that is passed in is not equal to <code>null</code>
-        /// If the object is <code>null</code> then an <see cref="AssertionException"/>
-        /// is thrown.
+        /// Asserts that an object is not <c>null</c>. If the object is <c>null</c>
+        /// a <see cref="TCLite.AssertionException"/> is thrown, ending the running
+        /// test and  reporting it as a Failure.
         /// </summary>
         /// <param name="anObject">The object that is to be tested</param>
         /// <param name="message">The message to display in case of failure</param>
@@ -49,9 +51,9 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Verifies that the object that is passed in is equal to <code>null</code>
-        /// If the object is not <code>null</code> then an <see cref="AssertionException"/>
-        /// is thrown.
+        /// Asserts that an object is <c>null</c>. If the object is not <c>null</c>
+        /// a <see cref="TCLite.AssertionException"/> is thrown, ending the running
+        /// test and  reporting it as a Failure.
         /// </summary>
         /// <param name="anObject">The object that is to be tested</param>
         /// <param name="message">The message to display in case of failure</param>
@@ -62,7 +64,9 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Assert that a string is empty. Returns without throwing an exception when inside a multiple assert block.
+        /// Asserts that a string is empty. If the string is not empty
+        /// a <see cref="TCLite.AssertionException"/> is thrown, ending
+        /// the running test and  reporting it as a Failure.
         /// </summary>
         /// <param name="aString">The string to be tested</param>
         /// <param name="message">The message to display in case of failure</param>
@@ -73,8 +77,9 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Assert that an array, list or other collection is empty. Returns without throwing an exception when inside a
-        /// multiple assert block.
+        /// Asserts that an array, list, collection or enumeration
+        /// is empty. If it is not empty a <see cref="TCLite.AssertionException"/>
+        /// is thrown, ending the running test and  reporting it as a Failure.
         /// </summary>
         /// <param name="collection">An array, list or other collection implementing ICollection</param>
         /// <param name="message">The message to display in case of failure</param>
@@ -85,8 +90,9 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Assert that a string is not empty. Returns without throwing an exception when inside a multiple assert
-        /// block.
+        /// Asserts that a string is not empty. If the string is empty
+        /// a <see cref="TCLite.AssertionException"/> is thrown, ending
+        /// the running test and  reporting it as a Failure.
         /// </summary>
         /// <param name="aString">The string to be tested</param>
         /// <param name="message">The message to display in case of failure</param>
@@ -97,8 +103,9 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Assert that an array, list or other collection is not empty. Returns without throwing an exception when
-        /// inside a multiple assert block.
+        /// Asserts that an array, list, collection or enumeration is 
+        /// not empty. If it is empty a <see cref="TCLite.AssertionException"/>
+        /// is thrown, ending the running test and  reporting it as a Failure.
         /// </summary>
         /// <param name="collection">An array, list or other collection implementing ICollection</param>
         /// <param name="message">The message to display in case of failure</param>

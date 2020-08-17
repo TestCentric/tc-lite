@@ -56,7 +56,7 @@ Task("Deploy")
 
         GitAddAll(DEPLOY_DIR);
         GitCommit(DEPLOY_DIR, UserId, UserEmail, "Deploy site to GitHub Pages");
-        GitPush(DEPLOY_DIR, UserId, GitHubPassword);
+        GitPush(DEPLOY_DIR, UserId, GitHubPassword, DEPLOY_BRANCH);
     });
 
 Task("Default")

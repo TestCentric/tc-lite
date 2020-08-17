@@ -8,8 +8,9 @@ namespace TCLite
     public abstract partial class Assert
     {
         /// <summary>
-        /// Verifies that two instances of a type are equal. If they are not, then an 
-        /// <see cref="AssertionException"/> is thrown.
+        /// Asserts that two instances of a type are equal. If not,
+        /// then a <see cref="TCLite.AssertionException"/> is thrown, ending
+        /// the test and reporting it as a Failure.
         /// </summary>
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
@@ -21,12 +22,14 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Verifies that two instances of a type are equal. If they are not, then an 
-        /// <see cref="AssertionException"/> is thrown.
+        /// Asserts that two instances of a type are equal. If not,
+        /// then a <see cref="TCLite.AssertionException"/> is thrown, ending
+        /// the test and reporting it as a Failure.
         /// </summary>
         /// <remarks>
-        /// This overload is used when the compiler can't determine the proper types
-        /// for the generic overload.
+        /// This overload is used when two different types are compared
+        /// or if the compiler can't determine the proper types for
+        /// the generic overload.
         /// </remarks>
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
@@ -38,10 +41,9 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Verifies that two doubles are equal considering a delta. If the
-        /// expected value is infinity then the delta value is ignored. If 
-        /// they are not equal then an <see cref="AssertionException"/> is
-        /// thrown.
+        /// Asserts that two doubles are equal within the specified
+        /// tolerance. If not, a <see cref="TCLite.AssertionException"/> is
+        /// thrown, ending the test and reporting it as a Failure.
         /// </summary>
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
@@ -54,11 +56,10 @@ namespace TCLite
             AssertDoublesAreEqual(expected, actual, delta, message, args);
         }
 
-         /// <summary>
-        /// Verifies that two doubles are equal considering a delta. If the
-        /// expected value is infinity then the delta value is ignored. If 
-        /// they are not equal then an <see cref="AssertionException"/> is
-        /// thrown.
+        /// <summary>
+        /// Asserts that two doubles are equal within the specified
+        /// tolerance. If not, a <see cref="TCLite.AssertionException"/> is
+        /// thrown, ending the test and reporting it as a Failure.
         /// </summary>
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
@@ -72,8 +73,9 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Verifies that two instances of a type are not equal. If they are equal, then an 
-        /// <see cref="AssertionException"/> is thrown.
+        /// Asserts that two instances of a type are not equal. If equal,
+        /// a <see cref="TCLite.AssertionException"/> is thrown, ending
+        /// the test and reporting it as a Failure.
         /// </summary>
         /// <param name="expected">The expected value</param>
         /// <param name="actual">The actual value</param>
@@ -85,8 +87,9 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Asserts that two objects refer to the same object. If they
-        /// are not the same an <see cref="AssertionException"/> is thrown.
+        /// Asserts that two references refer to the same instance of
+        /// a Type. If not, a <see cref="TCLite.AssertionException"/> is thrown,
+        /// ending the test and reporting it as a Failure.
         /// </summary>
         /// <param name="expected">The expected object</param>
         /// <param name="actual">The actual object</param>
@@ -99,8 +102,9 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Asserts that two objects do not refer to the same object. If they
-        /// are the same an <see cref="AssertionException"/> is thrown.
+        /// Asserts that two references do not refer to the same instance.
+        /// If they do, a <see cref="TCLite.AssertionException"/> is thrown,
+        /// ending the test and reporting it as a Failure.
         /// </summary>
         /// <param name="expected">The expected object</param>
         /// <param name="actual">The actual object</param>
@@ -122,7 +126,7 @@ namespace TCLite
         /// the expected and the actual</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        protected static void AssertDoublesAreEqual(double expected, double actual, double delta, string message, object[] args)
+        static void AssertDoublesAreEqual(double expected, double actual, double delta, string message, object[] args)
         {
             if (double.IsNaN(expected) || double.IsInfinity(expected))
                 Assert.That(actual, Is.EqualTo(expected), message, args);

@@ -13,13 +13,13 @@ var OUTPUT_DIR = PROJECT_DIR + "output/";
 var WEB_DIR = PROJECT_DIR + "web/";
 var WEB_OUTPUT_DIR = WEB_DIR + "output/";
 var WEB_DEPLOY_DIR = System.IO.Path.GetFullPath("../tc-lite.deploy/");
+const string WEB_DEPLOY_BRANCH = "gh-pages";
 
 var NUGET_ID = "TCLite";
 var VERSION = "0.1.1";
 
 const string WYAM = "wyam";
 const string PROJECT_URI = "https://github.com/TestCentric/tc-lite";
-const string DEPLOY_BRANCH = "gh-pages";
 
 const string USER_ID = "USER_ID";
 const string USER_EMAIL = "USER_EMAIL";
@@ -126,14 +126,14 @@ Task("DeployWebsite")
         GitClone(PROJECT_URI, WEB_DEPLOY_DIR, new GitCloneSettings()
         {
             Checkout = true,
-            BranchName = DEPLOY_BRANCH
+            BranchName = WEB_DEPLOY_BRANCH
         });
 
         CopyDirectory(WEB_OUTPUT_DIR, WEB_DEPLOY_DIR);
 
         GitAddAll(WEB_DEPLOY_DIR);
         GitCommit(WEB_DEPLOY_DIR, UserId, UserEmail, "Deploy site to GitHub Pages");
-        GitPush(WEB_DEPLOY_DIR, UserId, GitHubPassword);
+        GitPush(WEB_DEPLOY_DIR, UserId, GitHubPassword, WEB_DEPLOY_BRANCH);
     });
 
 Task("Test")

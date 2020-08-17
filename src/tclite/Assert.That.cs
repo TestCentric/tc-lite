@@ -10,11 +10,10 @@ namespace TCLite
 {
     public abstract partial class Assert
     {
-        #region Assert.That(bool...)
-
         /// <summary>
-        /// Asserts that a condition is true. If the condition is false the method throws
-        /// an <see cref="AssertionException"/>.
+        /// Asserts that a condition is true. If the condition is false
+        /// the method throws a <see cref="TCLite.AssertionException"/>,
+        /// ending the running test and reporting it as a Failure.
         /// </summary> 
         /// <param name="condition">The evaluated condition</param>
         /// <param name="message">The message to display if the condition is false</param>
@@ -23,28 +22,6 @@ namespace TCLite
         {
             Assert.That(condition, Is.True, message, args);
         }
-
-        /// <summary>
-        /// Apply a constraint to a referenced value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
-        /// </summary>
-        /// <param name="actual">The actual value to test</param>
-        /// <param name="expression">A Constraint expression to be applied</param>
-        /// <param name="message">The message that will be displayed on failure</param>
-        /// <param name="args">Arguments to be used in formatting the message</param>
-        static public void That(ref bool actual, IResolveConstraint expression, string message=null, params object[] args)
-        {
-            IConstraint constraint = expression.Resolve();
-
-            IncrementAssertCount();
-            var result = constraint.ApplyTo(ref actual);
-            if (!result.IsSuccess)
-                ReportFailure(result, message, args);
-        }
-
-        #endregion
-
-        #region Assert.That<T>
 
         /// <summary>
         /// Apply a constraint to an actual value, succeeding if the constraint
@@ -65,8 +42,9 @@ namespace TCLite
         }
 
         /// <summary>
-        /// Apply a constraint to an actual value, succeeding if the constraint
-        /// is satisfied and throwing an assertion exception on failure.
+        /// Apply a constraint to a <see cref="TCLite.ActualValueDelegate"/>,
+        /// succeeding if the constraint is satisfied and throwing an
+        /// assertion exception on failure.
         /// </summary>
         /// <param name="del">An ActualValueDelegate returning the value to be tested</param>
         /// <param name="expr">A Constraint expression to be applied</param>
@@ -99,7 +77,5 @@ namespace TCLite
             if (!result.IsSuccess)
                 ReportFailure(result, message, args);
         }
-
-        #endregion
     }
 }
