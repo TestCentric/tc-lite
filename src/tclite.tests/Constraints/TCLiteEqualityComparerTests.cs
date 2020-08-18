@@ -290,7 +290,7 @@ namespace TCLite.Constraints
             Assert.That(enumeration.EnumeratorsDisposed);
         }
 
-        [TestCaseSource(nameof(GetRecursiveContainsTestCases))]
+        [TestCaseData(nameof(GetRecursiveContainsTestCases))]
         public void SelfContainedItemFoundInCollection<T>(T x, ICollection y)
         {
             var equalityComparer = new TCLiteEqualityComparer();
@@ -303,7 +303,7 @@ namespace TCLite.Constraints
             // NYI: Assert.That(y, Does.Contain(x));
         }
 
-        [TestCaseSource(nameof(GetRecursiveComparerTestCases))]
+        [TestCaseData(nameof(GetRecursiveComparerTestCases))]
         public void SelfContainedItemDoesntRecurseForever<T>(T x, ICollection y)
         {
             var equalityComparer = new TCLiteEqualityComparer();

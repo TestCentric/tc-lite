@@ -19,7 +19,7 @@ namespace TCLite
     /// or any other class.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
-    public class TestCaseDataAttribute : TCLiteAttribute, ITestCaseSource, IImplyFixture
+    public class TestCaseDataAttribute : TCLiteAttribute, ITestCaseFactory, IImplyFixture
     {
         /// <summary>
         /// Construct with the name of the static method, property or field that will provide data

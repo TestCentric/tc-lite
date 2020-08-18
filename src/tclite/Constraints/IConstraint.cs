@@ -6,7 +6,7 @@
 namespace TCLite.Constraints
 {
     /// <summary>
-    /// Interface for all constraints
+    /// Interface implemented by all constraints
     /// </summary>
     public interface IConstraint
     {

@@ -109,7 +109,7 @@ namespace TCLite.Constraints
             }
         }
 
-        public class IgnoreCaseDataProvider : ITestCaseSource
+        public class IgnoreCaseDataProvider : ITestCaseFactory
         {
             public IEnumerable<ITestCaseData> GetTestCasesFor(MethodInfo method)
             {

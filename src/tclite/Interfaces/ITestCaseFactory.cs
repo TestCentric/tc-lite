@@ -9,13 +9,13 @@ using System.Reflection;
 namespace TCLite.Interfaces
 {
     /// <summary>
-    /// ITestCaseSource interface is implemented by Types that know how to 
+    /// ITestCaseFactory interface is implemented by Types that know how to 
     /// return a set of ITestCaseData items for use by a test method.
     /// </summary>
     /// <remarks>
     /// This method is defined differently depending on the version of .NET.
     /// </remarks>
-    public interface ITestCaseSource
+    public interface ITestCaseFactory
     {
         /// <summary>
         /// Returns a set of ITestCaseDataItems for use as arguments

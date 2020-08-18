@@ -14,7 +14,7 @@ namespace TCLite.Constraints
     /// that use an IEqualityComparer, IEqualityComparer&lt;T&gt;
     /// or a ComparisonAdapter.
     /// </summary>
-    public abstract class EqualityAdapter
+    internal abstract class EqualityAdapter
     {
         /// <summary>
         /// Compares two objects, returning true if they are equal

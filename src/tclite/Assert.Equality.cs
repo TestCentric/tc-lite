@@ -126,7 +126,7 @@ namespace TCLite
         /// the expected and the actual</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        static void AssertDoublesAreEqual(double expected, double actual, double delta, string message, object[] args)
+        private static void AssertDoublesAreEqual(double expected, double actual, double delta, string message, object[] args)
         {
             if (double.IsNaN(expected) || double.IsInfinity(expected))
                 Assert.That(actual, Is.EqualTo(expected), message, args);

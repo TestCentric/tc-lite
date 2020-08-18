@@ -30,7 +30,7 @@ namespace TCLite.Constraints
             Assert.That(Constraint.ToString(), Is.EqualTo(ExpectedRepresentation));
         }
 
-        [TestCaseSource("SuccessData")]
+        [TestCaseData("SuccessData")]
         public void SucceedsWithGoodValues(TExpected value)
         {
             var result = Constraint.ApplyTo(value);
@@ -42,7 +42,7 @@ namespace TCLite.Constraints
             }
         }
 
-        [TestCaseSource("FailureData")]
+        [TestCaseData("FailureData")]
         public void FailsWithBadValues(TExpected badValue, string message)
         {
             string NL = Environment.NewLine;
@@ -57,7 +57,7 @@ namespace TCLite.Constraints
                 TextMessageWriter.Pfx_Actual + message + NL));
         }
 
-        [TestCaseSource("InvalidData")]
+        [TestCaseData("InvalidData")]
         public void InvalidDataThrowsException(object value, Type exType)
         {
             Assert.Throws(exType, () =>

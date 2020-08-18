@@ -11,7 +11,7 @@ namespace TCLite
     /// Class used to guard against unexpected argument values
     /// by throwing an appropriate exception.
     /// </summary>
-    public class Guard
+    internal class Guard
     {
         /// <summary>
         /// Throws an exception if an argument is null

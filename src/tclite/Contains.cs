@@ -7,7 +7,7 @@ namespace TCLite
 {
     /// <summary>
     /// Helper class exposing properties and methods that form
-    /// part of the Constraint syntax in the primary namespace.
+    /// part of the Constraint syntax.
     /// </summary>
     /// <remarks>
     /// The actual syntactic elements are defined in the base class,

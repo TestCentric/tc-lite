@@ -11,7 +11,7 @@ namespace TCLite
     /// </summary>
     /// <remarks>
     /// The actual syntactic elements are defined in the base class,
-    /// Contains_Syntax, a partial class, with individual elements
+    /// Has_Syntax, a partial class, with individual elements
     /// distributed across multiple files.
     /// </remarks>
     public partial class Has : Constraints.Has_Syntax

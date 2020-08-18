@@ -18,7 +18,7 @@ namespace TCLite
     /// tests, it provides the arguments to be used.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited=false)]
-    public class TestCaseAttribute : DataParamAttribute, ITestCaseData, ITestCaseSource, IImplyFixture
+    public class TestCaseAttribute : DataParamAttribute, ITestCaseData, ITestCaseFactory, IImplyFixture
     {
         /// <summary>
         /// Construct a TestCaseAttribute with a list of arguments.

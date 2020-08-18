@@ -29,13 +29,13 @@ namespace TCLite.Constraints
             new TestCaseData( double.NaN, "NaN" ),
             new TestCaseData( double.PositiveInfinity, "Infinity" ) };
 
-        [TestCaseSource(nameof(SuccessData))]
+        [TestCaseData(nameof(SuccessData))]
         public void ApplyConstraintSucceeds<T>(T actual)
         {
             Assert.That(_constraint.ApplyTo(actual).IsSuccess);
         }
 
-        [TestCaseSource(nameof(FailureData))]
+        [TestCaseData(nameof(FailureData))]
         public void ApplyConstraintFails<T>(T actual, string message)
         {
             Assert.IsFalse(_constraint.ApplyTo(actual).IsSuccess);

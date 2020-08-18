@@ -10,9 +10,14 @@ using TCLite.Constraints;
 namespace TCLite
 {
     /// <summary>
-    /// Helper class with properties and methods that supply
-    /// a number of constraints used in Asserts.
+    /// Helper class exposing properties and methods that form
+    /// part of the Constraint syntax.
     /// </summary>
+    /// <remarks>
+    /// The actual syntactic elements are defined in the base class,
+    /// Is_Syntax, a partial class, with individual elements
+    /// distributed across multiple files.
+    /// </remarks>
     public partial class Is : Constraints.Is_Syntax
     {
 #if NYI // BinarySerializable

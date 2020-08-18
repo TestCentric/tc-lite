@@ -76,7 +76,7 @@ namespace TCLite.Constraints
 
         /// <summary>
         /// Validate the actual value argument based on what the
-        /// particular constraint allows.virtual The default 
+        /// particular constraint allows. The default 
         /// implementation does nothing, implying that the constraint
         /// can handle any Type as well as null values.
         /// </summary>

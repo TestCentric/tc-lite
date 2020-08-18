@@ -18,7 +18,7 @@ namespace TCLite
     /// Since this is the default, the attribute is optional.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public abstract class CombiningStrategyAttribute : TCLiteAttribute, ITestCaseSource, IApplyToTest, IImplyFixture
+    public abstract class CombiningStrategyAttribute : TCLiteAttribute, ITestCaseFactory, IApplyToTest, IImplyFixture
     {
         private readonly TCLiteTestCaseBuilder _builder = new TCLiteTestCaseBuilder();
 

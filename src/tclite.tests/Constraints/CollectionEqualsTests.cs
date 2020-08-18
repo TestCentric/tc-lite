@@ -82,7 +82,7 @@ namespace TCLite.Constraints
             Assert.That(expected, Is.EqualTo(actual).IgnoreCase);
         }
 
-        private class IgnoreCaseData : ITestCaseSource
+        private class IgnoreCaseData : ITestCaseFactory
         {
             public IEnumerable<ITestCaseData> GetTestCasesFor(MethodInfo method)
             {

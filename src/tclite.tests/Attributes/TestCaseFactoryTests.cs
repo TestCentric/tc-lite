@@ -26,6 +26,27 @@ namespace TCLite.Attributes
             return n / d;
         }
 
+        [TestCase]
+        public void InvalidFactoryReturnsOneNonRunnableTestCase()
+        {
+            var attr = new TestCaseFactoryAttribute(typeof(NotValidAsATestCaseFactory));
+            var method = GetType().GetMethod(nameof(DummyTest));
+
+            int count = 0;
+            foreach(var testCase in attr.GetTestCasesFor(method))
+            {
+                Assert.That(count++ == 0, "More than one test case returned");
+
+                Assert.That(testCase.RunState, Is.EqualTo(RunState.NotRunnable));
+                Assert.That(testCase.Properties.Get(PropertyNames.SkipReason),
+                    Contains.Substring("not a test case factory"));
+            }
+            
+            Assert.That(count, Is.EqualTo(1), "No test cases were returned");
+        }
+
+        public void DummyTest(int x, int y) { }
+
 #if NYI // TestBuilder
         [TestCase]
         public void SourceInAnotherClassPassingParamsToField()
@@ -168,7 +189,7 @@ namespace TCLite.Attributes
 
         #region Test Case Factories
 
-        private class DivideDataProvider : ITestCaseSource
+        private class DivideDataProvider : ITestCaseFactory
         {
             public IEnumerable<ITestCaseData> GetTestCasesFor(MethodInfo method)
             {
@@ -177,7 +198,7 @@ namespace TCLite.Attributes
             }
         }
 
-        public class DivideDataProviderWithExpectedResult : ITestCaseSource
+        public class DivideDataProviderWithExpectedResult : ITestCaseFactory
         {
             public IEnumerable<ITestCaseData> GetTestCasesFor(MethodInfo method)
             {
@@ -185,6 +206,10 @@ namespace TCLite.Attributes
                 yield return new TestCaseData(12, 2).Returns(6);
                 yield return new TestCaseData(12, 4).Returns(3);
             }
+        }
+
+        public class NotValidAsATestCaseFactory
+        {
         }
 
         #endregion

@@ -71,8 +71,8 @@ namespace TCLite.Builders
             List<TestMethod> testCases = new List<TestMethod>();
             var name = method.Name; // For Debugging
 
-            List<ITestCaseSource> sources = new List<ITestCaseSource>(
-                (ITestCaseSource[])method.GetCustomAttributes(typeof(ITestCaseSource), false));
+            List<ITestCaseFactory> sources = new List<ITestCaseFactory>(
+                (ITestCaseFactory[])method.GetCustomAttributes(typeof(ITestCaseFactory), false));
 
             // See if we need to add a CombinatorialAttribute for parameterized data
             var parameters = method.GetParameters();
@@ -84,7 +84,7 @@ namespace TCLite.Builders
                     sources.Add(new CombinatorialAttribute());
             }
 
-            foreach (ITestCaseSource source in sources)
+            foreach (ITestCaseFactory source in sources)
                 foreach (ITestCaseData testCase in source.GetTestCasesFor(method))
                 {
                     var parameterSet = testCase as TestCaseParameters;

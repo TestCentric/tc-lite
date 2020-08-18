@@ -17,7 +17,7 @@ namespace TCLite
     /// provide test cases for a test method.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
-    public class TestCaseFactoryAttribute : TCLiteAttribute, ITestCaseSource, IImplyFixture
+    public class TestCaseFactoryAttribute : TCLiteAttribute, ITestCaseFactory, IImplyFixture
     {
         /// <summary>
         /// Construct with a Type
@@ -25,10 +25,14 @@ namespace TCLite
         /// <param name="factoryType">The type that will provide data</param>
         public TestCaseFactoryAttribute(Type factoryType)
         {
-            Guard.ArgumentValid(
-                typeof(ITestCaseSource).IsAssignableFrom(factoryType),
-                $"Type {factoryType.Name} is not a test case factory", nameof(factoryType));
+            Guard.ArgumentNotNull(factoryType, nameof(factoryType));
+
             FactoryType = factoryType;
+            // NOTE: If the provided Type is not an ITestCaseFactory,
+            // then Factory will be set to null. We don't generate an
+            // error here because handling it in the GetTestCasesFor
+            // gives much better error reporting.
+            Factory = Reflect.Construct(FactoryType) as ITestCaseFactory;
         }
 
         /// <summary>
@@ -40,17 +44,7 @@ namespace TCLite
         /// The factory itself
         /// </summary>
         /// <value></value>
-        public ITestCaseSource Factory
-        {
-            get
-            {
-                if (_factory == null)
-                    _factory = (ITestCaseSource)Reflect.Construct(FactoryType);
-
-                return _factory;
-            }
-        }
-        private ITestCaseSource _factory;
+        public ITestCaseFactory Factory { get; }
 
         /// <summary>
         /// Gets or sets the category associated with this test.
@@ -70,7 +64,19 @@ namespace TCLite
         {
             List<ITestCaseData> data = new List<ITestCaseData>();
 
-            if (Factory != null)
+            if (Factory == null)
+            {
+                // This can only happen if the Type passed to the attribute
+                // constructor is not an ITestCaseFactory. We generate and
+                // return a single non-runnable (fake) TestCase and return
+                // it so that the user knows about the error.
+                var fakeTestCase = new TestCaseParameters();
+                fakeTestCase.RunState = RunState.NotRunnable;
+                fakeTestCase.Properties.Set(PropertyNames.SkipReason,
+                    $"The Type {FactoryType.Name} is not a test case factory");
+                data.Add(fakeTestCase);
+            }
+            else
             {
                 foreach (var testCase in Factory.GetTestCasesFor(method))
                 {

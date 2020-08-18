@@ -22,8 +22,7 @@ namespace TCLite
     /// </para>
     /// <para>
     /// This class is unsealed and may be inherited by custom user attributes that take test arguments
-    /// directly. It should NOT be used for classes similar to <see cref="TestCaseSourceAttribute">,
-    /// which provide test arguments indirectly.
+    /// directly.
     /// </para>
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Parameter, AllowMultiple = true, Inherited = false)]

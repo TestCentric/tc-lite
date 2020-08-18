@@ -7,6 +7,8 @@ the required arguments will be provided. The attribute additionally identifies t
 test method. The data is kept separate from the test itself and may be used by multiple test
 methods. See [Test Cases][1] for a general introduction to tests with arguments.
 
+# Syntax
+
 ```c#
 public TestCaseDataAttribute(string sourceName);
 public TestCaseDataAttribute(Type sourceType, string sourceName);
@@ -263,8 +265,6 @@ implementations for greater efficiency.
 
 * **Category** is used to assign one or more categories to every test case returned.
 If multiple categories are specified, they should be separated by commas.
-
-# See Also
 
 * [Overview of Test Cases][1]
 * [TestCaseData API][2]

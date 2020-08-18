@@ -77,7 +77,7 @@ namespace TCLite.Constraints
         /// test for equality. They are applied to members of
         /// collections, in place of NUnit's own logic.
         /// </summary>
-        public IList<EqualityAdapter> ExternalComparers { get; } = new EqualityAdapterList();
+        internal IList<EqualityAdapter> ExternalComparers { get; } = new EqualityAdapterList();
 
         /// <summary>
         /// Gets the list of failure points for the last Match performed.

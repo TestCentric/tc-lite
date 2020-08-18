@@ -118,7 +118,7 @@ namespace TCLite.Constraints
     public partial class Has_Syntax
     {
         /// <summary>
-        /// Returns a ConstraintExpression, which will apply
+        /// Returns a <see cref="TCLite.ItemsConstraintExpression", which will apply
         /// the following constraint to all members of a collection,
         /// succeeding only if a specified number of them succeed.
         /// </summary>
@@ -128,7 +128,7 @@ namespace TCLite.Constraints
         }
 
         /// <summary>
-        /// Returns a <see cref="ItemsConstraintExpression"/> which will apply
+        /// Returns a <see cref="TCLite.ItemsConstraintExpression"/> which will apply
         /// the following constraint to only one member of the collection,
         /// and fail if none or more than one match occurs.
         /// </summary>

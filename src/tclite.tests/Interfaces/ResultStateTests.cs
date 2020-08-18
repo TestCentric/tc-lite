@@ -79,7 +79,7 @@ namespace TCLite.Interfaces
             new TestCaseData(new ResultState(TestStatus.Failed), new ResultState(TestStatus.Failed)),
         };
 
-        [TestCaseSource(nameof(SuccessData))]
+        [TestCaseData(nameof(SuccessData))]
         public void TestEquality(ResultState expected, ResultState actual)
         {
             Assert.AreEqual(expected, actual);
@@ -93,7 +93,7 @@ namespace TCLite.Interfaces
             new TestCaseData(new ResultState(TestStatus.Passed), null)
         };
 
-        [TestCaseSource(nameof(FailureData))]
+        [TestCaseData(nameof(FailureData))]
         public void TestInequality(ResultState expected, ResultState actual)
         {
             Assert.AreNotEqual(expected, actual);
@@ -116,7 +116,7 @@ namespace TCLite.Interfaces
             new TestCaseData(ResultState.Cancelled, TestStatus.Failed, "Cancelled"),
         };
 
-        [TestCaseSource(nameof(StandardResults))]
+        [TestCaseData(nameof(StandardResults))]
         public void StandardResultTests(ResultState resultState, TestStatus status, string label)
         {
             Assert.AreEqual(status, resultState.Status, "Status not correct.");

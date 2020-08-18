@@ -3,23 +3,9 @@ Description: Identifies a test method and optionally provides a set of arguments
 ---
 
 `TestCaseAttribute` identifies a method as a test. In **TC-Lite** it is used for both
-simple and parameterized tests.
-
-# Test Methods
-
-A test method must be public and may be an instance method or a static method. It may
-not be abstract, however.
-
-If the test method returns a value, you must provide the expected return value using the
-`ExpectedResult` named parameter. This expected return value will be checked for equality with the return value of the test method when it is run.
-
-If the test method takes arguments, you must provide the required number and type of arguments
-on the attribute. If it takes none, you must not provide any.
-
-If any of the above requirements are violated, a non-runnable test is generated and reported,
-causing your test run to fail.
-
-<!-- TODO: Add info about async tests -->
+simple and parameterized tests. In the case of parameterized tests, the arguments
+are provided directly by the attribute constructor. See [Test Cases][1] for a general
+introduction to test cases.
 
 # Examples
 
@@ -81,19 +67,6 @@ namespace MyTests
   }
 }
 ```
-
-# Multiple Attributes
-
-As the example shows, `[TestCase]` may be applied to a method more than once, generating a
-different test case each time. Normally, all the attributes will have the same number of
-arguments provided. The only exception would be for methods whose last parameter is a
-`params` array.
-
-Individual test cases are executed in an indeterminate order, which may
-vary between different compilers or different .NET platforms. In keeping with **TC-Lite**'s
-design as a microtest framework, there is no facility for controlling the order of tests.
-
-In the case of a method that takes no arguments, `[TestCase]` may appear only once.
 
 # Argument Types
 
