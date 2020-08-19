@@ -54,6 +54,6 @@ Note that it is not possible to pass parameters to the source, even if the sourc
 * [TestCaseData Attribute][2]
 * [TestCase Attribute][3]
 
-[1]: /docs/Concepts/test-cases.html
-[2]: /docs/Features/testcasedata-attribute.html
-[3]: /docs/Featuers/testcase-attribute.html
+[1]: /tc-lite/docs/Concepts/test-cases.html
+[2]: /tc-lite/docs/Features/Attributes/testcasedata-attribute.html
+[3]: /tc-lite/docs/Features/Attributes/testcase-attribute.html

@@ -96,8 +96,8 @@ run.
 
 * [Overview of Test Cases][1]
 * [TestCaseData Attribute][2]
-* [TestCaseSource Attribute][3]
+* [TestCaseFactory Attribute][3]
 
-[1]: /docs/tclite/Concepts/test-cases.html
-[2]: /docs/tclite/Features/Attributes/testcasedata-attribute.html
-[3]: /docs/tclite/Features/Attributes/testcasesource-attribute.html
+[1]: /tc-lite/docs/Concepts/test-cases.html
+[2]: /tc-lite/docs/Features/Attributes/testcasedata-attribute.html
+[3]: /tc-lite/docs/Features/Attributes/testcasefactory-attribute.html

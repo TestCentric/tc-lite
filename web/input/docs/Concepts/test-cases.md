@@ -112,11 +112,11 @@ controlling the order of tests.
 Note that `[TestCase]` without arguments may appear only once, and only only on a method
 that takes no arguments,
 
-[1]: /docs/Features/Attributes/testcase-attribute.html
-[2]: /docs/Features/Attributes/testcasedata-attribute.html
-[3]: /docs/Features/Attributes/testcasefactory-attribute.html
-[4]: /docs/Features/Attributes/random-attribute.html
-[5]: /docs/Features/Attributes/range-attribute.html
-[6]: /docs/Features/Attributes/values-attribute.html
-[7]: /docs/Features/Attributes/valuesource-attribute.html
-[8]: /docs/Features/Attributes/combinatorial-attribute.html
+[1]: /tc-lite/docs/Features/Attributes/testcase-attribute.html
+[2]: /tc-lite/docs/Features/Attributes/testcasedata-attribute.html
+[3]: /tc-lite/docs/Features/Attributes/testcasefactory-attribute.html
+[4]: /tc-lite/docs/Features/Attributes/random-attribute.html
+[5]: /tc-lite/docs/Features/Attributes/range-attribute.html
+[6]: /tc-lite/docs/Features/Attributes/values-attribute.html
+[7]: /tc-lite/docs/Features/Attributes/valuesource-attribute.html
+[8]: /tc-lite/docs/Features/Attributes/combinatorial-attribute.html

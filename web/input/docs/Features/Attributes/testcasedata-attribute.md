@@ -266,12 +266,14 @@ implementations for greater efficiency.
 * **Category** is used to assign one or more categories to every test case returned.
 If multiple categories are specified, they should be separated by commas.
 
+# See Also
+
 * [Overview of Test Cases][1]
 * [TestCaseData API][2]
 * [TestCase Attribute][3]
-* [TestCaseSource Attribute][4]
+* [TestCaseFactory Attribute][4]
 
-[1]: /docs/tclite/Concepts/test-cases.html
-[2]: /api/TCLite/TestCaseData/
-[3]: /docs/tclite/Features/Attributes/testcase-attribute.html
-[4]: /docs/tclite/Features/Attributes/testcasesource-attribute.html
+[1]: /tc-lite/docs/Concepts/test-cases.html
+[2]: /tc-lite/api/TestCaseData/
+[3]: /tc-lite/docs/Features/Attributes/testcase-attribute.html
+[4]: /tc-lite/docs/Features/Attributes/testcasefactory-attribute.html
