@@ -71,39 +71,5 @@ namespace TCLite.Constraints
         }
 
         #endregion
-
-        #region After Modifier
-
-
-#if NYI // DelayedConstraint
-        /// <summary>
-        /// Returns a DelayedConstraint with the specified delay time.
-        /// </summary>
-        /// <param name="delayInMilliseconds">The delay in milliseconds.</param>
-        /// <returns></returns>
-        public DelayedConstraint After(int delayInMilliseconds)
-        {
-            return new DelayedConstraint(
-                Builder == null ? this : Builder.Resolve(),
-                delayInMilliseconds);
-        }
-
-        /// <summary>
-        /// Returns a DelayedConstraint with the specified delay time
-        /// and polling interval.
-        /// </summary>
-        /// <param name="delayInMilliseconds">The delay in milliseconds.</param>
-        /// <param name="pollingInterval">The interval at which to test the constraint.</param>
-        /// <returns></returns>
-        public DelayedConstraint After(int delayInMilliseconds, int pollingInterval)
-        {
-            return new DelayedConstraint(
-                Builder == null ? this : Builder.Resolve(),
-                delayInMilliseconds,
-                pollingInterval);
-        }
-#endif
-
-        #endregion
     }
 }

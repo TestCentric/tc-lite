@@ -20,26 +20,6 @@ namespace TCLite
     /// </remarks>
     public partial class Is : Constraints.Is_Syntax
     {
-#if NYI // BinarySerializable
-        /// <summary>
-        /// Returns a constraint that tests whether an object graph is serializable in binary format.
-        /// </summary>
-        public static BinarySerializableConstraint BinarySerializable
-        {
-            get { return new BinarySerializableConstraint(); }
-        }
-#endif
-
-#if NYI // XmlSerializable
-        /// <summary>
-        /// Returns a constraint that tests whether an object graph is serializable in xml format.
-        /// </summary>
-        public static XmlSerializableConstraint XmlSerializable
-        {
-            get { return new XmlSerializableConstraint(); }
-        }
-#endif
-
 #if NYI // AssignableFrom
         /// <summary>
         /// Returns a constraint that tests whether the actual value

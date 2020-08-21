@@ -434,7 +434,7 @@ namespace TCLite.Assertions
 
             var ex = Assert.Throws<AssertionException>(() => Assert.AreEqual(d1, d2, tol));
 
-            Assert.That(ex.Message, Does.Contain("+/- 0.005"));
+            Assert.That(ex.Message, Contains.Substring("+/- 0.005"));
         }
 
         [TestCase]
@@ -446,7 +446,7 @@ namespace TCLite.Assertions
 
             var ex = Assert.Throws<AssertionException>(() => Assert.AreEqual( f1, f2, tol ));
 
-            Assert.That(ex.Message, Does.Contain( "+/- 0.001"));
+            Assert.That(ex.Message, Contains.Substring( "+/- 0.001"));
         }
 
         [TestCase, DefaultTolerance(0.005)]
@@ -456,7 +456,7 @@ namespace TCLite.Assertions
             double d2 = 0.12;
 
             var ex = Assert.Throws<AssertionException>(() => Assert.AreEqual(d1, d2));
-            Assert.That(ex.Message, Does.Contain("+/- 0.005"));
+            Assert.That(ex.Message, Contains.Substring("+/- 0.005"));
         }
 
         [TestCase, DefaultTolerance(0.005)]
@@ -469,7 +469,6 @@ namespace TCLite.Assertions
             Assert.That(ex.Message.IndexOf("+/-") == -1);
         }
 
-#if WIP
         [TestCase]
         public void IEquatableSuccess_OldSyntax()
         {
@@ -478,7 +477,6 @@ namespace TCLite.Assertions
             Assert.AreEqual(1, a);
             Assert.AreEqual(a, 1);
         }
-#endif
 
         [TestCase]
         public void IEquatableSuccess_ConstraintSyntax()

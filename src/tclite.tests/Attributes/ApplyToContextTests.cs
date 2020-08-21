@@ -24,7 +24,7 @@ namespace TCLite.Attributes
             Assert.That(tolerance.Amount, Is.EqualTo(0.5));
         }
 
-#if NYI
+#if NYI // SingleThreaded
         [TestCase]
         public void SingleThreadedAttribute()
         {
@@ -32,7 +32,9 @@ namespace TCLite.Attributes
             attr.ApplyToContext(_context);
             Assert.True(_context.IsSingleThreaded);
         }
+#endif
 
+#if NYI // SetCulture, SetUICulture
         [TestCase]
         public void SetCultureAttribute()
         {
@@ -50,7 +52,7 @@ namespace TCLite.Attributes
         }
 #endif        
 
-#if THREAD_ABORT
+#if NYI // Timeout
         [TestCase]
         public void TimeoutAttribute()
         {

@@ -16,7 +16,7 @@ namespace TCLite
         /// <param name="actual">The actual value</param>
         /// <param name="message">The message to display in case of failure</param>
         /// <param name="args">Array of objects to be used in formatting the message</param>
-        public static void AreEqual<T>(T expected, T actual, string message = null, params object[] args)
+        public static void AreEqual<T1,T2>(T1 expected, T2 actual, string message = null, params object[] args)
         {
             Assert.That(actual, Is.EqualTo(expected), message, args);
         }

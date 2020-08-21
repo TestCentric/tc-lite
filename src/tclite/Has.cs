@@ -18,7 +18,7 @@ namespace TCLite
     {
         // TODO: Move these to the relevant files once those files are created.
 
-#if NYI // Property, Length, Count, Message, InnerException, Attribute
+#if NYI // Attribute
         #region Attribute
 
         /// <summary>

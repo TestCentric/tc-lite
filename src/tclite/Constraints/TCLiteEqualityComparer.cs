@@ -144,22 +144,6 @@ namespace TCLite.Constraints
             return null;
         }
 
-        // private bool DictionariesEqual(IDictionary expected, IDictionary actual, ref Tolerance tolerance)
-        // {
-        //     if (expected.Count != actual.Count)
-        //         return false;
- 
-        //     CollectionTally tally = new CollectionTally(this, expected.Keys);
-        //     if (!tally.TryRemove(actual.Keys) || tally.Count > 0)
-        //         return false;
-
-        //     foreach (object key in expected.Keys)
-        //         if (!ObjectsEqual(expected[key], actual[key], ref tolerance))
-        //             return false;
- 
-        //     return true;
-        // }
-
         public bool CheckRecursion(IEnumerable expected, IEnumerable actual)
         {
             return _recursionDetector.CheckRecursion(expected, actual);
@@ -198,83 +182,6 @@ namespace TCLite.Constraints
                 }
             }
         }
-
-        // /// <summary>
-        // /// Method to compare two DirectoryInfo objects
-        // /// </summary>
-        // /// <param name="expected">first directory to compare</param>
-        // /// <param name="actual">second directory to compare</param>
-        // /// <returns>true if equivalent, false if not</returns>
-        // private static bool DirectoriesEqual(DirectoryInfo expected, DirectoryInfo actual)
-        // {
-        //     // Do quick compares first
-        //     if (expected.Attributes != actual.Attributes ||
-        //         expected.CreationTime != actual.CreationTime ||
-        //         expected.LastAccessTime != actual.LastAccessTime)
-        //     {
-        //         return false;
-        //     }
-
-        //     // TODO: This is temporary and will generate false negatives,
-        //     return expected.FullName.Replace("\\", "/") == actual.FullName.Replace("\\", "/");
-        //     // TODO: Find a cleaner way to do this
-        //     //return new SamePathConstraint(expected.FullName).Matches(actual.FullName);
-        // }
-
-        // private bool StreamsEqual(Stream expected, Stream actual)
-        // {
-        //     if (expected == actual) return true;
-
-        //     if (!expected.CanRead)
-        //         throw new ArgumentException("Stream is not readable", "expected");
-        //     if (!actual.CanRead)
-        //         throw new ArgumentException("Stream is not readable", "actual");
-        //     if (!expected.CanSeek)
-        //         throw new ArgumentException("Stream is not seekable", "expected");
-        //     if (!actual.CanSeek)
-        //         throw new ArgumentException("Stream is not seekable", "actual");
-
-        //     if (expected.Length != actual.Length) return false;
-
-        //     byte[] bufferExpected = new byte[BUFFER_SIZE];
-        //     byte[] bufferActual = new byte[BUFFER_SIZE];
-
-        //     BinaryReader binaryReaderExpected = new BinaryReader(expected);
-        //     BinaryReader binaryReaderActual = new BinaryReader(actual);
-
-        //     long expectedPosition = expected.Position;
-        //     long actualPosition = actual.Position;
-
-        //     try
-        //     {
-        //         binaryReaderExpected.BaseStream.Seek(0, SeekOrigin.Begin);
-        //         binaryReaderActual.BaseStream.Seek(0, SeekOrigin.Begin);
-
-        //         for (long readByte = 0; readByte < expected.Length; readByte += BUFFER_SIZE)
-        //         {
-        //             binaryReaderExpected.Read(bufferExpected, 0, BUFFER_SIZE);
-        //             binaryReaderActual.Read(bufferActual, 0, BUFFER_SIZE);
-
-        //             for (int count = 0; count < BUFFER_SIZE; ++count)
-        //             {
-        //                 if (bufferExpected[count] != bufferActual[count])
-        //                 {
-        //                     FailurePoint fp = new FailurePoint();
-        //                     fp.Position = (int)readByte + count;
-        //                     FailurePoints.Insert(0, fp);
-        //                     return false;
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     finally
-        //     {
-        //         expected.Position = expectedPosition;
-        //         actual.Position = actualPosition;
-        //     }
-
-        //     return true;
-        // }
 
         #endregion
 

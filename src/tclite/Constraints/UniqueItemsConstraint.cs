@@ -133,8 +133,6 @@ namespace TCLite.Constraints
 
             return type.IsArray
                 || typeof(IEnumerable).IsAssignableFrom(type) // Covers lists, collections, dictionaries as well
-                || typeof(System.IO.Stream).IsAssignableFrom(type) // Covers all streams
-                || typeof(System.IO.DirectoryInfo).IsAssignableFrom(type) // Unlikely to be derived, but just in case
                 || type.FullName == "System.Tuple"
                 || type.FullName == "System.ValueTuple";
         }

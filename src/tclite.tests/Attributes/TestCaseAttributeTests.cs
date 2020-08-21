@@ -104,7 +104,6 @@ namespace TCLite.Attributes
             Assert.AreEqual(new DateTime(1942,10,12), dt);
         }
 
-#if NYI // TestCase arg special conversions
         [TestCase("1942-10-12", ExpectedResult = "1942-10-12")]
         public DateTime CanConvertExpectedResultStringToDateTime(DateTime dt)
         {
@@ -145,7 +144,6 @@ namespace TCLite.Attributes
         {
             return offset;
         }
-#endif
 
         [TestCase(null)]
         public void CanPassNullAsFirstArgument(object a)
@@ -249,14 +247,6 @@ namespace TCLite.Attributes
             return new[] {s1, s2};
         }
 #endif
-
-#if NYI // Explicit TestCase
-        [TestCase("a", "b", Explicit = true)]
-        public void ShouldNotRunAndShouldNotFailInConsoleRunner()
-        {
-            Assert.Fail();
-        }
-#endif        
 
 #if NYI // TestBuilder
         [TestCase]

@@ -132,26 +132,6 @@ namespace TCLite.Constraints
         }
 #endif
 
-#if NYI //BinarySerializable
-        /// <summary>
-        /// Returns a constraint that tests whether an object graph is serializable in binary format.
-        /// </summary>
-        public BinarySerializableConstraint BinarySerializable
-        {
-            get { return (BinarySerializableConstraint)this.Append(new BinarySerializableConstraint()); }
-        }
-#endif
-
-#if NYI // XmlSerializable
-        /// <summary>
-        /// Returns a constraint that tests whether an object graph is serializable in xml format.
-        /// </summary>
-        public XmlSerializableConstraint XmlSerializable
-        {
-            get { return (XmlSerializableConstraint)this.Append(new XmlSerializableConstraint()); }
-        }
-#endif
-
 #if NYI // AssignableFrom
         /// <summary>
         /// Returns a constraint that tests whether the actual value

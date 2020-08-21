@@ -67,29 +67,6 @@ namespace TCLite.Constraints
             Assert.That(comparer.AreEqual(x, y, ref tolerance));
         }
 
-#if NYI // Directories
-        [TestCase]
-        public void SameDirectoriesAreEqual()
-        {
-            using (var testDir = new TestDirectory())
-            {
-                var one = new DirectoryInfo(testDir.Directory.FullName);
-                var two = new DirectoryInfo(testDir.Directory.FullName);
-                Assert.That(comparer.AreEqual(one, two, ref tolerance));
-            }
-        }
-
-        [TestCase]
-        public void DifferentDirectoriesAreNotEqual()
-        {
-            using (var one = new TestDirectory())
-            using (var two = new TestDirectory())
-            {
-                Assert.That(comparer.AreEqual(one, two, ref tolerance), Is.False);
-            }
-        }
-#endif
-
         [TestCase]
         public void CanCompareArrayContainingSelfToSelf()
         {

@@ -199,7 +199,7 @@ namespace TCLite.Constraints
         public void CanMatchHashtableWithDictionary()
         {
             // With classic assert, we need to tell the compiler what type to use
-            Assert.AreEqual<IEnumerable>(new Hashtable { { 0, 0 }, { 1, 1 }, { 2, 2 } },
+            Assert.AreEqual(new Hashtable { { 0, 0 }, { 1, 1 }, { 2, 2 } },
                             new Dictionary<int, int> { { 0, 0 }, { 2, 2 }, { 1, 1 } });
 
             // With Assert.That, we don't 

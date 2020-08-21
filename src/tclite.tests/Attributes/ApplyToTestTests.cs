@@ -128,7 +128,7 @@ namespace TCLite.Attributes
 
         #endregion
 
-#if NYI
+#if NYI // Culture
         #region CultureAttribute
 
         [Test]
@@ -198,7 +198,9 @@ namespace TCLite.Attributes
         }
 
         #endregion
+#endif
 
+#if NYI // MaxTime
         #region MaxTimeAttribute
 
         [Test]
@@ -217,7 +219,9 @@ namespace TCLite.Attributes
         }
 
         #endregion
+#endif
 
+#if NYI // Pairwise
         #region PairwiseAttribute
 
         [Test]
@@ -236,7 +240,9 @@ namespace TCLite.Attributes
         }
 
         #endregion
+#endif
 
+#if NYI // Platform
         #region PlatformAttribute
 
         [Test]
@@ -287,7 +293,9 @@ namespace TCLite.Attributes
         }
 
         #endregion
+#endif
 
+#if NYI // Repeat
         #region RepeatAttribute
 
         [Test]
@@ -306,77 +314,9 @@ namespace TCLite.Attributes
         }
 
         #endregion
+#endif
 
-        #region RequiresMTAAttribute
-
-        [Test]
-        public void RequiresMTAAttributeSetsApartmentState()
-        {
-            new ApartmentAttribute(ApartmentState.MTA).ApplyToTest(test);
-            Assert.That(test.Properties.Get(PropertyNames.ApartmentState),
-                Is.EqualTo(ApartmentState.MTA));
-        }
-
-        [Test]
-        public void RequiresMTAAttributeSetsApartmentStateOnNonRunnableTest()
-        {
-            test.RunState = RunState.NotRunnable;
-            new ApartmentAttribute(ApartmentState.MTA).ApplyToTest(test);
-            Assert.That(test.Properties.Get(PropertyNames.ApartmentState),
-                Is.EqualTo(ApartmentState.MTA));
-        }
-
-        #endregion
-
-        #region RequiresSTAAttribute
-
-        [Test]
-        public void RequiresSTAAttributeSetsApartmentState()
-        {
-            new ApartmentAttribute(ApartmentState.STA).ApplyToTest(test);
-            Assert.That(test.Properties.Get(PropertyNames.ApartmentState),
-                Is.EqualTo(ApartmentState.STA));
-        }
-
-        [Test]
-        public void RequiresSTAAttributeSetsApartmentStateOnNonRunnableTest()
-        {
-            test.RunState = RunState.NotRunnable;
-            new ApartmentAttribute(ApartmentState.STA).ApplyToTest(test);
-            Assert.That(test.Properties.Get(PropertyNames.ApartmentState),
-                Is.EqualTo(ApartmentState.STA));
-        }
-
-        #endregion
-
-        #region RequiresThreadAttribute
-
-        [Test]
-        public void RequiresThreadAttributeSetsRequiresThread()
-        {
-            new RequiresThreadAttribute().ApplyToTest(test);
-            Assert.That(test.Properties.Get(PropertyNames.RequiresThread), Is.EqualTo(true));
-        }
-
-        [Test]
-        public void RequiresThreadAttributeSetsRequiresThreadOnNonRunnableTest()
-        {
-            test.RunState = RunState.NotRunnable;
-            new RequiresThreadAttribute().ApplyToTest(test);
-            Assert.That(test.Properties.Get(PropertyNames.RequiresThread), Is.EqualTo(true));
-        }
-
-        [Test]
-        public void RequiresThreadAttributeMaySetApartmentState()
-        {
-            new RequiresThreadAttribute(ApartmentState.STA).ApplyToTest(test);
-            Assert.That(test.Properties.Get(PropertyNames.RequiresThread), Is.EqualTo(true));
-            Assert.That(test.Properties.Get(PropertyNames.ApartmentState),
-                Is.EqualTo(ApartmentState.STA));
-        }
-
-        #endregion
-
+#if NYI // Sequential
         #region SequentialAttribute
 
         [Test]
@@ -395,7 +335,9 @@ namespace TCLite.Attributes
         }
 
         #endregion
+#endif
 
+#if NYI // SetCulture, SetUICulture
         #region SetCultureAttribute
 
         public void SetCultureAttributeSetsSetCultureProperty()

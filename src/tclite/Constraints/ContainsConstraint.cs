@@ -95,18 +95,4 @@ namespace TCLite.Constraints
             return (ContainsConstraint<string>)Append(new ContainsConstraint<string>(expected));
         }
     }
-
-    public partial class Does_Syntax
-    {
-        /// <summary>
-        /// Returns a new <see cref="ContainsConstraint"/>. This constraint
-        /// will, in turn, make use of the appropriate second-level
-        /// constraint, depending on the type of the actual argument.
-        /// This overload is only used if the item sought is a string,
-        /// since any other type implies that we are looking for a
-        /// collection member.
-        /// </summary>
-        public static ContainsConstraint<string> Contain(string expected) =>
-            new ContainsConstraint<string>(expected);
-    }
 }

@@ -98,9 +98,4 @@ namespace TCLite.Constraints
             return new SubstringConstraint(expected);
         }
     }
-
-    public partial class Does_Syntax
-    {
-
-    }
 }

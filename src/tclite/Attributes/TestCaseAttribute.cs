@@ -218,7 +218,16 @@ namespace TCLite
                 }
 
                 if (argsProvided == argsNeeded)
+                {
                     PerformSpecialConversions(parms.Arguments, parameters);
+
+                    if (parms.ExpectedResult != null)
+                    {
+                        object convertedValue;
+                        if (TryConvert(parms.ExpectedResult, method.ReturnType, out convertedValue))
+                            parms.ExpectedResult = convertedValue;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -231,6 +240,7 @@ namespace TCLite
         #endregion
 
         #region Helper Methods
+
         /// <summary>
         /// Performs several special conversions allowed by NUnit in order to
         /// permit arguments with types that cannot be used in the constructor
@@ -250,6 +260,7 @@ namespace TCLite
                     arglist[i] = convertedArg;
             }
         }
+
         #endregion
     }
 }

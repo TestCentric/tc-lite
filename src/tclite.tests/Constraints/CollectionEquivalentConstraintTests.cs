@@ -138,7 +138,7 @@ namespace TCLite.Constraints
                 .ApplyTo(set2).IsSuccess);
         }
 
-#if WIP
+#if NYI
         [TestCase]
         public void EquivalentHonorsUsingWhenCollectionsAreOfDifferentTypes()
         {
