@@ -4,9 +4,6 @@
 // ***********************************************************************
 
 using System;
-using System.Collections;
-using System.Globalization;
-using System.Linq;
 using TCLite.Internal;
 
 #if TASK_PARALLEL_LIBRARY_API
@@ -248,15 +245,35 @@ namespace TCLite.Attributes
         }
 #endif
 
-#if NYI // TestBuilder
-        [TestCase]
+        private const string SHORT_DESCRIPTION = "Short Description";
+        [TestCase(Description = SHORT_DESCRIPTION)]
         public void CanSpecifyDescription()
         {
-            Test test = (Test)TestBuilder.MakeParameterizedMethodSuite(
-                typeof(TestCaseAttributeFixture), nameof(TestCaseAttributeFixture.MethodHasDescriptionSpecified)).Tests[0];
-            Assert.AreEqual("My Description", test.Properties.Get(PropertyNames.Description));
+            Assert.AreEqual(SHORT_DESCRIPTION, TestContext.CurrentTest.Description);
         }
 
+        private const string LONG_DESCRIPTION = "This is a really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really long description";
+        [TestCase(Description = LONG_DESCRIPTION)]
+        public void CanSpecifyLongDescription()
+        {
+            Assert.AreEqual(LONG_DESCRIPTION, TestContext.CurrentTest.Description);
+        }
+
+        [TestCase(Category = "XYZ")]
+        public void CanSpecifyCategory()
+        {
+            Assert.That(TestContext.CurrentTest.Categories, Contains.Item.EqualTo("XYZ"));
+        }
+
+        [TestCase(Category = "X,Y,Z")]
+        public void CanSpecifyMultipleCategories()
+        {
+            Assert.That(TestContext.CurrentTest.Categories, Contains.Item.EqualTo("X"));
+            Assert.That(TestContext.CurrentTest.Categories, Contains.Item.EqualTo("Y"));
+            Assert.That(TestContext.CurrentTest.Categories, Contains.Item.EqualTo("Z"));
+        }
+
+#if NYI // TestBuilder
         [TestCase]
         public void CanSpecifyTestName_FixedText()
         {
@@ -277,24 +294,6 @@ namespace TCLite.Attributes
         }
 
         [TestCase]
-        public void CanSpecifyCategory()
-        {
-            Test test = (Test)TestBuilder.MakeParameterizedMethodSuite(
-                typeof(TestCaseAttributeFixture), nameof(TestCaseAttributeFixture.MethodHasSingleCategory)).Tests[0];
-            IList categories = test.Properties["Category"];
-            Assert.AreEqual(new string[] { "XYZ" }, categories);
-        }
-
-        [TestCase]
-        public void CanSpecifyMultipleCategories()
-        {
-            Test test = (Test)TestBuilder.MakeParameterizedMethodSuite(
-                typeof(TestCaseAttributeFixture), nameof(TestCaseAttributeFixture.MethodHasMultipleCategories)).Tests[0];
-            IList categories = test.Properties["Category"];
-            Assert.AreEqual(new string[] { "X", "Y", "Z" }, categories);
-        }
-
-        [TestCase]
         public void CanIgnoreIndividualTestCases()
         {
             var methodName = nameof(TestCaseAttributeFixture.MethodWithIgnoredTestCases);
@@ -310,56 +309,6 @@ namespace TCLite.Attributes
             testCase = TestFinder.Find($"{methodName}(3)", suite, false);
             Assert.That(testCase.RunState, Is.EqualTo(RunState.Ignored));
             Assert.That(testCase.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("Don't Run Me!"));
-        }
-
-        [TestCase]
-        public void CanIgnoreIndividualTestCasesWithUntilDate()
-        {
-            var methodName = nameof(TestCaseAttributeFixture.MethodWithIgnoredWithUntilDateTestCases);
-            TestSuite suite = TestBuilder.MakeParameterizedMethodSuite(
-                typeof(TestCaseAttributeFixture), methodName);
-            Test testCase = TestFinder.Find($"{methodName}(1)", suite, false);
-            Assert.That(testCase.RunState, Is.EqualTo(RunState.Runnable));
-
-            string untilDateString = DateTimeOffset.Parse("4242-01-01", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal).ToString("u");
-            testCase = TestFinder.Find($"{methodName}(2)", suite, false);
-            Assert.That(testCase.RunState, Is.EqualTo(RunState.Ignored));
-            Assert.That(testCase.Properties.Get(PropertyNames.SkipReason), Is.EqualTo(string.Format("Ignoring until {0}. Should not run", untilDateString)));
-            Assert.That(testCase.Properties.Get(PropertyNames.IgnoreUntilDate), Is.EqualTo(untilDateString));
-
-            untilDateString = DateTimeOffset.Parse("1942-01-01", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal).ToString("u");
-
-            testCase = TestFinder.Find($"{methodName}(3)", suite, false);
-            Assert.That(testCase.RunState, Is.EqualTo(RunState.Runnable));
-            Assert.That(testCase.Properties.Get(PropertyNames.IgnoreUntilDate), Is.EqualTo(untilDateString));
-
-            untilDateString = DateTimeOffset.Parse("4242-01-01T01:23:45Z", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal).ToString("u");
-
-            testCase = TestFinder.Find($"{methodName}(4)", suite, false);
-            Assert.That(testCase.RunState, Is.EqualTo(RunState.Ignored));
-            Assert.That(testCase.Properties.Get(PropertyNames.SkipReason), Is.EqualTo(string.Format("Ignoring until {0}. Don't Run Me!", untilDateString)));
-            Assert.That(testCase.Properties.Get(PropertyNames.IgnoreUntilDate), Is.EqualTo(untilDateString));
-
-            testCase = TestFinder.Find($"{methodName}(5)", suite, false);
-            Assert.That(testCase.RunState, Is.EqualTo(RunState.NotRunnable));
-        }
-
-        [TestCase]
-        public void CanMarkIndividualTestCasesExplicit()
-        {
-            var methodName = nameof(TestCaseAttributeFixture.MethodWithExplicitTestCases);
-            TestSuite suite = TestBuilder.MakeParameterizedMethodSuite(
-                typeof(TestCaseAttributeFixture), methodName);
-
-            Test testCase = TestFinder.Find($"{methodName}(1)", suite, false);
-            Assert.That(testCase.RunState, Is.EqualTo(RunState.Runnable));
-
-            testCase = TestFinder.Find($"{methodName}(2)", suite, false);
-            Assert.That(testCase.RunState, Is.EqualTo(RunState.Explicit));
-
-            testCase = TestFinder.Find($"{methodName}(3)", suite, false);
-            Assert.That(testCase.RunState, Is.EqualTo(RunState.Explicit));
-            Assert.That(testCase.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("Connection failing"));
         }
 
         [TestCase]

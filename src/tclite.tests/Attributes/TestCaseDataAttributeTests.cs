@@ -236,6 +236,49 @@ namespace TCLite.Attributes
 
         #endregion
 
+        #region Description
+
+        [TestCaseData(nameof(DataWithDescriptions))]
+        public void CanSpecifyDescriptionOnEachCase(string description)
+        {
+            Assert.AreEqual(description, TestContext.CurrentTest.Description);
+        }
+
+        [TestCaseData(nameof(DataWithDescriptions), Description="OVERRIDDEN")]
+        public void DescriptionPrpertyOverridesIndividualDescriptions(string description)
+        {
+            Assert.AreEqual("OVERRIDDEN", TestContext.CurrentTest.Description);
+        }
+
+        private const string SHORT_DESCRIPTION = "Short Description";
+        private const string LONG_DESCRIPTION = "This is a really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really long description";
+        private static TestCaseData[] DataWithDescriptions = new TestCaseData[]
+        {
+            new TestCaseData(SHORT_DESCRIPTION).SetDescription(SHORT_DESCRIPTION),
+            new TestCaseData(LONG_DESCRIPTION).SetDescription(LONG_DESCRIPTION)
+        };
+
+        #endregion
+
+        [TestCaseData(nameof(CategoryData), Category="XYZ")]
+        public void CanSpecifyCategory(int x)
+        {
+            Assert.That(TestContext.CurrentTest.Categories, Contains.Item.EqualTo("XYZ"));
+        }
+
+        [TestCaseData(nameof(CategoryData), Category = "X,Y,Z")]
+        public void CanSpecifyMultipleCategories(int x)
+        {
+            Assert.That(TestContext.CurrentTest.Categories, Contains.Item.EqualTo("X"));
+            Assert.That(TestContext.CurrentTest.Categories, Contains.Item.EqualTo("Y"));
+            Assert.That(TestContext.CurrentTest.Categories, Contains.Item.EqualTo("Z"));
+        }
+
+        private static TestCaseData[] CategoryData = new TestCaseData[]
+        {
+            new TestCaseData(1)
+        };
+
         [TestCaseData(nameof(testCases))]
         public void MethodTakingTwoStringArrays(string[] a, string[] b)
         {

@@ -4,7 +4,7 @@
 // ***********************************************************************
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using TCLite.Internal;
 
 namespace TCLite.Attributes
@@ -15,19 +15,7 @@ namespace TCLite.Attributes
     [TestFixture, Category("CategoryOnFixture")]
     public class CategoryAttributeTests
     {
-        Test _currentTest;
-        IList _categories;
-
-        public CategoryAttributeTests()
-        {
-            _currentTest = TestExecutionContext.CurrentContext.CurrentTest;
-            _categories = _currentTest.Properties["Category"];
-            string msg = "Category was not visible in constructor";
-
-            Assert.That(_categories, Contains.Item.EqualTo("CategoryOnFixture"), msg);
-            if (_currentTest.Name == "CategoryOnTestMethod")
-                Assert.That(_categories, Contains.Item.EqualTo("CategoryOnMethod"), msg);
-        }
+        IEnumerable<string> _categories = TestContext.CurrentTest.Categories;
 
         [TestCase]
         public void CategoryOnFixture()
@@ -54,6 +42,12 @@ namespace TCLite.Attributes
         public void CategoryOnTestMethod_MultipleTestCases(int n)
         {
             Assert.That(_categories, Contains.Item.EqualTo("CategoryOnMethod"), $"Case {n}");
+        }
+
+        [TestCase, Critical]
+        public void CanUseCustomCategory()
+        {
+            Assert.That(_categories, Contains.Item.EqualTo("Critical"));
         }
 
         [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]

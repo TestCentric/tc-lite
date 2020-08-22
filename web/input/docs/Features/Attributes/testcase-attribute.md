@@ -85,8 +85,7 @@ for the `TestCase` attribute before supplying it to the test.
 TestCaseAttribute supports a number of named parameters:
 
 * **Category** provides a comma-delimited list of categories for this test case.
-* **Description** sets the description property of the test.
-run.
+* **Description** sets the description property of the individual test case.
 * **ExpectedResult** sets the expected result to be returned from the method, which must have a compatible return type.
 * **Ignore** causes the test case to be ignored and specifies the reason.
 * **IgnoreReason** causes this test case to be ignored and specifies the reason.

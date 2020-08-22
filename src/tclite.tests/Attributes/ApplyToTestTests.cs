@@ -61,25 +61,6 @@ namespace TCLite.Attributes
 
         #endregion
 
-        #region DescriptionAttribute
-
-        [TestCase]
-        public void DescriptionAttributeSetsDescription()
-        {
-            new DescriptionAttribute("Cool test!").ApplyToTest(_testDummy);
-            Assert.That(_testDummy.Properties.Get(PropertyNames.Description), Is.EqualTo("Cool test!"));
-        }
-
-        [TestCase]
-        public void DescriptionAttributeSetsDescriptionOnNonRunnableTest()
-        {
-            _testDummy.RunState = RunState.NotRunnable;
-            new DescriptionAttribute("Cool test!").ApplyToTest(_testDummy);
-            Assert.That(_testDummy.Properties.Get(PropertyNames.Description), Is.EqualTo("Cool test!"));
-        }
-
-        #endregion
-
         #region IgnoreAttribute
 
         [TestCase]

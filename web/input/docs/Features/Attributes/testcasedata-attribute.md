@@ -264,7 +264,8 @@ implementations for greater efficiency.
 **TestCaseDataAttribute** supports one named parameter:
 
 * **Category** is used to assign one or more categories to every test case returned.
-If multiple categories are specified, they should be separated by commas.
+  If multiple categories are specified, they should be separated by commas.
+* **Description** sets the description property of the individual test case.
 
 # See Also
 

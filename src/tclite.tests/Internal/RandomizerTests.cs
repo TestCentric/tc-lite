@@ -638,8 +638,7 @@ namespace TCLite.Internal
 
         #region Strings
 
-        [TestCase]
-        [Description("Test that all generated strings are unique")]
+        [TestCase(Description="Test that all generated strings are unique")]
         public void RandomStringsAreUnique()
         {
             UniqueValues.Check(() => _randomizer.GetString(), 10, 10);
@@ -648,7 +647,6 @@ namespace TCLite.Internal
         [TestCase(30, "Tｈｅɋúｉｃｋƃｒòｗｎｆ߀хｊｕｍｐëԁoѵerｔհëｌａȥｙｄｏɢ")]
         [TestCase(200, "ａèí߀ù123456")]
         [TestCase(1000, Randomizer.DefaultStringChars)]
-        [Description("Test that all generated strings are unique for varying output length")]
         public void RandomStringsAreUnique(int outputLength, string allowedChars)
         {
             UniqueValues.Check(() => _randomizer.GetString(outputLength, allowedChars), 10, 10);
@@ -674,15 +672,13 @@ namespace TCLite.Internal
 
         #region Guids
 
-        [TestCase]
-        [Description("Test that all generated Guids are unique")]
+        [TestCase(Description="Test that all generated Guids are unique")]
         public void RandomGuidsAreUnique()
         {
             UniqueValues.Check(() => _randomizer.NextGuid(), 10, 10);
         }
 
-        [TestCase]
-        [Description("Test that generated Guids are version 4 variant 1 Guids")]
+        [TestCase(Description="Test that generated Guids are version 4 variant 1 Guids")]
         public void RandomGuidsAreV4()
         {
             Guid guid = _randomizer.NextGuid();
