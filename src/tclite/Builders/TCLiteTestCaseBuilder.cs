@@ -216,8 +216,8 @@ namespace TCLite.Builders
                 if (arglist != null)
                     argsProvided = arglist.Length;
 
-                if (testMethod.RunState != RunState.Runnable)
-                    return false;
+                // if (testMethod.RunState != RunState.Runnable)
+                //     return false;
             }
 
             Type returnType = testMethod.Method.ReturnType;

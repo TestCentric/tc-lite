@@ -273,6 +273,20 @@ namespace TCLite.Attributes
             Assert.That(TestContext.CurrentTest.Categories, Contains.Item.EqualTo("Z"));
         }
 
+        [ExpectIgnored()]
+        [TestCase(Ignore = true)]
+        public void CanIgnoreIndividualTestCase()
+        {
+            Assert.Fail("Test should not be run!");
+        }
+
+        [ExpectIgnored("My Reason")]
+        [TestCase(Ignore = true, Reason = "My Reason")]
+        public void CanIgnoreIndividualTestCaseWithReasonSpecified()
+        {
+            Assert.Fail("Test should not be run!");
+        }
+
 #if NYI // TestBuilder
         [TestCase]
         public void CanSpecifyTestName_FixedText()
@@ -291,24 +305,6 @@ namespace TCLite.Attributes
             var expectedName = "MethodHasTestNameSpecified_WithMethodName+XYZ";
             Assert.AreEqual(expectedName, test.Name);
             Assert.AreEqual("NUnit.TestData.TestCaseAttributeFixture.TestCaseAttributeFixture." + expectedName, test.FullName);
-        }
-
-        [TestCase]
-        public void CanIgnoreIndividualTestCases()
-        {
-            var methodName = nameof(TestCaseAttributeFixture.MethodWithIgnoredTestCases);
-            TestSuite suite = TestBuilder.MakeParameterizedMethodSuite(
-                typeof(TestCaseAttributeFixture), methodName);
-
-            Test testCase = TestFinder.Find($"{methodName}(1)", suite, false);
-            Assert.That(testCase.RunState, Is.EqualTo(RunState.Runnable));
-
-            testCase = TestFinder.Find($"{methodName}(2)", suite, false);
-            Assert.That(testCase.RunState, Is.EqualTo(RunState.Ignored));
-
-            testCase = TestFinder.Find($"{methodName}(3)", suite, false);
-            Assert.That(testCase.RunState, Is.EqualTo(RunState.Ignored));
-            Assert.That(testCase.Properties.Get(PropertyNames.SkipReason), Is.EqualTo("Don't Run Me!"));
         }
 
         [TestCase]

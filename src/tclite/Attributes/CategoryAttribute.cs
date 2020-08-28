@@ -4,6 +4,7 @@
 // ***********************************************************************
 
 using System;
+using System.Collections.Generic;
 using TCLite.Interfaces;
 using TCLite.Internal;
 
@@ -26,9 +27,10 @@ namespace TCLite
         /// runnable.
         /// </summary>
         /// <param name="name">The name of the category</param>
-        public CategoryAttribute(string name)
+        public CategoryAttribute(string names)
         {
-            Name = name.Trim();
+            foreach (string name in names.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                Categories.Add(name.Trim());
         }
 
         /// <summary>
@@ -40,13 +42,13 @@ namespace TCLite
             var name = GetType().Name;
             if (name.EndsWith( "Attribute" ))
                 name = name.Substring( 0, name.Length - 9 );
-            Name = name;
+            Categories.Add(name);
         }
 
         /// <summary>
-        /// The name of the category
+        /// The categories specified by this attribute
         /// </summary>
-        public string Name { get; }
+        public List<string> Categories { get; } = new List<string>();
 
         #region IApplyToTest Members
 
@@ -56,7 +58,8 @@ namespace TCLite
         /// <param name="test">The test to modify</param>
         public void ApplyToTest(ITest test)
         {
-            test.Properties.Add(PropertyNames.Category, this.Name);
+            foreach (string cat in Categories)
+                test.Properties.Add(PropertyNames.Category, cat);
         }
 
         #endregion

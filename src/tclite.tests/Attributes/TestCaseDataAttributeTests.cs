@@ -220,18 +220,16 @@ namespace TCLite.Attributes
 
         #region Ignoring Test Cases
 
+        [ExpectIgnored("Ignoring this!")]
         [TestCaseData(nameof(IgnoreOneItem))]
-        public void CanIgnoreIndividualTestCases(int item)
+        public void CanIgnoreIndividualTestCase()
         {
-            Assert.That(item, Is.Not.EqualTo(2), "Item 2 should be ignored");
-            Assert.That(item==1||item==3, $"Unexpected item number: {item}");
+            Assert.Fail("Test should not be run!");
         }
 
         static TestCaseData[] IgnoreOneItem = new TestCaseData[]
         {
-            new TestCaseData(1),
-            new TestCaseData(2).Ignore(),
-            new TestCaseData(3)
+            new TestCaseData().Ignore("Ignoring this!")
         };
 
         #endregion
@@ -245,7 +243,7 @@ namespace TCLite.Attributes
         }
 
         [TestCaseData(nameof(DataWithDescriptions), Description="OVERRIDDEN")]
-        public void DescriptionPrpertyOverridesIndividualDescriptions(string description)
+        public void DescriptionPropertyOverridesIndividualDescriptions(string description)
         {
             Assert.AreEqual("OVERRIDDEN", TestContext.CurrentTest.Description);
         }

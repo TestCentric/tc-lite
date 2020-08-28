@@ -29,7 +29,7 @@ namespace TCLite.Commands
         /// <param name="test">The test to be executed</param>
         public TestCommand(Test test)
         {
-            this.Test = test;
+            Test = test;
         }
 
         #region ITestCommandMembers

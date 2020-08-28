@@ -27,12 +27,23 @@ namespace TCLite.Attributes
         public void CategoryOnTestMethod()
         {
             Assert.That(_categories, Contains.Item.EqualTo("CategoryOnMethod"));
+            Assert.That(_categories, Contains.Item.EqualTo("CategoryOnFixture"));
         }
 
-        [TestCase, Critical]
-        public void CanDeriveFromCategoryAttribute()
+        [TestCase, Category("Cat1"), Category("Cat2"), Category("Cat3")]
+        public void MultipleCategoryAttributes()
         {
-            Assert.That(_categories, Contains.Item.EqualTo("Critical"));
+            Assert.That(_categories, Contains.Item.EqualTo("Cat1"));
+            Assert.That(_categories, Contains.Item.EqualTo("Cat2"));
+            Assert.That(_categories, Contains.Item.EqualTo("Cat3"));
+        }
+
+        [TestCase, Category("Cat1,Cat2,, Cat3")]
+        public void MultipleCategoriesOnSingleAttribute()
+        {
+            Assert.That(_categories, Contains.Item.EqualTo("Cat1"));
+            Assert.That(_categories, Contains.Item.EqualTo("Cat2"));
+            Assert.That(_categories, Contains.Item.EqualTo("Cat3"));
         }
 
         [TestCase(1)]
@@ -42,12 +53,14 @@ namespace TCLite.Attributes
         public void CategoryOnTestMethod_MultipleTestCases(int n)
         {
             Assert.That(_categories, Contains.Item.EqualTo("CategoryOnMethod"), $"Case {n}");
+            Assert.That(_categories, Contains.Item.EqualTo("CategoryOnFixture"), $"Case {n}");
         }
 
         [TestCase, Critical]
-        public void CanUseCustomCategory()
+        public void CanDeriveFromCategoryAttribute()
         {
             Assert.That(_categories, Contains.Item.EqualTo("Critical"));
+            Assert.That(_categories, Contains.Item.EqualTo("CategoryOnFixture"));
         }
 
         [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]

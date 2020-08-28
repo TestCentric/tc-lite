@@ -46,13 +46,23 @@ namespace TCLite
 
                     if (messageFragments.Length >0)
                     {
-                        foreach (string fragment in messageFragments)
-                            if (!result.Message.Contains(fragment))
-                            {
-                                result.SetResult(ResultState.Failure,
-                                    $"Warning message did not match\nExpected substring: {fragment}\nBut was:  {result.Message}");
-                                return;
-                            }
+                        var message = result.Message;
+                        if (string.IsNullOrEmpty(message))
+                        {
+                            result.SetResult(ResultState.Failure,
+                                "Result message was null or empty");
+                            return;
+                        }
+                        else
+                        {
+                            foreach (string fragment in messageFragments)
+                                if (!result.Message.Contains(fragment))
+                                {
+                                    result.SetResult(ResultState.Failure,
+                                        $"Result message did not match\nExpected substring: {fragment}\nBut was:  {result.Message}");
+                                    return;
+                                }
+                        }
                     }
 
                     result.SetResult(ResultState.Success);
@@ -81,5 +91,12 @@ namespace TCLite
     {
         public ExpectWarningAttribute(params string[] messageFragments)
             : base(ResultState.Warning, messageFragments) { }
+    }
+
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+    public class ExpectIgnoredAttribute : ExpectedResultAttribute, ICommandWrapper
+    {
+        public ExpectIgnoredAttribute(params string[] messageFragments)
+            : base(ResultState.Ignored, messageFragments) { }
     }
 }

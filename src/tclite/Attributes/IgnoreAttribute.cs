@@ -18,7 +18,12 @@ namespace TCLite
         private readonly string _reason;
 
         /// <summary>
-        /// Constructs the attribute giving a reason for ignoring the test
+        /// Constructs the attribute without specifying a reason for ignoring the test.
+        /// </summary>
+        public IgnoreAttribute() { }
+
+        /// <summary>
+        /// Constructs the attribute giving a reason for ignoring the test.
         /// </summary>
         /// <param name="reason">The reason for ignoring the test</param>
         public IgnoreAttribute(string reason)

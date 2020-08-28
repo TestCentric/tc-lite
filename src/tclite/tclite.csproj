@@ -6,6 +6,10 @@
     <Copyright>Copyright (c) Charlie Poole and TestCentric Contributors</Copyright>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.5.0" />
+  </ItemGroup>
+
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>tclite.tests</_Parameter1>

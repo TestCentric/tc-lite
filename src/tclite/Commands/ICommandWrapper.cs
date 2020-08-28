@@ -9,8 +9,7 @@ namespace TCLite.Commands
 {
     /// <summary>
     /// ICommandWrapper is implemented by attributes and other
-    /// objects able to decorate a TestCommand, usually by wrapping
-    /// it with an outer command.
+    /// objects able to wrap a TestCommand with another command.
     /// </summary>
     public interface ICommandWrapper
     {

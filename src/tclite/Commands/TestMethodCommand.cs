@@ -22,8 +22,8 @@ namespace TCLite.Commands
         private const string SystemAggregateException = "System.AggregateException";
         private const string InnerExceptionsProperty = "InnerExceptions";
         private const BindingFlags TaskResultPropertyBindingFlags = BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public;
-        private readonly TestMethod testMethod;
-        private readonly object[] arguments;
+        private readonly TestMethod _testMethod;
+        private readonly object[] _arguments;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TestMethodCommand"/> class.
@@ -31,8 +31,8 @@ namespace TCLite.Commands
         /// <param name="testMethod">The test.</param>
         public TestMethodCommand(TestMethod testMethod) : base(testMethod)
         {
-            this.testMethod = testMethod;
-            this.arguments = testMethod.Arguments;
+            _testMethod = testMethod;
+            _arguments = testMethod.Arguments;
         }
 
         /// <summary>
@@ -46,21 +46,21 @@ namespace TCLite.Commands
         /// <param name="context">The execution context</param>
         public override TestResult Execute(TestExecutionContext context)
         {
-            try
+            switch (Test.RunState)
             {
-                object result = RunTestMethod(context);
-
-                if (testMethod.HasExpectedResult)
-                    Assert.AreEqual(testMethod.ExpectedResult, result);
-
-                context.CurrentResult.SetResult(ResultState.Success);
-            }
-            catch(Exception ex)
-            {
-                if (ex is ThreadAbortException)
-                    Thread.ResetAbort();
-
-                context.CurrentResult.RecordException(ex);
+                default:
+                case RunState.Runnable:
+                    RunTestMethod(context);
+                    break;
+                case RunState.Skipped:
+                    context.CurrentResult.SetResult(ResultState.Skipped, GetSkipReason());
+                    break;
+                case RunState.Ignored:
+                    context.CurrentResult.SetResult(ResultState.Ignored, GetSkipReason());
+                    break;
+                case RunState.NotRunnable:
+                    context.CurrentResult.SetResult(ResultState.NotRunnable, GetSkipReason(), GetProviderStackTrace());
+                    break;
             }
 
             if (context.CurrentResult.AssertionResults.Count > 0)
@@ -70,20 +70,40 @@ namespace TCLite.Commands
             return context.CurrentResult;
         }
 
-        private object RunTestMethod(TestExecutionContext context)
+        private string GetSkipReason()
         {
+            return (string)Test.Properties.Get(PropertyNames.SkipReason);
+        }
+
+        private string GetProviderStackTrace()
+        {
+            return (string)Test.Properties.Get(PropertyNames.ProviderStackTrace);
+        }
+
+        private void RunTestMethod(TestExecutionContext context)
+        {
+            try
+            {
 #if NYI // async
-            if (MethodHelper.IsAsyncMethod(testMethod.Method))
-                return RunAsyncTestMethod(context);
-            //{
-            //    if (testMethod.Method.ReturnType == typeof(void))
-            //        return RunAsyncVoidTestMethod(context);
-            //    else
-            //        return RunAsyncTaskTestMethod(context);
-            //}
-            else
+                object result = 
+                    MethodHelper.IsAsyncMethod(testMethod.Method))
+                        ? RunAsyncTestMethod(context)
+                        : RunNonAsyncTestMethod(context);
+#else
+                object result = RunNonAsyncTestMethod(context);
 #endif
-                return RunNonAsyncTestMethod(context);
+                if (_testMethod.HasExpectedResult)
+                    Assert.AreEqual(_testMethod.ExpectedResult, result);
+
+                context.CurrentResult.SetResult(ResultState.Success);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ThreadAbortException)
+                    Thread.ResetAbort();
+
+                context.CurrentResult.RecordException(ex);
+            }
         }
 
 #if NYI // async
@@ -107,7 +127,7 @@ namespace TCLite.Commands
 
         private object RunNonAsyncTestMethod(TestExecutionContext context)
         {
-            return Reflect.InvokeMethod(testMethod.Method, context.TestObject, arguments);
+            return Reflect.InvokeMethod(_testMethod.Method, context.TestObject, _arguments);
         }
 
 #if NYI // async

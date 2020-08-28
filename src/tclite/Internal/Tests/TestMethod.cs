@@ -114,9 +114,6 @@ namespace TCLite.Internal
         /// <returns></returns>
         public virtual TestCommand MakeTestCommand()
         {
-            if (RunState != RunState.Runnable)
-                return new SkipCommand(this);
-
             TestCommand command = new TestMethodCommand(this);
 
             command = ApplyDecoratorsToCommand(command);
