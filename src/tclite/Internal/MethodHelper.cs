@@ -12,7 +12,7 @@ namespace TCLite.Internal
     /// <summary>
     /// MethodHelper provides static methods for working with methods.
     /// </summary>
-    public class MethodHelper
+    internal class MethodHelper
     {
         /// <summary>
         /// Gets the display name for a method as used by TCLite.

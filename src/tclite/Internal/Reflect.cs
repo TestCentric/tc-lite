@@ -43,7 +43,7 @@ namespace TCLite.Internal
 	/// NUnit core to inspect assemblies that reference an older
 	/// version of the NUnit framework.
 	/// </summary>
-	public static class Reflect
+	internal static class Reflect
 	{
         private static readonly BindingFlags AllMembers = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy;
 

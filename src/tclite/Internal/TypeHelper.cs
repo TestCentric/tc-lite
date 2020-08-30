@@ -13,7 +13,7 @@ namespace TCLite.Internal
     /// <summary>
     /// TypeHelper provides static methods that operate on Types.
     /// </summary>
-    public class TypeHelper
+    internal static class TypeHelper
     {
         /// <summary>
         /// Gets the display name for a Type as used by TCLite.

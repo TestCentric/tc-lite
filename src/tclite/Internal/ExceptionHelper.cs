@@ -12,7 +12,7 @@ namespace TCLite.Internal
     /// <summary>
     /// ExceptionHelper provides static methods for working with exceptions
     /// </summary>
-    public class ExceptionHelper
+    internal class ExceptionHelper
     {
         // TODO: Move to a utility class
         /// <summary>

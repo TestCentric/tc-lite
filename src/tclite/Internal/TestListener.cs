@@ -10,9 +10,9 @@ namespace TCLite.Internal
 {
 	/// <summary>
 	/// TestListener provides an implementation of ITestListener that
-    /// does nothing. It is used only throught its NULL property.
+    /// does nothing. It is used only through its NULL property.
 	/// </summary>
-	public class TestListener : ITestListener
+	internal class TestListener : ITestListener
 	{
         /// <summary>
         /// Called when a test has just started

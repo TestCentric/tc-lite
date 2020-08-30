@@ -36,7 +36,7 @@ namespace TCLite.Internal
     // Callers of this method have no influence on how these methods are used so we define a 'SecuritySafeCriticalAttribute'
     // rather than a 'SecurityCriticalAttribute' to enable use by security transparent callers.
     [SecuritySafeCritical]
-    public class OSPlatform
+    internal class OSPlatform
     {
         #region Static Members
         private static readonly Lazy<OSPlatform> currentPlatform = new Lazy<OSPlatform> (() =>

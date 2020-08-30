@@ -11,7 +11,7 @@ namespace TCLite.Internal
     /// The PropertyNames class provides constants for the
     /// standard property names that NUnit uses on tests.
     /// </summary>
-    public static class PropertyNames
+    internal static class PropertyNames
     {
         public const string Author = "Author";
         /// <summary>

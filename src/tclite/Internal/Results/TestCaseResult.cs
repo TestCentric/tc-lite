@@ -10,7 +10,7 @@ namespace TCLite.Internal
     /// <summary>
     /// Represents the result of running a single test case.
     /// </summary>
-    public class TestCaseResult : TestResult
+    internal class TestCaseResult : TestResult
     {
         /// <summary>
         /// Construct a TestCaseResult based on a TestMethod

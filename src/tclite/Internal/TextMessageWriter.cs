@@ -16,7 +16,7 @@ namespace TCLite.Internal
 	/// of individual message components to form the standard message
 	/// format of NUnit assertion failure messages.
 	/// </summary>
-    public class TextMessageWriter : MessageWriter
+    internal class TextMessageWriter : MessageWriter
     {
         #region Message Formats and Constants
 

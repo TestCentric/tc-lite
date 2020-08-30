@@ -13,7 +13,7 @@ namespace TCLite.Internal
 	/// exception and hence its stack trace.
 	/// </summary>
 	[Serializable]
-	public class TCLiteException : Exception 
+	internal class TCLiteException : Exception 
 	{
         /// <summary>
         /// Initializes a new instance of the <see cref="TCLiteException"/> class.

@@ -13,7 +13,7 @@ namespace TCLite.Internal
     /// fixture constructor using the provided arguments cannot be found.
     /// </summary>
 	[Serializable]
-	public class InvalidTestFixtureException : Exception
+	internal class InvalidTestFixtureException : Exception
 	{
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidTestFixtureException"/> class.

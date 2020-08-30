@@ -12,7 +12,7 @@ namespace TCLite.Internal
     /// ParameterizedMethodSuite holds a collection of individual
     /// TestMethods with their arguments applied.
     /// </summary>
-    public class ParameterizedMethodSuite : TestSuite
+    internal class ParameterizedMethodSuite : TestSuite
     {
 #if NYI // Theory
         private bool _isTheory;

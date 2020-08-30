@@ -8,7 +8,7 @@ namespace TCLite.Internal
     /// <summary>
     /// Represents the result of running a test suite
     /// </summary>
-    public class TestSuiteResult : TestResult
+    internal class TestSuiteResult : TestResult
     {
         private int _passCount = 0;
         private int _failCount = 0;

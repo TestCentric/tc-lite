@@ -14,7 +14,7 @@ namespace TCLite.Internal
     /// may be of any type. Null values are not permitted, since
     /// a null entry represents the absence of the key.
     /// </summary>
-    public class PropertyBag : IPropertyBag
+    internal class PropertyBag : IPropertyBag
     {
         private Dictionary<string, IList> inner = new Dictionary<string, IList>();
 

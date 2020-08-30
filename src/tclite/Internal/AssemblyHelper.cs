@@ -12,7 +12,7 @@ namespace TCLite.Internal
     /// AssemblyHelper provides static methods for working 
     /// with assemblies.
     /// </summary>
-    public class AssemblyHelper
+    internal class AssemblyHelper
     {
 
         /// <summary>

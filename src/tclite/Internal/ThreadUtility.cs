@@ -12,7 +12,7 @@ namespace TCLite.Internal
     /// The ThreadUtility class encapsulates several static methods
     /// useful when working with threads.
     /// </summary>
-    public class ThreadUtility
+    internal static class ThreadUtility
     {
         /// <summary>
         /// Do our best to Kill a thread
@@ -50,7 +50,5 @@ namespace TCLite.Internal
             if ( (thread.ThreadState & ThreadState.WaitSleepJoin) != 0 )
                 thread.Interrupt();
         }
-
-        private ThreadUtility() { }
     }
 }

@@ -16,7 +16,7 @@ namespace TCLite.Internal
     /// It provides a single point for accessing the data
     /// from potentially multiple attributes.
     /// </summary>
-    public class ParameterDataSource : IParameterDataSource
+    internal class ParameterDataSource : IParameterDataSource
     {
         public ParameterDataSource(ParameterInfo parameter)
         {

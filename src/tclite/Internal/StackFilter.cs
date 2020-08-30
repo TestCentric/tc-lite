@@ -14,7 +14,7 @@ namespace TCLite.Internal
     /// entries from a stack trace so that the resulting
     /// trace provides better information about the test.
     /// </summary>
-    public class StackFilter
+    internal class StackFilter
     {
         private const string DEFAULT_TOP_OF_STACK_PATTERN = @" TCLite\.(Assert|Assume|Warn)\.";
         private const string DEFAULT_BOTTOM_OF_STACK_PATTERN = @" System\.(Reflection|RuntimeMethodHandle|Threading\.ExecutionContext)\.";
