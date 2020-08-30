@@ -74,7 +74,7 @@ namespace TCLite.Internal
         /// </summary>
         /// <param name="childFilter">A filter to be used in selecting child tests</param>
         /// <returns>A new WorkItem</returns>
-        public override WorkItem CreateWorkItem(ITestFilter childFilter)
+        internal override WorkItem CreateWorkItem(ITestFilter childFilter)
         {
             //return RunState == Api.RunState.Runnable || RunState == Api.RunState.Explicit
             //    ? (WorkItem)new CompositeWorkItem(this, childFilter)

@@ -42,7 +42,7 @@ namespace TCLite.Internal
         /// </summary>
         private int _assertCount;
 
-        private Randomizer _randomGenerator;
+        private IRandomGenerator _randomGenerator;
 
         /// <summary>
         /// The current culture
@@ -228,7 +228,7 @@ namespace TCLite.Internal
         /// <summary>
         /// Gets the RandomGenerator specific to this Test
         /// </summary>
-        public Randomizer RandomGenerator
+        public IRandomGenerator RandomGenerator
         {
             get
             {

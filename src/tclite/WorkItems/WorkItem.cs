@@ -18,7 +18,7 @@ namespace TCLite.WorkItems
     /// pattern to allow derived classes to perform work in
     /// whatever way is needed.
     /// </summary>
-    public abstract class WorkItem
+    internal abstract class WorkItem
     {
         /// <summary>
         /// Construct a WorkItem for a particular test.

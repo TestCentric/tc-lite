@@ -261,7 +261,7 @@ namespace TCLite.Internal
         /// </summary>
         /// <param name="childFilter">A filter to be used in selecting child tests</param>
         /// <returns>A new WorkItem</returns>
-        public abstract WorkItem CreateWorkItem(ITestFilter childFilter);
+        internal abstract WorkItem CreateWorkItem(ITestFilter childFilter);
 
         /// <summary>
         /// Modify a newly constructed test by applying any of NUnit's common

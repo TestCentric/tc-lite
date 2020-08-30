@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using TCLite.Interfaces;
 
 namespace TCLite.Internal
 {
@@ -28,7 +29,7 @@ namespace TCLite.Internal
     /// arrays or strings use the prefix "Get..." to avoid
     /// confusion with the single-value methods.
     /// </remarks>
-    public class Randomizer : Random
+    public class Randomizer : Random, IRandomGenerator
     {
         #region Static Members
 
@@ -470,7 +471,7 @@ namespace TCLite.Internal
         /// <remarks>Default characters are the English alphabet (uppercase &amp; lowercase), Arabic numerals, and underscore</remarks>
         public const string DefaultStringChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789_";
 
-        private const int DefaultStringLength = 25;
+        // private const int DefaultStringLength = 25;
 
         /// <summary>
         /// Generate a random string based on the characters from the input string.
@@ -499,15 +500,15 @@ namespace TCLite.Internal
             return GetString(outputLength, DefaultStringChars);
         }
 
-        /// <summary>
-        /// Generate a random string based on the characters from the input string.
-        /// </summary>
-        /// <returns>A random string of the default length</returns>
-        /// <remarks>Uses <see cref="DefaultStringChars">DefaultStringChars</see> as the input character set </remarks>
-        public string GetString()
-        {
-            return GetString(DefaultStringLength, DefaultStringChars);
-        }
+        // /// <summary>
+        // /// Generate a random string based on the characters from the input string.
+        // /// </summary>
+        // /// <returns>A random string of the default length</returns>
+        // /// <remarks>Uses <see cref="DefaultStringChars">DefaultStringChars</see> as the input character set </remarks>
+        // public string GetString()
+        // {
+        //     return GetString(DefaultStringLength, DefaultStringChars);
+        // }
 
         #endregion
 

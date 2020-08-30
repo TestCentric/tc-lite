@@ -139,7 +139,7 @@ namespace TCLite
         /// <value>
         /// The random generator.
         /// </value>
-        public Randomizer Random
+        public IRandomGenerator Random
         {
             get { return _testExecutionContext.RandomGenerator; }
         }

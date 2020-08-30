@@ -20,8 +20,6 @@ namespace TCLite
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     public abstract class CombiningStrategyAttribute : TCLiteAttribute, ITestCaseFactory, IApplyToTest, IImplyFixture
     {
-        private readonly TCLiteTestCaseBuilder _builder = new TCLiteTestCaseBuilder();
-
         private readonly ICombiningStrategy _strategy;
 
         /// <summary>

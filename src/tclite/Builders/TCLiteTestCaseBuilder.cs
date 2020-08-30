@@ -25,7 +25,7 @@ namespace TCLite.Builders
     /// takes a different branch depending on whether any parameters are
     /// provided, but all four cases are dealt with in lower-level methods
     /// </summary>
-    public class TCLiteTestCaseBuilder : ITestCaseBuilder
+    public class TCLiteTestCaseBuilder
 	{
         private Randomizer _randomizer;
 

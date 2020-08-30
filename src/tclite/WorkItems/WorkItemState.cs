@@ -8,7 +8,7 @@ namespace TCLite.WorkItems
     /// <summary>
     /// The current state of a work item
     /// </summary>
-    public enum WorkItemState
+    internal enum WorkItemState
     {
         /// <summary>
         /// Ready to run or continue

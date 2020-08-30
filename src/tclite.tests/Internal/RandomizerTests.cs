@@ -641,7 +641,7 @@ namespace TCLite.Internal
         [TestCase(Description="Test that all generated strings are unique")]
         public void RandomStringsAreUnique()
         {
-            UniqueValues.Check(() => _randomizer.GetString(), 10, 10);
+            UniqueValues.Check(() => _randomizer.GetString(30), 10, 10);
         }
 
         [TestCase(30, "Tｈｅɋúｉｃｋƃｒòｗｎｆ߀хｊｕｍｐëԁoѵerｔհëｌａȥｙｄｏɢ")]

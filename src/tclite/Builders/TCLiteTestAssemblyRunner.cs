@@ -15,7 +15,7 @@ namespace TCLite.Builders
     /// <summary>
     /// Default implementation of ITestAssemblyRunner
     /// </summary>
-    public class TCLiteTestAssemblyRunner : ITestAssemblyRunner
+    public class TCLiteTestAssemblyRunner
     {
         private IDictionary<string, object> _settings;
 
@@ -28,7 +28,7 @@ namespace TCLite.Builders
         /// <summary>
         /// Root of the tree of loaded tests or null if none have been loaded
         /// </summary>
-        ITest ITestAssemblyRunner.LoadedTest => _loadedTest;
+        public ITest LoadedTest => _loadedTest;
 
         /// <summary>
         /// Loads the tests found in an Assembly
@@ -36,7 +36,7 @@ namespace TCLite.Builders
         /// <param name="assembly">The assembly to load</param>
         /// <param name="settings">Dictionary of option settings for loading the assembly</param>
         /// <returns>True if the load was successful</returns>
-        bool ITestAssemblyRunner.Load(Assembly assembly, IDictionary<string, object> settings)
+        public bool Load(Assembly assembly, IDictionary<string, object> settings)
         {
             _settings = settings;
 
@@ -54,7 +54,7 @@ namespace TCLite.Builders
         /// <param name="listener">Interface to receive EventListener notifications.</param>
         /// <param name="filter">A test filter used to select tests to be run</param>
         /// <returns></returns>
-        ITestResult ITestAssemblyRunner.Run(ITestListener listener, ITestFilter filter)
+        public ITestResult Run(ITestListener listener, ITestFilter filter)
         {
             TestExecutionContext context = new TestExecutionContext();
 

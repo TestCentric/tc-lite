@@ -37,7 +37,7 @@ namespace TCLite.Attributes
             throw new NotImplementedException();
         }
 
-        public override WorkItem CreateWorkItem(ITestFilter childFilter)
+        internal override WorkItem CreateWorkItem(ITestFilter childFilter)
         {
             throw new NotImplementedException();
         }

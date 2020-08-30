@@ -30,7 +30,7 @@ namespace TCLite.Runners
         private CommandLineOptions _options;
         private ExtendedTextWriter _writer;
         private TextUI _textUI;
-        private ITestAssemblyRunner _runner;
+        private TCLiteTestAssemblyRunner _runner;
         private string _workDirectory;
 
         public TestRunner()

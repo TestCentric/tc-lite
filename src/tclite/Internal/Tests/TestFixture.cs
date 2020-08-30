@@ -11,7 +11,7 @@ namespace TCLite.Internal
 	/// TestFixture is a surrogate for a user test fixture class,
 	/// containing one or more tests.
 	/// </summary>
-	public class TestFixture : TestSuite
+	internal class TestFixture : TestSuite
 	{
         /// <summary>
         /// Initializes a new instance of the <see cref="TestFixture"/> class.

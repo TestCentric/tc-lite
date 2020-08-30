@@ -13,7 +13,7 @@ namespace TCLite.Commands
     /// IsolatedFixtureCommand creates the test fixture used to run
     /// an individual test case and disposes it if necessary.
     /// </summary>
-    public class IsolatedFixtureCommand : BeforeAndAfterTestCommand
+    internal class IsolatedFixtureCommand : BeforeAndAfterTestCommand
     {
         private Type _fixtureType;
         private object[] _fixtureArgs;

@@ -15,7 +15,7 @@ namespace TCLite.WorkItems
     /// marked as completed immediately upon execution. This
     /// class is also used for skipped or ignored test suites.
     /// </summary>
-    public class SimpleWorkItem : WorkItem
+    internal class SimpleWorkItem : WorkItem
     {
         private TestCommand _command;
 

@@ -14,7 +14,7 @@ namespace TCLite.Builders
 	/// <summary>
 	/// Built-in SuiteBuilder for NUnit TestFixture
 	/// </summary>
-	public class TCLiteTestFixtureBuilder : ITestFixtureBuilder
+	internal class TCLiteTestFixtureBuilder
     {
         static readonly string NO_TYPE_ARGS_MSG = 
             "Fixture type contains generic parameters. You must either provide " +
@@ -26,7 +26,7 @@ namespace TCLite.Builders
 		/// </summary>
 		private TestFixture _fixture;
 
-        private ITestCaseBuilder _testCaseBuilder;
+        private TCLiteTestCaseBuilder _testCaseBuilder;
 
         public TCLiteTestFixtureBuilder()
         {

@@ -15,7 +15,7 @@ namespace TCLite.WorkItems
     /// encapsulates the execution of the suite as well
     /// as all its child tests.
     /// </summary>
-    public class CompositeWorkItem : WorkItem
+    internal class CompositeWorkItem : WorkItem
     {
         private TestSuite _suite;
         private ITestFilter _childFilter;
