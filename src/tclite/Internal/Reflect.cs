@@ -22,8 +22,8 @@
 // ***********************************************************************
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace TCLite.Internal
@@ -43,7 +43,7 @@ namespace TCLite.Internal
 	/// NUnit core to inspect assemblies that reference an older
 	/// version of the NUnit framework.
 	/// </summary>
-	public class Reflect
+	public static class Reflect
 	{
         private static readonly BindingFlags AllMembers = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy;
 
@@ -139,7 +139,7 @@ namespace TCLite.Internal
             if (arguments == null) return Construct(type);
 
             Type[] argTypes = GetTypeArray(arguments);
-            ConstructorInfo ctor = type.GetConstructor(argTypes);
+            ConstructorInfo ctor = GetConstructors(type, argTypes).FirstOrDefault();
             if (ctor == null)
                 throw new InvalidTestFixtureException(type.FullName + " does not have a suitable constructor");
 
@@ -158,8 +158,70 @@ namespace TCLite.Internal
             Type[] types = new Type[objects.Length];
             int index = 0;
             foreach (object o in objects)
-                types[index++] = o.GetType();
+                types[index++] = o?.GetType();
             return types;
+        }
+
+        /// <summary>
+        /// Gets the constructors to which the specified argument types can be coerced.
+        /// </summary>
+        internal static IEnumerable<ConstructorInfo> GetConstructors(Type type, Type[] matchingTypes)
+        {
+            return type
+                .GetConstructors()
+                .Where(c => c.GetParameters().ParametersMatch(matchingTypes));
+        }
+
+        /// <summary>
+        /// Determines if the given types can be coerced to match the given parameters.
+        /// </summary>
+        internal static bool ParametersMatch(this ParameterInfo[] pinfos, Type[] ptypes)
+        {
+            if (pinfos.Length != ptypes.Length)
+                return false;
+
+            for (int i = 0; i < pinfos.Length; i++)
+            {
+                if (!ptypes[i].CanImplicitlyConvertTo(pinfos[i].ParameterType))
+                    return false;
+            }
+            return true;
+        }
+
+        // §6.1.2 (Implicit numeric conversions) of the specification
+        private static readonly Dictionary<Type, List<Type>> convertibleValueTypes = new Dictionary<Type, List<Type>>() {
+            { typeof(decimal), new List<Type> { typeof(sbyte), typeof(byte), typeof(short), typeof(ushort), typeof(int), typeof(uint), typeof(long), typeof(ulong), typeof(char) } },
+            { typeof(double), new List<Type> { typeof(sbyte), typeof(byte), typeof(short), typeof(ushort), typeof(int), typeof(uint), typeof(long), typeof(ulong), typeof(char), typeof(float) } },
+            { typeof(float), new List<Type> { typeof(sbyte), typeof(byte), typeof(short), typeof(ushort), typeof(int), typeof(uint), typeof(long), typeof(ulong), typeof(char), typeof(float) } },
+            { typeof(ulong), new List<Type> { typeof(byte), typeof(ushort), typeof(uint), typeof(char) } },
+            { typeof(long), new List<Type> { typeof(sbyte), typeof(byte), typeof(short), typeof(ushort), typeof(int), typeof(uint), typeof(char) } },
+            { typeof(uint), new List<Type> { typeof(byte), typeof(ushort), typeof(char) } },
+            { typeof(int), new List<Type> { typeof(sbyte), typeof(byte), typeof(short), typeof(ushort), typeof(char) } },
+            { typeof(ushort), new List<Type> { typeof(byte), typeof(char) } },
+            { typeof(short), new List<Type> { typeof(byte) } }
+        };
+
+        /// <summary>
+        /// Determines whether the current type can be implicitly converted to the specified type.
+        /// </summary>
+        internal static bool CanImplicitlyConvertTo(this Type from, Type to)
+        {
+            if (to.IsAssignableFrom(from))
+                return true;
+
+            // Look for the marker that indicates from was null
+            if (from == null)
+            {
+                // Look for the marker that indicates from was null
+                return to.GetTypeInfo().IsClass || to.FullName.StartsWith("System.Nullable");
+            }
+
+            if (convertibleValueTypes.ContainsKey(to) && convertibleValueTypes[to].Contains(from))
+                return true;
+
+            return from
+                .GetMethods(BindingFlags.Public | BindingFlags.Static)
+                .Any(m => m.ReturnType == to && m.Name == "op_Implicit");
         }
 
         #endregion
@@ -202,12 +264,6 @@ namespace TCLite.Internal
 
 		    return null;
 		}
-
-		#endregion
-
-        #region Private Constructor for static-only class
-
-        private Reflect() { }
 
 		#endregion
 

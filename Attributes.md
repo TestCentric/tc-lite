@@ -8,7 +8,7 @@ Like NUnit, TC-Lite uses custom attributes to identify tests. This table lists a
 | [Author]                        | Not Supported      |
 | [Category]                      | [Category]         |
 | [Combinatorial]                 | [Combinatorial]    |
-| [Culture]                       | Not Supported      |
+| [Culture]                       | [Include]          |
 | [Datapoint]                     | Not Supported      |
 | [DatapointSource]               | Not Supported      |
 | [DefaultFloatingPointTolerance] | [DefaultTolerance] |
@@ -24,7 +24,7 @@ Like NUnit, TC-Lite uses custom attributes to identify tests. This table lists a
 | [Order]                         | NYI                |
 | [Pairwise]                      | NYI                |
 | [Parallelizable]                | NYI                |
-| [Platform]                      | Not Supported      |
+| [Platform]                      | [Include]          |
 | [Property]                      | [Property]         |
 | [Random]                        | [Random]           |
 | [Range]                         | [Range]            |
@@ -48,6 +48,3 @@ Like NUnit, TC-Lite uses custom attributes to identify tests. This table lists a
 | [Timeout]                       | NYI                |
 | [Values]                        | [Values]           |
 | [ValueSource]                   | [ValueSource]      |
-
-**Notes:**
-1. Use named properties on `TestCase` or on other test-creation attributes.

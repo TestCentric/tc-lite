@@ -343,6 +343,8 @@ namespace TCLite
 
 #region Properties
 
+            public TestAdapter Parent => _test.Parent != null ? new TestAdapter(_test.Parent) : null;
+
             /// <summary>
             /// Gets the unique Id of a test
             /// </summary>

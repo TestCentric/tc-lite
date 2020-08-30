@@ -83,17 +83,15 @@ namespace TCLite.Builders
             {
                 arguments = (object[])attr.Arguments;
 
-#if NYI // Generic Fixtures                
                 if (type.ContainsGenericParameters)
                 {
-                    Type[] typeArgs = (Type[])attr.TypeArgs;
+                    Type[] typeArgs = attr.TypeArgs;
                     if( typeArgs.Length > 0 || 
                         TypeHelper.CanDeduceTypeArgsFromArgs(type, arguments, ref typeArgs))
                     {
                         type = TypeHelper.MakeGenericType(type, typeArgs);
                     }
                 }
-#endif                
             }
 
             this._fixture = new TestFixture(type, arguments);
@@ -106,7 +104,7 @@ namespace TCLite.Builders
                 if (attr.Ignore)
                 {
                     _fixture.RunState = RunState.Ignored;
-                    _fixture.Properties.Set(PropertyNames.SkipReason, attr.IgnoreReason);
+                    _fixture.Properties.Set(PropertyNames.SkipReason, attr.Reason);
                 }
             }
 
@@ -165,10 +163,10 @@ namespace TCLite.Builders
                     if (arg != null)
                         argTypes[index++] = arg.GetType();
                     else
-                        return false;
+                        argTypes[index++] = null;
             }
 
-            return fixtureType.GetConstructor(argTypes) != null;
+            return fixtureType.GetConstructors() != null;
         }
 
         private void SetNotRunnable(TestFixture fixture, string reason)
@@ -192,10 +190,7 @@ namespace TCLite.Builders
             foreach (var attr in type.GetCustomAttributes(typeof(TestFixtureAttribute), true))
             {
                 var fixtureAttr = (TestFixtureAttribute)attr;
-                if (fixtureAttr.Arguments.Length > 0)
-#if NYI // Generic Fixtures                
-                    || fixtureAttr.TypeArgs.Length > 0)
-#endif                    
+                if (fixtureAttr.Arguments?.Length > 0 || fixtureAttr.TypeArgs?.Length > 0)
                     yield return fixtureAttr;
             }
         }

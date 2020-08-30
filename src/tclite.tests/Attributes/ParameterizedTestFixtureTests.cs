@@ -46,10 +46,8 @@ namespace TCLite.Attributes
     [TestFixture("hello", "hello", "goodbye")]
     [TestFixture("zip", "zip")]
     [TestFixture(42, 42, 99)]
-#if NYI // Null Fixture Arguments not yet supported
     [TestFixture(null, null, "null test")]
     [TestFixture((string)null, (string)null, "typed null test")]
-#endif
     public class ParameterizedTestFixture
     {
         private readonly string eq1;
@@ -90,69 +88,49 @@ namespace TCLite.Attributes
         }
     }
 
-#if NYI // TestBuilder
+    [TestFixture(1,2,3)]
+    [TestFixture(4,5,6)]
     public class ParameterizedTestFixtureNamingTests
     {
-        TestSuite fixture;
+        const string TYPE_NAME = "ParameterizedTestFixtureNamingTests";
+        const string TYPE_FULLNAME = "TCLite.Attributes." + TYPE_NAME;
 
-        [SetUp]
-        public void MakeFixture()
-        {
-            fixture = TestBuilder.MakeFixture(typeof(NUnit.TestData.ParameterizedTestFixture));
-        }
+        int X, Y, Z;
 
-        [TestCase]
-        public void TopLevelSuiteIsNamedCorrectly()
+        public ParameterizedTestFixtureNamingTests(int x, int y, int z)
         {
-            Assert.That(fixture.Name, Is.EqualTo("ParameterizedTestFixture"));
-            Assert.That(fixture.FullName, Is.EqualTo("NUnit.TestData.ParameterizedTestFixture"));
-        }
-
-        [TestCase]
-        public void SuiteHasCorrectNumberOfInstances()
-        {
-            Assert.That(fixture.Tests.Count, Is.EqualTo(2));
+            X = x; Y = y; Z = z;
         }
 
         [TestCase]
         public void FixtureInstancesAreNamedCorrectly()
         {
-            var names = new List<string>();
-            var fullnames = new List<string>();
-            foreach (Test test in fixture.Tests)
-            {
-                names.Add(test.Name);
-                fullnames.Add(test.FullName);
-            }
-
-            Assert.That(names, Is.EquivalentTo(new string[] {
-                "ParameterizedTestFixture(1)", "ParameterizedTestFixture(2)" }));
-            Assert.That(fullnames, Is.EquivalentTo(new string[] {
-                "NUnit.TestData.ParameterizedTestFixture(1)", "NUnit.TestData.ParameterizedTestFixture(2)" }));
+            var fixture = TestContext.CurrentTest.Parent;
+            Assert.That(fixture.Name, Is.EqualTo(GetType().Name));
+            Assert.That(fixture.FullName, Is.EqualTo(GetType().FullName));
         }
 
         [TestCase]
         public void MethodWithoutParamsIsNamedCorrectly()
         {
-            TestSuite instance = (TestSuite)fixture.Tests[0];
-            Test method = TestFinder.Find("MethodWithoutParams", instance, false);
-            Assert.That(method, Is.Not.Null );
-            Assert.That(method.FullName, Is.EqualTo(instance.FullName + ".MethodWithoutParams"));
+            var myName = nameof(MethodWithoutParamsIsNamedCorrectly);
+            var test = TestContext.CurrentTest;
+            Assert.That(test.Name, Is.EqualTo(myName));
+            Assert.That(test.FullName, Is.EqualTo(TYPE_FULLNAME + "." + myName));
         }
 
-        [TestCase]
-        public void MethodWithParamsIsNamedCorrectly()
+        [TestCase(1, 5.2, "Hello")]
+        public void MethodWithParamsIsNamedCorrectly(int x, double y, string z)
         {
-            TestSuite instance = (TestSuite)fixture.Tests[0];
-            TestSuite method = (TestSuite)TestFinder.Find("MethodWithParams", instance, false);
-            Assert.That(method, Is.Not.Null);
-            
-            Test testcase = (Test)method.Tests[0];
-            Assert.That(testcase.Name, Is.EqualTo("MethodWithParams(10,20)"));
-            Assert.That(testcase.FullName, Is.EqualTo(instance.FullName + ".MethodWithParams(10,20)"));
+            var myName = nameof(MethodWithParamsIsNamedCorrectly) + "(1,5.2d,\"Hello\")";
+            var typeName = GetType().FullName;
+            var test = TestContext.CurrentTest;
+            Assert.That(test.Name, Is.EqualTo(myName));
+            Assert.That(test.FullName, Is.EqualTo(TYPE_FULLNAME + "." + myName));
         }
     }
 
+#if NYI
     public class ParameterizedTestFixtureTests
     {
         [TestCase]
