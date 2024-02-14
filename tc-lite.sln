@@ -1,13 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4B713625-2A55-4B24-9C52-EE186D55487A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tclite", "src\tclite\tclite.csproj", "{61FF51E9-3B26-4A2C-A57A-BCEEC0D65563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tclite", "src\tclite\tclite.csproj", "{61FF51E9-3B26-4A2C-A57A-BCEEC0D65563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tclite.tests", "src\tclite.tests\tclite.tests.csproj", "{9B35B953-9425-40F1-ABEF-284B5AE352E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tclite.tests", "src\tclite.tests\tclite.tests.csproj", "{9B35B953-9425-40F1-ABEF-284B5AE352E1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{2A4DAA58-F92A-4ED1-BEC8-3FEF1D184842}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		appveyor.yml = appveyor.yml
+		build.cake = build.cake
+		build.cmd = build.cmd
+		build.ps1 = build.ps1
+		build.sh = build.sh
+		LICENSE = LICENSE
+		NuGet.config = NuGet.config
+		README.md = README.md
+		testcentric_128x128.png = testcentric_128x128.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +30,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{61FF51E9-3B26-4A2C-A57A-BCEEC0D65563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -47,8 +57,10 @@ Global
 		{9B35B953-9425-40F1-ABEF-284B5AE352E1}.Release|x86.ActiveCfg = Release|Any CPU
 		{9B35B953-9425-40F1-ABEF-284B5AE352E1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{61FF51E9-3B26-4A2C-A57A-BCEEC0D65563} = {4B713625-2A55-4B24-9C52-EE186D55487A}
-		{9B35B953-9425-40F1-ABEF-284B5AE352E1} = {4B713625-2A55-4B24-9C52-EE186D55487A}
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D0638B29-3752-428A-AB52-59D3ACFC93B1}
 	EndGlobalSection
 EndGlobal
