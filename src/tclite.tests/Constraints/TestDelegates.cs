@@ -1,8 +1,8 @@
-﻿// ****************************************************************
-// Copyright 2008, Charlie Poole
-// This is free software licensed under the NUnit license. You may
-// obtain a copy of the license at http://nunit.org/?p=license&r=2.4
-// ****************************************************************
+﻿// ***********************************************************************
+// Copyright (c) Charlie Poole and TestCentric contributors.
+// Licensed under the MIT License. See LICENSE file in root directory.
+// ***********************************************************************
+
 using System;
 
 namespace TCLite.Constraints

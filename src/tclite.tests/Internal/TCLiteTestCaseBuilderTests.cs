@@ -1,4 +1,9 @@
-﻿#if NYI // Async
+﻿// ***********************************************************************
+// Copyright (c) Charlie Poole and TestCentric contributors.
+// Licensed under the MIT License. See LICENSE file in root directory.
+// ***********************************************************************
+
+#if NYI // Async
 using System.Reflection;
 using TCLite.Interfaces;
 using TCLite.Builders;
