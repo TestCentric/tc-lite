@@ -1,17 +1,10 @@
-image: Visual Studio 2019
-
-install:
-- ps: |
-    $env:CORE_SDK_VERSION = '5.0.100-preview.7.20366.6'
-    Write-Host "Installing .NET Core SDK $env:CORE_SDK_VERSION"
-    Invoke-WebRequest -Uri 'https://dotnet.microsoft.com/download/dotnet-core/scripts/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
-    & $env:temp\dotnet-install.ps1 -Architecture x64 -Version $env:CORE_SDK_VERSION -InstallDir "$env:ProgramFiles\dotnet"
+image: Visual Studio 2022
 
 build_script: 
-  - ps: .\build.ps1 --target=AppVeyor --configuration=release
+  - ps: .\build.ps1 --target=AppVeyor --configuration=Release
   
 # disable built-in tests.
-test: off
+test: false
 
 artifacts:
 - path: output\*.nupkg
